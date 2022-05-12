@@ -6,8 +6,8 @@ using UnityEngine.EventSystems;
 
 public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
 {
-    public static bool iDown=false; // ÀÎº¥Åä¸®°¡ ¿­·ÁÀÖÀ¸¸é true
-    public GameObject Inven; // ÀÎº¥Åä¸® Ã¢
+    public static bool iDown=false; // ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ true
+    public GameObject Inven; // ï¿½Îºï¿½ï¿½ä¸® Ã¢
     static public Slot[] slots;
     [SerializeField]
     private GameObject SlotsParent;
@@ -32,10 +32,10 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I)) //ÀÎº¥Åä¸® ÄÑ±â/²ô±â
+        if(Input.GetKeyDown(KeyCode.I)) //ï¿½Îºï¿½ï¿½ä¸® ï¿½Ñ±ï¿½/ï¿½ï¿½ï¿½ï¿½
         {
             iDown = !iDown;
-            if (!iDown) //²û
+            if (!iDown) //ï¿½ï¿½
             {
                                
                 invenOff();
@@ -165,7 +165,7 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
        
     }
 
-    public void addItem(Item item, int num = 0) //°°Àº ¾ÆÀÌÅÛÀÌ ÀÖ°Å³ª ºóÃ¢ÀÌÀÖÀ»¶§ ³Ö´Â´Ù.
+    public void addItem(Item item, int num = 0) //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°Å³ï¿½ ï¿½ï¿½Ã¢ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Â´ï¿½.
     {
 
         if (item.itemType == Item.ItemType.Used)

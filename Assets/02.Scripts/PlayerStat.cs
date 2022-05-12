@@ -9,21 +9,21 @@ public class PlayerStat : MonoBehaviour
 
     public float NowExp;
 
-    public float MONEY;         //°¡Áø µ·
-    public float _STR;          //Èû
-    public float _DEX;          //µ¦
-    public float _INT;          //Áö´É
-    public float _DAMAGE;       //°ø°Ý·Â
-    public float _DEFENCE;      //¹æ¾î·Â
-    public float _SKILL_COOLTIME_DEC_PER; //½ºÅ³ ÄðÅ¸ÀÓ °¨¼Ò·®
-    public float _SKILL_ADD_DAMAGE_PER; // ½ºÅ³ Ãß°¡ °ø°Ý·Â
-    public float _MAXHP;               //Ã¼·Â
-    public float _Hp;                  //ÇöÀçÃ¼·Â
-    public float _MAXMP;                //¸¶³ª
-    public float _Mp;                   //ÇöÀç¸¶³ª
-    public float _CRITICAL_PROBABILITY; //Å©¸®Æ¼ÄÃÈ®·ü
-    public float _CRITICAL_ADD_DAMAGE_PER;//Å©¸®Æ¼Ä¿Ãß°¡µ¥¹ÌÁö
-    public float _MOVE_SPEED;       //ÀÌµ¿¼Óµµ
+    public float MONEY;         //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+    public float _STR;          //ï¿½ï¿½
+    public float _DEX;          //ï¿½ï¿½
+    public float _INT;          //ï¿½ï¿½ï¿½ï¿½
+    public float _DAMAGE;       //ï¿½ï¿½ï¿½Ý·ï¿½
+    public float _DEFENCE;      //ï¿½ï¿½ï¿½ï¿½
+    public float _SKILL_COOLTIME_DEC_PER; //ï¿½ï¿½Å³ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½Ò·ï¿½
+    public float _SKILL_ADD_DAMAGE_PER; // ï¿½ï¿½Å³ ï¿½ß°ï¿½ ï¿½ï¿½ï¿½Ý·ï¿½
+    public float _MAXHP;               //Ã¼ï¿½ï¿½
+    public float _Hp;                  //ï¿½ï¿½ï¿½ï¿½Ã¼ï¿½ï¿½
+    public float _MAXMP;                //ï¿½ï¿½ï¿½ï¿½
+    public float _Mp;                   //ï¿½ï¿½ï¿½ç¸¶ï¿½ï¿½
+    public float _CRITICAL_PROBABILITY; //Å©ï¿½ï¿½Æ¼ï¿½ï¿½È®ï¿½ï¿½
+    public float _CRITICAL_ADD_DAMAGE_PER;//Å©ï¿½ï¿½Æ¼Ä¿ï¿½ß°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public float _MOVE_SPEED;       //ï¿½Ìµï¿½ï¿½Óµï¿½
 
     public float LEV_ADD_STR;
     public float LEV_ADD_DEX;
@@ -31,7 +31,7 @@ public class PlayerStat : MonoBehaviour
     public bool expup =false;
 
     [SerializeField]
-    private PlayerST playerST; // 0 => Àü»ç , 1 => ±Ã¼ö , 2 => ¹ý»ç
+    private PlayerST playerST; // 0 => ï¿½ï¿½ï¿½ï¿½ , 1 => ï¿½Ã¼ï¿½ , 2 => ï¿½ï¿½ï¿½ï¿½
     [SerializeField]
     private inventory inven;
     [SerializeField]
@@ -257,7 +257,7 @@ public class PlayerStat : MonoBehaviour
         if(_Hp <= 0)
         {
             _Hp = 0;
-            Debug.Log("ÇÃ·¹ÀÌ¾î »ç¸Á ¤Ì");
+            Debug.Log("ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½");
         }
         gameUI.bar_set();
 
@@ -274,7 +274,7 @@ public class PlayerStat : MonoBehaviour
         else
         {
             _Mp = 0;
-            Debug.Log("¸¶³ª ºÎÁ·ÇÑµ¥....");
+            Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ñµï¿½....");
         }
         gameUI.bar_set();
     }

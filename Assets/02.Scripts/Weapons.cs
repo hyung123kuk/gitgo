@@ -15,6 +15,7 @@ public class Weapons : MonoBehaviour
     public bool Key3; //키보드 3번입력
     public bool Key3Up;
 
+    public static Weapons weapons;
     public Animator anim;
     private Rigidbody rigid;
     public BoxCollider meleeArea; //근딜범위
@@ -22,6 +23,9 @@ public class Weapons : MonoBehaviour
 
 
     public PlayerST playerST;
+    public AttackDamage attackdamage;
+    public PlayerStat playerstat;
+  
 
     /*=========================궁수 스킬 관련===================================*/
     public bool isEnergyReady; //3스킬쓰고있는상태
@@ -31,11 +35,6 @@ public class Weapons : MonoBehaviour
     public float EnergyReady2; //3스킬 5초장전 시간재기
     public float EnergyChargingTime = 5f; //풀차징 제한시간
 
-    private float BoomArrowTimePrev = 0f; //폭발화살 시간체크용
-    private float EnergyArrowTimePrev = 0f; //에너지화살 시간체크용
-
-    private float boomarrowcool = 0f; //폭발화살 쿨타임
-    private float energyarrowcool = 0f; //에너지화살 쿨타임
 
     [Header("궁수 관련")]
     public Transform arrowPos; //화살나가는위치
@@ -50,19 +49,14 @@ public class Weapons : MonoBehaviour
     public GameObject Arc3SkillArrow2; //2화살 발사이펙트
 
     /*=========================마법사 스킬 관련===================================*/
-    private float LightningBallTimePrev; //1스킬 시간재기
-    private float IceAgeTimePrev; //2스킬 시간재기
-    private float MeteoTimePrev; //3스킬 시간재기
     private float MeteoCasting; //3스킬 캐스팅시간
     private float MeteoMaxCasting = 4f; //3스킬 최대 캐스팅시간
 
-    private float lightningballcooltime = 0f; //1스킬 쿨타임
-    private float iceagecooltime = 0f; //2스킬 쿨타임
-    private float meteocooltime = 5f; //3스킬 쿨타임
 
     public bool isLightning;  //현재 스킬사용중?
     public bool isIceage;
     public static bool isMeteo;
+    public bool isMeteoShot;
 
     [Header("마법사 관련")]
     public Transform MagicPos; //마법나가는위치
@@ -78,13 +72,15 @@ public class Weapons : MonoBehaviour
     public GameObject Mage3SkillPosEff; //3스킬 도착위치 이펙트
     public GameObject Mage3SkillEff; //3스킬 이펙트
     public GameObject Mage3SkillPlayerEff; //3스킬 이펙트 플레이어쪽
+    public GameObject Skillarea; //켜지면 데미지만
+    public GameObject Skillarea2; //켜지면 데미지만
+    public GameObject CCarea;  //켜지면 CC기 
 
 
     private void Start()
     {
+        weapons = this;
         anim = GetComponentInParent<Animator>();
-        BoomArrowTimePrev = Time.time;
-        EnergyArrowTimePrev = Time.time;
     }
     private void Update()
     {
@@ -106,40 +102,48 @@ public class Weapons : MonoBehaviour
 
         }
 
-        if (PlayerST.isBuff == true)
+        if (attackdamage.Duration_Buff && playerST.ImWar)
         {
             rate = 0.45f;
-
-            Invoke("BuffTime", 6f);
+        }
+        else if (!attackdamage.Duration_Buff && playerST.ImWar)
+        {
+            playerST.BuffEff.SetActive(false);
+            rate = 0.6f;
         }
     }
-    void BuffTime() //공속 정상화  전사용
+    private void FixedUpdate()
     {
-        rate = 0.6f;
+        attackdamage.SkillPassedTimeFucn();
     }
     //============================궁수스킬========================================
     void BombArrow() //폭탄화살 궁수용
     {
         if (Key2 && !playerST.isDodge && !isEnergyReady && !PlayerST.isJump
-            && !PlayerST.isStun && !playerST.isRun && Time.time - BoomArrowTimePrev > boomarrowcool)
+            && !PlayerST.isStun && !playerST.isRun && attackdamage.Usable_Skill2)
         {
-            anim.SetBool("isBomb", true);
-            BoomArrowTimePrev = Time.time;
-            GameObject bombarrow = Instantiate(Arc2Skilarrow, arrowPos.position, arrowPos.rotation);
-            Rigidbody arrowRigid = bombarrow.GetComponent<Rigidbody>();
-            arrowRigid.velocity = arrowPos.forward * 20;
-            Destroy(bombarrow, 2f);
-            Invoke("BombArrowOut", 0.5f);
+            StartCoroutine(BombArrowPlay());
         }
     }
-    void BombArrowOut()
+    IEnumerator BombArrowPlay()
     {
+        attackdamage.Skill_2_Cool();
+        anim.SetBool("isBomb", true);
+        GameObject bombarrow = Instantiate(Arc2Skilarrow, arrowPos.position, arrowPos.rotation);
+        Rigidbody arrowRigid = bombarrow.GetComponent<Rigidbody>();
+        arrowRigid.velocity = arrowPos.forward * 20;
+        Arrow arrow = bombarrow.GetComponent<Arrow>(); //스킬데미지설정
+        arrow.damage = attackdamage.Skill_2_Damamge();
+
+        Destroy(bombarrow, 1f);
+
+        yield return new WaitForSeconds(0.5f);
         anim.SetBool("isBomb", false);
     }
     void EnergyArrow()
     {
         if (Key3 && !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun &&
-            Time.time - EnergyArrowTimePrev > energyarrowcool)
+            attackdamage.Usable_Skill3)
         {
             isEnergyReady = true;
             anim.SetBool("isReady", true);
@@ -170,21 +174,27 @@ public class Weapons : MonoBehaviour
         else if (Key3Up)
         {
             isEnergyReady = false;
-            EnergyArrowTimePrev = Time.time;
+            
             anim.SetBool("isReady", false);
             anim.SetBool("isShot", true);
             if (isEnergy1)
             {
+                attackdamage.Skill_3_Cool();
                 GameObject intantArrow = Instantiate(Arc3SkillArrow1, Arc3SkillPos.position, Arc3SkillPos.rotation);
                 Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
                 arrowRigid.velocity = Arc3SkillPos.forward * 20;
+                Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
+                arrow.damage = attackdamage.Skill_3_Damamge();
                 Destroy(intantArrow, 2f);
             }
             else if (isEnergy2)
             {
+                attackdamage.Skill_3_Cool();
                 GameObject intantArrow = Instantiate(Arc3SkillArrow2, Arc3SkillPos.position, Arc3SkillPos.rotation);
                 Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
                 arrowRigid.velocity = Arc3SkillPos.forward * 20;
+                Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
+                arrow.damage = 1.5f*attackdamage.Skill_3_Damamge();
                 Destroy(intantArrow, 2f);
             }
 
@@ -211,7 +221,7 @@ public class Weapons : MonoBehaviour
     void LightningBall()
     {
         if (Key1 && !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun && !playerST.isFlash && !isIceage &&
-           !isMeteo && Time.time - LightningBallTimePrev > lightningballcooltime)
+           !isMeteo && attackdamage.Usable_Skill1)
         {
             StartCoroutine(LightningBallStart());
         }
@@ -222,16 +232,22 @@ public class Weapons : MonoBehaviour
         isLightning = true;
         anim.SetBool("Skill1", true);
         yield return new WaitForSeconds(1.2f);
+        attackdamage.Skill_1_Cool();
         GameObject darkball1 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation);
-        GameObject darkball2 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation);
-        GameObject darkball3 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation);
-        darkball1.transform.DOMove(Mage1SkillPos1.position, 1f).SetEase(Ease.Linear); ;
-        darkball2.transform.DOMove(Mage1SkillPos2.position, 1f).SetEase(Ease.Linear); ;
-        darkball3.transform.DOMove(Mage1SkillPos3.position, 1f).SetEase(Ease.Linear); ;
+        GameObject darkball2 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation); 
+        GameObject darkball3 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation); 
+        darkball1.transform.DOMove(Mage1SkillPos1.position, 1f).SetEase(Ease.Linear); 
+        darkball2.transform.DOMove(Mage1SkillPos2.position, 1f).SetEase(Ease.Linear); 
+        darkball3.transform.DOMove(Mage1SkillPos3.position, 1f).SetEase(Ease.Linear); 
+        ArrowSkill arrow1 = darkball1.GetComponent<ArrowSkill>(); //스킬데미지설정
+        arrow1.damage = attackdamage.Skill_1_Damamge();
+        ArrowSkill arrow2 = darkball2.GetComponent<ArrowSkill>(); //스킬데미지설정
+        arrow2.damage = attackdamage.Skill_1_Damamge();
+        ArrowSkill arrow3 = darkball3.GetComponent<ArrowSkill>(); //스킬데미지설정
+        arrow3.damage = attackdamage.Skill_1_Damamge();
         Destroy(darkball1, 1.1f);
         Destroy(darkball2, 1.1f);
         Destroy(darkball3, 1.1f);
-        LightningBallTimePrev = Time.time;
         yield return new WaitForSeconds(0.5f);
         isLightning = false;
         anim.SetBool("Skill1", false);
@@ -239,7 +255,7 @@ public class Weapons : MonoBehaviour
     void IceAge()
     {
         if (Key2 && !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun && !isLightning && !playerST.isFlash &&
-           !isMeteo && Time.time - IceAgeTimePrev > iceagecooltime)
+           !isMeteo && attackdamage.Usable_Skill2)
         {
             StartCoroutine(IceAgeStart());
         }
@@ -250,10 +266,19 @@ public class Weapons : MonoBehaviour
         anim.SetBool("Skill2", true);
         isIceage = true;
         yield return new WaitForSeconds(1.8f);
+        BoxCollider Skillare = Skillarea.GetComponent<BoxCollider>(); //데미지 콜라이더 활성화
+        Skillare.enabled = true;
+        ArrowSkill arrow = Skillarea.GetComponent<ArrowSkill>(); //스킬데미지설정
+        arrow.damage = attackdamage.Skill_2_Damamge();
+        BoxCollider CCare = CCarea.GetComponent<BoxCollider>(); //cc기 콜라이더 활성화
+        CCare.enabled = true;
+        attackdamage.Skill_2_Cool();
         Mage2SkillReadyEff.SetActive(false);
         Mage2SkillEff.SetActive(true);
-        IceAgeTimePrev = Time.time;
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(0.2f);
+        CCare.enabled = false;
+        Skillare.enabled = false;
+        yield return new WaitForSeconds(0.4f);
         anim.SetBool("Skill2", false);
         isIceage = false;
         yield return new WaitForSeconds(1f);
@@ -262,7 +287,7 @@ public class Weapons : MonoBehaviour
     void Meteo()
     {
         if (Key3Up||Key3 && !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun && !playerST.isFlash
-            && !isLightning && !isIceage && Time.time - MeteoTimePrev > meteocooltime)
+            && !isLightning && !isIceage && attackdamage.Usable_Skill3)
         {
             if (Key3 && MeteoCasting < MeteoMaxCasting)
             {
@@ -273,7 +298,7 @@ public class Weapons : MonoBehaviour
                 Mage3SkillPosEff.SetActive(true);
                 MeteoCasting += Time.deltaTime;
             }
-            else if (Key3Up)
+            else if (Key3Up && !isMeteoShot)
             {
                 MeteoCasting = 0f;
                 isMeteo = false;
@@ -284,12 +309,15 @@ public class Weapons : MonoBehaviour
             }
             if (MeteoCasting > MeteoMaxCasting)
             {
+                isMeteoShot = true;
                 anim.SetBool("Skill31", true);
                 GameObject meteo = Instantiate(Mage3SkillEff, Mage3SkillPos2.position, Mage3SkillPos2.rotation);
                 meteo.transform.DOMove(Mage3SkillPos1.position, 1.5f).SetEase(Ease.Linear);
+                ArrowSkill arrow1 = meteo.GetComponent<ArrowSkill>(); //스킬데미지설정
+                arrow1.damage = attackdamage.Skill_3_Damamge();
                 Destroy(meteo, 1.6f);
                 MeteoCasting = 0f;
-                MeteoTimePrev = Time.time;
+                attackdamage.Skill_3_Cool();
                 Invoke("MeteoEnd", 0.8f);
                 Invoke("MeteoEnd2", 1.5f);
             }
@@ -300,21 +328,22 @@ public class Weapons : MonoBehaviour
         Mage3SkillPlayerEff.SetActive(false);
         anim.SetBool("Skill3", false);
         anim.SetBool("Skill31", false);
-        isMeteo = false;
     }
     void MeteoEnd2()
     {
         Mage3SkillPosEff.SetActive(false);
+        isMeteoShot = false;
+        isMeteo = false;
     }
     //====================================================================================
     public void Use()//무기 사용
     {
-        if (type == Type.Melee) //근접무기일때 실행
-        {
-            StopCoroutine("Swing");  //현재 공격중일시 멈춤
-            StartCoroutine("Swing"); //공격실행
-        }
-        else if (type == Type.Range)
+        //if (type == Type.Melee) //근접무기일때 실행
+        //{
+        //    StopCoroutine("Swing");  //현재 공격중일시 멈춤
+        //    StartCoroutine("Swing"); //공격실행
+        //}
+        if (type == Type.Range)
         {
             StartCoroutine("Shot");
         }
@@ -326,6 +355,7 @@ public class Weapons : MonoBehaviour
 
     IEnumerator Swing()
     {
+        
 
         yield return new WaitForSeconds(0.1f); // 대기
         meleeArea.enabled = true;
@@ -340,18 +370,22 @@ public class Weapons : MonoBehaviour
     {
         playerST.isSootReady = true;
         yield return new WaitForSeconds(0.2f); //애니메이션과 화살나가는속도와 맞추기위함
-        if (!PlayerST.isPoison)
+        if (!attackdamage.Duration_Buff)
         {
             GameObject intantArrow = Instantiate(ArcDefaultAttack, arrowPos.position, arrowPos.rotation);
             Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
             arrowRigid.velocity = arrowPos.forward * playerST.bowPower * 150;
+            Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
+            arrow.damage = attackdamage.Attack_Dam();
             Destroy(intantArrow, 1f);
         }
-        else if (PlayerST.isPoison)
+        else if (attackdamage.Duration_Buff)
         {
             GameObject intantArrow = Instantiate(Arc1Skilarrow, arrowPos.position, arrowPos.rotation);
             Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
             arrowRigid.velocity = arrowPos.forward * playerST.bowPower * 150;
+            Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
+            arrow.damage = 1.3f*attackdamage.Attack_Dam();
             Destroy(intantArrow, 1f);
         }
 
@@ -373,6 +407,8 @@ public class Weapons : MonoBehaviour
         GameObject intantArrow = Instantiate(MageDefaultAttack, MagicPos.position, MagicPos.rotation);
         Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
         arrowRigid.velocity = MagicPos.forward * 20;
+        Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
+        arrow.damage = attackdamage.Attack_Dam();
         Destroy(intantArrow, 0.7f);
         yield return new WaitForSeconds(0.3f);
         anim.SetBool("isAttack", false);

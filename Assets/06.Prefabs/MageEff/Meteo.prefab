@@ -13,9 +13,10 @@ GameObject:
   - component: {fileID: 1470204507440351367}
   - component: {fileID: 1470204507440351360}
   - component: {fileID: 1651134861895346018}
-  m_Layer: 8
+  - component: {fileID: 1993634717}
+  m_Layer: 14
   m_Name: Meteo
-  m_TagString: Untagged
+  m_TagString: ArrowSkill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -113,6 +114,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &1993634717
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1470204507440351361}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421441d7ba1154b45bfa4f8f25360281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1001 &2586529829423469719
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -122,7 +136,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 100000, guid: a590c04abd57be544b50a1b51a6674ac, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: a590c04abd57be544b50a1b51a6674ac, type: 3}
       propertyPath: m_Name
@@ -130,7 +144,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: a590c04abd57be544b50a1b51a6674ac, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: a590c04abd57be544b50a1b51a6674ac, type: 3}
       propertyPath: m_IsActive
@@ -138,15 +152,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 100004, guid: a590c04abd57be544b50a1b51a6674ac, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 100006, guid: a590c04abd57be544b50a1b51a6674ac, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 100008, guid: a590c04abd57be544b50a1b51a6674ac, type: 3}
       propertyPath: m_Layer
-      value: 8
+      value: 14
       objectReference: {fileID: 0}
     - target: {fileID: 400002, guid: a590c04abd57be544b50a1b51a6674ac, type: 3}
       propertyPath: m_RootOrder

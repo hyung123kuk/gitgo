@@ -19178,6 +19178,64 @@ Transform:
   m_Father: {fileID: 3045344785332392013}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &983728773
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 983728776}
+  - component: {fileID: 983728775}
+  - component: {fileID: 983728774}
+  m_Layer: 8
+  m_Name: 'SkillAREA '
+  m_TagString: ArrowSkill
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &983728776
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983728773}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3385786749736162927}
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &983728775
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983728773}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 4.3143806, y: 1.140164, z: 4.3887825}
+  m_Center: {x: 0.15255928, y: -0.34681195, z: 0.46021843}
+--- !u!114 &983728774
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 983728773}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421441d7ba1154b45bfa4f8f25360281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1 &1402589310
 GameObject:
   m_ObjectHideFlags: 0
@@ -19238,6 +19296,50 @@ Transform:
   m_Father: {fileID: 8259868091478866929}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1491825542
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1491825544}
+  - component: {fileID: 1491825543}
+  m_Layer: 8
+  m_Name: 'CC_AREA  '
+  m_TagString: CCAREA
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1491825544
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491825542}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3385786749736162927}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1491825543
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1491825542}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 4.3143806, y: 1.140164, z: 4.3887825}
+  m_Center: {x: 0.15255928, y: -0.34681195, z: 0.46021843}
 --- !u!1 &1493677313
 GameObject:
   m_ObjectHideFlags: 0
@@ -24142,6 +24244,8 @@ GameObject:
   - component: {fileID: 3379963180220227847}
   - component: {fileID: 1631382641}
   - component: {fileID: 1631382642}
+  - component: {fileID: 1525382057}
+  - component: {fileID: 1525382062}
   m_Layer: 8
   m_Name: gameMage
   m_TagString: Player
@@ -24169,6 +24273,8 @@ Transform:
   - {fileID: 8259868091478866929}
   - {fileID: 279614303670067652}
   - {fileID: 7443169566606492684}
+  - {fileID: 983728776}
+  - {fileID: 1491825544}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -24250,9 +24356,15 @@ MonoBehaviour:
   isSootReady: 1
   isFireReady: 1
   isDamage: 0
+  ImWar: 0
   archerattack: 0
   isRun: 0
   weapons: {fileID: 4053077489197052565}
+  attackdamage: {fileID: 1525382057}
+  playerstat: {fileID: 1525382062}
+  Skillarea: {fileID: 983728773}
+  Skillarea2: {fileID: 0}
+  CCarea: {fileID: 1491825542}
   isDodge: 0
   BuffEff: {fileID: 0}
   RushEff: {fileID: 0}
@@ -24309,6 +24421,87 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   smoothness: 10
+--- !u!114 &1525382057
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3379963180220227841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e21795db0e9d13c40b82a62e055d2587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStat: {fileID: 1525382062}
+  Skill_Buff_cooltime: 5
+  Usable_Buff: 1
+  Skill_Buff_duration: 5
+  Duration_Buff: 0
+  Skill_Teleport_cooltime: 10
+  Usable_Teleport: 1
+  Skill_Dodge_cooltime: 10
+  Usable_Dodge: 1
+  Skill_1_per_dam: 1.5
+  Skill_1_fixed_dam: 0
+  Skill_1_cooltime: 5
+  Usable_Skill1: 1
+  Skill_2_per_dam: 1.5
+  Skill_2_fixed_dam: 0
+  Skill_2_cooltime: 5
+  Usable_Skill2: 1
+  Skill_3_per_dam: 1.5
+  Skill_3_fixed_dam: 0
+  Skill_3_cooltime: 5
+  Usable_Skill3: 1
+  Skill_4_per_dam: 1
+  Skill_4_fixed_dam: 0
+  Skill_4_cooltime: 5
+  Usable_Skill4: 1
+--- !u!114 &1525382062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3379963180220227841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 248ef865d6187004c99e5f554f02f553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 3
+  TotalExp: 0
+  NowExp: 0
+  MONEY: 50
+  _STR: 0
+  _DEX: 0
+  _INT: 0
+  _DAMAGE: 0
+  _DEFENCE: 0
+  _SKILL_COOLTIME_DEC_PER: 50
+  _SKILL_ADD_DAMAGE_PER: 0
+  _MAXHP: 100
+  _Hp: 0
+  _MAXMP: 0
+  _Mp: 0
+  _CRITICAL_PROBABILITY: 0
+  _CRITICAL_ADD_DAMAGE_PER: 0
+  _MOVE_SPEED: 0
+  LEV_ADD_STR: 0
+  LEV_ADD_DEX: 0
+  LEV_ADD_INT: 0
+  expup: 0
+  playerST: {fileID: 3379963180220227847}
+  inven: {fileID: 0}
+  equSlots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &3379968210147162559
 GameObject:
   m_ObjectHideFlags: 0
@@ -65214,6 +65407,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 7838196484209121354, guid: c135b0939939ea5439157ac5155dfbab, type: 3}
     - target: {fileID: 1964054908, guid: 525d3a28b4a0c394d8dcd5f20a00eb13, type: 3}
+      propertyPath: playerstat
+      value: 
+      objectReference: {fileID: 1525382062}
+    - target: {fileID: 1964054908, guid: 525d3a28b4a0c394d8dcd5f20a00eb13, type: 3}
       propertyPath: Icereadyeff
       value: 
       objectReference: {fileID: 5871989226909167644}
@@ -65233,6 +65430,10 @@ PrefabInstance:
       propertyPath: DarkballPos3
       value: 
       objectReference: {fileID: 744698310}
+    - target: {fileID: 1964054908, guid: 525d3a28b4a0c394d8dcd5f20a00eb13, type: 3}
+      propertyPath: attackdamage
+      value: 
+      objectReference: {fileID: 1525382057}
     - target: {fileID: 1964054908, guid: 525d3a28b4a0c394d8dcd5f20a00eb13, type: 3}
       propertyPath: Mage1SkillEff
       value: 
@@ -65339,11 +65540,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 525d3a28b4a0c394d8dcd5f20a00eb13, type: 3}
---- !u!4 &4048410626384710837 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4983549492602716, guid: 525d3a28b4a0c394d8dcd5f20a00eb13, type: 3}
-  m_PrefabInstance: {fileID: 4053077490487913449}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &4053077489197052565 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1964054908, guid: 525d3a28b4a0c394d8dcd5f20a00eb13, type: 3}
@@ -65355,6 +65551,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc6d7d0affedf744d9af5e9dfd666b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &4048410626384710837 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4983549492602716, guid: 525d3a28b4a0c394d8dcd5f20a00eb13, type: 3}
+  m_PrefabInstance: {fileID: 4053077490487913449}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &4066071330778959903 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 23356744949513206, guid: 525d3a28b4a0c394d8dcd5f20a00eb13, type: 3}

@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7396217846326082195}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: LightningBall2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 7396217846326082203}
   - component: {fileID: 7396217846306684891}
   - component: {fileID: 7396217846306571899}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: LightningCore
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -4823,7 +4823,7 @@ GameObject:
   - component: {fileID: 7396217846326082207}
   - component: {fileID: 7396217846306684895}
   - component: {fileID: 7396217846306571903}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: LightningSpark
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -9641,10 +9641,10 @@ GameObject:
   - component: {fileID: 7838196484209121358}
   - component: {fileID: 7838196484209121353}
   - component: {fileID: 7838196484209121352}
-  - component: {fileID: 7838196484209121355}
-  m_Layer: 0
+  - component: {fileID: 6343456962589216510}
+  m_Layer: 14
   m_Name: Mage1Skill
-  m_TagString: Arrow
+  m_TagString: ArrowSkill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -9724,8 +9724,8 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.22784235
-  m_Center: {x: 0.005069029, y: 0, z: 0}
+  m_Radius: 0.44457138
+  m_Center: {x: 0.01, y: 0, z: 0}
 --- !u!54 &7838196484209121352
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9742,7 +9742,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7838196484209121355
+--- !u!114 &6343456962589216510
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -9751,7 +9751,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7838196484209121354}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9349333ca607d64798f57752b2efa19, type: 3}
+  m_Script: {fileID: 11500000, guid: 421441d7ba1154b45bfa4f8f25360281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
+  damage: 0

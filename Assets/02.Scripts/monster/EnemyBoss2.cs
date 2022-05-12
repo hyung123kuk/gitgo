@@ -5,11 +5,11 @@ using UnityEngine.AI;
 
 public class EnemyBoss2 : MonoBehaviour
 {
-    public float maxHealth = 100; //ÃÖ´ë Ã¼·Â
-    public float curHealth = 100; //ÇöÀç Ã¼·Â
-    public BoxCollider meleeArea; //¸ó½ºÅÍ °ø°Ý¹üÀ§
-    public bool isChase; //ÃßÀûÁßÀÎ »óÅÂ
-    public bool isAttack; //ÇöÀç °ø°ÝÁß
+    public float maxHealth = 100; //ï¿½Ö´ï¿½ Ã¼ï¿½ï¿½
+    public float curHealth = 100; //ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½
+    public BoxCollider meleeArea; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý¹ï¿½ï¿½ï¿½
+    public bool isChase; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public bool isAttack; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public bool isDie;
     public bool isBuff;
     private bool isStun;
@@ -31,8 +31,8 @@ public class EnemyBoss2 : MonoBehaviour
     Transform target;
     Rigidbody rigid;
     BoxCollider boxCollider;
-    SkinnedMeshRenderer[] mat; //ÇÇ°Ý½Ã »ö±òº¯ÇÏ°Ô
-    NavMeshAgent nav; //ÃßÀû
+  //  SkinnedMeshRenderer[] mat; //ï¿½Ç°Ý½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½
+    NavMeshAgent nav; //ï¿½ï¿½ï¿½ï¿½
     Animator anim;
 
 
@@ -43,7 +43,7 @@ public class EnemyBoss2 : MonoBehaviour
         stunarea = GetComponentInChildren<Light>();
         rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
-        mat = GetComponentsInChildren<SkinnedMeshRenderer>();
+   //     mat = GetComponentsInChildren<SkinnedMeshRenderer>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         
@@ -56,7 +56,7 @@ public class EnemyBoss2 : MonoBehaviour
 
     void Update()
     {
-        if(isDie)  //Á×¾úÀ¸¸é ÇöÀç½ÇÇàÁßÀÎ ÄÚ·ÎÆ¾ °­Á¦Á¾·á
+        if(isDie)  //ï¿½×¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
             StopAllCoroutines(); 
         }
@@ -73,7 +73,7 @@ public class EnemyBoss2 : MonoBehaviour
             Targerting();
             if (!isStun)
             {
-                if (Vector3.Distance(target.position, transform.position) <= 27f && nav.enabled) //15¹ÌÅÍ ¾È¿¡ Æ÷Âø
+                if (Vector3.Distance(target.position, transform.position) <= 27f && nav.enabled) //15ï¿½ï¿½ï¿½ï¿½ ï¿½È¿ï¿½ ï¿½ï¿½ï¿½ï¿½
                 {
                     if (!isAttack && !isDie)
                     {
@@ -86,7 +86,7 @@ public class EnemyBoss2 : MonoBehaviour
                         anim.SetBool("isRun", true);
                     }
                 }
-                else if (Vector3.Distance(target.position, transform.position) > 27f && nav.enabled) //15¹ÌÅÍ ¹Û
+                else if (Vector3.Distance(target.position, transform.position) > 27f && nav.enabled) //15ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
                 {
                     nav.SetDestination(respawn.position);
                     isChase = false;
@@ -107,15 +107,15 @@ public class EnemyBoss2 : MonoBehaviour
             }
         }
 
-        if (isChase || isAttack) //ÃßÀûÀÌ³ª °ø°ÝÁßÀÏ¶§¸¸
+        if (isChase || isAttack) //ï¿½ï¿½ï¿½ï¿½ï¿½Ì³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½ï¿½ï¿½
             if (!isDie && !PlayerST.isJump && !PlayerST.isFall)
-                transform.LookAt(target); //ÇÃ·¹ÀÌ¾î ¹Ù¶óº¸±â
+                transform.LookAt(target); //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ù¶óº¸±ï¿½
 
 
 
 
     }
-    IEnumerator Pattern() //º¸½ºÆÐÅÏ
+    IEnumerator Pattern() //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
             yield return new WaitForSeconds(7f);
         if (!isDie)
@@ -125,31 +125,31 @@ public class EnemyBoss2 : MonoBehaviour
             {
                 case 0:
                 case 1:
-                    //ÆøÁÖ : ÀÌµ¿¼Óµµ,°ø°Ý·ÂÁõ°¡
+                    //ï¿½ï¿½ï¿½ï¿½ : ï¿½Ìµï¿½ï¿½Óµï¿½,ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½ï¿½ï¿½
                     StartCoroutine(Pokju());
                     break;
                 case 2:
                 case 3:
                 case 4:
-                    //½ºÄÌ·¹Åæ ¼ÒÈ¯
+                    //ï¿½ï¿½ï¿½Ì·ï¿½ï¿½ï¿½ ï¿½ï¿½È¯
                     StartCoroutine(Sohwan());
                     break;
                 case 5:
                 case 6:    
                 case 7:    
                 case 8:
-                    //µ¹±¼¸®±â
+                    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
                     StartCoroutine(FireBall());
                     break;
                 case 9:
-                    //³ÐÀº ¹üÀ§ ½ºÅÏ
+                    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                     StartCoroutine(Stun());
                     break;
             }
         }
         
     }
-    void FreezeVelocity() //ÀÌµ¿º¸Á¤
+    void FreezeVelocity() //ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½
     {
         if (isChase)
         {
@@ -158,23 +158,23 @@ public class EnemyBoss2 : MonoBehaviour
         }
     }
 
-    void Targerting()//Å¸°ÙÆÃ
+    void Targerting()//Å¸ï¿½ï¿½ï¿½ï¿½
     {
         float targetRadius = 1f;
         float targetRange = 3f;
 
         RaycastHit[] rayHits =
             Physics.SphereCastAll(transform.position,
-            targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));  //·¹ÀÌÄ³½ºÆ®
+            targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));  //ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Æ®
 
-        if (rayHits.Length > 0 && !isAttack && !isDie) //·¹ÀÌÄ³½ºÆ®¿¡ ÇÃ·¹ÀÌ¾î°¡ ÀâÇû´Ù¸é && ÇöÀç °ø°ÝÁßÀÌ ¾Æ´Ï¶ó¸é
+        if (rayHits.Length > 0 && !isAttack && !isDie) //ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ù¸ï¿½ && ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½
         {
             //StopCoroutine(Attack());
             StartCoroutine(Attack());
         }
 
     }
-    IEnumerator Sohwan() //ÇØ°ñ¼ÒÈ¯
+    IEnumerator Sohwan() //ï¿½Ø°ï¿½ï¿½È¯
     {
         isChase = false;
         isAttack = true;
@@ -199,7 +199,7 @@ public class EnemyBoss2 : MonoBehaviour
         StartCoroutine(Pattern());
 
     }
-    IEnumerator Stun() //½ºÅÏ
+    IEnumerator Stun() //ï¿½ï¿½ï¿½ï¿½
     {
         isStun = true;
         isChase = false;
@@ -229,7 +229,7 @@ public class EnemyBoss2 : MonoBehaviour
         StartCoroutine(Pattern());
 
     }
-    IEnumerator Pokju() //ÆøÁÖ ¹öÇÁ½ºÅ³
+    IEnumerator Pokju() //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Å³
     {
 
 
@@ -258,7 +258,7 @@ public class EnemyBoss2 : MonoBehaviour
         pokju.SetActive(false);
     }
 
-    IEnumerator FireBall() //°ø±¼¸®±â
+    IEnumerator FireBall() //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
 
         isChase = false;
@@ -290,7 +290,7 @@ public class EnemyBoss2 : MonoBehaviour
 
     }
     
-    IEnumerator Attack() //Á¤Áö¸¦ ÇÏ°í °ø°ÝÀ»ÇÏ°í ´Ù½Ã ÃßÀûÀ» °³½Ã
+    IEnumerator Attack() //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         
             isChase = false;
@@ -319,7 +319,7 @@ public class EnemyBoss2 : MonoBehaviour
         FreezeVelocity();
     }
 
-    void OnTriggerEnter(Collider other)  //ÇÇ°Ý
+    void OnTriggerEnter(Collider other)  //ï¿½Ç°ï¿½
     {
         
             if (other.tag == "Melee")
@@ -341,26 +341,24 @@ public class EnemyBoss2 : MonoBehaviour
 
     IEnumerator OnDamage()
     {
-        foreach (SkinnedMeshRenderer mesh in mat)
-            mesh.material.color = Color.red;
+       // foreach (SkinnedMeshRenderer mesh in mat)
+         //   mesh.material.color = Color.red;
 
-        yield return new WaitForSeconds(0.1f);
+        
 
-        if (curHealth > 0)
-        {
-            foreach (SkinnedMeshRenderer mesh in mat)
-                mesh.material.color = Color.white;
-        }
-        else
+        if (curHealth < 0)
         {
             nav.isStopped = true;
             isDie = true;
             boxCollider.enabled = false;
-            foreach (SkinnedMeshRenderer mesh in mat)
-                mesh.material.color = Color.white;
-            isChase = false; //Á×¾úÀ¸´Ï ÃßÀûÁßÁö
-            anim.SetBool("isDie",true);
+            //foreach (SkinnedMeshRenderer mesh in mat)
+               // mesh.material.color = Color.white;
+            isChase = false; //ï¿½×¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            anim.SetBool("isDie", true);
             Destroy(gameObject, 200f);
+            //foreach (SkinnedMeshRenderer mesh in mat)
+              //  mesh.material.color = Color.white;
         }
+        yield return null;
     }
 }

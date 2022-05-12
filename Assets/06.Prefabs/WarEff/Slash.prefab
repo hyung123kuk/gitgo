@@ -14476,10 +14476,10 @@ GameObject:
   - component: {fileID: 303944212655866026}
   - component: {fileID: 1462703494}
   - component: {fileID: 1462703493}
-  - component: {fileID: 1462703492}
+  - component: {fileID: 4009076565399856449}
   m_Layer: 0
   m_Name: Slash
-  m_TagString: Arrow
+  m_TagString: ArrowSkill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -14577,7 +14577,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &1462703492
+--- !u!114 &4009076565399856449
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -14586,7 +14586,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 2249319137686593919}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9349333ca607d64798f57752b2efa19, type: 3}
+  m_Script: {fileID: 11500000, guid: 421441d7ba1154b45bfa4f8f25360281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
+  damage: 0

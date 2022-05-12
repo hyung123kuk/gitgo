@@ -4672,6 +4672,50 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
+--- !u!1 &333839267
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 333839268}
+  - component: {fileID: 333839269}
+  m_Layer: 8
+  m_Name: 'CC_AREA '
+  m_TagString: CCAREA
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &333839268
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333839267}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 1, z: 0.24}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6173690448349916702}
+  m_RootOrder: 14
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &333839269
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 333839267}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 4.3143806, y: 1.140164, z: 4.3887825}
+  m_Center: {x: 0.15255928, y: -0.34681195, z: 0.46021843}
 --- !u!1 &638397021
 GameObject:
   m_ObjectHideFlags: 0
@@ -9388,6 +9432,64 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: db08735561a38424182823d8d175333b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1358775187
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1358775188}
+  - component: {fileID: 1358775190}
+  - component: {fileID: 1358775189}
+  m_Layer: 8
+  m_Name: SkillAREA
+  m_TagString: ArrowSkill
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1358775188
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358775187}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.14, y: 1, z: 0.52}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 6173690448349916702}
+  m_RootOrder: 15
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &1358775190
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358775187}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 0
+  serializedVersion: 2
+  m_Size: {x: 4.3143806, y: 1.140164, z: 4.3887825}
+  m_Center: {x: 0.15255928, y: -0.34681195, z: 0.46021843}
+--- !u!114 &1358775189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1358775187}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 421441d7ba1154b45bfa4f8f25360281, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  damage: 0
 --- !u!1 &1533580841
 GameObject:
   m_ObjectHideFlags: 0
@@ -16452,6 +16554,8 @@ GameObject:
   - component: {fileID: 2407901092875048602}
   - component: {fileID: 2407901092875048580}
   - component: {fileID: 2407901092875048583}
+  - component: {fileID: 1506773405}
+  - component: {fileID: 1506773412}
   m_Layer: 8
   m_Name: gameArcher
   m_TagString: Player
@@ -16484,6 +16588,8 @@ Transform:
   - {fileID: 1533580842}
   - {fileID: 776107924}
   - {fileID: 3884745623204346889}
+  - {fileID: 333839268}
+  - {fileID: 1358775188}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -16565,9 +16671,15 @@ MonoBehaviour:
   isSootReady: 1
   isFireReady: 1
   isDamage: 0
+  ImWar: 0
   archerattack: 0
   isRun: 0
   weapons: {fileID: 2407901093679066094}
+  attackdamage: {fileID: 1506773405}
+  playerstat: {fileID: 1506773412}
+  Skillarea: {fileID: 1358775187}
+  Skillarea2: {fileID: 0}
+  CCarea: {fileID: 333839267}
   isDodge: 0
   BuffEff: {fileID: 0}
   RushEff: {fileID: 0}
@@ -16624,6 +16736,87 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   warriorController: {fileID: 0}
+--- !u!114 &1506773405
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6173690448349916700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e21795db0e9d13c40b82a62e055d2587, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  playerStat: {fileID: 0}
+  Skill_Buff_cooltime: 20
+  Usable_Buff: 1
+  Skill_Buff_duration: 10
+  Duration_Buff: 0
+  Skill_Teleport_cooltime: 5
+  Usable_Teleport: 1
+  Skill_Dodge_cooltime: 10
+  Usable_Dodge: 1
+  Skill_1_per_dam: 1.5
+  Skill_1_fixed_dam: 0
+  Skill_1_cooltime: 5
+  Usable_Skill1: 1
+  Skill_2_per_dam: 1
+  Skill_2_fixed_dam: 0
+  Skill_2_cooltime: 5
+  Usable_Skill2: 1
+  Skill_3_per_dam: 1.5
+  Skill_3_fixed_dam: 0
+  Skill_3_cooltime: 5
+  Usable_Skill3: 1
+  Skill_4_per_dam: 1
+  Skill_4_fixed_dam: 0
+  Skill_4_cooltime: 5
+  Usable_Skill4: 1
+--- !u!114 &1506773412
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6173690448349916700}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 248ef865d6187004c99e5f554f02f553, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Level: 2
+  TotalExp: 0
+  NowExp: 0
+  MONEY: 50
+  _STR: 0
+  _DEX: 0
+  _INT: 0
+  _DAMAGE: 0
+  _DEFENCE: 0
+  _SKILL_COOLTIME_DEC_PER: 50
+  _SKILL_ADD_DAMAGE_PER: 0
+  _MAXHP: 100
+  _Hp: 0
+  _MAXMP: 0
+  _Mp: 0
+  _CRITICAL_PROBABILITY: 0
+  _CRITICAL_ADD_DAMAGE_PER: 0
+  _MOVE_SPEED: 0
+  LEV_ADD_STR: 0
+  LEV_ADD_DEX: 0
+  LEV_ADD_INT: 0
+  expup: 0
+  playerST: {fileID: 0}
+  inven: {fileID: 0}
+  equSlots:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &6173690448360378790
 GameObject:
   m_ObjectHideFlags: 0
@@ -18274,10 +18467,15 @@ MonoBehaviour:
   type: 1
   damage: 0
   rate: 0.5
+  Key3: 0
+  Key3Up: 0
   anim: {fileID: 0}
   meleeArea: {fileID: 2407901093679066091}
   isSootReady: 1
   playerST: {fileID: 2407901092875048602}
+  attackdamage: {fileID: 1506773405}
+  playerstat: {fileID: 1506773412}
+  Arc2CCarea: {fileID: 0}
   isEnergyReady: 0
   isEnergy1: 0
   isEnergy2: 0
@@ -18294,6 +18492,8 @@ MonoBehaviour:
   Arc3SkillBuff3: {fileID: 776107923}
   Arc3SkillArrow1: {fileID: 7198114869083991301, guid: 76b8bb9199fa60147bd6e884fae249d6, type: 3}
   Arc3SkillArrow2: {fileID: 5773283464696801049, guid: 7214fda5b50ea7141b3ec653f888932d, type: 3}
+  isLightning: 0
+  isIceage: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}

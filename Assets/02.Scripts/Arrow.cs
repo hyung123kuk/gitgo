@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class Arrow : MonoBehaviour
 {
-    public int damage;
+    public float damage;
 
     void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.tag=="Enemy")
         {
-            Destroy(gameObject);  
+            Destroy(gameObject,0.1f);  
         }
     }
 }

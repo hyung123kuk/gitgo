@@ -5,13 +5,13 @@ using UnityEngine.AI;
 
 public class EnemyBoss1 : MonoBehaviour
 {
-    public float maxHealth = 100; //ÃÖ´ë Ã¼·Â
-    public float curHealth = 100; //ÇöÀç Ã¼·Â
-    public BoxCollider meleeArea; //¸ó½ºÅÍ °ø°Ý¹üÀ§
-    public BoxCollider nuckArea; //½ºÅÏ½ºÅ³ 
+    public float maxHealth = 100; //ï¿½Ö´ï¿½ Ã¼ï¿½ï¿½
+    public float curHealth = 100; //ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½
+    public BoxCollider meleeArea; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý¹ï¿½ï¿½ï¿½
+    public BoxCollider nuckArea; //ï¿½ï¿½ï¿½Ï½ï¿½Å³ 
     public SphereCollider nuckarea;
-    public bool isChase; //ÃßÀûÁßÀÎ »óÅÂ
-    public bool isAttack; //ÇöÀç °ø°ÝÁß
+    public bool isChase; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public bool isAttack; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public bool isRush;
     public bool isStun;
     public bool isbansa;
@@ -24,8 +24,8 @@ public class EnemyBoss1 : MonoBehaviour
     Transform target;
     Rigidbody rigid;
     BoxCollider boxCollider;
-    SkinnedMeshRenderer[] mat; //ÇÇ°Ý½Ã »ö±òº¯ÇÏ°Ô
-    NavMeshAgent nav; //ÃßÀû
+   // SkinnedMeshRenderer[] mat; //ï¿½Ç°Ý½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½
+    NavMeshAgent nav; //ï¿½ï¿½ï¿½ï¿½
     Animator anim;
 
     void Awake()
@@ -33,14 +33,14 @@ public class EnemyBoss1 : MonoBehaviour
         stunarea = GetComponentInChildren<Light>();
         rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
-        mat = GetComponentsInChildren<SkinnedMeshRenderer>();
+     //   mat = GetComponentsInChildren<SkinnedMeshRenderer>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         StartCoroutine(Pattern());
     }
     void Update()
     {
-        if (isDie)  //Á×¾úÀ¸¸é ÇöÀç½ÇÇàÁßÀÎ ÄÚ·ÎÆ¾ °­Á¦Á¾·á
+        if (isDie)  //ï¿½×¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
             StopAllCoroutines();
         }
@@ -49,7 +49,7 @@ public class EnemyBoss1 : MonoBehaviour
         if (!isbansa && !isRush && !isStun && !isDie)
         {
             Targerting();
-            if (Vector3.Distance(target.position, transform.position) <= 27f && nav.enabled) //15¹ÌÅÍ ¾È¿¡ Æ÷Âø
+            if (Vector3.Distance(target.position, transform.position) <= 27f && nav.enabled) //15ï¿½ï¿½ï¿½ï¿½ ï¿½È¿ï¿½ ï¿½ï¿½ï¿½ï¿½
             {
                 if (!isAttack&& !isDie)
                 {
@@ -60,7 +60,7 @@ public class EnemyBoss1 : MonoBehaviour
                     anim.SetBool("isRun", true);
                 }
             }
-            else if (Vector3.Distance(target.position, transform.position) > 27f && nav.enabled) //15¹ÌÅÍ ¹Û
+            else if (Vector3.Distance(target.position, transform.position) > 27f && nav.enabled) //15ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
             {
                 nav.SetDestination(respawn.position);
                 isChase = false;
@@ -82,12 +82,12 @@ public class EnemyBoss1 : MonoBehaviour
 
         if (isChase || isAttack)
             if(!isDie && !PlayerST.isJump && !PlayerST.isFall)
-            transform.LookAt(target); //ÇÃ·¹ÀÌ¾î ¹Ù¶óº¸±â
+            transform.LookAt(target); //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ù¶óº¸±ï¿½
         
     }
     
 
-    IEnumerator Pattern() //º¸½ºÆÐÅÏ
+    IEnumerator Pattern() //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     {
         
             yield return new WaitForSeconds(6f);
@@ -100,25 +100,25 @@ public class EnemyBoss1 : MonoBehaviour
                 case 1:
                 case 2:
                 case 3:
-                    //½ºÅÏ
+                    //ï¿½ï¿½ï¿½ï¿½
                     StartCoroutine(Stun());
                     break;
                 case 4:
                 case 5:
                 case 6:
-                    //µ¹Áø
+                    //ï¿½ï¿½ï¿½ï¿½
                     StartCoroutine(Rush());
                     break;
                 case 7:
                 case 8:
                 case 9:
-                    //¿òÃ÷¸®±â(¹Ý»çµ©)
+                    //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½(ï¿½Ý»çµ©)
                     StartCoroutine(Reflect());
                     break;
             }
         }
     }
-    void FreezeVelocity() //ÀÌµ¿º¸Á¤
+    void FreezeVelocity() //ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½
     {
         if (isChase)
         {
@@ -127,7 +127,7 @@ public class EnemyBoss1 : MonoBehaviour
         }
     }
 
-    void Targerting()//Å¸°ÙÆÃ
+    void Targerting()//Å¸ï¿½ï¿½ï¿½ï¿½
     {
             float targetRadius = 1f;
             float targetRange = 3f;
@@ -139,9 +139,9 @@ public class EnemyBoss1 : MonoBehaviour
             }
             RaycastHit[] rayHits =
                 Physics.SphereCastAll(transform.position,
-                targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));  //·¹ÀÌÄ³½ºÆ®
+                targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));  //ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Æ®
 
-            if (rayHits.Length > 0 && !isAttack && !isRush && !isDie) //·¹ÀÌÄ³½ºÆ®¿¡ ÇÃ·¹ÀÌ¾î°¡ ÀâÇû´Ù¸é && ÇöÀç °ø°ÝÁßÀÌ ¾Æ´Ï¶ó¸é
+            if (rayHits.Length > 0 && !isAttack && !isRush && !isDie) //ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ù¸ï¿½ && ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½
             {
                 //StopCoroutine(Attack());
                 StartCoroutine(Attack());
@@ -222,7 +222,7 @@ public class EnemyBoss1 : MonoBehaviour
             StartCoroutine(Pattern());
 
     }
-    IEnumerator Attack() //Á¤Áö¸¦ ÇÏ°í °ø°ÝÀ»ÇÏ°í ´Ù½Ã ÃßÀûÀ» °³½Ã
+    IEnumerator Attack() //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         
             isChase = false;
@@ -250,7 +250,7 @@ public class EnemyBoss1 : MonoBehaviour
         FreezeVelocity();
     }
 
-    void OnTriggerEnter(Collider other)  //ÇÇ°Ý
+    void OnTriggerEnter(Collider other)  //ï¿½Ç°ï¿½
     {
         if (!isbansa)
         {
@@ -287,26 +287,22 @@ public class EnemyBoss1 : MonoBehaviour
 
     IEnumerator OnDamage()
     {
-        foreach (SkinnedMeshRenderer mesh in mat)
-            mesh.material.color = Color.red;
-
-        yield return new WaitForSeconds(0.1f);
-
-        if (curHealth > 0)
-        {
-            foreach (SkinnedMeshRenderer mesh in mat)
-                mesh.material.color = Color.white;
-        }
-        else
+        if (curHealth < 0)
         {
             nav.isStopped = true;
             isDie = true;
             boxCollider.enabled = false;
-            foreach (SkinnedMeshRenderer mesh in mat)
-                mesh.material.color = Color.white;
-            isChase = false; //Á×¾úÀ¸´Ï ÃßÀûÁßÁö
-            anim.SetBool("isDie",true);
+            //foreach (SkinnedMeshRenderer mesh in mat)
+            // mesh.material.color = Color.white;
+            isChase = false; //ï¿½×¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+            anim.SetBool("isDie", true);
             Destroy(gameObject, 200f);
         }
+        
+
+        yield return null;
+        
+            
+        
     }
 }

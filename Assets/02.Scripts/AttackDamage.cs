@@ -6,92 +6,108 @@ public class AttackDamage : MonoBehaviour
 {
     [SerializeField]
     private PlayerStat playerStat;
-    [Header("½ºÅ³ ±âº» ÄðÅ¸ÀÓ")]
-    [Header("       ¹öÇÁ ½ºÅ³")]
+    [Header("ï¿½ï¿½Å³ ï¿½âº» ï¿½ï¿½Å¸ï¿½ï¿½")]
+    [Header("       ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³")]
     [SerializeField]
-    private float Skill_Buff_cooltime = 5;    //½ºÅ³ÀÇ ±âº» ÄðÅ¸ÀÓ ÀÌÈÄ ÄðÅ¸ÀÓ °¨¼Ò Àû¿ëµÇ¼­ °ª ³ª¿È
-    public bool Usable_Buff = true; //½ºÅ³ »ç¿ë °¡´É ÇÒ¶§ true·Î ¹Ù²ñ
-    [Header("½ºÅ³ Áö¼Ó ½Ã°£")]
+    private float Skill_Buff_cooltime = 5;    //ï¿½ï¿½Å³ï¿½ï¿½ ï¿½âº» ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¼ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public bool Usable_Buff = true; //ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¶ï¿½ trueï¿½ï¿½ ï¿½Ù²ï¿½
+    [Header("ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½")]
     [SerializeField]
     private float Skill_Buff_duration = 3;
     public bool Duration_Buff = false;
-    [Header("½ºÅ³ »ç¿ë ¸¶³ª")]
+    [Header("ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField]
     private float Skill_Buff_use_Mp = 50;
 
 
-    //½ºÅ³ ÆÛµ© : Ä³¸¯ÅÍ °ø°Ý·Â¿¡ ¹è¼ö ex) 1.2 ³ÖÀ¸¸é Ä³¸¯ÅÍ °ø°Ý·ÂÀÇ 1.2¹èÀÇ µ¥¹ÌÁö°¡ µé¾î°£´Ù.
-    //½ºÅ³ °íÁ¤µ© : Ä³¸¯ÅÍ °ø°Ý·Â¿¡ Ãß°¡µÈ´Ù°í »ý°¢ÇÏ¸é µÊ.
-    //½ºÅ³ ÆÛµ© + ½ºÅ³ °íÁ¤µ© : ½ºÅ³ ÆÛµ©ÀÌ 1.2 ½ºÅ³ °íÁ¤µ©ÀÌ 30 ÀÌ¶ó¸é µ¥¹ÌÁö´Â  (Ä³¸¯ÅÍ°ø°Ý·Â*1.2) + 30 ÀÌ µé¾î°£´Ù.
-    [Header("½ºÅ³ ÆÛµ©")]
-    [Header("       1¹ø ½ºÅ³")]
+    [SerializeField]
+    [Header("ï¿½ï¿½Å³ ï¿½âº» ï¿½ï¿½Å¸ï¿½ï¿½")]
+    [Header("       ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¬ï¿½ï¿½ï¿½ï¿½Å³")]
+    private float Skill_Teleport_cooltime = 5;    //ï¿½ï¿½Å³ï¿½ï¿½ ï¿½âº» ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¼ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public bool Usable_Teleport = true;
+
+
+    [SerializeField]
+    [Header("ï¿½ï¿½Å³ ï¿½âº» ï¿½ï¿½Å¸ï¿½ï¿½")]
+    [Header("       ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ô´Ï´ï¿½")]
+    private float Skill_Dodge_cooltime = 10;    //ï¿½ï¿½Å³ï¿½ï¿½ ï¿½âº» ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¼ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public bool Usable_Dodge = true;
+
+    //ï¿½ï¿½Å³ ï¿½Ûµï¿½ : Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý·Â¿ï¿½ ï¿½ï¿½ï¿½ ex) 1.2 ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý·ï¿½ï¿½ï¿½ 1.2ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°£ï¿½ï¿½.
+    //ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý·Â¿ï¿½ ï¿½ß°ï¿½ï¿½È´Ù°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ ï¿½ï¿½.
+    //ï¿½ï¿½Å³ ï¿½Ûµï¿½ + ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ : ï¿½ï¿½Å³ ï¿½Ûµï¿½ï¿½ï¿½ 1.2 ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 30 ï¿½Ì¶ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½  (Ä³ï¿½ï¿½ï¿½Í°ï¿½ï¿½Ý·ï¿½*1.2) + 30 ï¿½ï¿½ ï¿½ï¿½î°£ï¿½ï¿½.
+    [Header("ï¿½ï¿½Å³ ï¿½Ûµï¿½")]
+    [Header("       1ï¿½ï¿½ ï¿½ï¿½Å³")]
     [SerializeField]
     private float Skill_1_per_dam=1f;
-    [Header("½ºÅ³ °íÁ¤µ©")]
+    [Header("ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField]
     private float Skill_1_fixed_dam;
-    [Header("½ºÅ³ ±âº» ÄðÅ¸ÀÓ")]
+    [Header("ï¿½ï¿½Å³ ï¿½âº» ï¿½ï¿½Å¸ï¿½ï¿½")]
     [SerializeField]
-    private float Skill_1_cooltime=5;    //½ºÅ³ÀÇ ±âº» ÄðÅ¸ÀÓ ÀÌÈÄ ÄðÅ¸ÀÓ °¨¼Ò Àû¿ëµÇ¼­ °ª ³ª¿È
-    public bool Usable_Skill1 = true; //½ºÅ³ »ç¿ë °¡´É ÇÒ¶§ true·Î ¹Ù²ñ
-    [Header("½ºÅ³ »ç¿ë ¸¶³ª")]
+    private float Skill_1_cooltime=5;    //ï¿½ï¿½Å³ï¿½ï¿½ ï¿½âº» ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç¼ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public bool Usable_Skill1 = true; //ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ò¶ï¿½ trueï¿½ï¿½ ï¿½Ù²ï¿½
+    [Header("ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField]
     private float Skill_1_use_Mp = 50;
 
 
-    [Header("½ºÅ³ ÆÛµ©")]
-    [Header("       2¹ø ½ºÅ³")]
+    [Header("ï¿½ï¿½Å³ ï¿½Ûµï¿½")]
+    [Header("       2ï¿½ï¿½ ï¿½ï¿½Å³")]
     [SerializeField]
     private float Skill_2_per_dam=1f;
-    [Header("½ºÅ³ °íÁ¤µ©")]
+    [Header("ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField]
     private float Skill_2_fixed_dam;
-    [Header("½ºÅ³ ±âº» ÄðÅ¸ÀÓ")]
+    [Header("ï¿½ï¿½Å³ ï¿½âº» ï¿½ï¿½Å¸ï¿½ï¿½")]
     [SerializeField]
     private float Skill_2_cooltime = 5;
     public bool Usable_Skill2 = true;
-    [Header("½ºÅ³ »ç¿ë ¸¶³ª")]
+    [Header("ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField]
     private float Skill_2_use_Mp = 50;
 
-    [Header("½ºÅ³ ÆÛµ©")]
-    [Header("       3¹ø ½ºÅ³")]
+    [Header("ï¿½ï¿½Å³ ï¿½Ûµï¿½")]
+    [Header("       3ï¿½ï¿½ ï¿½ï¿½Å³")]
     [SerializeField]
     private float Skill_3_per_dam=1f;
-    [Header("½ºÅ³ °íÁ¤µ©")]
+    [Header("ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField]
     private float Skill_3_fixed_dam;
-    [Header("½ºÅ³ ±âº» ÄðÅ¸ÀÓ")]
+    [Header("ï¿½ï¿½Å³ ï¿½âº» ï¿½ï¿½Å¸ï¿½ï¿½")]
     [SerializeField]
     private float Skill_3_cooltime = 5;
     public bool Usable_Skill3 = true;
-    [Header("½ºÅ³ »ç¿ë ¸¶³ª")]
+    [Header("ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField]
     private float Skill_3_use_Mp = 50;
 
-    [Header("½ºÅ³ ÆÛµ©")]
-    [Header("       4¹ø ½ºÅ³")]
+    [Header("ï¿½ï¿½Å³ ï¿½Ûµï¿½")]
+    [Header("       4ï¿½ï¿½ ï¿½ï¿½Å³")]
     [SerializeField]
     private float Skill_4_per_dam=1f;
-    [Header("½ºÅ³ °íÁ¤µ©")]
+    [Header("ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField]
     private float Skill_4_fixed_dam;
-    [Header("½ºÅ³ ±âº» ÄðÅ¸ÀÓ")]
+    [Header("ï¿½ï¿½Å³ ï¿½âº» ï¿½ï¿½Å¸ï¿½ï¿½")]
     [SerializeField]
     private float Skill_4_cooltime = 5;
     public bool Usable_Skill4 = true;
-    [Header("½ºÅ³ »ç¿ë ¸¶³ª")]
+    [Header("ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½")]
     [SerializeField]
     private float Skill_4_use_Mp = 50;
 
     float SkillBuff_time;
     float SkillBuff_passedTime;
+    float SkillTeleport_time;
+    float SkillTeleport_passedTime;
+    float SkillDodge_time;
+    float SkillDodge_passedTime;
 
-   
     float SkillBuff_passedDurationgTime;
 
-    float Skill1_time;         //ÄðÅ¸ÀÓ °¨¼Ò Àû¿ë ½ºÅ³ Å¸ÀÓ
-    float Skill1_passedTime;   //½ºÅ³ 1 Èê·¯°£ ½Ã°£
+    float Skill1_time;         //ï¿½ï¿½Å¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³ Å¸ï¿½ï¿½
+    float Skill1_passedTime;   //ï¿½ï¿½Å³ 1 ï¿½ê·¯ï¿½ï¿½ ï¿½Ã°ï¿½
     float Skill2_time;
     float Skill2_passedTime;
     float Skill3_time;
@@ -103,7 +119,7 @@ public class AttackDamage : MonoBehaviour
     void Start()
     {
         playerStat = FindObjectOfType<PlayerStat>();
-        Skill_Buff_Cool();
+       // Skill_Buff_Cool();
         
     }
     private void Update()
@@ -115,14 +131,14 @@ public class AttackDamage : MonoBehaviour
    
 
 
-    // »ç¿ë¹ý => µ¥¹ÌÁö°ªÀ» ³Ö°í ½ÍÀº°÷¿¡ Atack_Dam() ¸¦ ³ÖÀ¸¸é µË´Ï´Ù.  ¹ÝÈ¯ÇüÀÌ floatÀÔ´Ï´Ù (µ¥¹ÌÁö°¡ floatÇüÀ¸·Î µé¾î°©´Ï´Ù)
+    // ï¿½ï¿½ï¿½ï¿½ => ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Atack_Dam() ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë´Ï´ï¿½.  ï¿½ï¿½È¯ï¿½ï¿½ï¿½ï¿½ floatï¿½Ô´Ï´ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ floatï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°©ï¿½Ï´ï¿½)
 
     public float Attack_Dam()
     {
         float DamRange = Random.Range(0.95f, 1.05f);
-        if(Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) //1~100 Áß Å©¸®Æ¼ÄÃ È®·ü°ªº¸´Ù ÀÛÀº°ªÀÌ¸éÅ©¸®Æ¼ÄÃµ¥¹ÌÁö ¸®ÅÏ.
+        if(Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) //1~100 ï¿½ï¿½ Å©ï¿½ï¿½Æ¼ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½Å©ï¿½ï¿½Æ¼ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
         {
-            return  ( playerStat._DAMAGE + (playerStat._DAMAGE * playerStat._CRITICAL_ADD_DAMAGE_PER /100f) ) *DamRange; //Å©¸®Æ¼ÄÃ ÅÍÁ³À»¶§ µ¥¹ÌÁö°ª¿¡ ÆÛ¼¾Æ®Ä¡ ´õÇÔ
+            return  ( playerStat._DAMAGE + (playerStat._DAMAGE * playerStat._CRITICAL_ADD_DAMAGE_PER /100f) ) *DamRange; //Å©ï¿½ï¿½Æ¼ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Û¼ï¿½Æ®Ä¡ ï¿½ï¿½ï¿½ï¿½
         }
         else
         {
@@ -131,12 +147,12 @@ public class AttackDamage : MonoBehaviour
         
     }
 
-    // ½ºÅ³ 1¹ø µ¥¹ÌÁö¸¦ ³Ö°í ½ÍÀº°÷¿¡ Skill_1_Damage() ¸¦ ³ÖÀ¸¸é µË´Ï´Ù.  ¹ÝÈ¯ÇüÀÌ floatÀÔ´Ï´Ù (µ¥¹ÌÁö°¡ floatÇüÀ¸·Î µé¾î°©´Ï´Ù)
+    // ï¿½ï¿½Å³ 1ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Skill_1_Damage() ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ë´Ï´ï¿½.  ï¿½ï¿½È¯ï¿½ï¿½ï¿½ï¿½ floatï¿½Ô´Ï´ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ floatï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°©ï¿½Ï´ï¿½)
     public float Skill_1_Damamge()
     {
         float DamRange = Random.Range(0.95f, 1.05f);
         float Skill_1_basedamage = (playerStat._DAMAGE * Skill_1_per_dam + Skill_1_fixed_dam) + (playerStat._DAMAGE * Skill_1_per_dam + Skill_1_fixed_dam) * playerStat._SKILL_ADD_DAMAGE_PER / 100;
-        if (Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) //1~100 Áß Å©¸®Æ¼ÄÃ È®·ü°ªº¸´Ù ÀÛÀº°ªÀÌ¸é Å©¸®Æ¼ÄÃµ¥¹ÌÁö ¸®ÅÏ.
+        if (Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) //1~100 ï¿½ï¿½ Å©ï¿½ï¿½Æ¼ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ Å©ï¿½ï¿½Æ¼ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
         {
             return (Skill_1_basedamage + (Skill_1_basedamage * playerStat._CRITICAL_ADD_DAMAGE_PER / 100f)) * DamRange; 
         }
@@ -154,7 +170,7 @@ public class AttackDamage : MonoBehaviour
     {
         float DamRange = Random.Range(0.95f, 1.05f);
         float Skill_2_basedamage = (playerStat._DAMAGE * Skill_2_per_dam + Skill_2_fixed_dam) + (playerStat._DAMAGE * Skill_2_per_dam + Skill_2_fixed_dam) * playerStat._SKILL_ADD_DAMAGE_PER / 100;
-        if (Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) //1~100 Áß Å©¸®Æ¼ÄÃ È®·ü°ªº¸´Ù ÀÛÀº°ªÀÌ¸é Å©¸®Æ¼ÄÃµ¥¹ÌÁö ¸®ÅÏ.
+        if (Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) //1~100 ï¿½ï¿½ Å©ï¿½ï¿½Æ¼ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ Å©ï¿½ï¿½Æ¼ï¿½Ãµï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½.
         {
             return (Skill_2_basedamage + (Skill_2_basedamage * playerStat._CRITICAL_ADD_DAMAGE_PER / 100f)) * DamRange; 
         }
@@ -170,7 +186,7 @@ public class AttackDamage : MonoBehaviour
     {
         float DamRange = Random.Range(0.95f, 1.05f);
         float Skill_3_basedamage = (playerStat._DAMAGE * Skill_3_per_dam + Skill_3_fixed_dam) + (playerStat._DAMAGE * Skill_3_per_dam + Skill_3_fixed_dam) * playerStat._SKILL_ADD_DAMAGE_PER / 100;
-        if (Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) //1~100 Áß Å©¸®Æ¼ÄÃ È®·ü°ªº¸´Ù ÀÛÀº°ªÀÌ¸é Å©¸®Æ¼ÄÃÀÌ ÅÍÁø´Ù.
+        if (Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) //1~100 ï¿½ï¿½ Å©ï¿½ï¿½Æ¼ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ Å©ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
         {
             return (Skill_3_basedamage + (Skill_3_basedamage * playerStat._CRITICAL_ADD_DAMAGE_PER / 100f)) * DamRange;
         }
@@ -186,7 +202,7 @@ public class AttackDamage : MonoBehaviour
     {
         float DamRange = Random.Range(0.95f, 1.05f);
         float Skill_4_basedamage = (playerStat._DAMAGE * Skill_4_per_dam + Skill_4_fixed_dam) + (playerStat._DAMAGE * Skill_4_per_dam + Skill_4_fixed_dam) * playerStat._SKILL_ADD_DAMAGE_PER / 100;
-        if (Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) //1~100 Áß Å©¸®Æ¼ÄÃ È®·ü°ªº¸´Ù ÀÛÀº°ªÀÌ¸é Å©¸®Æ¼ÄÃÀÌ ÅÍÁø´Ù.
+        if (Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) //1~100 ï¿½ï¿½ Å©ï¿½ï¿½Æ¼ï¿½ï¿½ È®ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ì¸ï¿½ Å©ï¿½ï¿½Æ¼ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
         {
             return (Skill_4_basedamage + (Skill_4_basedamage * playerStat._CRITICAL_ADD_DAMAGE_PER / 100f)) * DamRange;
         }
@@ -205,6 +221,18 @@ public class AttackDamage : MonoBehaviour
         SkillBuff_passedDurationgTime=0f;
         Duration_Buff = true;
         Usable_Buff = false;
+    }
+    public void Skill_Mage_Teleport_Cool()
+    {
+        SkillTeleport_time = Skill_Teleport_cooltime - Skill_Teleport_cooltime * playerStat._SKILL_COOLTIME_DEC_PER / 100;
+        SkillTeleport_passedTime = 0f;
+        Usable_Teleport = false;
+    }
+    public void Skill_Dodge_Cool()
+    {
+        SkillDodge_time = Skill_Dodge_cooltime - Skill_Dodge_cooltime * playerStat._SKILL_COOLTIME_DEC_PER / 100;
+        SkillDodge_passedTime = 0f;
+        Usable_Dodge = false;
     }
 
 
@@ -253,7 +281,30 @@ public class AttackDamage : MonoBehaviour
             }
         }
 
-        if(Duration_Buff)
+        if (!Usable_Teleport)
+        {
+            SkillTeleport_passedTime += Time.deltaTime;
+            if (SkillTeleport_time < SkillTeleport_passedTime)
+            {
+                Debug.Log(SkillTeleport_passedTime);
+                SkillTeleport_passedTime = 0f;
+                Usable_Teleport = true;
+
+            }
+        }
+        if (!Usable_Dodge)
+        {
+            SkillDodge_passedTime += Time.deltaTime;
+            if (SkillDodge_time < SkillDodge_passedTime)
+            {
+                Debug.Log(SkillDodge_passedTime);
+                SkillDodge_passedTime = 0f;
+                Usable_Dodge = true;
+
+            }
+        }
+
+        if (Duration_Buff)
         {
             SkillBuff_passedDurationgTime += Time.deltaTime;
             if(Skill_Buff_duration < SkillBuff_passedDurationgTime)
@@ -282,7 +333,7 @@ public class AttackDamage : MonoBehaviour
             {
                 Debug.Log(Skill2_passedTime);
                 Skill2_passedTime = 0f;
-                Usable_Skill1 = true;
+                Usable_Skill2 = true;
             }
         }
         if (!Usable_Skill3)
@@ -292,7 +343,7 @@ public class AttackDamage : MonoBehaviour
             {
                 Debug.Log(Skill3_passedTime);
                 Skill3_passedTime = 0f;
-                Usable_Skill1 = true;
+                Usable_Skill3 = true;
             }
         }
         if (!Usable_Skill4)
@@ -302,7 +353,7 @@ public class AttackDamage : MonoBehaviour
             {
                 Debug.Log(Skill4_passedTime);
                 Skill4_passedTime = 0f;
-                Usable_Skill1 = true;
+                Usable_Skill4 = true;
             }
         }
     }

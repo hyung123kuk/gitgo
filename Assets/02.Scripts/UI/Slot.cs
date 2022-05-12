@@ -6,9 +6,9 @@ using UnityEngine.EventSystems;
 
 public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
-    public Item item; // È¹µæÇÑ ¾ÆÀÌÅÛ
-    public int itemCount; // È¹µæÇÑ ¾ÆÀÌÅÛÀÇ °³¼ö
-    public Image itemImage;  // ¾ÆÀÌÅÛÀÇ ÀÌ¹ÌÁö
+    public Item item; // È¹ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
+    public int itemCount; // È¹ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public Image itemImage;  // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½
     public WarriorSlot WarriorSlot;
     [SerializeField]
     private Text text_Count;
@@ -90,7 +90,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     }
 
 
-    // ¾ÆÀÌÅÛ ÀÌ¹ÌÁöÀÇ Åõ¸íµµ Á¶Àý
+    // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ì¹ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void SetColor(float _alpha)
     {
         Color color = itemImage.color;
@@ -98,7 +98,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         itemImage.color = color;
     }
 
-    // ÀÎº¥Åä¸®¿¡ »õ·Î¿î ¾ÆÀÌÅÛ ½½·Ô Ãß°¡
+    // ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½ ï¿½ï¿½ï¿½Î¿ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ß°ï¿½
     public void AddItem(Item _item, int _count = 1)
     {
         item = _item;
@@ -119,7 +119,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         SetColor(1);
     }
 
-    // ÇØ´ç ½½·ÔÀÇ ¾ÆÀÌÅÛ °¹¼ö ¾÷µ¥ÀÌÆ®
+    // ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Æ®
     public void SetSlotCount(int _count)
     {
         itemCount += _count;
@@ -130,24 +130,24 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     }
     public void UseItem()
     {
-        if (item.itemName == "<color=#FFD700>¸¶°èÀÇ ½ÅºñÇÑ ¿µ¾à</color>")
+        if (item.itemName == "<color=#FFD700>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Åºï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½</color>")
         {
             playerStat.RecoverHp(50);
             playerStat.RecoverMp(50);
             
         }
-        else if (item.itemName == "<color=#FF0000>Ã¼·Â È¸º¹ ¹°¾à</color>")
+        else if (item.itemName == "<color=#FF0000>Ã¼ï¿½ï¿½ È¸ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½</color>")
         {
             playerStat.RecoverHp(25);
         }
-        else if (item.itemName == "<color=#1E90FF>ÆÄ¶õ ¸¶³ª ²É</color>")
+        else if (item.itemName == "<color=#1E90FF>ï¿½Ä¶ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½</color>")
         {
             playerStat.RecoverMp(25);
         }
         gameUI.bar_set();
     }
 
-    // ÇØ´ç ½½·Ô ÇÏ³ª »èÁ¦
+    // ï¿½Ø´ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ ï¿½ï¿½ï¿½ï¿½
     public void ClearSlot()
     {
         item = null;
@@ -158,7 +158,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         text_Count.text = "";
         
     }
-    public void OnPointerClick(PointerEventData eventData) //¿ìÅ¬¸¯ ÀåÂø
+    public void OnPointerClick(PointerEventData eventData) //ï¿½ï¿½Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         
         if(item !=null && eventData.button== PointerEventData.InputButton.Left && itemStore.sellButton)
@@ -173,22 +173,22 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             if (item != null) 
             {
                 
-                if ( gameObject.layer== LayerMask.NameToLayer("equip") ) //ÀåÂøÇÏ°í ÀÖ´Â ¾ÆÀÌÅÛ ÀåÂø »©±â
+                if ( gameObject.layer== LayerMask.NameToLayer("equip") ) //ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ö´ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 {
                     if (!inven.HasEmptySlot())
-                    { Debug.Log("ºóÃ¢ÀÌ ¾ø½À´Ï´Ù."); return; } //ºó½½·Ô ¾øÀ¸¸é ¸ø»«´Ù.
+                    { Debug.Log("ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½."); return; } //ï¿½ó½½·ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½.
                     if (gameObject.tag == "weaponslot")
                     {
-                        if (item.equipType == Item.EquipType.Sword && playerSt.CharacterType == PlayerST.Type.Warrior) //Àü»ç ¹«±â ±âº»À¸·Î ¼¼ÆÃ
+                        if (item.equipType == Item.EquipType.Sword && playerSt.CharacterType == PlayerST.Type.Warrior) //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½âº»ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                             playerSt.WeaponChange(playerSt.basicSword);
-                        else if (item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer) // ±Ã¼ö ¹«±â ±âº»À¸·Î ¼¼ÆÃ
+                        else if (item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer) // ï¿½Ã¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½âº»ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                             ;
-                        else if (item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage) //¹ý»ç ¹«±â ±âº»À¸·Î ¼¼ÆÃ
+                        else if (item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage) //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½âº»ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                             ;
 
                     }
                     
-                    EmptySlotEq(); //ºó ½½·Ô Ã£¾Æ ³Ö±â
+                    EmptySlotEq(); //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½ï¿½ ï¿½Ö±ï¿½
                     tooltip.ToolTipOff();
                     playerStat.StatAllUpdate();
                     gameUI.bar_set();
@@ -197,42 +197,42 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
 
 
 
-                else if (item.itemType == Item.ItemType.Equipment && item.itemEquLevel <= playerStat.Level) //¾ÆÀÌÅÛ ÀåÂøÇÏ±â
+                else if (item.itemType == Item.ItemType.Equipment && item.itemEquLevel <= playerStat.Level) //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
                 {
                  
-                    WarriorSword(); //¹«±â ÀåÂøÇÏ±â (Àü»ç¿ë)
-                    ArcherBow();    //¹«±â ÀåÂøÇÏ±â (±Ã¼ö¿ë)
-                    MageStaff();    //¹«±â ÀåÂøÇÏ±â (¹ý»ç¿ë)
+                    WarriorSword(); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½)
+                    ArcherBow();    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ (ï¿½Ã¼ï¿½ï¿½ï¿½)
+                    MageStaff();    //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½ (ï¿½ï¿½ï¿½ï¿½ï¿½)
 
 
 
-                    if (item != null && playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel) //Àü»ç ¹æ¾î±¸ ÀåÂø
+                    if (item != null && playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel) //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î±¸ ï¿½ï¿½ï¿½ï¿½
                     {
-                        shoulder(); //¾î±ú ÀåÂøÇÏ±â(Àü»ç¿ë)
-                        Chest(); //»óÀÇ ÀåÂøÇÏ±â
-                        Cloak(); //¸ÁÅä ÀåÂøÇÏ±â
-                        Boots(); //½Å¹ß ÀåÂøÇÏ±â
-                        gloves();//Àå°© ÀåÂøÇÏ±â
-                        helm();  //¸ðÀÚ ÀåÂøÇÏ±â
-                        pants(); //ÇÏÀÇ ÀåÂøÇÏ±â
+                        shoulder(); //ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½(ï¿½ï¿½ï¿½ï¿½ï¿½)
+                        Chest(); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+                        Cloak(); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+                        Boots(); //ï¿½Å¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+                        gloves();//ï¿½å°© ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+                        helm();  //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+                        pants(); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
                     }
-                    else if(item != null && playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather) //±Ã¼ö ¹æ¾î±¸ ÀåÂø
+                    else if(item != null && playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather) //ï¿½Ã¼ï¿½ ï¿½ï¿½î±¸ ï¿½ï¿½ï¿½ï¿½
                     {
-                        Chest(); //»óÀÇ ÀåÂøÇÏ±â
-                        Cloak(); //¸ÁÅä ÀåÂøÇÏ±â
-                        Boots(); //½Å¹ß ÀåÂøÇÏ±â
-                        gloves();//Àå°© ÀåÂøÇÏ±â
-                        helm();  //¸ðÀÚ ÀåÂøÇÏ±â
-                        pants(); //ÇÏÀÇ ÀåÂøÇÏ±â
+                        Chest(); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+                        Cloak(); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+                        Boots(); //ï¿½Å¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+                        gloves();//ï¿½å°© ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+                        helm();  //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+                        pants(); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
                     }
-                    else if(item != null && playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth) // ¸¶¹ý»ç ¹æ¾î±¸ ÀåÂø
+                    else if(item != null && playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î±¸ ï¿½ï¿½ï¿½ï¿½
                     {
-                        Chest(); //»óÀÇ ÀåÂøÇÏ±â
-                        Cloak(); //¸ÁÅä ÀåÂøÇÏ±â
-                        Boots(); //½Å¹ß ÀåÂøÇÏ±â
-                        gloves();//Àå°© ÀåÂøÇÏ±â
-                        helm();  //¸ðÀÚ ÀåÂøÇÏ±â
-                        pants(); //ÇÏÀÇ ÀåÂøÇÏ±â
+                        Chest(); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+                        Cloak(); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+                        Boots(); //ï¿½Å¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+                        gloves();//ï¿½å°© ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+                        helm();  //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
+                        pants(); //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï±ï¿½
                     }
                     
                     tooltip.ToolTipOff();
@@ -243,9 +243,9 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
                 }
                 else if ( item.itemType == Item.ItemType.Used)
                 {
-                    // ¼Òºñ
+                    // ï¿½Òºï¿½
                     
-                    Debug.Log(item.itemName + " À» »ç¿ëÇß½À´Ï´Ù.");
+                    Debug.Log(item.itemName + " ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ß½ï¿½ï¿½Ï´ï¿½.");
                     UseItem();
                     SetSlotCount(-1);
                 }
@@ -257,11 +257,11 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     {
         if (item != null && item.equipType == Item.EquipType.shoulder )
         {
-            if (WarriorSlot.shoulder.item != null) // ( ÀåÂøÀÌ µÇ¾îÀÖÀ»¶§ )
+            if (WarriorSlot.shoulder.item != null) // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {                
                 SwapSlot(WarriorSlot.shoulder);              
             }
-            else // ( ÀåÂøÀÌ µÇ¾î ÀÖÁö ¾ÊÀ»¶§ )
+            else // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {
                 EqItem(WarriorSlot.shoulder);             
             }
@@ -272,12 +272,12 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     {
         if (item != null && item.equipType == Item.EquipType.pants )
         {
-            if (WarriorSlot.pants.item != null) // ( ÀåÂøÀÌ µÇ¾îÀÖÀ»¶§ )
+            if (WarriorSlot.pants.item != null) // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {
                 SwapSlot(WarriorSlot.pants);
 
             }
-            else // ( ÀåÂøÀÌ µÇ¾î ÀÖÁö ¾ÊÀ»¶§ )
+            else // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {
                 EqItem(WarriorSlot.pants);
             }
@@ -288,12 +288,12 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     {
         if (item != null && item.equipType == Item.EquipType.helm )
         {
-            if (WarriorSlot.helm.item != null) // ( ÀåÂøÀÌ µÇ¾îÀÖÀ»¶§ )
+            if (WarriorSlot.helm.item != null) // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {
                 SwapSlot(WarriorSlot.helm);
 
             }
-            else // ( ÀåÂøÀÌ µÇ¾î ÀÖÁö ¾ÊÀ»¶§ )
+            else // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {
                 EqItem(WarriorSlot.helm);
             }
@@ -304,11 +304,11 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     {
         if (item != null && item.equipType == Item.EquipType.gloves)
         {
-            if (WarriorSlot.gloves.item != null) // ( ÀåÂøÀÌ µÇ¾îÀÖÀ»¶§ )
+            if (WarriorSlot.gloves.item != null) // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {
                 SwapSlot(WarriorSlot.gloves);
             }
-            else // ( ÀåÂøÀÌ µÇ¾î ÀÖÁö ¾ÊÀ»¶§ )
+            else // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {
                 EqItem(WarriorSlot.gloves);
             }
@@ -319,11 +319,11 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     {
         if (item != null && item.equipType == Item.EquipType.boots )
         {
-            if (WarriorSlot.boots.item != null) // ( ÀåÂøÀÌ µÇ¾îÀÖÀ»¶§ )
+            if (WarriorSlot.boots.item != null) // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {
                 SwapSlot(WarriorSlot.boots);
            }
-            else // ( ÀåÂøÀÌ µÇ¾î ÀÖÁö ¾ÊÀ»¶§ )
+            else // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {
                 EqItem(WarriorSlot.boots);
             }
@@ -334,11 +334,11 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     {
         if (item != null && item.equipType == Item.EquipType.cloak )
         {
-            if (WarriorSlot.cloak.item != null) // ( ÀåÂøÀÌ µÇ¾îÀÖÀ»¶§ )
+            if (WarriorSlot.cloak.item != null) // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {
                 SwapSlot(WarriorSlot.cloak);
             }
-            else // ( ÀåÂøÀÌ µÇ¾î ÀÖÁö ¾ÊÀ»¶§ )
+            else // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {
                 EqItem(WarriorSlot.cloak);
             }
@@ -349,11 +349,11 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     {
         if (item != null && item.equipType == Item.EquipType.chest)
         {
-            if (WarriorSlot.chest.item != null) // ( ÀåÂøÀÌ µÇ¾îÀÖÀ»¶§ )
+            if (WarriorSlot.chest.item != null) // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {
                 SwapSlot(WarriorSlot.chest);
             }
-            else // ( ÀåÂøÀÌ µÇ¾î ÀÖÁö ¾ÊÀ»¶§ )
+            else // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {
                 EqItem(WarriorSlot.chest);
             }
@@ -365,11 +365,11 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         if (item != null && item.equipType == Item.EquipType.Sword && playerSt.CharacterType == PlayerST.Type.Warrior)
         {
             playerSt.WeaponChange(item.SwordNames);
-            if (WarriorSlot.weapon.item != null) // ( ÀåÂøÀÌ µÇ¾îÀÖÀ»¶§ )
+            if (WarriorSlot.weapon.item != null) // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {                
                 SwapSlot(WarriorSlot.weapon);
             }
-            else // ( ÀåÂøÀÌ µÇ¾î ÀÖÁö ¾ÊÀ»¶§ )
+            else // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {
                 EqItem(WarriorSlot.weapon);
             }
@@ -379,16 +379,16 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     {
         if (item != null && item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer)
         {
-            //playerSt.WeaponChange(item.SwordNames); (±Ã¼ö ¹«±â ÇÁ¸®ÆÕÀ¸·Î ¸¸µé¾î¾ßÇÔ)
+            //playerSt.WeaponChange(item.SwordNames); (ï¿½Ã¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
 
 
-            if (WarriorSlot.weapon.item != null) // ( ÀåÂøÀÌ µÇ¾îÀÖÀ»¶§ )
+            if (WarriorSlot.weapon.item != null) // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {
 
                 SwapSlot(WarriorSlot.weapon);
 
             }
-            else // ( ÀåÂøÀÌ µÇ¾î ÀÖÁö ¾ÊÀ»¶§ )
+            else // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {
                 EqItem(WarriorSlot.weapon);
             }
@@ -400,12 +400,12 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     {
         if (item != null && item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage)
         {
-            //playerSt.WeaponChange(item.SwordNames); (¸¶¹ý»ç ¹«±â ÇÁ¸®ÆÕÀ¸·Î ¸¸µé¾î¾ßÇÔ)
-            if (WarriorSlot.weapon.item != null) // ( ÀåÂøÀÌ µÇ¾îÀÖÀ»¶§ )
+            //playerSt.WeaponChange(item.SwordNames); (ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½)
+            if (WarriorSlot.weapon.item != null) // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {
                 SwapSlot(WarriorSlot.weapon);
             }
-            else // ( ÀåÂøÀÌ µÇ¾î ÀÖÁö ¾ÊÀ»¶§ )
+            else // ( ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ç¾ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ )
             {
                 EqItem(WarriorSlot.weapon);
             }
@@ -421,7 +421,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         swapSlot.item = swapItem;
         itemImage.sprite = item.itemImage;
         swapSlot.itemImage.sprite = swapSlot.item.itemImage;
-    } //½½·Ô ¾ÆÀÌÅÛ ¼­·Î ¹Ù²Ù±â
+    } //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²Ù±ï¿½
 
     private void EqItem(Slot EqSlot )
     {        
@@ -430,10 +430,10 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         EqSlot.itemImage.sprite = EqSlot.item.itemImage;
         EqSlot.SetColor(1);
         SetColor(0);
-    } // ¾ÆÀÌÅÛ ÀåÂø
+    } // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
 
 
-    private void EmptySlotEq() //ºó ½½·Ô Ã£¾Æ¼­ ³Ö±â
+    private void EmptySlotEq() //ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ Ã£ï¿½Æ¼ï¿½ ï¿½Ö±ï¿½
     {
         for (int i = 0; i < inventory.slots.Length; i++)
         {
@@ -481,21 +481,21 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     {
         if (DragSlot.instance.dragSlot == null)
             return;
-        //ÆÇ¸Å    
+        //ï¿½Ç¸ï¿½    
         if (gameObject.tag == "sellslot")
         {
             item_sell_question.SellQuestionOn(DragSlot.instance.dragSlot.GetComponent<Slot>());
 
         }
-        //Äü½½·Ô¿¡ Àåºñ ³Ö±â ¸·±â
+        //ï¿½ï¿½ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½
         else if (gameObject.layer == LayerMask.NameToLayer("quikSlot") && DragSlot.instance.dragSlot.item.itemType != Item.ItemType.Used) { }
-        //Äü½½¸©¿¡¼­ ÀÎº¥Ã¢À¸·Î ¿Å±æ¶§ Àåºñ¿Ö ´Ù¸¥°Å ³Ö±â ¸·±â
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½Å±æ¶§ ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½ ï¿½Ö±ï¿½ ï¿½ï¿½ï¿½ï¿½
         else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot") && item != null && item.itemType == Item.ItemType.Equipment) { }
 
-        //Àåºñ Âø¿ë
-        else if (gameObject.layer == LayerMask.NameToLayer("equip") && DragSlot.instance.dragSlot.item.itemType != Item.ItemType.Equipment) { Debug.Log("Àåºñ¾Æ´Ñ°Å->ÀåºñÃ¢"); } //½½·ÔÀÇ Àåºñ ¾Æ´Ñ °Í-> ÀåºñÃ¢À¸·Î µå·¡±×½Ã ÀåÂøÀ» ¸·´Â °÷
-        else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("equip") && item != null && item.itemType != Item.ItemType.Equipment) { Debug.Log("ÀåºñÃ¢->Àåºñ¾Æ´Ñ°Å"); } //ÀåºñÃ¢ -> ½½·ÔÀÇ Àåºñ ¾Æ´Ñ °Í µå·¡±×½Ã ÀåÂøÀ» ¸·´Â °÷
-        else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("equip") && item == null) //ÀåºñÃ¢ -> ºó ½½·ÔÀ¸·Î º¸³¾¶§ Null¿¡·¯ ¸·±â ( ¹«±â´Â ÇÁ¸®ÆÕ 0Á¦·Î ¹Ù²ãÁà¾ßÇÔ
+        //ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+        else if (gameObject.layer == LayerMask.NameToLayer("equip") && DragSlot.instance.dragSlot.item.itemType != Item.ItemType.Equipment) { Debug.Log("ï¿½ï¿½ï¿½Æ´Ñ°ï¿½->ï¿½ï¿½ï¿½Ã¢"); } //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½-> ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½å·¡ï¿½×½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+        else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("equip") && item != null && item.itemType != Item.ItemType.Equipment) { Debug.Log("ï¿½ï¿½ï¿½Ã¢->ï¿½ï¿½ï¿½Æ´Ñ°ï¿½"); } //ï¿½ï¿½ï¿½Ã¢ -> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Æ´ï¿½ ï¿½ï¿½ ï¿½å·¡ï¿½×½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
+        else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("equip") && item == null) //ï¿½ï¿½ï¿½Ã¢ -> ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Nullï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ( ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 0ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
 
             if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Sword)
@@ -505,12 +505,12 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Bow)
             {
-                //±Ã¼ö ÀÏ¹Ý ¹«±â·Î ±³Ã¼
+                //ï¿½Ã¼ï¿½ ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼
                 ChangeSlot();
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Staff)
             {
-                //¹ý»ç ÀÏ¹Ý ¹«±â·Î ±³Ã¼
+                //ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼
                 ChangeSlot();
             }
             else
@@ -518,7 +518,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
                 ChangeSlot();
             }
         }
-        else if (gameObject.tag == "weaponslot" && DragSlot.instance.dragSlot.item.itemEquLevel <= playerStat.Level) // ÀÏ¹Ý½½·Ô ¹«±â -> ¹«±âÃ¢À¸·Î ¿Å±æ¶§
+        else if (gameObject.tag == "weaponslot" && DragSlot.instance.dragSlot.item.itemEquLevel <= playerStat.Level) // ï¿½Ï¹Ý½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½Å±æ¶§
         {
             if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Sword && playerSt.CharacterType == PlayerST.Type.Warrior)
             {
@@ -527,32 +527,31 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer)
             {
-                //±Ã¼ö ¹«±â ±³Ã¼
+                //ï¿½Ã¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼
                 ChangeSlot();
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage)
             {
-                //¹ý»ç ¹«±â ±³Ã¼
+                //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼
                 ChangeSlot();
             }
         }
-        else if (DragSlot.instance.dragSlot.tag == "weaponslot" && item.itemEquLevel <= playerStat.Level) //¹«±âÃ¢ -> ÀÏ¹Ý ½½·ÔÀ¸·Î ¿Å±æ‹š
+        else if (DragSlot.instance.dragSlot.tag == "weaponslot" && item.itemEquLevel <= playerStat.Level) //ï¿½ï¿½ï¿½ï¿½Ã¢ -> ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Å±æ‹š
         {
             if (item.equipType == Item.EquipType.Sword && playerSt.CharacterType == PlayerST.Type.Warrior)
             {
                 playerSt.WeaponChange(item.SwordNames);
-
                 ChangeSlot();
             }
             else if (item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer)
             {
-                //±Ã¼ö ÀÏ¹Ý ¹«±â·Î ±³Ã¼
+                //ï¿½Ã¼ï¿½ ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼
 
                 ChangeSlot();
             }
             else if (item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage)
             {
-                //¹ý»ç ÀÏ¹Ý ¹«±â·Î ±³Ã¼
+                //ï¿½ï¿½ï¿½ï¿½ ï¿½Ï¹ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¼
 
                 ChangeSlot();
             }
@@ -560,9 +559,9 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         else if (gameObject.tag == "chest" && DragSlot.instance.dragSlot.item.itemEquLevel <= playerStat.Level)
         {
             if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.chest &&
-               (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Warrior && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.steel || //Ä³¸¯ÅÍ°¡ Àü»ç°í µå·¡±× ¾ÆÀÌÅÛÀÌ °­Ã¶ ÀÌ°Å³ª
-               DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Archer && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.leather || //Ä³¸¯ÅÍ°¡ ±Ã¼ö°í µå·¡±× ¾ÆÀÌÅÛÀÌ °¡Á× ÀÌ°Å³ª
-               DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Mage && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.cloth))      //Ä³¸¯ÅÍ°¡ ¸¶¹ý»ç°í µå·¡±× ¾ÆÀÌÅÛÀÌ Ãµ ÀÌ°Å³ª
+               (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Warrior && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.steel || //Ä³ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½å·¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¶ ï¿½Ì°Å³ï¿½
+               DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Archer && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.leather || //Ä³ï¿½ï¿½ï¿½Í°ï¿½ ï¿½Ã¼ï¿½ï¿½ï¿½ ï¿½å·¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½Ì°Å³ï¿½
+               DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Mage && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.cloth))      //Ä³ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½å·¡ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ãµ ï¿½Ì°Å³ï¿½
             {
                 ChangeSlot();
             }
@@ -570,9 +569,9 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         else if (DragSlot.instance.dragSlot.tag == "chest" && item.itemEquLevel <= playerStat.Level)
         {
             if (item.equipType == Item.EquipType.chest &&
-                (playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel || //Ä³¸¯ÅÍ°¡ Àü»ç°í ¹Ù²Ü ½½·ÔÃ¢¿¡ ¾ÆÀÌÅÛÀÌ °­Ã¶ÀÌ°Å³ª
-                playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather || //Ä³¸¯ÅÍ°¡ ±Ã¼ö°í ¹Ù²Ü ½½·ÔÃ¢¿¡ ¾ÆÀÌÅÛÀÌ °¡Á×ÀÌ°Å³ª
-                playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth))      //Ä³¸¯ÅÍ°¡ ¹ý»ç°í ¹Ù²Ü ½½·ÔÃ¢¿¡ ¾ÆÀÌÅÛÀÌ ÃµÀÌ°Å³ª
+                (playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel || //Ä³ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ã¶ï¿½Ì°Å³ï¿½
+                playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather || //Ä³ï¿½ï¿½ï¿½Í°ï¿½ ï¿½Ã¼ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì°Å³ï¿½
+                playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth))      //Ä³ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù²ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ãµï¿½Ì°Å³ï¿½
             {
                 ChangeSlot();
             }
@@ -702,9 +701,9 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
                 ChangeSlot();
             }
         }
-        else if (DragSlot.instance.dragSlot != null && DragSlot.instance.dragSlot.gameObject.layer != LayerMask.NameToLayer("equip") && gameObject.layer != LayerMask.NameToLayer("equip")) //¼­·Î Àåºñ°¡ ¾Æ´Ï¸é ±³Ã¼
+        else if (DragSlot.instance.dragSlot != null && DragSlot.instance.dragSlot.gameObject.layer != LayerMask.NameToLayer("equip") && gameObject.layer != LayerMask.NameToLayer("equip")) //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ ï¿½Æ´Ï¸ï¿½ ï¿½ï¿½Ã¼
         {
-            if (DragSlot.instance.dragSlot.item.itemType == Item.ItemType.Used && DragSlot.instance.dragSlot.item == item) //°°Àº ¾ÆÀÌÅÛÀº ÇÕÄ£´Ù.
+            if (DragSlot.instance.dragSlot.item.itemType == Item.ItemType.Used && DragSlot.instance.dragSlot.item == item) //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Ä£ï¿½ï¿½.
             {
                 SetSlotCount(DragSlot.instance.dragSlot.itemCount);
                 DragSlot.instance.dragSlot.SetSlotCount(DragSlot.instance.dragSlot.itemCount * -1);
@@ -714,7 +713,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             {
                 ChangeSlot();
             }
-            if (gameObject.GetComponent<QuikSlot>()!=null&& gameObject.GetComponent<QuikSlot>().skill.skill != null) //Äü ½½·Ô¿¡ ½ºÅ³ ÀÖÀ¸¸é ³ÎÀ¸·Î ÃÊ±âÈ­
+            if (gameObject.GetComponent<QuikSlot>()!=null&& gameObject.GetComponent<QuikSlot>().skill.skill != null) //ï¿½ï¿½ ï¿½ï¿½ï¿½Ô¿ï¿½ ï¿½ï¿½Å³ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ê±ï¿½È­
             {
                 gameObject.GetComponent<QuikSlot>().skill.skill = null;
             }
@@ -754,7 +753,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     }
 
 
-    // ÅøÆÁ ºÎºÐ
+    // ï¿½ï¿½ï¿½ï¿½ ï¿½Îºï¿½
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (item != null)
@@ -766,7 +765,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
                 itemPosition.x =  1920f - 400f;
             if (eventData.position.y - 500f < 0f)
                 itemPosition.y =  500f;                
-            tooltip.ToolTipOn(item,itemPosition,0); // ÀÎº¥Åä¸®´Â  0 , ¾ÆÀÌÅÛÆÇ¸ÅÃ¢Àº 1  // ÆÇ¸Å°ñµå°¡ ´Ù¸£°Ô ³ª¿À±â ¶§¹®ÀÌ´Ù.
+            tooltip.ToolTipOn(item,itemPosition,0); // ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½  0 , ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½Ã¢ï¿½ï¿½ 1  // ï¿½Ç¸Å°ï¿½å°¡ ï¿½Ù¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½.
         }
     }
 

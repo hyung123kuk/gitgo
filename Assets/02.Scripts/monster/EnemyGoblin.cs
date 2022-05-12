@@ -5,19 +5,22 @@ using UnityEngine.AI;
 
 public class EnemyGoblin : MonoBehaviour
 {
-    public float maxHealth =100; //ÃÖ´ë Ã¼·Â
-    public float curHealth =100; //ÇöÀç Ã¼·Â
-    public BoxCollider meleeArea; //¸ó½ºÅÍ °ø°Ý¹üÀ§
-    public bool isChase; //ÃßÀûÁßÀÎ »óÅÂ
-    public bool isAttack; //ÇöÀç °ø°ÝÁß
+    public float maxHealth =100; //ï¿½Ö´ï¿½ Ã¼ï¿½ï¿½
+    public float curHealth =100; //ï¿½ï¿½ï¿½ï¿½ Ã¼ï¿½ï¿½
+    public BoxCollider meleeArea; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ý¹ï¿½ï¿½ï¿½
+    public bool isChase; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public bool isAttack; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     public Transform respawn;
     private bool isDie;
+
+    public ParticleSystem Hiteff; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
+    public ParticleSystem Hiteff2; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Æ®
 
     Transform target;
     Rigidbody rigid;
     BoxCollider boxCollider;
-    Material mat; //ÇÇ°Ý½Ã »ö±òº¯ÇÏ°Ô
-    NavMeshAgent nav; //ÃßÀû
+    Material mat; //ï¿½Ç°Ý½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½
+    NavMeshAgent nav; //ï¿½ï¿½ï¿½ï¿½
     Animator anim;
 
     void Awake()
@@ -31,13 +34,13 @@ public class EnemyGoblin : MonoBehaviour
     }
     void Update()
     {
-        if (isDie)  //Á×¾úÀ¸¸é ÇöÀç½ÇÇàÁßÀÎ ÄÚ·ÎÆ¾ °­Á¦Á¾·á
+        if (isDie)  //ï¿½×¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ú·ï¿½Æ¾ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
             StopAllCoroutines();
         }
         target = GameObject.FindGameObjectWithTag("Player").transform;
         Targerting();
-        if (Vector3.Distance(target.position, transform.position) <= 15f && nav.enabled) //15¹ÌÅÍ ¾È¿¡ Æ÷Âø
+        if (Vector3.Distance(target.position, transform.position) <= 15f && nav.enabled) //15ï¿½ï¿½ï¿½ï¿½ ï¿½È¿ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             if (!isAttack)
             {
@@ -55,7 +58,7 @@ public class EnemyGoblin : MonoBehaviour
                 }
             }
         }
-        else if (Vector3.Distance(target.position, transform.position) > 15f && nav.enabled) //15¹ÌÅÍ ¹Û
+        else if (Vector3.Distance(target.position, transform.position) > 15f && nav.enabled) //15ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½
         {
             nav.SetDestination(respawn.position);
             isChase = false;
@@ -69,12 +72,12 @@ public class EnemyGoblin : MonoBehaviour
             }
         }
 
-        if (isChase || isAttack) //ÃßÀûÀÌ³ª °ø°ÝÁßÀÏ¶§¸¸
+        if (isChase || isAttack) //ï¿½ï¿½ï¿½ï¿½ï¿½Ì³ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½ï¿½ï¿½
             if (!isDie && !PlayerST.isJump && !PlayerST.isFall)
-                transform.LookAt(target); //ÇÃ·¹ÀÌ¾î ¹Ù¶óº¸±â
+                transform.LookAt(target); //ï¿½Ã·ï¿½ï¿½Ì¾ï¿½ ï¿½Ù¶óº¸±ï¿½
     }
 
-    void FreezeVelocity() //ÀÌµ¿º¸Á¤
+    void FreezeVelocity() //ï¿½Ìµï¿½ï¿½ï¿½ï¿½ï¿½
     {
         if (isChase)
         {
@@ -82,23 +85,23 @@ public class EnemyGoblin : MonoBehaviour
             rigid.angularVelocity = Vector3.zero;
         }
     }
-    void Targerting()//Å¸°ÙÆÃ
+    void Targerting()//Å¸ï¿½ï¿½ï¿½ï¿½
     {
         float targetRadius = 1f;
         float targetRange = 0.5f;
 
         RaycastHit[] rayHits =
             Physics.SphereCastAll(transform.position,
-            targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));  //·¹ÀÌÄ³½ºÆ®
+            targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));  //ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Æ®
 
-        if (rayHits.Length > 0 && !isAttack && !isDie) //·¹ÀÌÄ³½ºÆ®¿¡ ÇÃ·¹ÀÌ¾î°¡ ÀâÇû´Ù¸é && ÇöÀç °ø°ÝÁßÀÌ ¾Æ´Ï¶ó¸é
+        if (rayHits.Length > 0 && !isAttack && !isDie) //ï¿½ï¿½ï¿½ï¿½Ä³ï¿½ï¿½Æ®ï¿½ï¿½ ï¿½Ã·ï¿½ï¿½Ì¾î°¡ ï¿½ï¿½ï¿½ï¿½ï¿½Ù¸ï¿½ && ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Æ´Ï¶ï¿½ï¿½
         {
             StartCoroutine(Attack());
         }
     }
 
     
-    IEnumerator Attack() //Á¤Áö¸¦ ÇÏ°í °ø°ÝÀ»ÇÏ°í ´Ù½Ã ÃßÀûÀ» °³½Ã
+    IEnumerator Attack() //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ï°ï¿½ ï¿½Ù½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         isChase = false;
         isAttack = true;
@@ -122,7 +125,7 @@ public class EnemyGoblin : MonoBehaviour
         FreezeVelocity();
     }
 
-    void OnTriggerEnter(Collider other)  //ÇÇ°Ý
+    void OnTriggerEnter(Collider other)  //ï¿½Ç°ï¿½
     {
         if (other.tag == "Melee")
         {
@@ -143,9 +146,11 @@ public class EnemyGoblin : MonoBehaviour
 
     IEnumerator OnDamage()
     {
+        Hiteff.Play();
+        Hiteff2.Play();
         mat.color = Color.red;
 
-        yield return new WaitForSeconds(0.06f);
+        yield return new WaitForSeconds(0.1f);
 
         if (curHealth > 0)
         {
@@ -157,7 +162,7 @@ public class EnemyGoblin : MonoBehaviour
             mat.color = Color.black;
             nav.isStopped = true;
             isDie = true;
-            isChase = false; //Á×¾úÀ¸´Ï ÃßÀûÁßÁö
+            isChase = false; //ï¿½×¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             anim.SetBool("isDie",true);
             Destroy(gameObject, 2f);
         }

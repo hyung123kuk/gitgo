@@ -424,7 +424,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3699856991198280761
 Transform:
   m_ObjectHideFlags: 0
@@ -453,7 +453,7 @@ Animator:
   m_GameObject: {fileID: 3699856991197978649}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 1083249be60bb8446b2e9a4371be0196, type: 3}
-  m_Controller: {fileID: 9100000, guid: 1dcae1250ad294f94bcfb2b0b4fdd8e1, type: 2}
+  m_Controller: {fileID: 9100000, guid: 7320561e573928149bfab09322d135ab, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -475,9 +475,9 @@ Rigidbody:
   m_AngularDrag: 0.05
   m_UseGravity: 1
   m_IsKinematic: 1
-  m_Interpolate: 0
+  m_Interpolate: 2
   m_Constraints: 80
-  m_CollisionDetection: 0
+  m_CollisionDetection: 3
 --- !u!65 &3699856991197882084
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -489,8 +489,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1.2592885, y: 1.4760069, z: 1.3429723}
-  m_Center: {x: -0.059809625, y: 0.7125968, z: 0.016245605}
+  m_Size: {x: 1.9638939, y: 2.3771667, z: 1.3429723}
+  m_Center: {x: -0.12013022, y: 1.1631767, z: 0.01624558}
 --- !u!195 &3699856991197882087
 NavMeshAgent:
   m_ObjectHideFlags: 0

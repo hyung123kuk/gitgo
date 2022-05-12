@@ -5,9 +5,9 @@ using UnityEngine;
 public class ComboHit : MonoBehaviour
 {
     public Animator anim;
-    public int noOfClicks = 0; //Å¬¸¯¼ö
-    float lastClickdTime = 0; //¸¶Áö¸· Å¬¸¯½Ã°£
-    public float maxComboDelay; //ÄÞº¸»çÀÌ ½Ã°£
+    public int noOfClicks = 0; //Å¬ï¿½ï¿½ï¿½ï¿½
+    float lastClickdTime = 0; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Å¬ï¿½ï¿½ï¿½Ã°ï¿½
+    public float maxComboDelay; //ï¿½Þºï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ã°ï¿½
 
     void Start()
     {
@@ -31,6 +31,7 @@ public class ComboHit : MonoBehaviour
             if (noOfClicks == 1)
             {
                 anim.SetBool("isAttack", true);
+                Weapons.weapons.StartCoroutine("Swing");
             }
             noOfClicks = Mathf.Clamp(noOfClicks, 0, 3);
         }
@@ -41,8 +42,8 @@ public class ComboHit : MonoBehaviour
         if (noOfClicks >= 2)
         {
             anim.SetBool("isAttack2", true);
-           
-            
+            Weapons.weapons.StartCoroutine("Swing");
+
         }
         else
         {
@@ -55,6 +56,7 @@ public class ComboHit : MonoBehaviour
         if (noOfClicks >= 3)
         {
             anim.SetBool("isAttack3", true);
+            Invoke("ThreeAttack", 0.2f);
             
         }
         else
@@ -69,5 +71,9 @@ public class ComboHit : MonoBehaviour
         anim.SetBool("isAttack2", false);
         anim.SetBool("isAttack", false);
         noOfClicks = 0;
+    }
+    void ThreeAttack()
+    {
+        Weapons.weapons.StartCoroutine("Swing");
     }
 }
