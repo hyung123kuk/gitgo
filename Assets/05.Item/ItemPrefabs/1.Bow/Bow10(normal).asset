@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e11710ca97a0162498375a7e32dcba0e, type: 3}
+  m_Name: Bow10(normal)
+  m_EditorClassIdentifier: 
+  itemType: 0
+  armortype: 3
+  equipType: 1
+  ItemGrade: 0
+  itemEquLevel: 7
+  SwordNames: 5
+  itemText: 
+  itemName: "\uBA54\uD0C8 \uBCF4\uC6B0"
+  itemImage: {fileID: 21300000, guid: f049b8f6e6c70664abce7e9de8fc5a5c, type: 3}
+  itemPrefab: {fileID: 0}
+  _PRICE: 1100
+  _STR: 4
+  _DEX: 9
+  _INT: 0
+  _DAMAGE: 60
+  _DEFENCE: 0
+  _SKILL_COOLTIME_DEC_PER: 0
+  _SKILL_ADD_DAMAGE_PER: 15
+  _HP: 0
+  _MP: 0
+  _CRITICAL_PROBABILITY: 20
+  _CRITICAL_ADD_DAMAGE_PER: 20
+  _MOVE_SPEED: 0

@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e11710ca97a0162498375a7e32dcba0e, type: 3}
+  m_Name: 10_Cloth_helm
+  m_EditorClassIdentifier: 
+  itemType: 0
+  armortype: 2
+  equipType: 7
+  ItemGrade: 0
+  itemEquLevel: 7
+  SwordNames: 5
+  itemText: 
+  itemName: "\uC0C1\uAE09 \uB808\uC774\uC628 \uBAA8\uC790"
+  itemImage: {fileID: 21300000, guid: 1ff18920df7230a4dbc8e9e75c4ed7e5, type: 3}
+  itemPrefab: {fileID: 0}
+  _PRICE: 480
+  _STR: 3
+  _DEX: 0
+  _INT: 3
+  _DAMAGE: 0
+  _DEFENCE: 15
+  _SKILL_COOLTIME_DEC_PER: 0
+  _SKILL_ADD_DAMAGE_PER: 0
+  _HP: 350
+  _MP: 0
+  _CRITICAL_PROBABILITY: 0
+  _CRITICAL_ADD_DAMAGE_PER: 0
+  _MOVE_SPEED: 0
