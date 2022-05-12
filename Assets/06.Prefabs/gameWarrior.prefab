@@ -12039,6 +12039,7 @@ MonoBehaviour:
   expup: 0
   playerST: {fileID: 2186467341851780087}
   inven: {fileID: 0}
+  gameUI: {fileID: 0}
   equSlots:
   - {fileID: 0}
   - {fileID: 0}
@@ -12065,6 +12066,7 @@ MonoBehaviour:
   Usable_Buff: 1
   Skill_Buff_duration: 12
   Duration_Buff: 0
+  Skill_Buff_use_Mp: 50
   Skill_Teleport_cooltime: 5
   Usable_Teleport: 1
   Skill_Dodge_cooltime: 10
@@ -12073,18 +12075,22 @@ MonoBehaviour:
   Skill_1_fixed_dam: 0
   Skill_1_cooltime: 5
   Usable_Skill1: 1
+  Skill_1_use_Mp: 50
   Skill_2_per_dam: 1
   Skill_2_fixed_dam: 0
   Skill_2_cooltime: 5
   Usable_Skill2: 1
+  Skill_2_use_Mp: 50
   Skill_3_per_dam: 2
   Skill_3_fixed_dam: 0
   Skill_3_cooltime: 5
   Usable_Skill3: 1
+  Skill_3_use_Mp: 50
   Skill_4_per_dam: 1.08
   Skill_4_fixed_dam: 2
   Skill_4_cooltime: 5
   Usable_Skill4: 1
+  Skill_4_use_Mp: 50
 --- !u!1 &8007892901913705074
 GameObject:
   m_ObjectHideFlags: 0

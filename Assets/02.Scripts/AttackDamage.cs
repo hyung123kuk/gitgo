@@ -253,14 +253,14 @@ public class AttackDamage : MonoBehaviour
         playerStat.SkillMp(Skill_3_use_Mp);
         Skill3_time = Skill_3_cooltime - Skill_3_cooltime * playerStat._SKILL_COOLTIME_DEC_PER / 100;
         Skill3_passedTime = 0f;
-        Usable_Skill1 = false;
+        Usable_Skill3 = false;
     }
     public void Skill_4_Cool()
     {
         playerStat.SkillMp(Skill_4_use_Mp);
         Skill4_time = Skill_4_cooltime - Skill_4_cooltime * playerStat._SKILL_COOLTIME_DEC_PER / 100;
         Skill4_passedTime = 0f;
-        Usable_Skill1 = false;
+        Usable_Skill4 = false;
     }
 
 

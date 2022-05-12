@@ -282,6 +282,7 @@ public class PlayerST : MonoBehaviour
         if (Key2 && !isYes && !isJump && !isDodge && !isBlock && !isAura && !isStun && !isRun &&
             attackdamage.Usable_Skill2)
         {
+            attackdamage.Skill_2_Cool();  //돌진쿨타임
             StartCoroutine(RushPlay());
         }
     }
@@ -307,7 +308,7 @@ public class PlayerST : MonoBehaviour
         isRush = false;
         isFall = false;
         yield return new WaitForSeconds(0.5f);
-        attackdamage.Skill_2_Cool();  //돌진쿨타임
+        
         RushEff.SetActive(false);
 
     }
@@ -316,6 +317,7 @@ public class PlayerST : MonoBehaviour
         if (Key3 && !isRun && !isJump && !isDodge && !isBlock && !isRush && !isStun &&
             attackdamage.Usable_Skill3)
         {
+            attackdamage.Skill_3_Cool();
             StartCoroutine(AuraPlay());
         }
     }
@@ -323,7 +325,7 @@ public class PlayerST : MonoBehaviour
     {
         isAura = true;
         //AuraTimePrev = Time.time;
-        attackdamage.Skill_3_Cool();//쿨타임 지나게하는함수
+        
         anim.SetBool("isAura", true);
         yield return new WaitForSeconds(0.7f);
 
