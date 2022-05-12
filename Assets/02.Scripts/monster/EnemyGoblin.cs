@@ -142,6 +142,13 @@ public class EnemyGoblin : MonoBehaviour
 
             StartCoroutine(OnDamage());
         }
+        else if (other.tag == "ArrowSkill")
+        {
+            ArrowSkill arrow = other.GetComponent<ArrowSkill>();
+            curHealth -= arrow.damage;
+
+            StartCoroutine(OnDamage());
+        }
     }
 
     IEnumerator OnDamage()
