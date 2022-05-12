@@ -16562,7 +16562,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &6173690448349916702
 Transform:
   m_ObjectHideFlags: 0
@@ -16751,7 +16751,7 @@ MonoBehaviour:
   playerStat: {fileID: 0}
   Skill_Buff_cooltime: 20
   Usable_Buff: 1
-  Skill_Buff_duration: 10
+  Skill_Buff_duration: 15
   Duration_Buff: 0
   Skill_Teleport_cooltime: 5
   Usable_Teleport: 1
@@ -16761,13 +16761,13 @@ MonoBehaviour:
   Skill_1_fixed_dam: 0
   Skill_1_cooltime: 5
   Usable_Skill1: 1
-  Skill_2_per_dam: 1
+  Skill_2_per_dam: 1.5
   Skill_2_fixed_dam: 0
   Skill_2_cooltime: 5
   Usable_Skill2: 1
-  Skill_3_per_dam: 1.5
+  Skill_3_per_dam: 5
   Skill_3_fixed_dam: 0
-  Skill_3_cooltime: 5
+  Skill_3_cooltime: 15
   Usable_Skill3: 1
   Skill_4_per_dam: 1
   Skill_4_fixed_dam: 0
@@ -18475,7 +18475,6 @@ MonoBehaviour:
   playerST: {fileID: 2407901092875048602}
   attackdamage: {fileID: 1506773405}
   playerstat: {fileID: 1506773412}
-  Arc2CCarea: {fileID: 0}
   isEnergyReady: 0
   isEnergy1: 0
   isEnergy2: 0
@@ -18494,6 +18493,7 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 5773283464696801049, guid: 7214fda5b50ea7141b3ec653f888932d, type: 3}
   isLightning: 0
   isIceage: 0
+  isMeteoShot: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -18507,3 +18507,6 @@ MonoBehaviour:
   Mage3SkillPosEff: {fileID: 0}
   Mage3SkillEff: {fileID: 0}
   Mage3SkillPlayerEff: {fileID: 0}
+  Skillarea: {fileID: 0}
+  Skillarea2: {fileID: 0}
+  CCarea: {fileID: 0}
