@@ -1,0 +1,73 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!78 &1
+TagManager:
+  serializedVersion: 2
+  tags:
+  - Collide
+  - Fire
+  - Enemy
+  - Melee
+  - Arrow
+  - EnemyRange
+  - ground
+  - SelManager
+  - Slime
+  - EnemyBullet
+  - Boss1Skill
+  - slot
+  - weaponslot
+  - chest
+  - pants
+  - helm
+  - shoulder
+  - boots
+  - gloves
+  - cloak
+  - sellslot
+  - SHOPIA
+  - PETER
+  - Boss2Skill
+  - Boss3Skill
+  - WALL
+  - CCAREA
+  - Boom
+  - FxTemporaire
+  - ArrowSkill
+  layers:
+  - Default
+  - TransparentFX
+  - Ignore Raycast
+  - 
+  - Water
+  - UI
+  - Enemy
+  - EnemyDead
+  - Player
+  - EnemyRange
+  - World
+  - Boss
+  - World2
+  - Back
+  - Skill
+  - 
+  - 
+  - 
+  - 
+  - 
+  - OverUI
+  - equip
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  m_SortingLayers:
+  - name: Default
+    uniqueID: 0
+    locked: 0
