@@ -6,8 +6,8 @@ using UnityEngine.EventSystems;
 
 public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
 {
-    public static bool iDown=false; // �κ��丮�� ���������� true
-    public GameObject Inven; // �κ��丮 â
+    public static bool iDown=false; // 인벤토리가 열려있으면 true
+    public GameObject Inven; // 인벤토리 창
     static public Slot[] slots;
     [SerializeField]
     private GameObject SlotsParent;
@@ -32,16 +32,16 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I)) //�κ��丮 �ѱ�/����
+        if(Input.GetKeyDown(KeyCode.I)) //인벤토리 켜기/끄기
         {
             iDown = !iDown;
-            if (!iDown) //��
+            if (!iDown) //끔
             {
                                
                 invenOff();
                 
             }
-            else //Ŵ
+            else //킴
             {
                 
                 invenOn();
@@ -165,7 +165,7 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
        
     }
 
-    public void addItem(Item item, int num = 0) //���� �������� �ְų� ��â�������� �ִ´�.
+    public void addItem(Item item, int num = 0) //같은 아이템이 있거나 빈창이있을때 넣는다.
     {
 
         if (item.itemType == Item.ItemType.Used)

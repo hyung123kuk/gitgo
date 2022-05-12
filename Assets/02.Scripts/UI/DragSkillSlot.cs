@@ -17,7 +17,7 @@ public class DragSkillSlot : MonoBehaviour
         instance = this;
     }
 
-    // Update is called once per frame
+
     public void DragSetImage(Image _itemImage)
     {
         imageSkill.sprite = _itemImage.sprite;

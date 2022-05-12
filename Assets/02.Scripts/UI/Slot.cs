@@ -6,9 +6,9 @@ using UnityEngine.EventSystems;
 
 public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
-    public Item item; // ȹ���� ������
-    public int itemCount; // ȹ���� �������� ����
-    public Image itemImage;  // �������� �̹���
+    public Item item; // 획득한 아이템
+    public int itemCount; // 획득한 아이템의 개수
+    public Image itemImage;  // 아이템의 이미지
     public WarriorSlot WarriorSlot;
     [SerializeField]
     private Text text_Count;
@@ -90,7 +90,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     }
 
 
-    // ������ �̹����� ������ ����
+    // 아이템 이미지의 투명도 조절
     public void SetColor(float _alpha)
     {
         Color color = itemImage.color;
@@ -98,7 +98,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         itemImage.color = color;
     }
 
-    // �κ��丮�� ���ο� ������ ���� �߰�
+    // 인벤토리에 새로운 아이템 슬롯 추가
     public void AddItem(Item _item, int _count = 1)
     {
         item = _item;
@@ -119,7 +119,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         SetColor(1);
     }
 
-    // �ش� ������ ������ ���� ������Ʈ
+    // 해당 슬롯의 아이템 갯수 업데이트
     public void SetSlotCount(int _count)
     {
         itemCount += _count;
@@ -130,24 +130,24 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     }
     public void UseItem()
     {
-        if (item.itemName == "<color=#FFD700>������ �ź��� ����</color>")
+        if (item.itemName == "<color=#FFD700>마계의 신비한 영약</color>")
         {
             playerStat.RecoverHp(50);
             playerStat.RecoverMp(50);
             
         }
-        else if (item.itemName == "<color=#FF0000>ü�� ȸ�� ����</color>")
+        else if (item.itemName == "<color=#FF0000>체력 회복 물약</color>")
         {
             playerStat.RecoverHp(25);
         }
-        else if (item.itemName == "<color=#1E90FF>�Ķ� ���� ��</color>")
+        else if (item.itemName == "<color=#1E90FF>파란 마나 꽃</color>")
         {
             playerStat.RecoverMp(25);
         }
         gameUI.bar_set();
     }
 
-    // �ش� ���� �ϳ� ����
+    // 해당 슬롯 하나 삭제
     public void ClearSlot()
     {
         item = null;
@@ -158,10 +158,10 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         text_Count.text = "";
         
     }
-    public void OnPointerClick(PointerEventData eventData) //��Ŭ�� ����
+    public void OnPointerClick(PointerEventData eventData) //우클릭 장착
     {
-        
-        if(item !=null && eventData.button== PointerEventData.InputButton.Left && itemStore.sellButton)
+
+        if (item != null && eventData.button == PointerEventData.InputButton.Left && itemStore.sellButton)
         {
             item_sell_question.SellQuestionOn(GetComponent<Slot>());
             return;
@@ -169,26 +169,26 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
 
         if (eventData.button == PointerEventData.InputButton.Right)
         {
-            
-            if (item != null) 
+
+            if (item != null)
             {
-                
-                if ( gameObject.layer== LayerMask.NameToLayer("equip") ) //�����ϰ� �ִ� ������ ���� ����
+
+                if (gameObject.layer == LayerMask.NameToLayer("equip")) //장착하고 있는 아이템 장착 빼기
                 {
                     if (!inven.HasEmptySlot())
-                    { Debug.Log("��â�� �����ϴ�."); return; } //�󽽷� ������ ������.
+                    { Debug.Log("빈창이 없습니다."); return; } //빈슬롯 없으면 못뺀다.
                     if (gameObject.tag == "weaponslot")
                     {
-                        if (item.equipType == Item.EquipType.Sword && playerSt.CharacterType == PlayerST.Type.Warrior) //���� ���� �⺻���� ����
+                        if (item.equipType == Item.EquipType.Sword && playerSt.CharacterType == PlayerST.Type.Warrior) //전사 무기 기본으로 세팅
                             playerSt.WeaponChange(playerSt.basicSword);
-                        else if (item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer) // �ü� ���� �⺻���� ����
+                        else if (item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer) // 궁수 무기 기본으로 세팅
                             ;
-                        else if (item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage) //���� ���� �⺻���� ����
+                        else if (item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage) //법사 무기 기본으로 세팅
                             ;
 
                     }
-                    
-                    EmptySlotEq(); //�� ���� ã�� �ֱ�
+
+                    EmptySlotEq(); //빈 슬롯 찾아 넣기
                     tooltip.ToolTipOff();
                     playerStat.StatAllUpdate();
                     gameUI.bar_set();
@@ -197,44 +197,44 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
 
 
 
-                else if (item.itemType == Item.ItemType.Equipment && item.itemEquLevel <= playerStat.Level) //������ �����ϱ�
+                else if (item.itemType == Item.ItemType.Equipment && item.itemEquLevel <= playerStat.Level) //아이템 장착하기
                 {
-                 
-                    WarriorSword(); //���� �����ϱ� (�����)
-                    ArcherBow();    //���� �����ϱ� (�ü���)
-                    MageStaff();    //���� �����ϱ� (�����)
+
+                    WarriorSword(); //무기 장착하기 (전사용)
+                    ArcherBow();    //무기 장착하기 (궁수용)
+                    MageStaff();    //무기 장착하기 (법사용)
 
 
 
-                    if (item != null && playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel) //���� �� ����
+                    if (item != null && playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel) //전사 방어구 장착
                     {
-                        shoulder(); //��� �����ϱ�(�����)
-                        Chest(); //���� �����ϱ�
-                        Cloak(); //���� �����ϱ�
-                        Boots(); //�Ź� �����ϱ�
-                        gloves();//�尩 �����ϱ�
-                        helm();  //���� �����ϱ�
-                        pants(); //���� �����ϱ�
+                        shoulder(); //어깨 장착하기(전사용)
+                        Chest(); //상의 장착하기
+                        Cloak(); //망토 장착하기
+                        Boots(); //신발 장착하기
+                        gloves();//장갑 장착하기
+                        helm();  //모자 장착하기
+                        pants(); //하의 장착하기
                     }
-                    else if(item != null && playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather) //�ü� �� ����
+                    else if (item != null && playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather) //궁수 방어구 장착
                     {
-                        Chest(); //���� �����ϱ�
-                        Cloak(); //���� �����ϱ�
-                        Boots(); //�Ź� �����ϱ�
-                        gloves();//�尩 �����ϱ�
-                        helm();  //���� �����ϱ�
-                        pants(); //���� �����ϱ�
+                        Chest(); //상의 장착하기
+                        Cloak(); //망토 장착하기
+                        Boots(); //신발 장착하기
+                        gloves();//장갑 장착하기
+                        helm();  //모자 장착하기
+                        pants(); //하의 장착하기
                     }
-                    else if(item != null && playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth) // ������ �� ����
+                    else if (item != null && playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth) // 마법사 방어구 장착
                     {
-                        Chest(); //���� �����ϱ�
-                        Cloak(); //���� �����ϱ�
-                        Boots(); //�Ź� �����ϱ�
-                        gloves();//�尩 �����ϱ�
-                        helm();  //���� �����ϱ�
-                        pants(); //���� �����ϱ�
+                        Chest(); //상의 장착하기
+                        Cloak(); //망토 장착하기
+                        Boots(); //신발 장착하기
+                        gloves();//장갑 장착하기
+                        helm();  //모자 장착하기
+                        pants(); //하의 장착하기
                     }
-                    
+
                     tooltip.ToolTipOff();
                     playerStat.StatAllUpdate();
                     gameUI.bar_set();
@@ -243,9 +243,9 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
                 }
                 else if ( item.itemType == Item.ItemType.Used)
                 {
-                    // �Һ�
+                  
                     
-                    Debug.Log(item.itemName + " �� ����߽��ϴ�.");
+                    Debug.Log(item.itemName + " 을 사용했습니다.");
                     UseItem();
                     SetSlotCount(-1);
                 }
@@ -255,45 +255,45 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
 
     private void shoulder()
     {
-        if (item != null && item.equipType == Item.EquipType.shoulder )
+        if (item != null && item.equipType == Item.EquipType.shoulder)
         {
-            if (WarriorSlot.shoulder.item != null) // ( ������ �Ǿ������� )
-            {                
-                SwapSlot(WarriorSlot.shoulder);              
-            }
-            else // ( ������ �Ǿ� ���� ������ )
+            if (WarriorSlot.shoulder.item != null) // ( 장착이 되어있을때 )
             {
-                EqItem(WarriorSlot.shoulder);             
+                SwapSlot(WarriorSlot.shoulder);
+            }
+            else // ( 장착이 되어 있지 않을때 )
+            {
+                EqItem(WarriorSlot.shoulder);
             }
         }
     }
 
     private void pants()
     {
-        if (item != null && item.equipType == Item.EquipType.pants )
+        if (item != null && item.equipType == Item.EquipType.pants)
         {
-            if (WarriorSlot.pants.item != null) // ( ������ �Ǿ������� )
+            if (WarriorSlot.pants.item != null) // ( 장착이 되어있을때 )
             {
                 SwapSlot(WarriorSlot.pants);
 
             }
-            else // ( ������ �Ǿ� ���� ������ )
+            else // ( 장착이 되어 있지 않을때 )
             {
                 EqItem(WarriorSlot.pants);
             }
-       }
+        }
     }
 
     private void helm()
     {
-        if (item != null && item.equipType == Item.EquipType.helm )
+        if (item != null && item.equipType == Item.EquipType.helm)
         {
-            if (WarriorSlot.helm.item != null) // ( ������ �Ǿ������� )
+            if (WarriorSlot.helm.item != null) // ( 장착이 되어있을때 )
             {
                 SwapSlot(WarriorSlot.helm);
 
             }
-            else // ( ������ �Ǿ� ���� ������ )
+            else // ( 장착이 되어 있지 않을때 )
             {
                 EqItem(WarriorSlot.helm);
             }
@@ -304,11 +304,11 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     {
         if (item != null && item.equipType == Item.EquipType.gloves)
         {
-            if (WarriorSlot.gloves.item != null) // ( ������ �Ǿ������� )
+            if (WarriorSlot.gloves.item != null) // ( 장착이 되어있을때 )
             {
                 SwapSlot(WarriorSlot.gloves);
             }
-            else // ( ������ �Ǿ� ���� ������ )
+            else // ( 장착이 되어 있지 않을때 )
             {
                 EqItem(WarriorSlot.gloves);
             }
@@ -317,13 +317,13 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
 
     private void Boots()
     {
-        if (item != null && item.equipType == Item.EquipType.boots )
+        if (item != null && item.equipType == Item.EquipType.boots)
         {
-            if (WarriorSlot.boots.item != null) // ( ������ �Ǿ������� )
+            if (WarriorSlot.boots.item != null) // ( 장착이 되어있을때 )
             {
                 SwapSlot(WarriorSlot.boots);
-           }
-            else // ( ������ �Ǿ� ���� ������ )
+            }
+            else // ( 장착이 되어 있지 않을때 )
             {
                 EqItem(WarriorSlot.boots);
             }
@@ -332,13 +332,13 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
 
     private void Cloak()
     {
-        if (item != null && item.equipType == Item.EquipType.cloak )
+        if (item != null && item.equipType == Item.EquipType.cloak)
         {
-            if (WarriorSlot.cloak.item != null) // ( ������ �Ǿ������� )
+            if (WarriorSlot.cloak.item != null) // ( 장착이 되어있을때 )
             {
                 SwapSlot(WarriorSlot.cloak);
             }
-            else // ( ������ �Ǿ� ���� ������ )
+            else // ( 장착이 되어 있지 않을때 )
             {
                 EqItem(WarriorSlot.cloak);
             }
@@ -349,11 +349,11 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     {
         if (item != null && item.equipType == Item.EquipType.chest)
         {
-            if (WarriorSlot.chest.item != null) // ( ������ �Ǿ������� )
+            if (WarriorSlot.chest.item != null) // ( 장착이 되어있을때 )
             {
                 SwapSlot(WarriorSlot.chest);
             }
-            else // ( ������ �Ǿ� ���� ������ )
+            else // ( 장착이 되어 있지 않을때 )
             {
                 EqItem(WarriorSlot.chest);
             }
@@ -365,11 +365,11 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         if (item != null && item.equipType == Item.EquipType.Sword && playerSt.CharacterType == PlayerST.Type.Warrior)
         {
             playerSt.WeaponChange(item.SwordNames);
-            if (WarriorSlot.weapon.item != null) // ( ������ �Ǿ������� )
-            {                
+            if (WarriorSlot.weapon.item != null) // ( 장착이 되어있을때 )
+            {
                 SwapSlot(WarriorSlot.weapon);
             }
-            else // ( ������ �Ǿ� ���� ������ )
+            else // ( 장착이 되어 있지 않을때 )
             {
                 EqItem(WarriorSlot.weapon);
             }
@@ -379,16 +379,16 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     {
         if (item != null && item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer)
         {
-            //playerSt.WeaponChange(item.SwordNames); (�ü� ���� ���������� ��������)
+            //playerSt.WeaponChange(item.SwordNames); (궁수 무기 프리팹으로 만들어야함)
 
 
-            if (WarriorSlot.weapon.item != null) // ( ������ �Ǿ������� )
+            if (WarriorSlot.weapon.item != null) // ( 장착이 되어있을때 )
             {
 
                 SwapSlot(WarriorSlot.weapon);
 
             }
-            else // ( ������ �Ǿ� ���� ������ )
+            else // ( 장착이 되어 있지 않을때 )
             {
                 EqItem(WarriorSlot.weapon);
             }
@@ -400,12 +400,12 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     {
         if (item != null && item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage)
         {
-            //playerSt.WeaponChange(item.SwordNames); (������ ���� ���������� ��������)
-            if (WarriorSlot.weapon.item != null) // ( ������ �Ǿ������� )
+            //playerSt.WeaponChange(item.SwordNames); (마법사 무기 프리팹으로 만들어야함)
+            if (WarriorSlot.weapon.item != null) // ( 장착이 되어있을때 )
             {
                 SwapSlot(WarriorSlot.weapon);
             }
-            else // ( ������ �Ǿ� ���� ������ )
+            else // ( 장착이 되어 있지 않을때 )
             {
                 EqItem(WarriorSlot.weapon);
             }
@@ -421,19 +421,19 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         swapSlot.item = swapItem;
         itemImage.sprite = item.itemImage;
         swapSlot.itemImage.sprite = swapSlot.item.itemImage;
-    } //���� ������ ���� �ٲٱ�
+    } //슬롯 아이템 서로 바꾸기
 
-    private void EqItem(Slot EqSlot )
-    {        
+    private void EqItem(Slot EqSlot)
+    {
         EqSlot.item = item;
         item = null;
         EqSlot.itemImage.sprite = EqSlot.item.itemImage;
         EqSlot.SetColor(1);
         SetColor(0);
-    } // ������ ����
+    } // 아이템 장착
 
 
-    private void EmptySlotEq() //�� ���� ã�Ƽ� �ֱ�
+    private void EmptySlotEq() //빈 슬롯 찾아서 넣기
     {
         for (int i = 0; i < inventory.slots.Length; i++)
         {
@@ -447,14 +447,14 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
                 break;
             }
         }
-    } 
-    
+    }
+
 
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        
-        if (item!=null)
+
+        if (item != null)
         {
             item_sell_question.itemSellScope.SetActive(true);
             DragSlot.instance.dragSlot = this;
@@ -481,21 +481,21 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     {
         if (DragSlot.instance.dragSlot == null)
             return;
-        //�Ǹ�    
+        //판매    
         if (gameObject.tag == "sellslot")
         {
             item_sell_question.SellQuestionOn(DragSlot.instance.dragSlot.GetComponent<Slot>());
 
         }
-        //�����Կ� ��� �ֱ� ����
+        //퀵슬롯에 장비 넣기 막기
         else if (gameObject.layer == LayerMask.NameToLayer("quikSlot") && DragSlot.instance.dragSlot.item.itemType != Item.ItemType.Used) { }
-        //���������� �κ�â���� �ű涧 ���� �ٸ��� �ֱ� ����
+        //퀵슬릇에서 인벤창으로 옮길때 장비왜 다른거 넣기 막기
         else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot") && item != null && item.itemType == Item.ItemType.Equipment) { }
 
-        //��� ����
-        else if (gameObject.layer == LayerMask.NameToLayer("equip") && DragSlot.instance.dragSlot.item.itemType != Item.ItemType.Equipment) { Debug.Log("���ƴѰ�->���â"); } //������ ��� �ƴ� ��-> ���â���� �巡�׽� ������ ���� ��
-        else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("equip") && item != null && item.itemType != Item.ItemType.Equipment) { Debug.Log("���â->���ƴѰ�"); } //���â -> ������ ��� �ƴ� �� �巡�׽� ������ ���� ��
-        else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("equip") && item == null) //���â -> �� �������� ������ Null���� ���� ( ����� ������ 0���� �ٲ������
+        //장비 착용
+        else if (gameObject.layer == LayerMask.NameToLayer("equip") && DragSlot.instance.dragSlot.item.itemType != Item.ItemType.Equipment) { Debug.Log("장비아닌거->장비창"); } //슬롯의 장비 아닌 것-> 장비창으로 드래그시 장착을 막는 곳
+        else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("equip") && item != null && item.itemType != Item.ItemType.Equipment) { Debug.Log("장비창->장비아닌거"); } //장비창 -> 슬롯의 장비 아닌 것 드래그시 장착을 막는 곳
+        else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("equip") && item == null) //장비창 -> 빈 슬롯으로 보낼때 Null에러 막기 ( 무기는 프리팹 0제로 바꿔줘야함
         {
 
             if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Sword)
@@ -505,12 +505,12 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Bow)
             {
-                //�ü� �Ϲ� ����� ��ü
+                //궁수 일반 무기로 교체
                 ChangeSlot();
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Staff)
             {
-                //���� �Ϲ� ����� ��ü
+                //법사 일반 무기로 교체
                 ChangeSlot();
             }
             else
@@ -518,7 +518,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
                 ChangeSlot();
             }
         }
-        else if (gameObject.tag == "weaponslot" && DragSlot.instance.dragSlot.item.itemEquLevel <= playerStat.Level) // �Ϲݽ��� ���� -> ����â���� �ű涧
+        else if (gameObject.tag == "weaponslot" && DragSlot.instance.dragSlot.item.itemEquLevel <= playerStat.Level) // 일반슬롯 무기 -> 무기창으로 옮길때
         {
             if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Sword && playerSt.CharacterType == PlayerST.Type.Warrior)
             {
@@ -527,31 +527,32 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer)
             {
-                //�ü� ���� ��ü
+                //궁수 무기 교체
                 ChangeSlot();
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage)
             {
-                //���� ���� ��ü
+                //법사 무기 교체
                 ChangeSlot();
             }
         }
-        else if (DragSlot.instance.dragSlot.tag == "weaponslot" && item.itemEquLevel <= playerStat.Level) //����â -> �Ϲ� �������� �ű拚
+        else if (DragSlot.instance.dragSlot.tag == "weaponslot" && item.itemEquLevel <= playerStat.Level) //무기창 -> 일반 슬롯으로 옮길떄
         {
             if (item.equipType == Item.EquipType.Sword && playerSt.CharacterType == PlayerST.Type.Warrior)
             {
                 playerSt.WeaponChange(item.SwordNames);
+
                 ChangeSlot();
             }
             else if (item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer)
             {
-                //�ü� �Ϲ� ����� ��ü
+                //궁수 일반 무기로 교체
 
                 ChangeSlot();
             }
             else if (item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage)
             {
-                //���� �Ϲ� ����� ��ü
+                //법사 일반 무기로 교체
 
                 ChangeSlot();
             }
@@ -559,9 +560,9 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         else if (gameObject.tag == "chest" && DragSlot.instance.dragSlot.item.itemEquLevel <= playerStat.Level)
         {
             if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.chest &&
-               (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Warrior && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.steel || //ĳ���Ͱ� ����� �巡�� �������� ��ö �̰ų�
-               DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Archer && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.leather || //ĳ���Ͱ� �ü��� �巡�� �������� ���� �̰ų�
-               DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Mage && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.cloth))      //ĳ���Ͱ� ������� �巡�� �������� õ �̰ų�
+               (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Warrior && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.steel || //캐릭터가 전사고 드래그 아이템이 강철 이거나
+               DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Archer && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.leather || //캐릭터가 궁수고 드래그 아이템이 가죽 이거나
+               DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Mage && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.cloth))      //캐릭터가 마법사고 드래그 아이템이 천 이거나
             {
                 ChangeSlot();
             }
@@ -569,9 +570,9 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         else if (DragSlot.instance.dragSlot.tag == "chest" && item.itemEquLevel <= playerStat.Level)
         {
             if (item.equipType == Item.EquipType.chest &&
-                (playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel || //ĳ���Ͱ� ����� �ٲ� ����â�� �������� ��ö�̰ų�
-                playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather || //ĳ���Ͱ� �ü��� �ٲ� ����â�� �������� �����̰ų�
-                playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth))      //ĳ���Ͱ� ����� �ٲ� ����â�� �������� õ�̰ų�
+                (playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel || //캐릭터가 전사고 바꿀 슬롯창에 아이템이 강철이거나
+                playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather || //캐릭터가 궁수고 바꿀 슬롯창에 아이템이 가죽이거나
+                playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth))      //캐릭터가 법사고 바꿀 슬롯창에 아이템이 천이거나
             {
                 ChangeSlot();
             }
@@ -701,9 +702,9 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
                 ChangeSlot();
             }
         }
-        else if (DragSlot.instance.dragSlot != null && DragSlot.instance.dragSlot.gameObject.layer != LayerMask.NameToLayer("equip") && gameObject.layer != LayerMask.NameToLayer("equip")) //���� ��� �ƴϸ� ��ü
+        else if (DragSlot.instance.dragSlot != null && DragSlot.instance.dragSlot.gameObject.layer != LayerMask.NameToLayer("equip") && gameObject.layer != LayerMask.NameToLayer("equip")) //서로 장비가 아니면 교체
         {
-            if (DragSlot.instance.dragSlot.item.itemType == Item.ItemType.Used && DragSlot.instance.dragSlot.item == item) //���� �������� ��ģ��.
+            if (DragSlot.instance.dragSlot.item.itemType == Item.ItemType.Used && DragSlot.instance.dragSlot.item == item) //같은 아이템은 합친다.
             {
                 SetSlotCount(DragSlot.instance.dragSlot.itemCount);
                 DragSlot.instance.dragSlot.SetSlotCount(DragSlot.instance.dragSlot.itemCount * -1);
@@ -713,7 +714,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             {
                 ChangeSlot();
             }
-            if (gameObject.GetComponent<QuikSlot>()!=null&& gameObject.GetComponent<QuikSlot>().skill.skill != null) //�� ���Կ� ��ų ������ ������ �ʱ�ȭ
+            if (gameObject.GetComponent<QuikSlot>() != null && gameObject.GetComponent<QuikSlot>().skill.skill != null) //퀵 슬롯에 스킬 있으면 널으로 초기화
             {
                 gameObject.GetComponent<QuikSlot>().skill.skill = null;
             }
@@ -730,10 +731,10 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         {
             DragSlot.instance.dragSlot.ItemLimitColorRed();
         }
-        
-       
-            item_sell_question.itemSellScope.SetActive(false);
-        
+
+
+        item_sell_question.itemSellScope.SetActive(false);
+
     }
 
     private void ChangeSlot()
@@ -742,7 +743,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         int _tempItemCount = itemCount;
         AddItem(DragSlot.instance.dragSlot.item, DragSlot.instance.dragSlot.itemCount);
 
-        if(_tempItem !=null)
+        if (_tempItem != null)
         {
             DragSlot.instance.dragSlot.AddItem(_tempItem, _tempItemCount);
         }
@@ -753,19 +754,19 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     }
 
 
-    // ���� �κ�
+    // 툴팁 부분
     public void OnPointerEnter(PointerEventData eventData)
     {
         if (item != null)
         {
-           
+
             Vector2 itemPosition;
-            itemPosition = eventData.position;           
+            itemPosition = eventData.position;
             if (eventData.position.x + 400f > 1920f)
-                itemPosition.x =  1920f - 400f;
+                itemPosition.x = 1920f - 400f;
             if (eventData.position.y - 500f < 0f)
-                itemPosition.y =  500f;                
-            tooltip.ToolTipOn(item,itemPosition,0); // �κ��丮��  0 , �������Ǹ�â�� 1  // �ǸŰ�尡 �ٸ��� ������ �����̴�.
+                itemPosition.y = 500f;
+            tooltip.ToolTipOn(item, itemPosition, 0); // 인벤토리는  0 , 아이템판매창은 1  // 판매골드가 다르게 나오기 때문이다.
         }
     }
 
@@ -773,9 +774,9 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     {
         if (item != null)
         {
-           
+
             tooltip.ToolTipOff();
         }
-       
+
     }
 }
