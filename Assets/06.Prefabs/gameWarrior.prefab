@@ -86,6 +86,7 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteoShot: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -99,6 +100,9 @@ MonoBehaviour:
   Mage3SkillPosEff: {fileID: 0}
   Mage3SkillEff: {fileID: 0}
   Mage3SkillPlayerEff: {fileID: 0}
+  Skillarea: {fileID: 0}
+  Skillarea2: {fileID: 0}
+  CCarea: {fileID: 0}
 --- !u!1 &400565390
 GameObject:
   m_ObjectHideFlags: 0
@@ -273,6 +277,7 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteoShot: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -286,6 +291,9 @@ MonoBehaviour:
   Mage3SkillPosEff: {fileID: 0}
   Mage3SkillEff: {fileID: 0}
   Mage3SkillPlayerEff: {fileID: 0}
+  Skillarea: {fileID: 0}
+  Skillarea2: {fileID: 0}
+  CCarea: {fileID: 0}
 --- !u!1 &768824939
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,6 +410,7 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteoShot: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -415,6 +424,9 @@ MonoBehaviour:
   Mage3SkillPosEff: {fileID: 0}
   Mage3SkillEff: {fileID: 0}
   Mage3SkillPlayerEff: {fileID: 0}
+  Skillarea: {fileID: 0}
+  Skillarea2: {fileID: 0}
+  CCarea: {fileID: 0}
 --- !u!1 &883279890
 GameObject:
   m_ObjectHideFlags: 0
@@ -531,6 +543,7 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteoShot: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -544,6 +557,9 @@ MonoBehaviour:
   Mage3SkillPosEff: {fileID: 0}
   Mage3SkillEff: {fileID: 0}
   Mage3SkillPlayerEff: {fileID: 0}
+  Skillarea: {fileID: 0}
+  Skillarea2: {fileID: 0}
+  CCarea: {fileID: 0}
 --- !u!1 &1762256483
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,6 +681,7 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteoShot: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -678,6 +695,9 @@ MonoBehaviour:
   Mage3SkillPosEff: {fileID: 0}
   Mage3SkillEff: {fileID: 0}
   Mage3SkillPlayerEff: {fileID: 0}
+  Skillarea: {fileID: 0}
+  Skillarea2: {fileID: 0}
+  CCarea: {fileID: 0}
 --- !u!1 &1504666893635784
 GameObject:
   m_ObjectHideFlags: 0
@@ -10500,8 +10520,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 0
   serializedVersion: 2
-  m_Size: {x: 4.3143806, y: 1.140164, z: 4.3887825}
-  m_Center: {x: 0.15255928, y: -0.34681195, z: 0.46021843}
+  m_Size: {x: 2.1836472, y: 1.140164, z: 2.1449509}
+  m_Center: {x: 0.03705597, y: -0.34681195, z: 1.5821342}
 --- !u!114 &2528468438434006731
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11779,7 +11799,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &8007892901880628150
 Transform:
   m_ObjectHideFlags: 0
@@ -11891,6 +11911,7 @@ MonoBehaviour:
   isSootReady: 1
   isFireReady: 1
   isDamage: 0
+  ImWar: 0
   archerattack: 0
   isRun: 0
   weapons: {fileID: 670969467}
@@ -12044,6 +12065,10 @@ MonoBehaviour:
   Usable_Buff: 1
   Skill_Buff_duration: 12
   Duration_Buff: 0
+  Skill_Teleport_cooltime: 5
+  Usable_Teleport: 1
+  Skill_Dodge_cooltime: 10
+  Usable_Dodge: 1
   Skill_1_per_dam: 1
   Skill_1_fixed_dam: 0
   Skill_1_cooltime: 5
@@ -14921,6 +14946,7 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteoShot: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -14934,6 +14960,9 @@ MonoBehaviour:
   Mage3SkillPosEff: {fileID: 0}
   Mage3SkillEff: {fileID: 0}
   Mage3SkillPlayerEff: {fileID: 0}
+  Skillarea: {fileID: 0}
+  Skillarea2: {fileID: 0}
+  CCarea: {fileID: 0}
 --- !u!1001 &8007892903191623039
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15169,6 +15198,7 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteoShot: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -15182,3 +15212,6 @@ MonoBehaviour:
   Mage3SkillPosEff: {fileID: 0}
   Mage3SkillEff: {fileID: 0}
   Mage3SkillPlayerEff: {fileID: 0}
+  Skillarea: {fileID: 0}
+  Skillarea2: {fileID: 0}
+  CCarea: {fileID: 0}
