@@ -48,11 +48,11 @@ public class PlayerStat : MonoBehaviour
         TotalExp = LevelExp();
         _Hp = _MAXHP;
         _Mp = _MAXMP;
-       //gameUI.Hp_bar.text.text = (int)_Hp + "/" + (int)_MAXHP;
-       //gameUI.Mp_bar.text.text = (int)_Mp + "/" + (int)_MAXMP;
-       //gameUI.level_Text.text = "LV." + Level;
-       //gameUI.Exp_Text.text = (int)NowExp + "/" + (int)TotalExp +"  ("+ (int)(NowExp / TotalExp * 100) + "%)" ; 
-       //gameUI.ExpSet();
+       gameUI.Hp_bar.text.text = (int)_Hp + "/" + (int)_MAXHP;
+       gameUI.Mp_bar.text.text = (int)_Mp + "/" + (int)_MAXMP;
+       gameUI.level_Text.text = "LV." + Level;
+       gameUI.Exp_Text.text = (int)NowExp + "/" + (int)TotalExp +"  ("+ (int)(NowExp / TotalExp * 100) + "%)" ; 
+       gameUI.ExpSet();
 
     }
 

@@ -33,14 +33,12 @@ public class GameUI : MonoBehaviour
     }
 
     public void ExpSet()
-    {
-        Debug.Log("1");
-        
+    {    
 
-        Debug.Log("1");
+
         Exp_bar_Set();
 
-        Debug.Log("1");
+
     }
 
     public void Exp_bar_Set()
