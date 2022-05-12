@@ -9,21 +9,21 @@ public class PlayerStat : MonoBehaviour
 
     public float NowExp;
 
-    public float MONEY;         //���� ��
-    public float _STR;          //��
-    public float _DEX;          //��
-    public float _INT;          //����
-    public float _DAMAGE;       //���ݷ�
-    public float _DEFENCE;      //����
-    public float _SKILL_COOLTIME_DEC_PER; //��ų ��Ÿ�� ���ҷ�
-    public float _SKILL_ADD_DAMAGE_PER; // ��ų �߰� ���ݷ�
-    public float _MAXHP;               //ü��
-    public float _Hp;                  //����ü��
-    public float _MAXMP;                //����
-    public float _Mp;                   //���縶��
-    public float _CRITICAL_PROBABILITY; //ũ��Ƽ��Ȯ��
-    public float _CRITICAL_ADD_DAMAGE_PER;//ũ��ƼĿ�߰�������
-    public float _MOVE_SPEED;       //�̵��ӵ�
+    public float MONEY;         
+    public float _STR;          
+    public float _DEX;          
+    public float _INT;        
+    public float _DAMAGE;       
+    public float _DEFENCE;      
+    public float _SKILL_COOLTIME_DEC_PER; 
+    public float _SKILL_ADD_DAMAGE_PER;
+    public float _MAXHP;             
+    public float _Hp;              
+    public float _MAXMP;            
+    public float _Mp;                
+    public float _CRITICAL_PROBABILITY; 
+    public float _CRITICAL_ADD_DAMAGE_PER;
+    public float _MOVE_SPEED;      
 
     public float LEV_ADD_STR;
     public float LEV_ADD_DEX;
@@ -31,13 +31,14 @@ public class PlayerStat : MonoBehaviour
     public bool expup =false;
 
     [SerializeField]
-    private PlayerST playerST; // 0 => ���� , 1 => �ü� , 2 => ����
+    private PlayerST playerST; 
     [SerializeField]
     private inventory inven;
     [SerializeField]
     private GameUI gameUI;
     public Slot[] equSlots;
 
+ 
     void Start()
     {
         playerST = GetComponent<PlayerST>();
@@ -257,7 +258,7 @@ public class PlayerStat : MonoBehaviour
         if(_Hp <= 0)
         {
             _Hp = 0;
-            Debug.Log("�÷��̾� ��� ��");
+            Debug.Log("체력이 없다");
         }
         gameUI.bar_set();
 
@@ -274,7 +275,7 @@ public class PlayerStat : MonoBehaviour
         else
         {
             _Mp = 0;
-            Debug.Log("���� �����ѵ�....");
+            Debug.Log("마나가 없다");
         }
         gameUI.bar_set();
     }

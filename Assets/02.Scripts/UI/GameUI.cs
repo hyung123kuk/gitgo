@@ -19,7 +19,8 @@ public class GameUI : MonoBehaviour
     [SerializeField]
     private PlayerStat playerStat;
 
-    private void Start()
+
+    private void Awake()
     {
         playerStat = FindObjectOfType<PlayerStat>();
     }
@@ -33,8 +34,13 @@ public class GameUI : MonoBehaviour
 
     public void ExpSet()
     {
-        Exp_Text.text = (int)playerStat.NowExp + "/" + (int)playerStat.TotalExp + "  (" + (int) (playerStat.NowExp / playerStat.TotalExp * 100) + "%)";
+        Debug.Log("1");
+        
+
+        Debug.Log("1");
         Exp_bar_Set();
+
+        Debug.Log("1");
     }
 
     public void Exp_bar_Set()

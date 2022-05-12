@@ -1832,6 +1832,7 @@ MonoBehaviour:
   WarriorSlot: {fileID: 0}
   text_Count: {fileID: 0}
   allUI: {fileID: 0}
+  gameUI: {fileID: 0}
   inven: {fileID: 0}
   empSlot: {fileID: 0}
   playerSt: {fileID: 0}
@@ -37733,6 +37734,7 @@ MonoBehaviour:
   expup: 0
   playerST: {fileID: 0}
   inven: {fileID: 0}
+  gameUI: {fileID: 0}
   equSlots:
   - {fileID: 806290678}
   - {fileID: 1557481893}
@@ -37759,22 +37761,31 @@ MonoBehaviour:
   Usable_Buff: 1
   Skill_Buff_duration: 3
   Duration_Buff: 0
+  Skill_Buff_use_Mp: 50
+  Skill_Teleport_cooltime: 5
+  Usable_Teleport: 1
+  Skill_Dodge_cooltime: 10
+  Usable_Dodge: 1
   Skill_1_per_dam: 1
   Skill_1_fixed_dam: 0
   Skill_1_cooltime: 5
   Usable_Skill1: 1
+  Skill_1_use_Mp: 50
   Skill_2_per_dam: 1
   Skill_2_fixed_dam: 0
   Skill_2_cooltime: 5
   Usable_Skill2: 1
+  Skill_2_use_Mp: 50
   Skill_3_per_dam: 1
   Skill_3_fixed_dam: 0
   Skill_3_cooltime: 5
   Usable_Skill3: 1
+  Skill_3_use_Mp: 50
   Skill_4_per_dam: 1
   Skill_4_fixed_dam: 0
   Skill_4_cooltime: 5
   Usable_Skill4: 1
+  Skill_4_use_Mp: 50
 --- !u!4 &1080620976 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8578869230586474647, guid: eae42a57b046b1a42a79ae6319bccca3, type: 3}
@@ -45488,7 +45499,7 @@ RectTransform:
   m_Children:
   - {fileID: 1826068463}
   m_Father: {fileID: 1023152788}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
@@ -48123,6 +48134,8 @@ MonoBehaviour:
   transform_icon: {fileID: 0}
   CursorNormal: {fileID: 21300000, guid: 51cb6ee928f89b64691ef4dfd57c03e9, type: 3}
   CursorSell: {fileID: 21300000, guid: 6d0916f30d4a8e84c839a037bed24d2a, type: 3}
+  CursorX: 0.3
+  CursorY: 0
 --- !u!1001 &1376039559
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -52001,22 +52014,31 @@ MonoBehaviour:
   Usable_Buff: 1
   Skill_Buff_duration: 5
   Duration_Buff: 0
+  Skill_Buff_use_Mp: 50
+  Skill_Teleport_cooltime: 5
+  Usable_Teleport: 1
+  Skill_Dodge_cooltime: 10
+  Usable_Dodge: 1
   Skill_1_per_dam: 1
   Skill_1_fixed_dam: 0
   Skill_1_cooltime: 5
   Usable_Skill1: 1
+  Skill_1_use_Mp: 50
   Skill_2_per_dam: 1
   Skill_2_fixed_dam: 0
   Skill_2_cooltime: 5
   Usable_Skill2: 1
+  Skill_2_use_Mp: 50
   Skill_3_per_dam: 1
   Skill_3_fixed_dam: 0
   Skill_3_cooltime: 5
   Usable_Skill3: 1
+  Skill_3_use_Mp: 50
   Skill_4_per_dam: 1
   Skill_4_fixed_dam: 0
   Skill_4_cooltime: 5
   Usable_Skill4: 1
+  Skill_4_use_Mp: 50
 --- !u!114 &1506773412
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52053,6 +52075,7 @@ MonoBehaviour:
   expup: 0
   playerST: {fileID: 0}
   inven: {fileID: 0}
+  gameUI: {fileID: 0}
   equSlots:
   - {fileID: 806290678}
   - {fileID: 1557481893}
@@ -52883,22 +52906,31 @@ MonoBehaviour:
   Usable_Buff: 1
   Skill_Buff_duration: 5
   Duration_Buff: 0
+  Skill_Buff_use_Mp: 50
+  Skill_Teleport_cooltime: 5
+  Usable_Teleport: 1
+  Skill_Dodge_cooltime: 10
+  Usable_Dodge: 1
   Skill_1_per_dam: 1
   Skill_1_fixed_dam: 0
   Skill_1_cooltime: 5
   Usable_Skill1: 1
+  Skill_1_use_Mp: 50
   Skill_2_per_dam: 1
   Skill_2_fixed_dam: 0
   Skill_2_cooltime: 5
   Usable_Skill2: 1
+  Skill_2_use_Mp: 50
   Skill_3_per_dam: 1
   Skill_3_fixed_dam: 0
   Skill_3_cooltime: 5
   Usable_Skill3: 1
+  Skill_3_use_Mp: 50
   Skill_4_per_dam: 1
   Skill_4_fixed_dam: 0
   Skill_4_cooltime: 5
   Usable_Skill4: 1
+  Skill_4_use_Mp: 50
 --- !u!114 &1525382062
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -52935,6 +52967,7 @@ MonoBehaviour:
   expup: 0
   playerST: {fileID: 0}
   inven: {fileID: 0}
+  gameUI: {fileID: 0}
   equSlots:
   - {fileID: 806290678}
   - {fileID: 1557481893}

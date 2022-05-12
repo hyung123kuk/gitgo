@@ -9,8 +9,8 @@ public class AttackDamage : MonoBehaviour
     [Header("��ų �⺻ ��Ÿ��")]
     [Header("       ���� ��ų")]
     [SerializeField]
-    private float Skill_Buff_cooltime = 5;    //��ų�� �⺻ ��Ÿ�� ���� ��Ÿ�� ���� ����Ǽ� �� ����
-    public bool Usable_Buff = true; //��ų ��� ���� �Ҷ� true�� �ٲ�
+    private float Skill_Buff_cooltime = 5;    
+    public bool Usable_Buff = true; 
     [Header("��ų ���� �ð�")]
     [SerializeField]
     private float Skill_Buff_duration = 3;
@@ -23,19 +23,17 @@ public class AttackDamage : MonoBehaviour
     [SerializeField]
     [Header("��ų �⺻ ��Ÿ��")]
     [Header("       ������� ��Ŭ����ų")]
-    private float Skill_Teleport_cooltime = 5;    //��ų�� �⺻ ��Ÿ�� ���� ��Ÿ�� ���� ����Ǽ� �� ����
+    private float Skill_Teleport_cooltime = 5;    
     public bool Usable_Teleport = true;
 
 
     [SerializeField]
     [Header("��ų �⺻ ��Ÿ��")]
     [Header("       ������ �Դϴ�")]
-    private float Skill_Dodge_cooltime = 10;    //��ų�� �⺻ ��Ÿ�� ���� ��Ÿ�� ���� ����Ǽ� �� ����
+    private float Skill_Dodge_cooltime = 10;    
     public bool Usable_Dodge = true;
 
-    //��ų �۵� : ĳ���� ���ݷ¿� ��� ex) 1.2 ������ ĳ���� ���ݷ��� 1.2���� �������� ����.
-    //��ų ������ : ĳ���� ���ݷ¿� �߰��ȴٰ� �����ϸ� ��.
-    //��ų �۵� + ��ų ������ : ��ų �۵��� 1.2 ��ų �������� 30 �̶�� ��������  (ĳ���Ͱ��ݷ�*1.2) + 30 �� ����.
+    
     [Header("��ų �۵�")]
     [Header("       1�� ��ų")]
     [SerializeField]
@@ -45,8 +43,8 @@ public class AttackDamage : MonoBehaviour
     private float Skill_1_fixed_dam;
     [Header("��ų �⺻ ��Ÿ��")]
     [SerializeField]
-    private float Skill_1_cooltime=5;    //��ų�� �⺻ ��Ÿ�� ���� ��Ÿ�� ���� ����Ǽ� �� ����
-    public bool Usable_Skill1 = true; //��ų ��� ���� �Ҷ� true�� �ٲ�
+    private float Skill_1_cooltime=5;    
+    public bool Usable_Skill1 = true; 
     [Header("��ų ��� ����")]
     [SerializeField]
     private float Skill_1_use_Mp = 50;
@@ -106,8 +104,8 @@ public class AttackDamage : MonoBehaviour
 
     float SkillBuff_passedDurationgTime;
 
-    float Skill1_time;         //��Ÿ�� ���� ���� ��ų Ÿ��
-    float Skill1_passedTime;   //��ų 1 �귯�� �ð�
+    float Skill1_time;         
+    float Skill1_passedTime;   
     float Skill2_time;
     float Skill2_passedTime;
     float Skill3_time;
@@ -131,14 +129,14 @@ public class AttackDamage : MonoBehaviour
    
 
 
-    // ���� => ���������� �ְ� �������� Atack_Dam() �� ������ �˴ϴ�.  ��ȯ���� float�Դϴ� (�������� float������ ���ϴ�)
+    
 
     public float Attack_Dam()
     {
         float DamRange = Random.Range(0.95f, 1.05f);
-        if(Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) //1~100 �� ũ��Ƽ�� Ȯ�������� �������̸�ũ��Ƽ�õ����� ����.
+        if(Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) 
         {
-            return  ( playerStat._DAMAGE + (playerStat._DAMAGE * playerStat._CRITICAL_ADD_DAMAGE_PER /100f) ) *DamRange; //ũ��Ƽ�� �������� ���������� �ۼ�Ʈġ ����
+            return  ( playerStat._DAMAGE + (playerStat._DAMAGE * playerStat._CRITICAL_ADD_DAMAGE_PER /100f) ) *DamRange; 
         }
         else
         {
@@ -147,12 +145,12 @@ public class AttackDamage : MonoBehaviour
         
     }
 
-    // ��ų 1�� �������� �ְ� �������� Skill_1_Damage() �� ������ �˴ϴ�.  ��ȯ���� float�Դϴ� (�������� float������ ���ϴ�)
+    
     public float Skill_1_Damamge()
     {
         float DamRange = Random.Range(0.95f, 1.05f);
         float Skill_1_basedamage = (playerStat._DAMAGE * Skill_1_per_dam + Skill_1_fixed_dam) + (playerStat._DAMAGE * Skill_1_per_dam + Skill_1_fixed_dam) * playerStat._SKILL_ADD_DAMAGE_PER / 100;
-        if (Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) //1~100 �� ũ��Ƽ�� Ȯ�������� �������̸� ũ��Ƽ�õ����� ����.
+        if (Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) 
         {
             return (Skill_1_basedamage + (Skill_1_basedamage * playerStat._CRITICAL_ADD_DAMAGE_PER / 100f)) * DamRange; 
         }
@@ -266,7 +264,7 @@ public class AttackDamage : MonoBehaviour
     }
 
 
-    private void SkillPassedTimeFucn()
+    public void SkillPassedTimeFucn()
     {
 
         if (!Usable_Buff)
