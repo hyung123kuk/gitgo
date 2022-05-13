@@ -11,7 +11,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     public Image itemImage;  // 아이템의 이미지
     public WarriorSlot WarriorSlot;
     [SerializeField]
-    private Text text_Count;
+    public Text text_Count;
     [SerializeField]
     private AllUI allUI;
     [SerializeField]
@@ -493,6 +493,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot") && item != null && item.itemType == Item.ItemType.Equipment) { }
 
         //장비 착용
+        else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("equip") && gameObject.layer == LayerMask.NameToLayer("equip")) { Debug.Log("장비창->장비창"); } // 장비창-> 장비창으로 옮기는거 막기
         else if (gameObject.layer == LayerMask.NameToLayer("equip") && DragSlot.instance.dragSlot.item.itemType != Item.ItemType.Equipment) { Debug.Log("장비아닌거->장비창"); } //슬롯의 장비 아닌 것-> 장비창으로 드래그시 장착을 막는 곳
         else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("equip") && item != null && item.itemType != Item.ItemType.Equipment) { Debug.Log("장비창->장비아닌거"); } //장비창 -> 슬롯의 장비 아닌 것 드래그시 장착을 막는 곳
         else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("equip") && item == null) //장비창 -> 빈 슬롯으로 보낼때 Null에러 막기 ( 무기는 프리팹 0제로 바꿔줘야함
@@ -710,13 +711,30 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
                 DragSlot.instance.dragSlot.SetSlotCount(DragSlot.instance.dragSlot.itemCount * -1);
 
             }
+            
+            else if (gameObject.GetComponent<QuikSlot>() != null && gameObject.GetComponent<QuikSlot>().skill.skill != null) //퀵 슬롯으로 옮길때 안에 스킬이 있으면
+            {
+                if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("inven")) //인벤에서 옮길때
+                {
+                    gameObject.GetComponent<QuikSlot>().skill.skill = null;
+                    ChangeSlot();
+                }
+                else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot")) // 퀵슬롯 끼리 옮길때
+                {
+                    DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().skill.skill= gameObject.GetComponent<QuikSlot>().skill.skill;
+                    gameObject.GetComponent<QuikSlot>().skill.ClearSlot();
+                    DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().skill.imageSkill.sprite = DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().skill.skill.SkillImage;
+                    
+                    gameObject.GetComponent<QuikSlot>().slot.AddItem(DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().slot.item, DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().slot.itemCount);
+                    DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().slot.item = null;
+                    DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().slot.itemCount = 0;
+                    DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().slot.text_Count.text = "";
+                    Debug.Log("dd");
+                }
+            }
             else
             {
                 ChangeSlot();
-            }
-            if (gameObject.GetComponent<QuikSlot>() != null && gameObject.GetComponent<QuikSlot>().skill.skill != null) //퀵 슬롯에 스킬 있으면 널으로 초기화
-            {
-                gameObject.GetComponent<QuikSlot>().skill.skill = null;
             }
 
         }

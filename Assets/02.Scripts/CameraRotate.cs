@@ -51,7 +51,7 @@ public class CameraRotate : MonoBehaviour
    
     void Update()
     {
-        if (inventory.iDown || Weapons.isMeteo)
+        if (inventory.iDown || Weapons.isMeteo || SkillWindow.kDown)
             return;
 
         if (target)

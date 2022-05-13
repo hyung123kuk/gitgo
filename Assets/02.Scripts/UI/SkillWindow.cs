@@ -1,13 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 
-public class SkillWindow : MonoBehaviour
+public class SkillWindow : MonoBehaviour , IPointerClickHandler
 {
     [SerializeField]
     private GameObject skillWindow;
     [SerializeField]
     private AllUI allUI;
+    [SerializeField]
+    
 
     public static bool kDown =false;
 
@@ -54,5 +57,11 @@ public class SkillWindow : MonoBehaviour
         Cursor.lockState = CursorLockMode.Locked;
     }
 
-    
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        allUI.SkillWindowTop();
+    }
+
+
 }
