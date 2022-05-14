@@ -252,6 +252,7 @@ public class PlayerST : MonoBehaviour
     }
     IEnumerator BlockPlay()
     {
+        attackdamage.Skill_1_Cool();
         anim.SetBool("isBlock", true);
         isBlock = true;
         isDamage = true;
@@ -266,7 +267,7 @@ public class PlayerST : MonoBehaviour
         anim.SetBool("isBlock", false);
         isBlock = false;
         isDamage = false;
-        attackdamage.Skill_1_Cool();  //방패치기쿨타임
+        //attackdamage.Skill_1_Cool();  //방패치기쿨타임
     }
     public void Buff()
     {

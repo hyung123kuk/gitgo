@@ -122,7 +122,8 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnDrop(PointerEventData eventData)
     {
-        gameObject.GetComponent<QuikSlot>().slot.tooltip.ToolTipOff();
+        if(gameObject.layer == LayerMask.NameToLayer("quikSlot"))
+            gameObject.GetComponent<QuikSlot>().slot.tooltip.ToolTipOff();
         if (DragSkillSlot.instance.dragSkillSlot == null)//스킬슬롯 드래그 아닐때 드랍 막기
             return;
 
@@ -197,8 +198,8 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
 
         }
-
-        gameObject.GetComponent<QuikSlot>().setCoolImage();
+        if (gameObject.layer == LayerMask.NameToLayer("quikSlot"))
+            gameObject.GetComponent<QuikSlot>().setCoolImage();
         if(DragSkillSlot.instance.dragSkillSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot") )
             DragSkillSlot.instance.dragSkillSlot.gameObject.GetComponent<QuikSlot>().setCoolImage();
             

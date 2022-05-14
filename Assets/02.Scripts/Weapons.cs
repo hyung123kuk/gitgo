@@ -233,10 +233,11 @@ public class Weapons : MonoBehaviour
 
     IEnumerator LightningBallStart()
     {
+        attackdamage.Skill_1_Cool();
         isLightning = true;
         anim.SetBool("Skill1", true);
         yield return new WaitForSeconds(1.2f);
-        attackdamage.Skill_1_Cool();
+        
         GameObject darkball1 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation);
         GameObject darkball2 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation); 
         GameObject darkball3 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation); 
@@ -266,6 +267,7 @@ public class Weapons : MonoBehaviour
     }
     IEnumerator IceAgeStart()
     {
+        attackdamage.Skill_2_Cool();
         Mage2SkillReadyEff.SetActive(true);
         anim.SetBool("Skill2", true);
         isIceage = true;
@@ -276,7 +278,7 @@ public class Weapons : MonoBehaviour
         arrow.damage = attackdamage.Skill_2_Damamge();
         BoxCollider CCare = CCarea.GetComponent<BoxCollider>(); //cc기 콜라이더 활성화
         CCare.enabled = true;
-        attackdamage.Skill_2_Cool();
+        
         Mage2SkillReadyEff.SetActive(false);
         Mage2SkillEff.SetActive(true);
         yield return new WaitForSeconds(0.2f);
@@ -290,7 +292,7 @@ public class Weapons : MonoBehaviour
     }
     public void Meteo()
     {
-        if (mage_skill4_Order ==0|| mage_skill4_Order==1 && !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun && !playerST.isFlash
+        if ((mage_skill4_Order ==0|| mage_skill4_Order==1) && !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun && !playerST.isFlash
             && !isLightning && !isIceage && attackdamage.Usable_Skill3)
         {
             if (mage_skill4_Order==0 && MeteoCasting < MeteoMaxCasting)
@@ -313,6 +315,7 @@ public class Weapons : MonoBehaviour
             }
             if (MeteoCasting > MeteoMaxCasting)
             {
+                Debug.Log("메테오!!");
                 isMeteoShot = true;
                 anim.SetBool("Skill31", true);
                 GameObject meteo = Instantiate(Mage3SkillEff, Mage3SkillPos2.position, Mage3SkillPos2.rotation);

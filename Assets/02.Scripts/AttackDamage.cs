@@ -101,23 +101,24 @@ public class AttackDamage : MonoBehaviour
     [SerializeField]
     private float Skill_4_use_Mp = 50;
 
-    float SkillBuff_time;
-    float SkillBuff_passedTime;
-    float SkillTeleport_time;
-    float SkillTeleport_passedTime;
-    float SkillDodge_time;
-    float SkillDodge_passedTime;
+    public float SkillBuff_time;
+    public float SkillBuff_passedTime;
+    public float SkillTeleport_time;
+    public float SkillTeleport_passedTime;
+    public float SkillDodge_time;
+    public float SkillDodge_passedTime;
 
-    float SkillBuff_passedDurationgTime;
+    public float SkillBuff_passedDurationgTime;
 
-    float Skill1_time;         
-    float Skill1_passedTime;   
-    float Skill2_time;
-    float Skill2_passedTime;
-    float Skill3_time;
-    float Skill3_passedTime;
-    float Skill4_time;
-    float Skill4_passedTime;
+    public float Skill1_time;
+    public float Skill1_passedTime;
+
+    public float Skill2_time;
+    public float Skill2_passedTime;
+    public float Skill3_time;
+    public float Skill3_passedTime;
+    public float Skill4_time;
+    public float Skill4_passedTime;
 
 
     void Start()
@@ -365,5 +366,3 @@ public class AttackDamage : MonoBehaviour
     }
 
 }
-
-
