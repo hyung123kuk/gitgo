@@ -38,13 +38,16 @@ public class PlayerStat : MonoBehaviour
     private GameUI gameUI;
     public Slot[] equSlots;
 
+    public static PlayerStat playerstat;
+
  
     void Start()
     {
+        playerstat = this;
         playerST = GetComponent<PlayerST>();
         inven = FindObjectOfType<inventory>();
         gameUI = FindObjectOfType<GameUI>();
-        StatAllUpdate();
+        //StatAllUpdate();
         TotalExp = LevelExp();
         _Hp = _MAXHP;
         _Mp = _MAXMP;
@@ -260,7 +263,7 @@ public class PlayerStat : MonoBehaviour
             _Hp = 0;
             Debug.Log("체력이 없다");
         }
-        gameUI.bar_set();
+        //gameUI.bar_set();
 
     }
 

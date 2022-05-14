@@ -14,8 +14,6 @@ public class PlayerST : MonoBehaviour
     public GameObject cam; //플레이어 카메라
     public CapsuleCollider SelectPlayer; //제어할 플레이어
     public Animator anim; //애니메이션
-    public static float health = 0; //체력
-    public float maxhealth = 100; //체력최대치
     public Weapons[] equipWeapon;    //현재 무기. 나중에 배열로 여러무기를 등록하려고함
     public int NowWeapon; //현재 무기
     public enum SwordNames { Sword1, Sword5_normal, Sword5_rare, Sword10_normal, Sword10_rare, None }; //무기이름 위의 배열의 순서에 따라.
@@ -95,7 +93,6 @@ public class PlayerST : MonoBehaviour
 
     void Start()
     {
-        health = maxhealth;
         bowPower = bowMinPower;
         _transform = GetComponent<Transform>();
         anim = GetComponentInChildren<Animator>();
@@ -562,7 +559,7 @@ public class PlayerST : MonoBehaviour
             {
                 Debug.Log("아야!");
                 EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
-                health -= enemyRange.damage;
+                PlayerStat.playerstat.DamagedHp(enemyRange.damage);
                 StartCoroutine(OnDamage());
 
             }
@@ -572,7 +569,7 @@ public class PlayerST : MonoBehaviour
             if (!isDamage) //무적타이밍이 아닐때만 실행
             {
                 EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
-                health -= enemyRange.damage;
+                PlayerStat.playerstat.DamagedHp(enemyRange.damage);
 
                 StartCoroutine(OnDamageNuck());
             }
@@ -582,7 +579,7 @@ public class PlayerST : MonoBehaviour
             if (!isDamage) //무적타이밍이 아닐때만 실행
             {
                 EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
-                health -= enemyRange.damage;
+                PlayerStat.playerstat.DamagedHp(enemyRange.damage);
 
                 StartCoroutine(OnDamageNuck2());
             }
@@ -593,7 +590,7 @@ public class PlayerST : MonoBehaviour
             if (!isDamage) //무적타이밍이 아닐때만 실행
             {
                 EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
-                health -= enemyRange.damage;
+                PlayerStat.playerstat.DamagedHp(enemyRange.damage);
 
                 StartCoroutine(OnDamageNuck3());
             }

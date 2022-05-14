@@ -13,6 +13,8 @@ public class EnemySlime : MonoBehaviour
     public bool isAttack; //���� ������
     public Transform respawn;
     private bool isDie;
+    public bool isStun;
+    public bool isDamage; //현재맞고있나
 
     public ParticleSystem Hiteff; //������ ����Ʈ
     public ParticleSystem Hiteff2; //������ ����Ʈ
@@ -40,34 +42,39 @@ public class EnemySlime : MonoBehaviour
             StopAllCoroutines();
         }
         target = GameObject.FindGameObjectWithTag("Player").transform;
-        Targerting();
-        if (Vector3.Distance(target.position,transform.position)<=15f && nav.enabled)
+        if (!isStun)
         {
-            nav.speed = 3.5f;
-            if (!isAttack)
+
+
+            Targerting();
+            if (Vector3.Distance(target.position, transform.position) <= 15f && nav.enabled)
             {
-                isChase = true;
-                nav.isStopped = false;
-                nav.SetDestination(target.position);
-                anim.SetBool("isWalk", true);
+                nav.speed = 3.5f;
+                if (!isAttack)
+                {
+                    isChase = true;
+                    nav.isStopped = false;
+                    nav.SetDestination(target.position);
+                    anim.SetBool("isWalk", true);
+                }
             }
-        }
-        else if(Vector3.Distance(target.position,transform.position) > 15f && nav.enabled)
-        {
-            nav.SetDestination(respawn.position);
-            isChase = false;
-            nav.speed = 20f;
-            curHealth = maxHealth;
-            if (Vector3.Distance(respawn.position,transform.position)<1f)
+            else if (Vector3.Distance(target.position, transform.position) > 15f && nav.enabled)
             {
-                nav.isStopped = true;
-                anim.SetBool("isWalk", false);
+                nav.SetDestination(respawn.position);
+                isChase = false;
+                nav.speed = 20f;
+                curHealth = maxHealth;
+                if (Vector3.Distance(respawn.position, transform.position) < 1f)
+                {
+                    nav.isStopped = true;
+                    anim.SetBool("isWalk", false);
+                }
+
             }
-     
         }
 
         if (isChase || isAttack) //�����̳� �������϶���
-            if (!isDie && !PlayerST.isJump &&!PlayerST.isFall)
+            if (!isDie && !PlayerST.isJump &&!PlayerST.isFall && !isStun)
                 transform.LookAt(target); //�÷��̾� �ٶ󺸱�
     }
 
@@ -121,37 +128,53 @@ public class EnemySlime : MonoBehaviour
 
     void OnTriggerEnter(Collider other)  //�ǰ�
     {
-       if(other.tag == "Melee")
+        if (!isDamage)
         {
-            Weapons weapon = other.GetComponent<Weapons>();
-            curHealth -= weapon.damage;
-           
-            StartCoroutine(OnDamage());
-            
-        }
-       else if(other.tag=="Arrow")
-        {
-            Arrow arrow = other.GetComponent<Arrow>();
-            curHealth -= arrow.damage;
-            
-            StartCoroutine(OnDamage());
-        }
-        else if (other.tag == "ArrowSkill")
-        {
-            ArrowSkill arrow = other.GetComponent<ArrowSkill>();
-            curHealth -= arrow.damage;
+            if (other.tag == "Melee")
+            {
+                Weapons weapon = other.GetComponent<Weapons>();
+                curHealth -= weapon.damage;
 
-            StartCoroutine(OnDamage());
+                StartCoroutine(OnDamage());
+
+            }
+            else if (other.tag == "Arrow")
+            {
+                Arrow arrow = other.GetComponent<Arrow>();
+                curHealth -= arrow.damage;
+
+                StartCoroutine(OnDamage());
+            }
+            else if (other.tag == "ArrowSkill")
+            {
+                ArrowSkill arrow = other.GetComponent<ArrowSkill>();
+                curHealth -= arrow.damage;
+
+                StartCoroutine(OnDamage());
+            }
         }
+        if (other.tag == "CCAREA")
+        {
+            StartCoroutine(Stun());
+        }
+    }
+    IEnumerator Stun()
+    {
+        isStun = true;
+        anim.SetBool("isStun", true);
+        yield return new WaitForSeconds(3f);
+        isStun = false;
+        anim.SetBool("isStun", false);
     }
 
     IEnumerator OnDamage() 
     {
+        isDamage = true;
         mat.color = Color.red;
         Hiteff.Play();
         Hiteff2.Play();
         yield return new WaitForSeconds(0.1f);
-
+        isDamage = false;
         if (curHealth>0)
         {
             mat.color = Color.white;

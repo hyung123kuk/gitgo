@@ -12,6 +12,8 @@ public class EnemyGoblin : MonoBehaviour
     public bool isAttack; //���� ������
     public Transform respawn;
     private bool isDie;
+    public bool isStun;
+    public bool isDamage; //현재맞고있나
 
     public ParticleSystem Hiteff; //������ ����Ʈ
     public ParticleSystem Hiteff2; //������ ����Ʈ
@@ -39,41 +41,44 @@ public class EnemyGoblin : MonoBehaviour
             StopAllCoroutines();
         }
         target = GameObject.FindGameObjectWithTag("Player").transform;
-        Targerting();
-        if (Vector3.Distance(target.position, transform.position) <= 15f && nav.enabled) //15���� �ȿ� ����
+        if (!isStun)
         {
-            if (!isAttack)
+            Targerting();
+            if (Vector3.Distance(target.position, transform.position) <= 15f && nav.enabled) //15���� �ȿ� ����
             {
-                anim.SetBool("isRun",false);
-                nav.speed = 4.5f;
-                isChase = true;
-                nav.isStopped = false;
-                nav.destination = target.position;
-                anim.SetBool("isWalk", true);
-                if (Vector3.Distance(target.position, transform.position) >= 6f && nav.enabled)
+                if (!isAttack)
                 {
-                    anim.SetBool("isWalk", false);
-                    nav.speed = 10f;
-                    anim.SetBool("isRun",true);
+                    anim.SetBool("isRun", false);
+                    nav.speed = 4.5f;
+                    isChase = true;
+                    nav.isStopped = false;
+                    nav.destination = target.position;
+                    anim.SetBool("isWalk", true);
+                    if (Vector3.Distance(target.position, transform.position) >= 6f && nav.enabled)
+                    {
+                        anim.SetBool("isWalk", false);
+                        nav.speed = 10f;
+                        anim.SetBool("isRun", true);
+                    }
                 }
             }
-        }
-        else if (Vector3.Distance(target.position, transform.position) > 15f && nav.enabled) //15���� ��
-        {
-            nav.SetDestination(respawn.position);
-            isChase = false;
-            nav.speed = 20f;
-            curHealth = maxHealth;
-            if (Vector3.Distance(respawn.position, transform.position) < 1f)
+            else if (Vector3.Distance(target.position, transform.position) > 15f && nav.enabled) //15���� ��
             {
-                nav.isStopped = true;
-                anim.SetBool("isWalk", false);
-                anim.SetBool("isRun", false);
+                nav.SetDestination(respawn.position);
+                isChase = false;
+                nav.speed = 20f;
+                curHealth = maxHealth;
+                if (Vector3.Distance(respawn.position, transform.position) < 1f)
+                {
+                    nav.isStopped = true;
+                    anim.SetBool("isWalk", false);
+                    anim.SetBool("isRun", false);
+                }
             }
         }
 
         if (isChase || isAttack) //�����̳� �������϶���
-            if (!isDie && !PlayerST.isJump && !PlayerST.isFall)
+            if (!isDie && !PlayerST.isJump && !PlayerST.isFall && !isStun)
                 transform.LookAt(target); //�÷��̾� �ٶ󺸱�
     }
 
@@ -127,38 +132,58 @@ public class EnemyGoblin : MonoBehaviour
 
     void OnTriggerEnter(Collider other)  //�ǰ�
     {
-        if (other.tag == "Melee")
+        if (!isDamage)
         {
-            Weapons weapon = other.GetComponent<Weapons>();
-            curHealth -= weapon.damage;
+            if (other.tag == "Melee")
+            {
+                Weapons weapon = other.GetComponent<Weapons>();
+                curHealth -= weapon.damage;
 
-            StartCoroutine(OnDamage());
+                StartCoroutine(OnDamage());
 
+            }
+            else if (other.tag == "Arrow")
+            {
+                Arrow arrow = other.GetComponent<Arrow>();
+                curHealth -= arrow.damage;
+
+                StartCoroutine(OnDamage());
+            }
+            else if (other.tag == "ArrowSkill")
+            {
+                ArrowSkill arrow = other.GetComponent<ArrowSkill>();
+                curHealth -= arrow.damage;
+
+                StartCoroutine(OnDamage());
+            }
         }
-        else if (other.tag == "Arrow")
+
+        if (other.tag == "CCAREA")
         {
-            Arrow arrow = other.GetComponent<Arrow>();
-            curHealth -= arrow.damage;
-
-            StartCoroutine(OnDamage());
+            StartCoroutine(Stun());
         }
-        else if (other.tag == "ArrowSkill")
-        {
-            ArrowSkill arrow = other.GetComponent<ArrowSkill>();
-            curHealth -= arrow.damage;
 
-            StartCoroutine(OnDamage());
-        }
+
+    }
+
+    IEnumerator Stun()
+    {
+        isStun = true;
+        anim.SetBool("isStun", true);
+        yield return new WaitForSeconds(3f);
+        isStun = false;
+        anim.SetBool("isStun", false);
     }
 
     IEnumerator OnDamage()
     {
+        isDamage = true;
         Hiteff.Play();
         Hiteff2.Play();
         mat.color = Color.red;
 
         yield return new WaitForSeconds(0.1f);
-
+        isDamage = false;
         if (curHealth > 0)
         {
             mat.color = Color.white;

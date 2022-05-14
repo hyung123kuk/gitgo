@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyAttack : MonoBehaviour
 {
-    public int damage;
+    public float damage;
     public bool isMelee;
     private void OnTriggerEnter(Collider other)
     {

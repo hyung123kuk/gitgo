@@ -275,12 +275,12 @@ public class EnemyBoss1 : MonoBehaviour
             if (other.tag == "Melee")
             {
                 Weapons weapon = other.GetComponent<Weapons>();
-                PlayerST.health -= weapon.damage;
+                PlayerStat.playerstat._Hp -= weapon.damage;
             }
             else if (other.tag == "Arrow")
             {
                 Arrow arrow = other.GetComponent<Arrow>();
-                PlayerST.health -= arrow.damage;
+                PlayerStat.playerstat._Hp -= arrow.damage;
             }
         }
     }
