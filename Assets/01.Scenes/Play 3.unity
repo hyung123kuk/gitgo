@@ -10996,7 +10996,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.0001373291, y: -0.000061035156}
-  m_SizeDelta: {x: 60, y: 60}
+  m_SizeDelta: {x: 70, y: 70}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &315315214
 MonoBehaviour:
@@ -51222,6 +51222,7 @@ MonoBehaviour:
   - {fileID: 915115984}
   - {fileID: 331568500}
   - {fileID: 1057156689}
+  - {fileID: 1782601841}
   inven: {fileID: 1343293711}
   store: {fileID: 573222011}
   itemBuyQuestion: {fileID: 1571860877}
@@ -63955,7 +63956,11 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0.00021362305, y: 0.000030517578}
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
   m_SizeDelta: {x: 60, y: 60}
+========
+  m_SizeDelta: {x: 100, y: 100}
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1759059405
 MonoBehaviour:
@@ -81290,6 +81295,13 @@ PrefabInstance:
       propertyPath: tooltip
       value: 
       objectReference: {fileID: 1463667785}
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+    - target: {fileID: 1104202743, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
     - target: {fileID: 1442772561, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
       value: 
@@ -81306,6 +81318,13 @@ PrefabInstance:
       propertyPath: tooltip
       value: 
       objectReference: {fileID: 1463667785}
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+    - target: {fileID: 1828740408, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
     - target: {fileID: 2025162703, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
       value: 
@@ -81314,6 +81333,25 @@ PrefabInstance:
       propertyPath: tooltip
       value: 
       objectReference: {fileID: 1463667785}
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+    - target: {fileID: 195130521209598110, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 195130521676179025, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 549519592986054018, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 549519593469483853, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
     - target: {fileID: 549519594580427113, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
       value: 
@@ -81322,6 +81360,21 @@ PrefabInstance:
       propertyPath: tooltip
       value: 
       objectReference: {fileID: 1463667785}
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+    - target: {fileID: 843301782320145348, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 843301782921016587, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 857321924403157609, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
     - target: {fileID: 857321924403157614, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -81345,6 +81398,13 @@ PrefabInstance:
     - target: {fileID: 857321924403157614, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -789.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 1085831572834002840, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 1085831572834002847, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchorMax.y
@@ -81369,6 +81429,25 @@ PrefabInstance:
     - target: {fileID: 1085831572834002847, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -789.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 1159578446877988454, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1463667785}
+    - target: {fileID: 1159578447396526733, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 1159578448005712962, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 1623471483851505913, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 1159578446877988454, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
@@ -81397,6 +81476,21 @@ PrefabInstance:
     - target: {fileID: 1623471483851505918, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -429.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 1631333230711925316, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1463667785}
+    - target: {fileID: 1631333231587962976, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 1631333232337725103, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 1631333230711925316, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
@@ -81425,6 +81519,13 @@ PrefabInstance:
     - target: {fileID: 1810524520132099289, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -789.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 1810524520132099294, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 1857270876722537648, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchorMax.y
@@ -81449,6 +81550,17 @@ PrefabInstance:
     - target: {fileID: 1857270876722537648, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -519.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 1857270876722537655, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 1864665565492780355, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 1864665565492780356, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchorMax.y
@@ -81497,6 +81609,21 @@ PrefabInstance:
     - target: {fileID: 1952496759472192762, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -429.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 1952496759472192765, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 1992774461903576047, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 1992774462250618144, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 1992774463495853828, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: item
@@ -81533,6 +81660,17 @@ PrefabInstance:
     - target: {fileID: 2003534341189278496, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -609.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 2003534341189278503, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 2008809370447369842, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 2008809370447369845, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchorMax.y
@@ -81557,6 +81695,25 @@ PrefabInstance:
     - target: {fileID: 2008809370447369845, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -699.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 2085915358539062612, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 2085915359014030235, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 2085915360134484415, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1463667785}
+    - target: {fileID: 2089749425498855433, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 2085915360134484415, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
@@ -81585,6 +81742,45 @@ PrefabInstance:
     - target: {fileID: 2089749425498855438, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -519.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 2196716643841217179, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 2196716644179936340, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 2196716644734126271, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1463667785}
+    - target: {fileID: 2366550216302499215, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1463667785}
+    - target: {fileID: 2366550217280278443, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 2366550217895827812, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424587261531619384, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1463667785}
+    - target: {fileID: 2424587262086859987, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 2424587262819785244, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 2196716644734126271, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
@@ -81621,6 +81817,37 @@ PrefabInstance:
     - target: {fileID: 2430836755655005992, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -699.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 2430836755655005999, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 2616369626019778713, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1463667785}
+    - target: {fileID: 2616369627324680893, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 2616369627648728178, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 2686134841403476125, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1463667785}
+    - target: {fileID: 2686134842691637945, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 2686134843032454262, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 2616369626019778713, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
@@ -81653,6 +81880,13 @@ PrefabInstance:
     - target: {fileID: 2993837183128308816, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -699.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 2993837183128308823, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 3174794706870425676, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: item
@@ -81666,6 +81900,25 @@ PrefabInstance:
       propertyPath: itemCount
       value: 0
       objectReference: {fileID: 0}
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+    - target: {fileID: 3174794708115620456, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 3174794708464768167, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190347614287389076, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 3190347615020382043, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
     - target: {fileID: 3190347615540984752, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
       value: 
@@ -81674,6 +81927,17 @@ PrefabInstance:
       propertyPath: tooltip
       value: 
       objectReference: {fileID: 1463667785}
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+    - target: {fileID: 3365230304446421706, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 3365230305173048325, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
     - target: {fileID: 3385588385162675080, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -81697,6 +81961,17 @@ PrefabInstance:
     - target: {fileID: 3385588385162675080, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -519.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 3385588385162675087, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 3453841739808802537, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 3453841739808802542, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchorMax.y
@@ -81745,6 +82020,17 @@ PrefabInstance:
     - target: {fileID: 3653821314024773352, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -519.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 3653821314024773359, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4130188088422394513, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 4130188088422394518, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchorMax.y
@@ -81793,6 +82079,29 @@ PrefabInstance:
     - target: {fileID: 4151185715650593826, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -609.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 4151185715650593829, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4362809386325422000, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1463667785}
+    - target: {fileID: 4362809387209880980, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4362809387953349467, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4495685026830904161, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 4362809386325422000, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
@@ -81821,6 +82130,61 @@ PrefabInstance:
     - target: {fileID: 4495685026830904166, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -699.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 4629679128979176396, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4629679129703705859, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4629679130258907624, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1463667785}
+    - target: {fileID: 4673030878379456897, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1463667785}
+    - target: {fileID: 4673030878931547498, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4673030879414969253, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4683521120498211409, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4683521120836865182, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4683521121358512245, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1463667785}
+    - target: {fileID: 4757775532873245131, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1463667785}
+    - target: {fileID: 4757775533392801056, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4757775533716847599, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4807710277588437554, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 4629679130258907624, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
@@ -81861,6 +82225,49 @@ PrefabInstance:
     - target: {fileID: 4807710277588437557, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -789.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 4815000049323247121, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1463667785}
+    - target: {fileID: 4815000049844931322, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4815000050183593013, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4827598955598138180, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1463667785}
+    - target: {fileID: 4827598956150196143, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4827598956893671776, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4908891506353626907, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4908891506702764500, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 4908891507222316351, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1463667785}
+    - target: {fileID: 5038685900882332809, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 4815000049323247121, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
@@ -81897,6 +82304,13 @@ PrefabInstance:
     - target: {fileID: 5038685900882332814, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -519.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 5144206922069857673, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 5144206922069857678, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchorMax.y
@@ -81921,6 +82335,13 @@ PrefabInstance:
     - target: {fileID: 5144206922069857678, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -429.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 5262470057591049040, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 5262470057591049047, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchorMax.y
@@ -81945,6 +82366,25 @@ PrefabInstance:
     - target: {fileID: 5262470057591049047, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -609.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 5735352130386435535, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1463667785}
+    - target: {fileID: 5735352131380987883, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 5735352131979759908, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 5745469666547693426, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 5735352130386435535, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
@@ -82002,6 +82442,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -609.3
       objectReference: {fileID: 0}
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+    - target: {fileID: 5957040019866199254, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 5979227148532616116, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 5979227148999204219, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
     - target: {fileID: 5979227150126991199, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
       value: 
@@ -82018,6 +82473,14 @@ PrefabInstance:
       propertyPath: itemCount
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6200907785201311882, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 6200907785525294661, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
     - target: {fileID: 6422039432092042121, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_IsActive
       value: 1
@@ -82030,6 +82493,13 @@ PrefabInstance:
       propertyPath: tooltip
       value: 
       objectReference: {fileID: 1463667785}
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+    - target: {fileID: 6422039432711117354, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
     - target: {fileID: 6422039432711117357, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -82142,6 +82612,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6605255605627396419, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
     - target: {fileID: 6605255605627396420, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -82189,6 +82663,37 @@ PrefabInstance:
     - target: {fileID: 6827426242200984664, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -429.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 6827426242200984671, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 6939707249194694567, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1463667785}
+    - target: {fileID: 6939707250189217155, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 6939707250787990348, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954775793809692947, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: tooltip
+      value: 
+      objectReference: {fileID: 1463667785}
+    - target: {fileID: 6954775794829476663, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 6954775795438671352, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 6939707249194694567, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
@@ -82222,10 +82727,36 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -429.3
       objectReference: {fileID: 0}
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+    - target: {fileID: 7319610341546930822, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 7456917960986245820, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 7456917961576557683, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
     - target: {fileID: 7456917962579572311, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
       value: 
       objectReference: {fileID: 1463667785}
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+    - target: {fileID: 7758384902403183101, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 7758384902876055346, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
     - target: {fileID: 7758384903430212569, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
       value: 
@@ -82234,10 +82765,28 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+    - target: {fileID: 8111992111101135685, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 8111992111557303690, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
     - target: {fileID: 8111992112112505185, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
       value: 
       objectReference: {fileID: 1463667785}
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+    - target: {fileID: 8435391779549332858, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
     - target: {fileID: 8435391779549332861, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchorMax.y
       value: 1
@@ -82286,6 +82835,21 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -609.3
       objectReference: {fileID: 0}
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+    - target: {fileID: 8456016920595998342, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 8570675638786376187, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 8570675639376697140, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
     - target: {fileID: 8570675639931902943, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
       value: 
@@ -82314,10 +82878,36 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: -789.3
       objectReference: {fileID: 0}
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+    - target: {fileID: 8623295935733320471, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 8638938055723648157, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 8638938056475513426, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
     - target: {fileID: 8638938057028656825, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
       value: 
       objectReference: {fileID: 1463667785}
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+    - target: {fileID: 8692998347878516466, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 8692998348217241661, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
     - target: {fileID: 8692998349504317977, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: tooltip
       value: 
@@ -82345,6 +82935,17 @@ PrefabInstance:
     - target: {fileID: 8699397099739094281, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -699.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 8699397099739094286, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+      objectReference: {fileID: 0}
+    - target: {fileID: 8775270696643266745, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 8775270696643266750, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchorMax.y
@@ -82369,6 +82970,13 @@ PrefabInstance:
     - target: {fileID: 8775270696643266750, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -609.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 8960117885521565099, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     - target: {fileID: 8960117885521565100, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchorMax.y
@@ -82417,6 +83025,13 @@ PrefabInstance:
     - target: {fileID: 9029889354373483944, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: -699.3
+<<<<<<<< HEAD:Assets/01.Scenes/hyungkuk.unity
+========
+      objectReference: {fileID: 0}
+    - target: {fileID: 9029889354373483951, guid: bc56ab843a9067348b17b82cb35597de, type: 3}
+      propertyPath: m_Layer
+      value: 29
+>>>>>>>> 749f84dee69f1aee54dd6afaca347147ebe2c515:Assets/01.Scenes/Play 3.unity
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bc56ab843a9067348b17b82cb35597de, type: 3}

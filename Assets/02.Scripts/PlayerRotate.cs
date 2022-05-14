@@ -23,7 +23,7 @@ public class PlayerRotate : MonoBehaviour
 
     void LateUpdate()  //플레이어가 카메라를 바라봄
     {
-        if (inventory.iDown || Weapons.isMeteo)
+        if (inventory.iDown || Weapons.isMeteo || SkillWindow.kDown)
             return;
         
             Vector3 playerRotate = Vector3.Scale(_camera.transform.forward, new Vector3(1, 0, 1));

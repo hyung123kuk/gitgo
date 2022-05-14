@@ -97,7 +97,7 @@ public class PlayerStat : MonoBehaviour
             _DEX += 25f;
             _INT += 5f;
         }
-        else if (playerST.CharacterType == PlayerST.Type.Archer)
+        else if (playerST.CharacterType == PlayerST.Type.Mage)
         {
             _STR += 10f;
             _DEX += 10f;

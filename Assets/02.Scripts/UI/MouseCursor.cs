@@ -23,6 +23,8 @@ public class MouseCursor : MonoBehaviour
         Init_Cursor();
     }
 
+    
+
     public void Init_Cursor()
     {
         Cursor.visible = false;

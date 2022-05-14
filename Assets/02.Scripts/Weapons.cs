@@ -35,6 +35,7 @@ public class Weapons : MonoBehaviour
     public float EnergyReady2; //3스킬 5초장전 시간재기
     public float EnergyChargingTime = 5f; //풀차징 제한시간
 
+    public int archer_skill4_Order = 0; //궁수 기모아 쏘기 스킬 차례
 
     [Header("궁수 관련")]
     public Transform arrowPos; //화살나가는위치
@@ -57,6 +58,8 @@ public class Weapons : MonoBehaviour
     public bool isIceage;
     public static bool isMeteo;
     public bool isMeteoShot;
+
+    public int mage_skill4_Order = 0; //마법사 메테오 스킬 차례
 
     [Header("마법사 관련")]
     public Transform MagicPos; //마법나가는위치
@@ -89,7 +92,7 @@ public class Weapons : MonoBehaviour
         Key3 = Input.GetButton("Key3"); //3번키 꾹
         Key3Up = Input.GetKeyUp(KeyCode.Alpha3);
 
-        if (type == Type.Range)
+        /*if (type == Type.Range)
         {
             BombArrow();
             EnergyArrow();
@@ -100,7 +103,7 @@ public class Weapons : MonoBehaviour
             IceAge();
             Meteo();
 
-        }
+        }*/
 
         if (attackdamage.Duration_Buff && playerST.ImWar)
         {
@@ -114,12 +117,12 @@ public class Weapons : MonoBehaviour
     }
     private void FixedUpdate()
     {
-        attackdamage.SkillPassedTimeFucn();
+        //attackdamage.SkillPassedTimeFucn(); (weapons스크립트의 117줄, attackDamage의125줄 , playerST의 553줄에 총 3개가 있어 쿨타임이 3배로 돌아갑니다. 그래서 2개 주석처리 해놨습니다. 문제시에 알려주세요)
     }
     //============================궁수스킬========================================
-    void BombArrow() //폭탄화살 궁수용
+    public void BombArrow() //폭탄화살 궁수용
     {
-        if (Key2 && !playerST.isDodge && !isEnergyReady && !PlayerST.isJump
+        if (!playerST.isDodge && !isEnergyReady && !PlayerST.isJump
             && !PlayerST.isStun && !playerST.isRun && attackdamage.Usable_Skill2)
         {
             StartCoroutine(BombArrowPlay());
@@ -140,16 +143,17 @@ public class Weapons : MonoBehaviour
         yield return new WaitForSeconds(0.5f);
         anim.SetBool("isBomb", false);
     }
-    void EnergyArrow()
+    public void EnergyArrow()
     {
-        if (Key3 && !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun &&
+        if (archer_skill4_Order == 0 &&  !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun &&
             attackdamage.Usable_Skill3)
         {
+            
             isEnergyReady = true;
             anim.SetBool("isReady", true);
             Arc3SkillBuff1.SetActive(true);
 
-            if (Key3 && EnergyReady < EnergyChargingTime)
+            if (EnergyReady < EnergyChargingTime)
             {
                 EnergyReady += Time.deltaTime;
                 EnergyReady2 += Time.deltaTime;
@@ -171,7 +175,7 @@ public class Weapons : MonoBehaviour
             }
         }
 
-        else if (Key3Up)
+        else if (archer_skill4_Order == 1)
         {
             isEnergyReady = false;
             
@@ -218,9 +222,9 @@ public class Weapons : MonoBehaviour
         anim.SetBool("isShot", false);
     }
     //============================================마법사 스킬=====================================================
-    void LightningBall()
+    public void LightningBall()
     {
-        if (Key1 && !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun && !playerST.isFlash && !isIceage &&
+        if ( !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun && !playerST.isFlash && !isIceage &&
            !isMeteo && attackdamage.Usable_Skill1)
         {
             StartCoroutine(LightningBallStart());
@@ -229,10 +233,11 @@ public class Weapons : MonoBehaviour
 
     IEnumerator LightningBallStart()
     {
+        attackdamage.Skill_1_Cool();
         isLightning = true;
         anim.SetBool("Skill1", true);
         yield return new WaitForSeconds(1.2f);
-        attackdamage.Skill_1_Cool();
+        
         GameObject darkball1 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation);
         GameObject darkball2 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation); 
         GameObject darkball3 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation); 
@@ -252,9 +257,9 @@ public class Weapons : MonoBehaviour
         isLightning = false;
         anim.SetBool("Skill1", false);
     }
-    void IceAge()
+    public void IceAge()
     {
-        if (Key2 && !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun && !isLightning && !playerST.isFlash &&
+        if ( !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun && !isLightning && !playerST.isFlash &&
            !isMeteo && attackdamage.Usable_Skill2)
         {
             StartCoroutine(IceAgeStart());
@@ -262,6 +267,7 @@ public class Weapons : MonoBehaviour
     }
     IEnumerator IceAgeStart()
     {
+        attackdamage.Skill_2_Cool();
         Mage2SkillReadyEff.SetActive(true);
         anim.SetBool("Skill2", true);
         isIceage = true;
@@ -272,7 +278,7 @@ public class Weapons : MonoBehaviour
         arrow.damage = attackdamage.Skill_2_Damamge();
         BoxCollider CCare = CCarea.GetComponent<BoxCollider>(); //cc기 콜라이더 활성화
         CCare.enabled = true;
-        attackdamage.Skill_2_Cool();
+        
         Mage2SkillReadyEff.SetActive(false);
         Mage2SkillEff.SetActive(true);
         yield return new WaitForSeconds(0.2f);
@@ -284,12 +290,12 @@ public class Weapons : MonoBehaviour
         yield return new WaitForSeconds(1f);
         Mage2SkillEff.SetActive(false);
     }
-    void Meteo()
+    public void Meteo()
     {
-        if (Key3Up||Key3 && !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun && !playerST.isFlash
+        if ((mage_skill4_Order ==0|| mage_skill4_Order==1) && !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun && !playerST.isFlash
             && !isLightning && !isIceage && attackdamage.Usable_Skill3)
         {
-            if (Key3 && MeteoCasting < MeteoMaxCasting)
+            if (mage_skill4_Order==0 && MeteoCasting < MeteoMaxCasting)
             {
                 isMeteo = true;
                 Mage3SkillPlayerEff.SetActive(true);
@@ -298,7 +304,7 @@ public class Weapons : MonoBehaviour
                 Mage3SkillPosEff.SetActive(true);
                 MeteoCasting += Time.deltaTime;
             }
-            else if (Key3Up && !isMeteoShot)
+            else if (mage_skill4_Order==1 && !isMeteoShot)
             {
                 MeteoCasting = 0f;
                 isMeteo = false;
@@ -309,6 +315,7 @@ public class Weapons : MonoBehaviour
             }
             if (MeteoCasting > MeteoMaxCasting)
             {
+                Debug.Log("메테오!!");
                 isMeteoShot = true;
                 anim.SetBool("Skill31", true);
                 GameObject meteo = Instantiate(Mage3SkillEff, Mage3SkillPos2.position, Mage3SkillPos2.rotation);

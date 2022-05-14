@@ -239,9 +239,9 @@ public class PlayerST : MonoBehaviour
     }
 
     //==================================여기서부터 전사스킬=======================================
-    void Block() //방패 치기
+    public void Block() //방패 치기
     {
-        if (f2Down && !isRush && !isAura && !isJump && !isDodge && !isStun && !isRun &&
+        if (!isRush && !isAura && !isJump && !isDodge && !isStun && !isRun &&
              attackdamage.Usable_Skill1)
         {
             StartCoroutine(BlockPlay());
@@ -249,6 +249,7 @@ public class PlayerST : MonoBehaviour
     }
     IEnumerator BlockPlay()
     {
+        attackdamage.Skill_1_Cool();
         anim.SetBool("isBlock", true);
         isBlock = true;
         isDamage = true;
@@ -263,20 +264,20 @@ public class PlayerST : MonoBehaviour
         anim.SetBool("isBlock", false);
         isBlock = false;
         isDamage = false;
-        attackdamage.Skill_1_Cool();  //방패치기쿨타임
+        //attackdamage.Skill_1_Cool();  //방패치기쿨타임
     }
-    void Buff()
+    public void Buff()
     {
-        if (Key1 && !isRush && !isAura && !isJump && !isDodge && !isBlock && !isStun && !isRun &&
+        if (!isRush && !isAura && !isJump && !isDodge && !isBlock && !isStun && !isRun &&
             attackdamage.Usable_Buff)
         {
             attackdamage.Skill_Buff_Cool();
             BuffEff.SetActive(true);
         }
     }
-    void Rush()
+    public void Rush()
     {
-        if (Key2 && !isYes && !isJump && !isDodge && !isBlock && !isAura && !isStun && !isRun &&
+        if (!isYes && !isJump && !isDodge && !isBlock && !isAura && !isStun && !isRun &&
             attackdamage.Usable_Skill2)
         {
             attackdamage.Skill_2_Cool();  //돌진쿨타임
@@ -309,9 +310,9 @@ public class PlayerST : MonoBehaviour
         RushEff.SetActive(false);
 
     }
-    void Aura()
+    public void Aura()
     {
-        if (Key3 && !isRun && !isJump && !isDodge && !isBlock && !isRush && !isStun &&
+        if (!isRun && !isJump && !isDodge && !isBlock && !isRush && !isStun &&
             attackdamage.Usable_Skill3)
         {
             attackdamage.Skill_3_Cool();
@@ -339,9 +340,9 @@ public class PlayerST : MonoBehaviour
         anim.SetBool("isAura", false);
     }
     //==================================여기서부터 궁수스킬=======================================
-    void Smoke() //마우스 우클릭 연막
+    public void Smoke() //마우스 우클릭 연막
     {
-        if (f2Down && !isJump && !isDodge && !isStun && !isRun && attackdamage.Usable_Skill1)
+        if ( !isJump && !isDodge && !isStun && !isRun && attackdamage.Usable_Skill1)
         {
             StartCoroutine(SmokePlay());
         }
@@ -373,17 +374,17 @@ public class PlayerST : MonoBehaviour
         isBackStep = false;
         isFall = false;
     }
-    void PoisonArrow()
+    public void PoisonArrow()
     {
-        if (Key1 && !isStun && !isRun && attackdamage.Usable_Buff)
+        if (!isStun && !isRun && attackdamage.Usable_Buff)
         {
             attackdamage.Skill_Buff_Cool();
         }
     }
     //==================================여기서부터 마법사스킬=======================================
-    void Flash()
+    public void Flash()
     {
-        if (f2Down && !isDodge && !isJump && !isRun && !isStun && !weapons.isLightning && !weapons.isIceage && !Weapons.isMeteo &&
+        if (!isDodge && !isJump && !isRun && !isStun && !weapons.isLightning && !weapons.isIceage && !Weapons.isMeteo &&
             attackdamage.Usable_Teleport)
         {
             StartCoroutine(FlashStart());
@@ -425,7 +426,7 @@ public class PlayerST : MonoBehaviour
     private void Update()
     {
         ImWar = CharacterType == Type.Warrior;
-        if (inventory.iDown)
+        if (inventory.iDown || SkillWindow.kDown)
             return;
         if (!NPC.isNPCRange)
             Cursor.lockState = CursorLockMode.Locked;//마우스커서 고정
@@ -457,27 +458,28 @@ public class PlayerST : MonoBehaviour
         WarriorMove(); //전사이동제한
         ArcherMove(); //궁수이동제한
         MageMove(); //마법사이동제한
-        SkillClass(); //스킬직업제한
+
+        //SkillClass(); //스킬직업제한
     }
-    void SkillClass()
-    {
-        if (CharacterType == Type.Warrior)
-        {
-            Block(); //방패치기
-            Buff(); //폭주스킬
-            Rush(); //돌진스킬
-            Aura(); //검기스킬
-        }
-        else if (CharacterType == Type.Archer)
-        {
-            Smoke(); //섬광탄백스텝
-            PoisonArrow(); //독화살버프
-        }
-        else if (CharacterType == Type.Mage)
-        {
-            Flash(); //점멸
-        }
-    }
+    //void SkillClass()
+    //{
+    //    if (CharacterType == Type.Warrior)
+    //    {
+    //        Block(); //방패치기
+    //        Buff(); //폭주스킬
+    //        Rush(); //돌진스킬
+    //        Aura(); //검기스킬
+    //    }
+    //    else if (CharacterType == Type.Archer)
+    //    {
+    //        Smoke(); //섬광탄백스텝
+    //        PoisonArrow(); //독화살버프
+    //    }
+    //    else if (CharacterType == Type.Mage)
+    //    {
+    //        Flash(); //점멸
+    //    }
+    //}
     void MageMove()
     {
         if (!isStun && !weapons.isLightning && !weapons.isIceage && !Weapons.isMeteo
@@ -547,7 +549,7 @@ public class PlayerST : MonoBehaviour
 
     void FixedUpdate()
     {
-        attackdamage.SkillPassedTimeFucn();
+        //attackdamage.SkillPassedTimeFucn(); (weapons스크립트의 117줄, attackDamage의125줄 , playerST의 553줄에 총 3개가 있어 쿨타임이 3배로 돌아갑니다. 그래서 2개 주석처리 해놨습니다. 문제시에 알려주세요)
         FreezeVelocity();
     }
 

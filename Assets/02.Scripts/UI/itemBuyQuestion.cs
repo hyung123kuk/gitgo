@@ -21,7 +21,7 @@ public class itemBuyQuestion : MonoBehaviour , IPointerClickHandler
     private PlayerStat playerStat;
 
     bool isPortionWindow = false;
-    // Start is called before the first frame update
+
     void Start()
     {
         inven = FindObjectOfType<inventory>();
@@ -31,7 +31,6 @@ public class itemBuyQuestion : MonoBehaviour , IPointerClickHandler
 
     
 
-    // Update is called once per frame
     void Update()
     {
 

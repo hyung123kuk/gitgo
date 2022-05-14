@@ -40,6 +40,7 @@ public class AllUI : MonoBehaviour
                UIWIndow[i].SetActive(false);
             }
             inventory.iDown = false;
+            SkillWindow.kDown = false;
             itemStore.sellButton = false;
             MouseCursor.transform_cursor.gameObject.SetActive(false);
             MouseCursor.SetNormalCursor();
