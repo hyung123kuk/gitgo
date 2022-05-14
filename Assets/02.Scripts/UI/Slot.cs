@@ -479,7 +479,10 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
 
     public void OnDrop(PointerEventData eventData)
     {
+        
         if (DragSlot.instance.dragSlot == null)
+            return;
+        if (DragSlot.instance.dragSlot.gameObject == gameObject)
             return;
         //판매    
         if (gameObject.tag == "sellslot")
@@ -717,9 +720,10 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
                 if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("inven")) //인벤에서 옮길때
                 {
                     gameObject.GetComponent<QuikSlot>().skill.skill = null;
+                    
                     ChangeSlot();
                 }
-                else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot")) // 퀵슬롯 끼리 옮길때
+                else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot")) // 퀵슬롯 끼리 옮길때 (물약을 드래그해 스킬이있는 퀵슬롯에 드랍할때)
                 {
                     DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().skill.skill= gameObject.GetComponent<QuikSlot>().skill.skill;
                     gameObject.GetComponent<QuikSlot>().skill.ClearSlot();
@@ -729,8 +733,16 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
                     DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().slot.item = null;
                     DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().slot.itemCount = 0;
                     DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().slot.text_Count.text = "";
+
+
+                   
                     Debug.Log("dd");
                 }
+                gameObject.GetComponent<QuikSlot>().setCoolImage();
+                if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot"))
+                      DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().setCoolImage();
+
+
             }
             else
             {

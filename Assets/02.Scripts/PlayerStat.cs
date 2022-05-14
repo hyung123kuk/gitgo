@@ -38,7 +38,8 @@ public class PlayerStat : MonoBehaviour
     private GameUI gameUI;
     public Slot[] equSlots;
 
- 
+    
+
     void Start()
     {
         playerST = GetComponent<PlayerST>();
@@ -94,7 +95,7 @@ public class PlayerStat : MonoBehaviour
             _DEX += 25f;
             _INT += 5f;
         }
-        else if (playerST.CharacterType == PlayerST.Type.Archer)
+        else if (playerST.CharacterType == PlayerST.Type.Mage)
         {
             _STR += 10f;
             _DEX += 10f;
@@ -277,7 +278,7 @@ public class PlayerStat : MonoBehaviour
             _Mp = 0;
             Debug.Log("마나가 없다");
         }
-        //gameUI.bar_set();
+        gameUI.bar_set();
     }
 
 }

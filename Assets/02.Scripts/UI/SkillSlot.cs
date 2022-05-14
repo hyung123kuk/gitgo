@@ -142,7 +142,9 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             skill = DragSkillSlot.instance.dragSkillSlot.skill;
             imageSkill.sprite = skill.SkillImage;
             SetColor(1);
-            
+           
+
+
         }
 
 
@@ -165,10 +167,12 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 DragSkillSlot.instance.dragSkillSlot.SetColor(1);
                 SetColor(1);
                 instanceSlot.itemImage.sprite = instanceSlot.item.itemImage;
-                return;
+
+             
+                
             }
 
-            if (skill != null)
+            else if (skill != null)
             {
                 SkillUI instanceSkill = DragSkillSlot.instance.dragSkillSlot.skill;
                 Debug.Log("1");
@@ -177,22 +181,27 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 skill = instanceSkill;
                 imageSkill.sprite = skill.SkillImage;
                 SetColor(1);
+          
             }
-            if (skill == null)
+            else if (skill == null)
             {
                 SkillUI instanceSkill = DragSkillSlot.instance.dragSkillSlot.skill;
                 DragSkillSlot.instance.dragSkillSlot.ClearSlot();
                 skill = instanceSkill;
                 imageSkill.sprite = skill.SkillImage;
                 SetColor(1);
+                
             }
-            
-            
+           
+
+
 
         }
 
-        
-
+        gameObject.GetComponent<QuikSlot>().setCoolImage();
+        if(DragSkillSlot.instance.dragSkillSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot") )
+            DragSkillSlot.instance.dragSkillSlot.gameObject.GetComponent<QuikSlot>().setCoolImage();
+            
     }
 
     public void SetColor(float _alpha)

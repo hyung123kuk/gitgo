@@ -21,19 +21,25 @@ public class AttackDamage : MonoBehaviour
 
 
     [SerializeField]
-    [Header("��ų �⺻ ��Ÿ��")]
-    [Header("       ������� ��Ŭ����ų")]
+    [Header("스킬 기본 쿨타임")]
+    [Header("       마법사 텔레포트")]
     private float Skill_Teleport_cooltime = 5;    
     public bool Usable_Teleport = true;
+    [Header("스킬 사용 마나")]
+    [SerializeField]
+    private float Skill_TelePort_Mp = 50;
 
 
     [SerializeField]
-    [Header("��ų �⺻ ��Ÿ��")]
-    [Header("       ������ �Դϴ�")]
+    [Header("스킬 기본 쿨타임")]
+    [Header("       닷지 스킬")]
     private float Skill_Dodge_cooltime = 10;    
     public bool Usable_Dodge = true;
+    [Header("스킬 사용 마나")]
+    [SerializeField]
+    private float Skill_Dodge_Mp = 50;
 
-    
+
     [Header("스킬 퍼뎀")]
     [Header("       1번 스킬")]
     [SerializeField]
@@ -117,10 +123,10 @@ public class AttackDamage : MonoBehaviour
     void Start()
     {
         playerStat = FindObjectOfType<PlayerStat>();
-       // Skill_Buff_Cool();
+
         
     }
-    private void Update()
+    private void FixedUpdate()
     {
         SkillPassedTimeFucn();
         
@@ -222,12 +228,14 @@ public class AttackDamage : MonoBehaviour
     }
     public void Skill_Mage_Teleport_Cool()
     {
+        playerStat.SkillMp(Skill_TelePort_Mp);
         SkillTeleport_time = Skill_Teleport_cooltime - Skill_Teleport_cooltime * playerStat._SKILL_COOLTIME_DEC_PER / 100;
         SkillTeleport_passedTime = 0f;
         Usable_Teleport = false;
     }
     public void Skill_Dodge_Cool()
     {
+        playerStat.SkillMp(Skill_Dodge_Mp);
         SkillDodge_time = Skill_Dodge_cooltime - Skill_Dodge_cooltime * playerStat._SKILL_COOLTIME_DEC_PER / 100;
         SkillDodge_passedTime = 0f;
         Usable_Dodge = false;
