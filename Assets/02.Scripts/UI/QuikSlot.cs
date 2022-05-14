@@ -155,6 +155,7 @@ public class QuikSlot : MonoBehaviour
             yield return new WaitForSeconds(0.02f);
             
         }
+        CoolTimeImage.fillAmount = 0f;
         yield return null;
     }
 
@@ -170,6 +171,7 @@ public class QuikSlot : MonoBehaviour
             yield return new WaitForSeconds(0.02f);
 
         }
+        CoolTimeImage.fillAmount = 0f;
         yield return null;
     }
 
@@ -185,6 +187,7 @@ public class QuikSlot : MonoBehaviour
             yield return new WaitForSeconds(0.02f);
 
         }
+        CoolTimeImage.fillAmount = 0f;
         yield return null;
     }
 
@@ -200,6 +203,7 @@ public class QuikSlot : MonoBehaviour
             yield return new WaitForSeconds(0.02f);
 
         }
+        CoolTimeImage.fillAmount = 0f;
         yield return null;
     }
 
@@ -215,6 +219,7 @@ public class QuikSlot : MonoBehaviour
             yield return new WaitForSeconds(0.02f);
 
         }
+        CoolTimeImage.fillAmount = 0f;
         yield return null;
     }
 
@@ -230,6 +235,7 @@ public class QuikSlot : MonoBehaviour
             yield return new WaitForSeconds(0.02f);
 
         }
+        CoolTimeImage.fillAmount = 0f;
         yield return null;
     }
 
