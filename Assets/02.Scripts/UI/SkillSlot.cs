@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler , IPointerEnterHandler , IPointerExitHandler
 {
     [SerializeField]
     public Image imageSkill;
@@ -22,6 +22,8 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private SkillUI[] Mage_skills;
     [SerializeField]
     private SkillUI[] Common_skills;
+    [SerializeField]
+    public SkillToolTip skillToolTip;
 
 
 
@@ -29,6 +31,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     void Start()
     {
         playerST = FindObjectOfType<PlayerST>();
+        skillToolTip = FindObjectOfType<SkillToolTip>();
         SkillSet();
 
     }
@@ -190,6 +193,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 skill = instanceSkill;
                 imageSkill.sprite = skill.SkillImage;
                 SetColor(1);
+
           
             }
             else if (skill == null)
@@ -201,16 +205,16 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 SetColor(1);
                 
             }
-           
 
 
+            skillToolTip.ToolTipOff();
 
         }
         if (gameObject.layer == LayerMask.NameToLayer("quikSlot"))
             gameObject.GetComponent<QuikSlot>().setCoolImage();
         if(DragSkillSlot.instance.dragSkillSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot") )
             DragSkillSlot.instance.dragSkillSlot.gameObject.GetComponent<QuikSlot>().setCoolImage();
-            
+        
     }
 
     public void SetColor(float _alpha)
@@ -229,5 +233,29 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void Setimage()
     {
         imageSkill.sprite = skill.SkillImage;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (skill != null)
+        {
+
+            Vector2 SkillPosition;
+            SkillPosition = eventData.position;
+            if (eventData.position.x + 400f > 1920f)
+                SkillPosition.x = 1920f - 400f;
+            if (eventData.position.y - 500f < 0f)
+                SkillPosition.y = 500f;
+            skillToolTip.ToolTipOn(skill, SkillPosition); // 인벤토리는  0 , 아이템판매창은 1  // 판매골드가 다르게 나오기 때문이다.
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (skill != null)
+        {
+
+            skillToolTip.ToolTipOff();
+        }
     }
 }

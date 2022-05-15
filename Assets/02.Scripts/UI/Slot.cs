@@ -750,6 +750,8 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             }
 
         }
+        if (gameObject.layer == LayerMask.NameToLayer("quikSlot"))
+            gameObject.GetComponent<QuikSlot>().skill.skillToolTip.ToolTipOff();
         tooltip.ToolTipOff();
         playerStat.StatAllUpdate();
         gameUI.bar_set();

@@ -10,8 +10,12 @@ public class SkillUI : ScriptableObject
     public  SkillCharacter skillCharacter;
     public int skillNum;
     public int Level;
-   
-    
+    public string skillName;
+    public enum SkillType { Attack, Buff, Move}
+    public SkillType skillType;
+
+    [TextArea]
+    public string skillText;
 
     
 }
