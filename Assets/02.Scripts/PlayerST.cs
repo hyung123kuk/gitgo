@@ -215,11 +215,12 @@ public class PlayerST : MonoBehaviour
         }
     }
 
-    void Dodge()
+    public void Dodge()
     {
-        if (Ddown && !isStun && !isJump && !isBlock && !isBackStep && !weapons.isEnergyReady && !isRush && !isAura && !isFlash &&
+        if ( !isStun && !isJump && !isBlock && !isBackStep && !weapons.isEnergyReady && !isRush && !isAura && !isFlash &&
            !weapons.isLightning && !weapons.isIceage && !Weapons.isMeteo && attackdamage.Usable_Dodge)
         {
+            attackdamage.Skill_Dodge_Cool();
             dodgeVec = moveVec;
             speed *= 2;
             anim.SetTrigger("doDodge");
@@ -232,7 +233,7 @@ public class PlayerST : MonoBehaviour
 
     void DodgeOut()
     {
-        attackdamage.Skill_Dodge_Cool();
+        
         speed *= 0.5f;
         isDodge = false;
         isDamage = false;
@@ -454,7 +455,7 @@ public class PlayerST : MonoBehaviour
         Anima(); //애니메이션
         Attack(); //근접 공격
         Jump(); //점프
-        Dodge(); //구르기
+        //Dodge(); //구르기
         WarriorMove(); //전사이동제한
         ArcherMove(); //궁수이동제한
         MageMove(); //마법사이동제한

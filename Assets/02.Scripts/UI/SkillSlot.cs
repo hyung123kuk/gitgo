@@ -19,7 +19,8 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private SkillUI[] Archer_skills;
     [SerializeField]
     private SkillUI[] Mage_skills;
-
+    [SerializeField]
+    private SkillUI[] Common_skills;
 
 
 
@@ -91,7 +92,13 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 skill = Mage_skills[3];
             }
         }
-        if(skill!=null)
+        
+        if(gameObject.tag == "DodgeSlot")
+        {
+            skill = Common_skills[0];
+        }
+
+        if (skill!=null)
         imageSkill.sprite = skill.SkillImage;
     }
 

@@ -6,7 +6,7 @@ using UnityEngine;
 public class SkillUI : ScriptableObject
 {
     public Sprite SkillImage;
-    public enum SkillCharacter { Warrior,Archer,Mage}
+    public enum SkillCharacter { Warrior,Archer,Mage,Common}
     public  SkillCharacter skillCharacter;
     public int skillNum;
     public int Level;

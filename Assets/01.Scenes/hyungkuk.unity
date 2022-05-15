@@ -4729,6 +4729,7 @@ MonoBehaviour:
   Warrior_skills: []
   Archer_skills: []
   Mage_skills: []
+  Common_skills: []
 --- !u!114 &157292278
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8842,6 +8843,7 @@ MonoBehaviour:
   Warrior_skills: []
   Archer_skills: []
   Mage_skills: []
+  Common_skills: []
 --- !u!114 &256315350
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11380,6 +11382,81 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1778994357615247706, guid: ef62619642b0df743b22dd5120c6ac4d, type: 3}
   m_PrefabInstance: {fileID: 322982586}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &323315422
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 323315423}
+  - component: {fileID: 323315425}
+  - component: {fileID: 323315424}
+  m_Layer: 31
+  m_Name: Image
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &323315423
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 323315422}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 641387525}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 12, y: 12}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &323315424
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 323315422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: c46be55a65cb30e44b7c89e3c0d531da, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &323315425
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 323315422}
+  m_CullTransparentMesh: 1
 --- !u!1001 &324744888
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -11850,7 +11927,7 @@ RectTransform:
   m_Children:
   - {fileID: 891249057}
   m_Father: {fileID: 2039120500}
-  m_RootOrder: 1
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -11887,6 +11964,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1571e13792a0a374f8f7445fcb855499, type: 2}
   - {fileID: 11400000, guid: 1431a879dff3d434db53a6f74755cc65, type: 2}
   - {fileID: 11400000, guid: eb71e6052ab21464c9043ecadfb412a5, type: 2}
+  Common_skills: []
 --- !u!114 &334116974
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13086,7 +13164,7 @@ RectTransform:
   m_Children:
   - {fileID: 616193619}
   m_Father: {fileID: 2039120500}
-  m_RootOrder: 2
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -13123,6 +13201,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1571e13792a0a374f8f7445fcb855499, type: 2}
   - {fileID: 11400000, guid: 1431a879dff3d434db53a6f74755cc65, type: 2}
   - {fileID: 11400000, guid: eb71e6052ab21464c9043ecadfb412a5, type: 2}
+  Common_skills: []
 --- !u!114 &374519683
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18801,6 +18880,7 @@ MonoBehaviour:
   Warrior_skills: []
   Archer_skills: []
   Mage_skills: []
+  Common_skills: []
 --- !u!114 &533446837
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -22974,6 +23054,115 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1778994357615247706, guid: ef62619642b0df743b22dd5120c6ac4d, type: 3}
   m_PrefabInstance: {fileID: 641198266}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &641387524
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 641387525}
+  - component: {fileID: 641387528}
+  - component: {fileID: 641387527}
+  - component: {fileID: 641387526}
+  m_Layer: 31
+  m_Name: CommonSkill
+  m_TagString: DodgeSlot
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &641387525
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641387524}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children:
+  - {fileID: 323315423}
+  m_Father: {fileID: 2039120500}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -75.6, y: 0.1}
+  m_SizeDelta: {x: 15, y: 15}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &641387526
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641387524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d97d6b40c4b0a6b45a4fb14cd9908a0f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  imageSkill: {fileID: 323315424}
+  playerST: {fileID: 0}
+  skill: {fileID: 0}
+  Warrior_skills:
+  - {fileID: 11400000, guid: 5376947d492ed3d4e857531164150da3, type: 2}
+  - {fileID: 11400000, guid: 2a5af27697898bc488f9860d1d9fc071, type: 2}
+  - {fileID: 11400000, guid: 7292f57919cb5414d96ad9c9602e107a, type: 2}
+  - {fileID: 11400000, guid: e021f2343089bc64da7ce50103bfc43c, type: 2}
+  Archer_skills:
+  - {fileID: 11400000, guid: 0ebaef3079f711545a0a8b0cc6b2cddb, type: 2}
+  - {fileID: 11400000, guid: eeea81e2d727f78449f47270aef2db97, type: 2}
+  - {fileID: 11400000, guid: 454666d3db0c4c547bfcaf70b7076647, type: 2}
+  - {fileID: 11400000, guid: fd60ebd2fbeb33141a64833e2af422e4, type: 2}
+  Mage_skills:
+  - {fileID: 11400000, guid: 9fea0461334e26044899047384a74da8, type: 2}
+  - {fileID: 11400000, guid: 1571e13792a0a374f8f7445fcb855499, type: 2}
+  - {fileID: 11400000, guid: 1431a879dff3d434db53a6f74755cc65, type: 2}
+  - {fileID: 11400000, guid: eb71e6052ab21464c9043ecadfb412a5, type: 2}
+  Common_skills:
+  - {fileID: 11400000, guid: 1991413c575c83c4e9950ca322229f1b, type: 2}
+--- !u!114 &641387527
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641387524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 21300000, guid: 9a38d34966735d24e9cda5ecb0a183bc, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &641387528
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 641387524}
+  m_CullTransparentMesh: 1
 --- !u!1 &643116395
 GameObject:
   m_ObjectHideFlags: 0
@@ -24538,6 +24727,7 @@ MonoBehaviour:
   Warrior_skills: []
   Archer_skills: []
   Mage_skills: []
+  Common_skills: []
 --- !u!114 &698189596
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -34203,7 +34393,7 @@ RectTransform:
   m_Children:
   - {fileID: 1386454151}
   m_Father: {fileID: 2039120500}
-  m_RootOrder: 0
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -34278,6 +34468,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1571e13792a0a374f8f7445fcb855499, type: 2}
   - {fileID: 11400000, guid: 1431a879dff3d434db53a6f74755cc65, type: 2}
   - {fileID: 11400000, guid: eb71e6052ab21464c9043ecadfb412a5, type: 2}
+  Common_skills: []
 --- !u!1001 &933568500
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -44471,7 +44662,7 @@ RectTransform:
   m_Children:
   - {fileID: 412885984}
   m_Father: {fileID: 2039120500}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -44508,6 +44699,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 1571e13792a0a374f8f7445fcb855499, type: 2}
   - {fileID: 11400000, guid: 1431a879dff3d434db53a6f74755cc65, type: 2}
   - {fileID: 11400000, guid: eb71e6052ab21464c9043ecadfb412a5, type: 2}
+  Common_skills: []
 --- !u!114 &1176286198
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -49173,6 +49365,7 @@ MonoBehaviour:
   Warrior_skills: []
   Archer_skills: []
   Mage_skills: []
+  Common_skills: []
 --- !u!1 &1309060108
 GameObject:
   m_ObjectHideFlags: 0
@@ -53554,6 +53747,7 @@ MonoBehaviour:
   Warrior_skills: []
   Archer_skills: []
   Mage_skills: []
+  Common_skills: []
 --- !u!114 &1434933033
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -74411,6 +74605,7 @@ RectTransform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
+  - {fileID: 641387525}
   - {fileID: 932632227}
   - {fileID: 334116972}
   - {fileID: 374519681}
@@ -74420,7 +74615,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 51.6, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!4 &2041682566 stripped
@@ -78443,6 +78638,7 @@ MonoBehaviour:
   Warrior_skills: []
   Archer_skills: []
   Mage_skills: []
+  Common_skills: []
 --- !u!114 &2137304666
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81316,7 +81512,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3379963180220227841, guid: 6217c9f3ffe726242863aad8be4e319e, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3379963180220227847, guid: 6217c9f3ffe726242863aad8be4e319e, type: 3}
       propertyPath: m_Enabled
@@ -83311,7 +83507,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8007892901880628136, guid: fdc4ab9b8444ada4b88f078a307e9400, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8007892901880628150, guid: fdc4ab9b8444ada4b88f078a307e9400, type: 3}
       propertyPath: m_RootOrder

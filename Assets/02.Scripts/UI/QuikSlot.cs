@@ -55,7 +55,8 @@ public class QuikSlot : MonoBehaviour
     
     void Update()
     {
-
+        if (inventory.iDown || SkillWindow.kDown)
+            return;
 
 
         if (slot.item!=null && Input.GetButtonDown(gameObject.tag)) //아이템 사용
@@ -124,6 +125,15 @@ public class QuikSlot : MonoBehaviour
                 if (skill.skill.skillNum == 1) { playerST.Flash(); StartCoroutine(Telleport()); }
                 else if (skill.skill.skillNum == 2) { weapons.LightningBall(); StartCoroutine(Skill1()); }
                 else if (skill.skill.skillNum == 3) { weapons.IceAge(); StartCoroutine(Skill2()); }
+
+            }
+            #endregion
+
+            #region 공용 스킬
+            if (skill.skill.skillCharacter == SkillUI.SkillCharacter.Common)
+            {
+                if (skill.skill.skillNum == 0) { playerST.Dodge(); StartCoroutine(Dodge()); }
+
 
             }
             #endregion
@@ -239,6 +249,20 @@ public class QuikSlot : MonoBehaviour
         yield return null;
     }
 
+    IEnumerator Dodge()
+    {
+        float fillmount6 = 1 - attckDamage.SkillDodge_passedTime / attckDamage.SkillDodge_time;
+        while (fillmount6 >= 0f)
+        {
+            fillmount6 = 1 - attckDamage.SkillDodge_passedTime / attckDamage.SkillDodge_time;
+            if (fillmount6 != 1)
+                CoolTimeImage.fillAmount = fillmount6;
 
+            yield return new WaitForSeconds(0.02f);
+
+        }
+        CoolTimeImage.fillAmount = 0f;
+        yield return null;
+    }
 }
 
