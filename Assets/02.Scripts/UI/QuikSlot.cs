@@ -21,8 +21,9 @@ public class QuikSlot : MonoBehaviour
 
     [SerializeField]
     private AttackDamage attckDamage;
+    [SerializeField]
+    private BuffSkillUI[] buffSkillUI;
 
-    
 
     void Start()
     {
@@ -31,6 +32,7 @@ public class QuikSlot : MonoBehaviour
         playerST = FindObjectOfType<PlayerST>();
         weapons = FindObjectOfType<Weapons>();
         attckDamage = FindObjectOfType<AttackDamage>();
+        buffSkillUI = FindObjectsOfType<BuffSkillUI>();
 
     }
 
@@ -104,7 +106,7 @@ public class QuikSlot : MonoBehaviour
             if(skill.skill.skillCharacter == SkillUI.SkillCharacter.Warrior)
             {
                 if(skill.skill.skillNum == 1 && attckDamage.Usable_Skill1) { playerST.Block(); StartCoroutine(Skill1()); }
-                else if (skill.skill.skillNum == 2) { playerST.Buff(); StartCoroutine(Buff()); }
+                else if (skill.skill.skillNum == 2) { playerST.Buff(); StartCoroutine(Buff()) ; buffSkillUI[0].BuffOn(BuffSkillUI.BuffSkills.WarriorBuff1, CoolTimeImage.sprite); }
                 else if (skill.skill.skillNum == 3) { playerST.Rush(); StartCoroutine(Skill2()); }
                 else if (skill.skill.skillNum == 4) { playerST.Aura(); StartCoroutine(Skill3()); }
 
@@ -114,7 +116,7 @@ public class QuikSlot : MonoBehaviour
             if (skill.skill.skillCharacter == SkillUI.SkillCharacter.Archer)
             {
                 if (skill.skill.skillNum == 1) { playerST.Smoke(); StartCoroutine(Skill1()); }
-                else if (skill.skill.skillNum == 2) { playerST.PoisonArrow(); StartCoroutine(Buff()); }
+                else if (skill.skill.skillNum == 2) { playerST.PoisonArrow(); StartCoroutine(Buff()); buffSkillUI[0].BuffOn(BuffSkillUI.BuffSkills.ArcherBuff1 , CoolTimeImage.sprite); }
                 else if (skill.skill.skillNum == 3) { weapons.BombArrow(); StartCoroutine(Skill2()); }
 
             }

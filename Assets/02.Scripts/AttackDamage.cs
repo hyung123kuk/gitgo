@@ -13,7 +13,7 @@ public class AttackDamage : MonoBehaviour
     public bool Usable_Buff = true;
     [Header("스킬 지속 시간")]
     [SerializeField]
-    private float Skill_Buff_duration = 3;
+    public float Skill_Buff_duration = 3;
     public bool Duration_Buff = false;
     [Header("스킬 사용 마나")]
     [SerializeField]

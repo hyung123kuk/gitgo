@@ -13,6 +13,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [SerializeField]
     public SkillUI skill;
 
+
     [SerializeField]
     private SkillUI[] Warrior_skills;
     [SerializeField]
