@@ -47,15 +47,15 @@ public class PlayerStat : MonoBehaviour
         playerST = GetComponent<PlayerST>();
         inven = FindObjectOfType<inventory>();
         gameUI = FindObjectOfType<GameUI>();
-        //StatAllUpdate();
+        StatAllUpdate();
         TotalExp = LevelExp();
         _Hp = _MAXHP;
         _Mp = _MAXMP;
-       //gameUI.Hp_bar.text.text = (int)_Hp + "/" + (int)_MAXHP;
-       //gameUI.Mp_bar.text.text = (int)_Mp + "/" + (int)_MAXMP;
-       //gameUI.level_Text.text = "LV." + Level;
-       //gameUI.Exp_Text.text = (int)NowExp + "/" + (int)TotalExp +"  ("+ (int)(NowExp / TotalExp * 100) + "%)" ; 
-       //gameUI.ExpSet();
+       gameUI.Hp_bar.text.text = (int)_Hp + "/" + (int)_MAXHP;
+       gameUI.Mp_bar.text.text = (int)_Mp + "/" + (int)_MAXMP;
+       gameUI.level_Text.text = "LV." + Level;
+       gameUI.Exp_Text.text = (int)NowExp + "/" + (int)TotalExp +"  ("+ (int)(NowExp / TotalExp * 100) + "%)" ; 
+       gameUI.ExpSet();
 
     }
 
@@ -263,7 +263,7 @@ public class PlayerStat : MonoBehaviour
             _Hp = 0;
             Debug.Log("체력이 없다");
         }
-        //gameUI.bar_set();
+        gameUI.bar_set();
 
     }
 
@@ -280,7 +280,7 @@ public class PlayerStat : MonoBehaviour
             _Mp = 0;
             Debug.Log("마나가 없다");
         }
-        //gameUI.bar_set();
+        gameUI.bar_set();
     }
 
 }
