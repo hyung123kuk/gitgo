@@ -10,14 +10,53 @@ public class SkillWindow : MonoBehaviour , IPointerClickHandler
     [SerializeField]
     private AllUI allUI;
     [SerializeField]
-    
+    private GameObject warriorSkillWIndow;
+    [SerializeField]
+    private GameObject acherSkillWIndow;
+    [SerializeField]
+    private GameObject mageSkillWIndow;
+    [SerializeField]
+    private PlayerST playerST;
+    [SerializeField]
+    private SkillSlot[] skillslots;
+
 
     public static bool kDown =false;
 
-    private void Start()
+    private void Awake()
     {
         allUI = FindObjectOfType<AllUI>();
+        warriorSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(2).gameObject;
+        acherSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(3).gameObject;
+        mageSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(4).gameObject;
+        playerST = FindObjectOfType<PlayerST>();
+        skillslots = GetComponentsInChildren<SkillSlot>();
+
+        if (playerST.CharacterType == PlayerST.Type.Warrior)
+        {
+            warriorSkillWIndow.SetActive(true);
+            acherSkillWIndow.SetActive(false);
+            mageSkillWIndow.SetActive(false);
+        }
+        else if (playerST.CharacterType == PlayerST.Type.Archer)
+        {
+            warriorSkillWIndow.SetActive(false);
+            acherSkillWIndow.SetActive(true);
+            mageSkillWIndow.SetActive(false);
+        }
+        else if (playerST.CharacterType == PlayerST.Type.Mage)
+        {
+            warriorSkillWIndow.SetActive(false);
+            acherSkillWIndow.SetActive(false);
+            mageSkillWIndow.SetActive(true);
+        }
     }
+
+    private void Start()
+    {
+        
+    }
+
 
 
     void Update()
@@ -63,5 +102,12 @@ public class SkillWindow : MonoBehaviour , IPointerClickHandler
         allUI.SkillWindowTop();
     }
 
+    public void AllSkillSlotColor()
+    {
+        for (int i = 0; i < skillslots.Length; i++)
+        {
+            skillslots[i].SetSkillColor();
 
+        }
+    }
 }

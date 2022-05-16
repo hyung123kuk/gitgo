@@ -36,9 +36,14 @@ public class PlayerStat : MonoBehaviour
     private inventory inven;
     [SerializeField]
     private GameUI gameUI;
+    [SerializeField]
+    SkillWindow skillWindow;
     public Slot[] equSlots;
 
+
+
     public static PlayerStat playerstat;
+
 
  
     void Start()
@@ -47,6 +52,7 @@ public class PlayerStat : MonoBehaviour
         playerST = GetComponent<PlayerST>();
         inven = FindObjectOfType<inventory>();
         gameUI = FindObjectOfType<GameUI>();
+        skillWindow = FindObjectOfType<SkillWindow>();
         StatAllUpdate();
         TotalExp = LevelExp();
         _Hp = _MAXHP;
@@ -177,6 +183,9 @@ public class PlayerStat : MonoBehaviour
             gameUI.bar_set();
             gameUI.LevelSet();
             gameUI.ExpSet();
+            inven.AllSlotItemLimitColor();
+            skillWindow.AllSkillSlotColor();
+
         }
     }
 

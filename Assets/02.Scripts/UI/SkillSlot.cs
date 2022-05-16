@@ -24,6 +24,8 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private SkillUI[] Common_skills;
     [SerializeField]
     public SkillToolTip skillToolTip;
+    [SerializeField]
+    private PlayerStat playerStat;
 
 
 
@@ -32,10 +34,27 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         playerST = FindObjectOfType<PlayerST>();
         skillToolTip = FindObjectOfType<SkillToolTip>();
+        playerStat = FindObjectOfType<PlayerStat>();
         SkillSet();
+        SetSkillColor();
 
     }
 
+    public void SetSkillColor()
+    {
+        if (gameObject.layer == LayerMask.NameToLayer("SkillSlot"))
+        {
+            if (skill.Level > playerStat.Level)
+            {
+                imageSkill.color = new Color(1, 0, 0);
+                
+            }
+            else
+            {
+                imageSkill.color = new Color(1, 1, 1);
+            }
+        }
+    }
     private void SkillSet()
     {
         if (playerST.CharacterType == PlayerST.Type.Warrior)
@@ -108,7 +127,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (skill != null)
+        if (skill != null && skill.Level<=playerStat.Level)
         {
             DragSkillSlot.instance.dragSkillSlot = this;
             DragSkillSlot.instance.DragSetImage(imageSkill);

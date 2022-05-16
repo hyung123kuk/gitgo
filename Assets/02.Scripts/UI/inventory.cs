@@ -202,6 +202,12 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
         }
     }
 
+    public void AllSlotItemLimitColor()
+    {
+        for (int i = 0; i < slots.Length; i++)
+        { if (slots[i].item!=null)
+                slots[i].ItemLimitColorRed(); }
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
