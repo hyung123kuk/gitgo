@@ -124,8 +124,14 @@ public class AttackDamage : MonoBehaviour
     void Start()
     {
         playerStat = FindObjectOfType<PlayerStat>();
+        Skill1_time = Skill_1_cooltime;
+        Skill2_time = Skill_2_cooltime;
+        Skill3_time = Skill_3_cooltime;
+        Skill4_time = Skill_4_cooltime;
+        SkillBuff_time = Skill_Buff_cooltime;
+        SkillDodge_time = Skill_Dodge_cooltime;
+        SkillTeleport_time = Skill_Teleport_cooltime;
 
-        
     }
     private void FixedUpdate()
     {
@@ -238,7 +244,7 @@ public class AttackDamage : MonoBehaviour
     {
         return Skill_Teleport_cooltime - Skill_Teleport_cooltime * playerStat._SKILL_COOLTIME_DEC_PER / 100;
     }
-
+ 
     public void Skill_Mage_Teleport_Cool()
     {
         playerStat.SkillMp(Skill_TelePort_Mp);

@@ -69,6 +69,8 @@ public class PlayerST : MonoBehaviour
     private bool isAura; //현재 검기날리는 상태? ㅣ 키보드 3번
     private bool isYes; //돌진 벽에서 쓰는행위 막는용도
 
+    
+
     [Header("전사 관련")]
     public GameObject BuffEff;
     public GameObject RushEff;
@@ -90,6 +92,14 @@ public class PlayerST : MonoBehaviour
     public GameObject FlashEff;  //순간이동이펙트
     public bool isFlash; //현재 순간이동중?
 
+
+    //쿨타임 돌아가게 하기
+    public static bool isCool1;
+    public static bool isCool2;
+    public static bool isCool3;
+    public static bool isCool4;
+    public static bool isCooldodge;
+    public static bool isCoolTeleport;
 
     void Start()
     {
@@ -220,7 +230,8 @@ public class PlayerST : MonoBehaviour
         if ( !isStun && !isJump && !isBlock && !isBackStep && !weapons.isEnergyReady && !isRush && !isAura && !isFlash &&
            !weapons.isLightning && !weapons.isIceage && !Weapons.isMeteo && attackdamage.Usable_Dodge)
         {
-            attackdamage.Skill_Dodge_Cool();
+            isCooldodge = false;
+            attackdamage.Usable_Dodge = false;
             dodgeVec = moveVec;
             speed *= 2;
             anim.SetTrigger("doDodge");
@@ -228,12 +239,14 @@ public class PlayerST : MonoBehaviour
             isDamage = true;
 
             Invoke("DodgeOut", 0.4f); //구르기를 하면 0.4초후에 이동속도가 정상으로돌아옴
+           
         }
     }
 
     void DodgeOut()
     {
-        
+        isCooldodge = true;
+        attackdamage.Skill_Dodge_Cool();
         speed *= 0.5f;
         isDodge = false;
         isDamage = false;
@@ -250,7 +263,8 @@ public class PlayerST : MonoBehaviour
     }
     IEnumerator BlockPlay()
     {
-        attackdamage.Skill_1_Cool();
+        isCool1 = false;
+        attackdamage.Usable_Skill1 = false;
         anim.SetBool("isBlock", true);
         isBlock = true;
         isDamage = true;
@@ -262,10 +276,12 @@ public class PlayerST : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         Skillare.enabled = false;
         yield return new WaitForSeconds(0.5f);
+        isCool1 = true;
         anim.SetBool("isBlock", false);
         isBlock = false;
         isDamage = false;
-        //attackdamage.Skill_1_Cool();  //방패치기쿨타임
+      
+        attackdamage.Skill_1_Cool();  //방패치기쿨타임
     }
     public void Buff()
     {
@@ -281,12 +297,15 @@ public class PlayerST : MonoBehaviour
         if (!isYes && !isJump && !isDodge && !isBlock && !isAura && !isStun && !isRun &&
             attackdamage.Usable_Skill2)
         {
-            attackdamage.Skill_2_Cool();  //돌진쿨타임
+            
             StartCoroutine(RushPlay());
         }
     }
     IEnumerator RushPlay()
     {
+        isCool2 = false;
+        attackdamage.Usable_Skill2 = false;
+
         isRush = true;
         isFall = true;
         anim.SetBool("isRush", true);
@@ -306,8 +325,11 @@ public class PlayerST : MonoBehaviour
         anim.SetBool("isRush", false);
         isRush = false;
         isFall = false;
+        isCool2 = true;
+        attackdamage.Skill_2_Cool();  //돌진쿨타임
         yield return new WaitForSeconds(0.5f);
-        
+
+
         RushEff.SetActive(false);
 
     }
@@ -316,12 +338,14 @@ public class PlayerST : MonoBehaviour
         if (!isRun && !isJump && !isDodge && !isBlock && !isRush && !isStun &&
             attackdamage.Usable_Skill3)
         {
-            attackdamage.Skill_3_Cool();
+            
             StartCoroutine(AuraPlay());
         }
     }
     IEnumerator AuraPlay()
     {
+        isCool3 = false;
+        attackdamage.Usable_Skill3 = false;
         isAura = true;
         //AuraTimePrev = Time.time;
         
@@ -335,7 +359,8 @@ public class PlayerST : MonoBehaviour
         arrow.damage = attackdamage.Skill_3_Damamge();
 
         Destroy(swordaura, 1f);
-
+        isCool3 = true;
+        attackdamage.Skill_3_Cool();
         yield return new WaitForSeconds(0.8f);
         isAura = false;
         anim.SetBool("isAura", false);
@@ -350,6 +375,7 @@ public class PlayerST : MonoBehaviour
     }
     IEnumerator SmokePlay()
     {
+        isCool1 = true;
         attackdamage.Skill_1_Cool();
         gameObject.layer = LayerMask.NameToLayer("Back");
         isFall = true;
@@ -393,7 +419,10 @@ public class PlayerST : MonoBehaviour
     }
     IEnumerator FlashStart()
     {
-        attackdamage.Skill_Mage_Teleport_Cool();
+        isCoolTeleport = false;//쿨타임
+        attackdamage.Usable_Teleport = false;
+        
+       
         gameObject.layer = LayerMask.NameToLayer("Back");
         isFlash = true;
         isFall = true;
@@ -408,6 +437,10 @@ public class PlayerST : MonoBehaviour
         FlashEff.SetActive(false);
         mesh.enabled = true;
         smesh.enabled = true;
+
+        isCoolTeleport = true;//쿨타임
+        attackdamage.Skill_Mage_Teleport_Cool();
+       
     }
     void InputManager()
     {

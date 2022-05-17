@@ -13,6 +13,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [SerializeField]
     public SkillUI skill;
 
+    
 
     [SerializeField]
     private SkillUI[] Warrior_skills;
@@ -27,16 +28,23 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [SerializeField]
     private PlayerStat playerStat;
 
+    private void Awake()
+    {
+        playerST = FindObjectOfType<PlayerST>();
+        skillToolTip = FindObjectOfType<SkillToolTip>();
+        playerStat = FindObjectOfType<PlayerStat>();
+       
+        SkillSet();
+        SetSkillColor();
+    }
 
 
 
     void Start()
     {
-        playerST = FindObjectOfType<PlayerST>();
-        skillToolTip = FindObjectOfType<SkillToolTip>();
-        playerStat = FindObjectOfType<PlayerStat>();
-        SkillSet();
-        SetSkillColor();
+       
+        
+        
 
     }
 
