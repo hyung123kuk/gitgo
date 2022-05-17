@@ -6,6 +6,9 @@ using UnityEngine.EventSystems;
 public class SkillWindow : MonoBehaviour , IPointerClickHandler
 {
     [SerializeField]
+    public static SkillWindow skillwindow;
+
+    [SerializeField]
     private GameObject skillWindow;
     [SerializeField]
     private AllUI allUI;
@@ -19,18 +22,22 @@ public class SkillWindow : MonoBehaviour , IPointerClickHandler
     private PlayerST playerST;
     [SerializeField]
     private SkillSlot[] skillslots;
+    [SerializeField]
+    private SkillToolTip skillToolTip;
 
 
     public static bool kDown =false;
 
     private void Awake()
     {
+        skillwindow = this;
         allUI = FindObjectOfType<AllUI>();
         warriorSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(2).gameObject;
         acherSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(3).gameObject;
         mageSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(4).gameObject;
         playerST = FindObjectOfType<PlayerST>();
         skillslots = GetComponentsInChildren<SkillSlot>();
+        skillToolTip = FindObjectOfType<SkillToolTip>();
 
         if (playerST.CharacterType == PlayerST.Type.Warrior)
         {
@@ -52,30 +59,11 @@ public class SkillWindow : MonoBehaviour , IPointerClickHandler
         }
     }
 
-    private void Start()
+    public void SkillToolTipOff()
     {
-        
+        skillToolTip.ToolTipOff();
     }
 
-
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K)) //½ºÅ³Ã¢ ÄÑ±â/ ²ô±â
-        {
-            kDown = !kDown;
-            if (!kDown) //²û
-            {
-                SkillWindowOff();
-
-            }
-            else //Å´
-            {
-                SkillWindowOn();
-                allUI.SkillWindowTop();
-            }
-        }
-    }
 
     public void SkillWindowOn()
     {

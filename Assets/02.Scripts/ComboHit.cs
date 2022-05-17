@@ -17,7 +17,7 @@ public class ComboHit : MonoBehaviour
 
     void Update()
     {
-        if (inventory.iDown || NPC.isNPCRange|| SkillWindow.kDown)
+        if (inventory.iDown || NPC.isNPCRange|| SkillWindow.kDown || StatWindow.tDown)
             return;
         if (Time.time - lastClickdTime > maxComboDelay)
         {

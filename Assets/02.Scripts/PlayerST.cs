@@ -460,7 +460,7 @@ public class PlayerST : MonoBehaviour
     private void Update()
     {
         ImWar = CharacterType == Type.Warrior;
-        if (inventory.iDown || SkillWindow.kDown)
+        if (inventory.iDown || SkillWindow.kDown|| StatWindow.tDown)
             return;
         if (!NPC.isNPCRange)
             Cursor.lockState = CursorLockMode.Locked;//마우스커서 고정

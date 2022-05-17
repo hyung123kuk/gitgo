@@ -6,7 +6,8 @@ using UnityEngine.EventSystems;
 
 public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
 {
-    public static bool iDown=false; // 인벤토리가 열려있으면 true
+    public static inventory inven;
+    public static bool iDown; // 인벤토리가 열려있으면 true
     public GameObject Inven; // 인벤토리 창
     static public Slot[] slots;
     [SerializeField]
@@ -17,37 +18,32 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
     private AllUI allUI;
     [SerializeField]
     private itemStore itemStore;
+    [SerializeField]
+    private ToolTip toolTip;
+
+    private void Awake()
+    {
+        playerStat = FindObjectOfType<PlayerStat>();
+        slots = SlotsParent.GetComponentsInChildren<Slot>();
+        allUI = FindObjectOfType<AllUI>();
+        itemStore = FindObjectOfType<itemStore>();
+        toolTip = FindObjectOfType<ToolTip>();
+        inven = this;
+        iDown = false;
+    }
 
     private void Start()
     {
-        playerStat = FindObjectOfType<PlayerStat>();
-        slots =  SlotsParent.GetComponentsInChildren<Slot>();
-        allUI = FindObjectOfType<AllUI>();
-        itemStore= FindObjectOfType<itemStore>();
+        
         GoldUpdate();
 
-
+        
     }
 
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I)) //인벤토리 켜기/끄기
-        {
-            iDown = !iDown;
-            if (!iDown) //끔
-            {
-                               
-                invenOff();
-                
-            }
-            else //킴
-            {
-                
-                invenOn();
-                allUI.InvenTop();
-            }
-        }        
+        
     }
 
     public void invenOn()
@@ -209,6 +205,11 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
                 slots[i].ItemLimitColorRed(); }
     }
 
+    public void ToolTIpOff()
+    {
+        toolTip.ToolTipOff();
+    }
+
     public void OnPointerClick(PointerEventData eventData)
     {
         allUI.InvenTop();
@@ -219,4 +220,5 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
     {
         allUI.InvenTop();
     }
+
 }

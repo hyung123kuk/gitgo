@@ -57,7 +57,7 @@ public class QuikSlot : MonoBehaviour
     
     void Update()
     {
-        if (inventory.iDown || SkillWindow.kDown)
+        if (inventory.iDown || SkillWindow.kDown || StatWindow.tDown)
             return;
 
 

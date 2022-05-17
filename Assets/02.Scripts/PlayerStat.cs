@@ -62,7 +62,8 @@ public class PlayerStat : MonoBehaviour
        gameUI.level_Text.text = "LV." + Level;
        gameUI.Exp_Text.text = (int)NowExp + "/" + (int)TotalExp +"  ("+ (int)(NowExp / TotalExp * 100) + "%)" ; 
        gameUI.ExpSet();
-
+        StatWindow.statWindow.SetLevel();
+        StatWindow.statWindow.SetStat();
     }
 
     private void Update()
@@ -150,6 +151,7 @@ public class PlayerStat : MonoBehaviour
         _CRITICAL_ADD_DAMAGE_PER += (30 + (_STR * 1f) + (_DEX * 0.5f));
         _MOVE_SPEED += _DEX * 0.5f;
         MaxSet();
+        StatWindow.statWindow.SetStat();
 
     }
 
@@ -185,7 +187,7 @@ public class PlayerStat : MonoBehaviour
             gameUI.ExpSet();
             inven.AllSlotItemLimitColor();
             skillWindow.AllSkillSlotColor();
-
+            StatWindow.statWindow.SetLevel();
         }
     }
 
