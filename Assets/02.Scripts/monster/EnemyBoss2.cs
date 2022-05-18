@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyBoss2 : MonoBehaviour
+public class EnemyBoss2 : HpBar
 {
-    public float maxHealth = 100; //�ִ� ü��
-    public float curHealth = 100; //���� ü��
+   
     public BoxCollider meleeArea; //���� ���ݹ���
     public bool isChase; //�������� ����
     public bool isAttack; //���� ������
@@ -46,7 +45,7 @@ public class EnemyBoss2 : MonoBehaviour
    //     mat = GetComponentsInChildren<SkinnedMeshRenderer>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        
+        StartHpBar();
         StartCoroutine(Pattern());
     }
     private void Start()
@@ -348,6 +347,7 @@ public class EnemyBoss2 : MonoBehaviour
 
         if (curHealth < 0)
         {
+            
             nav.isStopped = true;
             isDie = true;
             boxCollider.enabled = false;
@@ -355,6 +355,7 @@ public class EnemyBoss2 : MonoBehaviour
                // mesh.material.color = Color.white;
             isChase = false; //�׾����� ��������
             anim.SetBool("isDie", true);
+      
             Destroy(gameObject, 200f);
             //foreach (SkinnedMeshRenderer mesh in mat)
               //  mesh.material.color = Color.white;

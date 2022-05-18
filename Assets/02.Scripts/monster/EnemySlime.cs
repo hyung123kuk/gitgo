@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemySlime : MonoBehaviour
+public class EnemySlime  : HpBar
 {
 
-    public float maxHealth; //�ִ� ü��
-    public float curHealth; //���� ü��
+    
     public BoxCollider meleeArea; //���� ���ݹ���
     public bool isChase; //�������� ����
     public bool isAttack; //���� ������
@@ -33,6 +32,7 @@ public class EnemySlime : MonoBehaviour
         mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
         anim=GetComponent<Animator>();
+        StartHpBar();
         
     }
     void Update()
@@ -78,7 +78,7 @@ public class EnemySlime : MonoBehaviour
                 transform.LookAt(target); //�÷��̾� �ٶ󺸱�
     }
 
-    void FreezeVelocity() //�̵�����
+     void FreezeVelocity() //�̵�����
     {
         if (isChase)
         {
@@ -169,25 +169,31 @@ public class EnemySlime : MonoBehaviour
 
     IEnumerator OnDamage() 
     {
-        isDamage = true;
-        mat.color = Color.red;
-        Hiteff.Play();
-        Hiteff2.Play();
-        yield return new WaitForSeconds(0.1f);
-        isDamage = false;
-        if (curHealth>0)
+        if (!isDie)
         {
-            mat.color = Color.white;
-        }
-        else
-        {
-            nav.isStopped = true;
-            boxCollider.enabled = false;
-            mat.color = Color.black;
-            isChase = false; //�׾����� ��������
-            isDie = true;
-            anim.SetBool("isDie",true);
-            Destroy(gameObject, 2f);
+            isDamage = true;
+            mat.color = Color.red;
+            Hiteff.Play();
+            Hiteff2.Play();
+            yield return new WaitForSeconds(0.1f);
+            isDamage = false;
+            SetHpBar();
+            if (curHealth > 0)
+            {
+
+                mat.color = Color.white;
+            }
+            else
+            {
+                nav.isStopped = true;
+                boxCollider.enabled = false;
+                mat.color = Color.black;
+                isChase = false; //�׾����� ��������
+                isDie = true;
+                anim.SetBool("isDie", true);
+
+                Destroy(gameObject, 2f);
+            }
         }
     }
 }

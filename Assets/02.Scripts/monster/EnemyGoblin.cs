@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyGoblin : MonoBehaviour
+public class EnemyGoblin : HpBar
 {
-    public float maxHealth =100; //�ִ� ü��
-    public float curHealth =100; //���� ü��
+   
     public BoxCollider meleeArea; //���� ���ݹ���
     public bool isChase; //�������� ����
     public bool isAttack; //���� ������
@@ -32,7 +31,8 @@ public class EnemyGoblin : MonoBehaviour
         mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-       
+        StartHpBar();
+
     }
     void Update()
     {
@@ -175,17 +175,18 @@ public class EnemyGoblin : MonoBehaviour
         anim.SetBool("isStun", false);
     }
 
-    IEnumerator OnDamage()
+     IEnumerator OnDamage()
     {
         isDamage = true;
+        mat.color = Color.red;
         Hiteff.Play();
         Hiteff2.Play();
-        mat.color = Color.red;
-
         yield return new WaitForSeconds(0.1f);
         isDamage = false;
+        SetHpBar();
         if (curHealth > 0)
         {
+            
             mat.color = Color.white;
         }
         else
@@ -196,6 +197,7 @@ public class EnemyGoblin : MonoBehaviour
             isDie = true;
             isChase = false; //�׾����� ��������
             anim.SetBool("isDie",true);
+            
             Destroy(gameObject, 2f);
         }
     }

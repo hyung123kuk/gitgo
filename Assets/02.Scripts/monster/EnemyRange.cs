@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyRange : MonoBehaviour
+public class EnemyRange : HpBar
 {
-    public float maxHealth; //�ִ� ü��
-    public float curHealth; //���� ü��
+    
     public bool isChase; //�������� ����
     public bool isAttack; //���� ������
     public Transform respawn;
@@ -32,7 +31,8 @@ public class EnemyRange : MonoBehaviour
         boxCollider = GetComponent<BoxCollider>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        
+        StartHpBar();
+
     }
     void Update()
     {
@@ -175,8 +175,10 @@ public class EnemyRange : MonoBehaviour
         mat.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         isDamage = false;
+        SetHpBar();
         if (curHealth > 0)
         {
+            
             mat.material.color = Color.white;
             
         }
@@ -188,6 +190,7 @@ public class EnemyRange : MonoBehaviour
             isDie = true;
             isChase = false; //�׾����� ��������
             anim.SetBool("isDie", true);
+            
             Destroy(gameObject, 1f);
         }
     }
