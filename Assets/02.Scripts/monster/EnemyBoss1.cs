@@ -287,6 +287,7 @@ public class EnemyBoss1 : HpBar
 
     IEnumerator OnDamage()
     {
+        SetHpBar();
         if (curHealth < 0)
         {
             

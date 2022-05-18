@@ -340,10 +340,10 @@ public class EnemyBoss2 : HpBar
 
     IEnumerator OnDamage()
     {
-       // foreach (SkinnedMeshRenderer mesh in mat)
-         //   mesh.material.color = Color.red;
+        // foreach (SkinnedMeshRenderer mesh in mat)
+        //   mesh.material.color = Color.red;
 
-        
+        SetHpBar();
 
         if (curHealth < 0)
         {
