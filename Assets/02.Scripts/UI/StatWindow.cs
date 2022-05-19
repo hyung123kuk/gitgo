@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
-public class StatWindow : MonoBehaviour
+public class StatWindow : MonoBehaviour ,IPointerClickHandler
 {
     [SerializeField]
     GameObject StatWindowDesign;
@@ -91,18 +92,18 @@ public class StatWindow : MonoBehaviour
     }
     public void SetStat()
     {
-        STR.text = "힘 : " + playerStat._STR;
-        DEX.text = "민첩 : " + playerStat._DEX;
-        INT.text = "지능 : " + playerStat._INT;
+        STR.text = "힘 : " + (int)playerStat._STR;
+        DEX.text = "민첩 : " + (int)playerStat._DEX;
+        INT.text = "지능 : " + (int)playerStat._INT;
 
-        CoolTIme.text = "쿨타임 감소량 : " + playerStat._SKILL_COOLTIME_DEC_PER ;
-        SkillAddDamage.text = "스킬 추가 데미지 : " + playerStat._SKILL_ADD_DAMAGE_PER ;
-        DAMAGE.text = "공격력 : " + playerStat._DAMAGE;
-        DEFENCE.text = "방어력 : " + playerStat._DEFENCE;
+        CoolTIme.text = "쿨타임 감소량 : " + (int)playerStat._SKILL_COOLTIME_DEC_PER ;
+        SkillAddDamage.text = "스킬 추가 데미지 : " + (int)playerStat._SKILL_ADD_DAMAGE_PER ;
+        DAMAGE.text = "공격력 : " + (int)playerStat._DAMAGE;
+        DEFENCE.text = "방어력 : " + (int)playerStat._DEFENCE;
 
-        MOVESPEED.text = "이동속도 : " + playerStat._MOVE_SPEED;
-        Critical_Probable.text = "크리티컬 확률 : " + playerStat._CRITICAL_PROBABILITY ;
-        Critical_Damage.text = "크리티컬 데미지 : " + playerStat._CRITICAL_ADD_DAMAGE_PER ;
+        MOVESPEED.text = "이동속도 : " + (int)playerST.speed*10;
+        Critical_Probable.text = "크리티컬 확률 : " + (int)playerStat._CRITICAL_PROBABILITY ;
+        Critical_Damage.text = "크리티컬 데미지 : " + (int)playerStat._CRITICAL_ADD_DAMAGE_PER ;
 
 
     }
@@ -124,5 +125,10 @@ public class StatWindow : MonoBehaviour
         allUI.MouseCursor.Init_Cursor();
         tDown = false;
         Cursor.lockState = CursorLockMode.Locked;
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        allUI.StatWindowTop();
     }
 }
