@@ -150,6 +150,7 @@ public class PlayerStat : MonoBehaviour
         _CRITICAL_PROBABILITY += (_STR * 0.25f) + (_DEX * 0.25f);
         _CRITICAL_ADD_DAMAGE_PER += (30 + (_STR * 1f) + (_DEX * 0.5f));
         _MOVE_SPEED += _DEX * 0.5f;
+        playerST.speed = 5 + (5 * _MOVE_SPEED / 100);
         MaxSet();
         StatWindow.statWindow.SetStat();
 
@@ -238,7 +239,7 @@ public class PlayerStat : MonoBehaviour
     {
         _Mp += _MAXMP * _Mp_per / 100;
         if (_Mp > _MAXMP)
-            _Hp = _MAXMP;
+            _Mp = _MAXMP;
     }
     public void MaxHpSet()
     {
