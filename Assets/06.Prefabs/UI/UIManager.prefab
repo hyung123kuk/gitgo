@@ -441,6 +441,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  - {fileID: 0}
   - {fileID: 342680750397086972}
   - {fileID: 342680751510878505}
   inven: {fileID: 0}
@@ -448,6 +449,7 @@ MonoBehaviour:
   itemBuyQuestion: {fileID: 0}
   itemSellQuestion: {fileID: 0}
   skillWindow: {fileID: 0}
+  statWindow: {fileID: 0}
   MouseCursor: {fileID: 0}
 --- !u!114 &342680749971426606
 MonoBehaviour:

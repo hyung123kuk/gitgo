@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyBoss1 : HpBar
+public class EnemyBoss1 : HpBar 
 {
    
     public BoxCollider meleeArea; //���� ���ݹ���

@@ -501,7 +501,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7008701605785521773
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4339,6 +4339,7 @@ MonoBehaviour:
   mageSkillWIndow: {fileID: 0}
   playerST: {fileID: 0}
   skillslots: []
+  skillToolTip: {fileID: 0}
 --- !u!1 &7008701607513691084
 GameObject:
   m_ObjectHideFlags: 0
