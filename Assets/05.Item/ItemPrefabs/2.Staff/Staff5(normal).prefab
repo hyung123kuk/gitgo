@@ -1,0 +1,144 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &184118350184406895
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 704195439266563541}
+  - component: {fileID: 4497430886771329648}
+  - component: {fileID: 1841658722732015290}
+  - component: {fileID: 1166808381}
+  m_Layer: 8
+  m_Name: Staff5(normal)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &704195439266563541
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184118350184406895}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 43.39, y: 3.1717775, z: -72.84196}
+  m_LocalScale: {x: 1.3, y: 1.3, z: 1.3}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!33 &4497430886771329648
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184118350184406895}
+  m_Mesh: {fileID: -4006300823370068072, guid: 67be24e8ee52ec04497cfee5403c5fa3, type: 3}
+--- !u!23 &1841658722732015290
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184118350184406895}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RayTracingMode: 2
+  m_RayTraceProcedural: 0
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 2100000, guid: babd69570f094464b9bf7c12d49cf49f, type: 2}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_ReceiveGI: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 1
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+  m_AdditionalVertexStreams: {fileID: 0}
+--- !u!114 &1166808381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 184118350184406895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cc6d7d0affedf744d9af5e9dfd666b94, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  type: 2
+  damage: 0
+  rate: 0.7
+  Key3: 0
+  Key3Up: 0
+  anim: {fileID: 0}
+  meleeArea: {fileID: 0}
+  isSootReady: 1
+  playerST: {fileID: 0}
+  attackdamage: {fileID: 0}
+  playerstat: {fileID: 1525382062, guid: 6217c9f3ffe726242863aad8be4e319e, type: 3}
+  isEnergyReady: 0
+  isEnergy1: 0
+  isEnergy2: 0
+  EnergyReady: 0
+  EnergyReady2: 0
+  EnergyChargingTime: 5
+  archer_skill4_Order: 0
+  arrowPos: {fileID: 0}
+  Arc3SkillPos: {fileID: 0}
+  ArcDefaultAttack: {fileID: 0}
+  Arc1Skilarrow: {fileID: 0}
+  Arc2Skilarrow: {fileID: 0}
+  Arc3SkillBuff1: {fileID: 0}
+  Arc3SkillBuff2: {fileID: 0}
+  Arc3SkillBuff3: {fileID: 0}
+  Arc3SkillArrow1: {fileID: 0}
+  Arc3SkillArrow2: {fileID: 0}
+  isLightning: 0
+  isIceage: 0
+  isMeteoShot: 0
+  mage_skill4_Order: 0
+  MagicPos: {fileID: 0}
+  MageDefaultAttack: {fileID: 4240952705438075378, guid: 3e62d42e6075f1b48bf235034be9251b, type: 3}
+  Mage1SkillEff: {fileID: 7838196484209121354, guid: c135b0939939ea5439157ac5155dfbab, type: 3}
+  Mage1SkillPos1: {fileID: 0}
+  Mage1SkillPos2: {fileID: 0}
+  Mage1SkillPos3: {fileID: 0}
+  Mage2SkillEff: {fileID: 0}
+  Mage2SkillReadyEff: {fileID: 0}
+  Mage3SkillPos1: {fileID: 0}
+  Mage3SkillPos2: {fileID: 0}
+  Mage3SkillPosEff: {fileID: 0}
+  Mage3SkillEff: {fileID: 1470204507440351361, guid: 038ecafa1b413a64cb68b508ab6fb4b6, type: 3}
+  Mage3SkillPlayerEff: {fileID: 0}
+  Skillarea: {fileID: 0}
+  Skillarea2: {fileID: 0}
+  CCarea: {fileID: 0}
