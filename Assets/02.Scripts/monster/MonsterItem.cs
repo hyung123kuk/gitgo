@@ -5,17 +5,26 @@ using UnityEngine;
 public class MonsterItem : MonoBehaviour
 {
     [SerializeField]
-    private Item[] item;
+    private GameObject[] item;
 
 
 
 
     public void Drop()
     {
-        float rand=Random.Range(0f, 100f);
-        if (rand < 100)
+        int rand=Random.Range(0, item.Length);
+        Debug.Log(item.Length);
+        for(int i = 0; i < item.Length; i++)
         {
-            Instantiate(item[0].itemPrefab, transform.position, Quaternion.identity);
+            Debug.Log(rand);
+            Debug.Log(i);
+            if(rand == i)
+            {
+                Debug.Log(item[i]);
+                Instantiate(item[i], transform.position, Quaternion.identity);
+            }
         }
+
+       
     }
 }

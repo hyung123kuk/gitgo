@@ -27,7 +27,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     private itemSellQuestion item_sell_question;
     public GameObject itemSellScope;
 
-    private void Start()
+    private void Awake()
     {
         gameUI = FindObjectOfType<GameUI>();
         playerSt = FindObjectOfType<PlayerST>();
@@ -35,11 +35,11 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         inven = FindObjectOfType<inventory>();
         playerStat = FindObjectOfType<PlayerStat>();
         item_sell_question = FindObjectOfType<itemSellQuestion>();
-       
+
         if (item != null)
         {
             itemImage.sprite = item.itemImage;
-            
+
 
             if (item.itemType != Item.ItemType.Equipment)
             {
@@ -54,12 +54,19 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             SetColor(1);
             ItemLimitColorRed();
         }
+       
+    }
+
+    private void Start()
+    {
+        
 
 
     }
 
     public void ItemLimitColorRed()
     {
+        
         if (item.itemEquLevel > playerStat.Level ||
            (item.armortype == Item.ArmorType.cloth && playerSt.CharacterType == PlayerST.Type.Archer) ||
             (item.armortype == Item.ArmorType.cloth && playerSt.CharacterType == PlayerST.Type.Warrior) ||

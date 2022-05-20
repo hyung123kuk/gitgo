@@ -14,7 +14,7 @@ public class EnemyBoss2 : HpBar
     private bool isStun;
     public Transform respawn;
     public SphereCollider nuckarea;
-
+    MonsterItem monsterItem;
 
 
     public GameObject sohwane;
@@ -45,8 +45,10 @@ public class EnemyBoss2 : HpBar
    //     mat = GetComponentsInChildren<SkinnedMeshRenderer>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+        monsterItem = GetComponent<MonsterItem>();
         StartHpBar();
         StartCoroutine(Pattern());
+
     }
     private void Start()
     {
@@ -355,7 +357,8 @@ public class EnemyBoss2 : HpBar
                // mesh.material.color = Color.white;
             isChase = false; //�׾����� ��������
             anim.SetBool("isDie", true);
-      
+            monsterItem.Drop();
+
             Destroy(gameObject, 200f);
             //foreach (SkinnedMeshRenderer mesh in mat)
               //  mesh.material.color = Color.white;

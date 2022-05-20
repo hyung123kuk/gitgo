@@ -16,7 +16,7 @@ public class EnemyBoss1 : HpBar
     public bool isbansa;
     public bool isDie;
     public Transform respawn;
-
+    MonsterItem monsterItem;
 
 
     private Light stunarea;
@@ -35,8 +35,10 @@ public class EnemyBoss1 : HpBar
      //   mat = GetComponentsInChildren<SkinnedMeshRenderer>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+        monsterItem = GetComponent<MonsterItem>();
         StartCoroutine(Pattern());
         StartHpBar();
+        
     }
     void Update()
     {
@@ -298,7 +300,9 @@ public class EnemyBoss1 : HpBar
             // mesh.material.color = Color.white;
             isChase = false; //�׾����� ��������
             anim.SetBool("isDie", true);
-     
+            monsterItem.Drop();
+
+
             Destroy(gameObject, 200f);
         }
         

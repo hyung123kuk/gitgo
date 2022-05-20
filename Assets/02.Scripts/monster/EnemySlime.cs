@@ -18,7 +18,7 @@ public class EnemySlime  : HpBar
     public ParticleSystem Hiteff; //������ ����Ʈ
     public ParticleSystem Hiteff2; //������ ����Ʈ
     [SerializeField]
-    MonsterItem dropitem;
+  
     Transform target;
     Rigidbody rigid;
     BoxCollider boxCollider;
@@ -33,7 +33,7 @@ public class EnemySlime  : HpBar
         mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
         anim=GetComponent<Animator>();
-        dropitem = GetComponent<MonsterItem>();
+       
         StartHpBar();
         
     }
@@ -193,7 +193,7 @@ public class EnemySlime  : HpBar
                 isChase = false; //�׾����� ��������
                 isDie = true;
                 anim.SetBool("isDie", true);
-                dropitem.Drop();
+     
                 Destroy(gameObject, 2f);
             }
         }
