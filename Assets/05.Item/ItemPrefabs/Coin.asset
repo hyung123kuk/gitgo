@@ -7,22 +7,22 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 0}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e11710ca97a0162498375a7e32dcba0e, type: 3}
-  m_Name: Mp_portion
+  m_Name: Coin
   m_EditorClassIdentifier: 
-  itemType: 1
+  itemType: 3
   armortype: 3
-  equipType: 9
+  equipType: 0
   ItemGrade: 0
   itemEquLevel: 0
-  SwordNames: 0
-  itemText: "<color=#1E90FF>\uB9C8\uB098\uB97C 25% \uD68C\uBCF5\uD569\uB2C8\uB2E4.</color>"
-  itemName: "<color=#1E90FF>\uD30C\uB780 \uB9C8\uB098 \uAF43</color>"
-  itemImage: {fileID: 21300000, guid: 0dfe8b2bef58ba5419e147dc55aa256a, type: 3}
-  itemPrefab: {fileID: 3330870188424781476, guid: 44aff9e6958c1ee4289955245ca779f2, type: 3}
-  _PRICE: 50
+  SwordNames: 5
+  itemText: 
+  itemName: "\uCF54\uC778"
+  itemImage: {fileID: 0}
+  itemPrefab: {fileID: 5137509321368036168, guid: 5d0ca37f1ed49014482362d2ffb3af19, type: 3}
+  _PRICE: 0
   _STR: 0
   _DEX: 0
   _INT: 0

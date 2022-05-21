@@ -47,8 +47,9 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
     IEnumerator invenSet() //playerstat을 슬롯이 받아오질못해 없으면 처음시작할때 인벤을 키지않고 아이템을 먹으면 널리퍼런스가뜸 그러나 인벤을 한번키면 안뜸 이유는 모르겠음.
     {
         invenOn();
-        yield return new WaitForSeconds(0.2f);
+        yield return new WaitForSeconds(0.1f);
         invenOff();
+
 
     }
 
@@ -73,6 +74,7 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
         Inven.SetActive(false);
         allUI.MouseCursor.transform_cursor.gameObject.SetActive(false);
         allUI.MouseCursor.Init_Cursor();
+        toolTip.ToolTipOff();
         iDown = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -80,6 +82,7 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
    
     public void GoldUpdate()
     {
+        playerStat.MONEY = (int)playerStat.MONEY;
         Gold.text = "Gold : " + playerStat.MONEY.ToString();
     }
 

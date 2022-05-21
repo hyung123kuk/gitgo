@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemySlime  : HpBar
+public class EnemySlime  : Monster
 {
 
     
@@ -26,6 +26,8 @@ public class EnemySlime  : HpBar
     NavMeshAgent nav; //����
     Animator anim;
 
+
+
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -34,7 +36,7 @@ public class EnemySlime  : HpBar
         nav = GetComponent<NavMeshAgent>();
         anim=GetComponent<Animator>();
        
-        StartHpBar();
+        StartMonster();
         
     }
     void Update()
@@ -187,13 +189,14 @@ public class EnemySlime  : HpBar
             }
             else
             {
+                MonsterDie();
                 nav.isStopped = true;
                 boxCollider.enabled = false;
                 mat.color = Color.black;
                 isChase = false; //�׾����� ��������
                 isDie = true;
                 anim.SetBool("isDie", true);
-     
+                
                 Destroy(gameObject, 2f);
             }
         }

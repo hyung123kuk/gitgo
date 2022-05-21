@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyGoblin : HpBar
+public class EnemyGoblin : Monster
 {
    
     public BoxCollider meleeArea; //���� ���ݹ���
@@ -31,7 +31,7 @@ public class EnemyGoblin : HpBar
         mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        StartHpBar();
+        StartMonster();
 
     }
     void Update()
@@ -191,13 +191,16 @@ public class EnemyGoblin : HpBar
         }
         else
         {
+            MonsterDie();
+
             boxCollider.enabled = false;
             mat.color = Color.black;
             nav.isStopped = true;
             isDie = true;
             isChase = false; //�׾����� ��������
             anim.SetBool("isDie",true);
-            
+         
+
             Destroy(gameObject, 2f);
         }
     }

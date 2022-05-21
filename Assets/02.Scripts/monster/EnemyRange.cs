@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyRange : HpBar
+public class EnemyRange : Monster
 {
     
     public bool isChase; //�������� ����
@@ -31,7 +31,7 @@ public class EnemyRange : HpBar
         boxCollider = GetComponent<BoxCollider>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        StartHpBar();
+        StartMonster();
 
     }
     void Update()
@@ -184,13 +184,14 @@ public class EnemyRange : HpBar
         }
         else
         {
+            MonsterDie();
             nav.isStopped = true;
             boxCollider.enabled = false;
             mat.material.color = Color.black;
             isDie = true;
             isChase = false; //�׾����� ��������
             anim.SetBool("isDie", true);
-            
+          
             Destroy(gameObject, 1f);
         }
     }

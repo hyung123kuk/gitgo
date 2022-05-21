@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyBoss1 : HpBar 
+public class EnemyBoss1 : MonsterBoss 
 {
    
     public BoxCollider meleeArea; //���� ���ݹ���
@@ -16,7 +16,7 @@ public class EnemyBoss1 : HpBar
     public bool isbansa;
     public bool isDie;
     public Transform respawn;
-    MonsterItem monsterItem;
+
 
 
     private Light stunarea;
@@ -32,14 +32,27 @@ public class EnemyBoss1 : HpBar
         stunarea = GetComponentInChildren<Light>();
         rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
-     //   mat = GetComponentsInChildren<SkinnedMeshRenderer>();
+        //   mat = GetComponentsInChildren<SkinnedMeshRenderer>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        monsterItem = GetComponent<MonsterItem>();
+
+
         StartCoroutine(Pattern());
-        StartHpBar();
-        
+        StartBossMonster();
+        BossItemSet();
+
     }
+
+
+
+    public void BossItemSet()
+    {
+
+        item = Resources.LoadAll<GameObject>("DROP/BOSS1");
+
+    }
+
+
     void Update()
     {
         if (isDie)  //�׾����� ����������� �ڷ�ƾ ��������
@@ -102,19 +115,19 @@ public class EnemyBoss1 : HpBar
                 case 1:
                 case 2:
                 case 3:
-                    //����
+                
                     StartCoroutine(Stun());
                     break;
                 case 4:
                 case 5:
                 case 6:
-                    //����
+                  
                     StartCoroutine(Rush());
                     break;
                 case 7:
                 case 8:
                 case 9:
-                    //��������(�ݻ絩)
+                   
                     StartCoroutine(Reflect());
                     break;
             }
@@ -292,7 +305,8 @@ public class EnemyBoss1 : HpBar
         SetHpBar();
         if (curHealth < 0)
         {
-            
+            BossDrop();
+            MonsterDie();
             nav.isStopped = true;
             isDie = true;
             boxCollider.enabled = false;
@@ -300,7 +314,6 @@ public class EnemyBoss1 : HpBar
             // mesh.material.color = Color.white;
             isChase = false; //�׾����� ��������
             anim.SetBool("isDie", true);
-            monsterItem.Drop();
 
 
             Destroy(gameObject, 200f);
@@ -312,4 +325,7 @@ public class EnemyBoss1 : HpBar
             
         
     }
+
+    
 }
+

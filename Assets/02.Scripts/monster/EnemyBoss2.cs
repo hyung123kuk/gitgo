@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyBoss2 : HpBar
+public class EnemyBoss2 : MonsterBoss
 {
    
     public BoxCollider meleeArea; //���� ���ݹ���
@@ -14,7 +14,7 @@ public class EnemyBoss2 : HpBar
     private bool isStun;
     public Transform respawn;
     public SphereCollider nuckarea;
-    MonsterItem monsterItem;
+    
 
 
     public GameObject sohwane;
@@ -45,15 +45,19 @@ public class EnemyBoss2 : HpBar
    //     mat = GetComponentsInChildren<SkinnedMeshRenderer>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        monsterItem = GetComponent<MonsterItem>();
-        StartHpBar();
+
+        StartBossMonster();
         StartCoroutine(Pattern());
+        BossItemSet();
 
     }
-    private void Start()
+
+    public void BossItemSet()
     {
-       
+        item = Resources.LoadAll<GameObject>("DROP/BOSS2");
+
     }
+
 
     void Update()
     {
@@ -349,7 +353,9 @@ public class EnemyBoss2 : HpBar
 
         if (curHealth < 0)
         {
-            
+            BossDrop();
+            MonsterDie();
+
             nav.isStopped = true;
             isDie = true;
             boxCollider.enabled = false;
@@ -357,7 +363,6 @@ public class EnemyBoss2 : HpBar
                // mesh.material.color = Color.white;
             isChase = false; //�׾����� ��������
             anim.SetBool("isDie", true);
-            monsterItem.Drop();
 
             Destroy(gameObject, 200f);
             //foreach (SkinnedMeshRenderer mesh in mat)

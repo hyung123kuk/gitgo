@@ -3,39 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DropItem : MonoBehaviour
+public class DropItem : DropCoin
 {
-    [SerializeField]
-    private Transform tr;
-    [SerializeField]
-    SphereCollider col;
+
     [SerializeField]
     private Text RangeText;
-    [SerializeField]
-    private Item item;
-    
 
-    public float RotateSpeed=2f;
+    public float RotateSpeed = 2f;
 
     void Start()
     {
-        tr=GetComponent<Transform>();
-        col = GetComponent<SphereCollider>();
+        SetDropITem();
         RangeText = GameObject.FindGameObjectWithTag("RangeText").GetComponent<Text>();
     }
 
 
-    private void FixedUpdate()
-    {
-        tr.Rotate(Vector3.up * RotateSpeed,Space.World);
-    }
 
-   
+    public void FixedUpdate()
+    {
+        tr.Rotate(Vector3.up * RotateSpeed, Space.World);
+    }
 
     private void OnTriggerStay(Collider other)
     {
-        Debug.Log("hi");
-        if (other.gameObject.tag == "Player")
+  
+        if (other.gameObject.tag == "Player" && item.itemType==Item.ItemType.Equipment)
         {
             RangeText.enabled = true;
             RangeText.text = "Z키를 누르면 아이템을 줍습니다.";
@@ -48,6 +40,7 @@ public class DropItem : MonoBehaviour
                 }
                 else
                 {
+                  
                     RangeText.enabled = false;
                     inventory.inven.addItem(item);
                     Destroy(gameObject);
@@ -62,6 +55,7 @@ public class DropItem : MonoBehaviour
     {
         if (other.tag == "Player")
         {
+
             RangeText.enabled = false;
         }
     }
