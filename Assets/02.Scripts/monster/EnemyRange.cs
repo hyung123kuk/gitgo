@@ -169,6 +169,7 @@ public class EnemyRange : Monster
     }
     IEnumerator OnDamage()
     {
+        ShakeOn();
         isDamage = true;
         Hiteff.Play();
         Hiteff2.Play();

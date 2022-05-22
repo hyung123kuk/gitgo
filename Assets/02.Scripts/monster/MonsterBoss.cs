@@ -19,6 +19,7 @@ public class MonsterBoss : Monster
 
     public void BossDrop()
     {
+
         if (!isSpread)
         {
             int rand = Random.Range(0, item.Length);

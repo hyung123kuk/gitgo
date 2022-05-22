@@ -13,6 +13,7 @@ public class Monster : MonoBehaviour
     private GameObject[] Portion;
     private Canvas uiCanvas;
     private Image hpBarImage;
+    private Transform tr;
     
     public float maxHealth; //최대hp
     public float curHealth; //현재hp
@@ -24,15 +25,64 @@ public class Monster : MonoBehaviour
     public float coin;
     public float coinCount=3;
     public bool isSpread = false;
+    
+    //쉐이킹 관련
+    float allX = 0;
+    float allY = 0;
+    float allZ = 0;
+    public float shakeTime = 0f;
+
     public void Start()
     {
         MonsterDropSet();
+        tr = GetComponent<Transform>();
+ 
     }
+
+    
+    public void Update()
+    {
+        
+        
+    }
+
+    public void ShakeOn()
+    {         
+            shakeTime = Time.time;
+            StartCoroutine(HitShake());        
+    }
+
+    IEnumerator HitShake()
+    {
+        yield return new WaitForSeconds(0.05f);
+        float progress = 0;
+        float increment = 0.03f;
+        while (progress <= 0.15f)
+        {
+
+            float x = Random.Range(-0.1f, 0.1f);
+
+            float z = Random.Range(-0.1f, 0.1f);
+            allX += x;
+            allZ += z;
+            tr.position += new Vector3(x, 0, z);
+            progress += increment;
+            yield return new WaitForSeconds(increment);
+
+
+        }        
+        transform.position -= new Vector3(allX, allY, allZ);
+        allX = 0; allY = 0; allZ = 0;
+    }
+
+
+
 
     public void MonsterDropSet()
     {
         Portion = Resources.LoadAll<GameObject>("DROP/Portion");
         Coin = Resources.Load<GameObject>("DROP/Coin");
+       
     }
 
     public void StartMonster()
@@ -108,7 +158,6 @@ public class Monster : MonoBehaviour
         }
         isSpread = true;
     }
-
 
 
 

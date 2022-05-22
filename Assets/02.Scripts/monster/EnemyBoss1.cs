@@ -302,6 +302,7 @@ public class EnemyBoss1 : MonsterBoss
 
     IEnumerator OnDamage()
     {
+        ShakeOn();
         SetHpBar();
         if (curHealth < 0)
         {

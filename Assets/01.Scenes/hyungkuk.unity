@@ -7003,7 +7003,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2380908731862510157, guid: f49835e31510a364f95ad8f33db7e395, type: 3}
       propertyPath: maxHealth
-      value: 100
+      value: 800000
       objectReference: {fileID: 0}
     - target: {fileID: 2380908731862510157, guid: f49835e31510a364f95ad8f33db7e395, type: 3}
       propertyPath: itemUpPoint
@@ -20840,7 +20840,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2767482814519052423, guid: 5281d4b0ead38b3469c7d5eb8410a12b, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3252657046014153277, guid: 5281d4b0ead38b3469c7d5eb8410a12b, type: 3}
       propertyPath: m_RootOrder
@@ -34250,7 +34250,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4588351644774815914, guid: c703cee1edc2cd244a7a131824c17a07, type: 3}
       propertyPath: maxHealth
-      value: 100
+      value: 800000
       objectReference: {fileID: 0}
     - target: {fileID: 4588351644774815914, guid: c703cee1edc2cd244a7a131824c17a07, type: 3}
       propertyPath: itemUpPoint
@@ -49231,7 +49231,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4251001166893250450, guid: 4cde2099bd9b8324c8263039253002e2, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7733473512970136146, guid: 4cde2099bd9b8324c8263039253002e2, type: 3}
       propertyPath: damage
@@ -58787,7 +58787,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5713643772343169314, guid: 46c1f169fdd318c459c8c93e7c4db52c, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5713979314949226643, guid: 46c1f169fdd318c459c8c93e7c4db52c, type: 3}
       propertyPath: coin

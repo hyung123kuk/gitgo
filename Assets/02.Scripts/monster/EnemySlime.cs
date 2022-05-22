@@ -173,6 +173,7 @@ public class EnemySlime  : Monster
 
     IEnumerator OnDamage() 
     {
+        ShakeOn();
         if (!isDie)
         {
             isDamage = true;
