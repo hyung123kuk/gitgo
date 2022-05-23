@@ -6,37 +6,64 @@ using UnityEngine.EventSystems;
 public class SkillWindow : MonoBehaviour , IPointerClickHandler
 {
     [SerializeField]
+    public static SkillWindow skillwindow;
+
+    [SerializeField]
     private GameObject skillWindow;
     [SerializeField]
     private AllUI allUI;
     [SerializeField]
-    
+    private GameObject warriorSkillWIndow;
+    [SerializeField]
+    private GameObject acherSkillWIndow;
+    [SerializeField]
+    private GameObject mageSkillWIndow;
+    [SerializeField]
+    private PlayerST playerST;
+    [SerializeField]
+    private SkillSlot[] skillslots;
+    [SerializeField]
+    private SkillToolTip skillToolTip;
+
 
     public static bool kDown =false;
 
-    private void Start()
+    private void Awake()
     {
+        skillwindow = this;
         allUI = FindObjectOfType<AllUI>();
-    }
+        warriorSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(2).gameObject;
+        acherSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(3).gameObject;
+        mageSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(4).gameObject;
+        playerST = FindObjectOfType<PlayerST>();
+        skillslots = GetComponentsInChildren<SkillSlot>();
+        skillToolTip = FindObjectOfType<SkillToolTip>();
 
-
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.K)) //½ºÅ³Ã¢ ÄÑ±â/ ²ô±â
+        if (playerST.CharacterType == PlayerST.Type.Warrior)
         {
-            kDown = !kDown;
-            if (!kDown) //²û
-            {
-                SkillWindowOff();
-
-            }
-            else //Å´
-            {
-                SkillWindowOn();
-                allUI.SkillWindowTop();
-            }
+            warriorSkillWIndow.SetActive(true);
+            acherSkillWIndow.SetActive(false);
+            mageSkillWIndow.SetActive(false);
+        }
+        else if (playerST.CharacterType == PlayerST.Type.Archer)
+        {
+            warriorSkillWIndow.SetActive(false);
+            acherSkillWIndow.SetActive(true);
+            mageSkillWIndow.SetActive(false);
+        }
+        else if (playerST.CharacterType == PlayerST.Type.Mage)
+        {
+            warriorSkillWIndow.SetActive(false);
+            acherSkillWIndow.SetActive(false);
+            mageSkillWIndow.SetActive(true);
         }
     }
+
+    public void SkillToolTipOff()
+    {
+        skillToolTip.ToolTipOff();
+    }
+
 
     public void SkillWindowOn()
     {
@@ -63,5 +90,12 @@ public class SkillWindow : MonoBehaviour , IPointerClickHandler
         allUI.SkillWindowTop();
     }
 
+    public void AllSkillSlotColor()
+    {
+        for (int i = 0; i < skillslots.Length; i++)
+        {
+            skillslots[i].SetSkillColor();
 
+        }
+    }
 }

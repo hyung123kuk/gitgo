@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler , IPointerEnterHandler , IPointerExitHandler
 {
     [SerializeField]
     public Image imageSkill;
@@ -13,24 +13,56 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [SerializeField]
     public SkillUI skill;
 
+    
+
     [SerializeField]
     private SkillUI[] Warrior_skills;
     [SerializeField]
     private SkillUI[] Archer_skills;
     [SerializeField]
     private SkillUI[] Mage_skills;
+    [SerializeField]
+    private SkillUI[] Common_skills;
+    [SerializeField]
+    public SkillToolTip skillToolTip;
+    [SerializeField]
+    private PlayerStat playerStat;
 
-
+    private void Awake()
+    {
+        playerST = FindObjectOfType<PlayerST>();
+        skillToolTip = FindObjectOfType<SkillToolTip>();
+        playerStat = FindObjectOfType<PlayerStat>();
+       
+        SkillSet();
+        SetSkillColor();
+    }
 
 
 
     void Start()
     {
-        playerST = FindObjectOfType<PlayerST>();
-        SkillSet();
+       
+        
+        
 
     }
 
+    public void SetSkillColor()
+    {
+        if (gameObject.layer == LayerMask.NameToLayer("SkillSlot"))
+        {
+            if (skill.Level > playerStat.Level)
+            {
+                imageSkill.color = new Color(1, 0, 0);
+                
+            }
+            else
+            {
+                imageSkill.color = new Color(1, 1, 1);
+            }
+        }
+    }
     private void SkillSet()
     {
         if (playerST.CharacterType == PlayerST.Type.Warrior)
@@ -91,13 +123,19 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 skill = Mage_skills[3];
             }
         }
-        if(skill!=null)
+        
+        if(gameObject.tag == "DodgeSlot")
+        {
+            skill = Common_skills[0];
+        }
+
+        if (skill!=null)
         imageSkill.sprite = skill.SkillImage;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (skill != null)
+        if (skill != null && skill.Level<=playerStat.Level)
         {
             DragSkillSlot.instance.dragSkillSlot = this;
             DragSkillSlot.instance.DragSetImage(imageSkill);
@@ -182,6 +220,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 skill = instanceSkill;
                 imageSkill.sprite = skill.SkillImage;
                 SetColor(1);
+
           
             }
             else if (skill == null)
@@ -193,16 +232,16 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 SetColor(1);
                 
             }
-           
 
 
+            skillToolTip.ToolTipOff();
 
         }
         if (gameObject.layer == LayerMask.NameToLayer("quikSlot"))
             gameObject.GetComponent<QuikSlot>().setCoolImage();
         if(DragSkillSlot.instance.dragSkillSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot") )
             DragSkillSlot.instance.dragSkillSlot.gameObject.GetComponent<QuikSlot>().setCoolImage();
-            
+        
     }
 
     public void SetColor(float _alpha)
@@ -221,5 +260,29 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public void Setimage()
     {
         imageSkill.sprite = skill.SkillImage;
+    }
+
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (skill != null)
+        {
+
+            Vector2 SkillPosition;
+            SkillPosition = eventData.position;
+            if (eventData.position.x + 400f > 1920f)
+                SkillPosition.x = 1920f - 400f;
+            if (eventData.position.y - 500f < 0f)
+                SkillPosition.y = 500f;
+            skillToolTip.ToolTipOn(skill, SkillPosition); // 인벤토리는  0 , 아이템판매창은 1  // 판매골드가 다르게 나오기 때문이다.
+        }
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        if (skill != null)
+        {
+
+            skillToolTip.ToolTipOff();
+        }
     }
 }

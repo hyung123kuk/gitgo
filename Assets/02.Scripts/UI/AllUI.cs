@@ -18,6 +18,8 @@ public class AllUI : MonoBehaviour
     [SerializeField]
     private Canvas skillWindow;
     [SerializeField]
+    private Canvas statWindow;
+    [SerializeField]
     public MouseCursor MouseCursor;
     
 
@@ -41,12 +43,68 @@ public class AllUI : MonoBehaviour
             }
             inventory.iDown = false;
             SkillWindow.kDown = false;
+            StatWindow.tDown = false;
             itemStore.sellButton = false;
             MouseCursor.transform_cursor.gameObject.SetActive(false);
             MouseCursor.SetNormalCursor();
 
         }
-        
+
+        if (Input.GetKeyDown(KeyCode.I)) //ÀÎº¥Åä¸® ÄÑ±â/²ô±â
+        {
+            inventory.iDown = !inventory.iDown;
+            if (!inventory.iDown) //²û
+            {
+
+                inventory.inven.invenOff();
+                inventory.inven.ToolTIpOff();
+
+            }
+            else //Å´
+            {
+
+                inventory.inven.invenOn();
+                InvenTop();
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.K)) //½ºÅ³Ã¢ ÄÑ±â/ ²ô±â
+        {
+            SkillWindow.kDown = !SkillWindow.kDown;
+            if (!SkillWindow.kDown) //²û
+            {
+                SkillWindow.skillwindow.SkillWindowOff();
+                SkillWindow.skillwindow.SkillToolTipOff();
+
+            }
+            else //Å´
+            {
+                SkillWindow.skillwindow.SkillWindowOn();
+                SkillWindowTop();
+
+            }
+        }
+
+        if (Input.GetKeyDown(KeyCode.T)) //½ºÅÈÃ¢ ÄÑ±â/ ²ô±â
+        {
+            StatWindow.tDown = !StatWindow.tDown;
+            if (!StatWindow.tDown) //²û
+            {
+                
+                StatWindow.statWindow.StatWindowOff();
+
+            }
+            else //Å´
+            {
+                StatWindow.statWindow.StatWindowOn();
+                StatWindowTop();
+
+            }
+        }
+
+
+
+
     }
     public void InvenTop()
     {
@@ -55,6 +113,7 @@ public class AllUI : MonoBehaviour
         itemBuyQuestion.sortingOrder--;
         itemSellQuestion.sortingOrder--;
         skillWindow.sortingOrder--;
+        statWindow.sortingOrder--;
     }
     public void StoreTop()
     {
@@ -63,6 +122,7 @@ public class AllUI : MonoBehaviour
         itemBuyQuestion.sortingOrder--;
         itemSellQuestion.sortingOrder--;
         skillWindow.sortingOrder--;
+        statWindow.sortingOrder--;
     }
     public void ItemBuyTop()
     {
@@ -71,6 +131,7 @@ public class AllUI : MonoBehaviour
         itemBuyQuestion.sortingOrder=1;
         itemSellQuestion.sortingOrder--;
         skillWindow.sortingOrder--;
+        statWindow.sortingOrder--;
     }
     public void ItemSellTop()
     {
@@ -79,6 +140,7 @@ public class AllUI : MonoBehaviour
         itemBuyQuestion.sortingOrder --;
         itemSellQuestion.sortingOrder=1;
         skillWindow.sortingOrder--;
+        statWindow.sortingOrder--;
     }
     public void SkillWindowTop()
     {
@@ -87,8 +149,19 @@ public class AllUI : MonoBehaviour
         itemBuyQuestion.sortingOrder--;
         itemSellQuestion.sortingOrder --;
         skillWindow.sortingOrder=1;
+        statWindow.sortingOrder--;
     }
-   
 
-    
+    public void StatWindowTop()
+    {
+        inven.sortingOrder--;
+        store.sortingOrder--;
+        itemBuyQuestion.sortingOrder--;
+        itemSellQuestion.sortingOrder--;
+        skillWindow.sortingOrder--;
+        statWindow.sortingOrder=1;
+    }
+
+
+
 }

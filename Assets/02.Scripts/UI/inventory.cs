@@ -6,7 +6,8 @@ using UnityEngine.EventSystems;
 
 public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
 {
-    public static bool iDown=false; // 인벤토리가 열려있으면 true
+    public static inventory inven;
+    public static bool iDown; // 인벤토리가 열려있으면 true
     public GameObject Inven; // 인벤토리 창
     static public Slot[] slots;
     [SerializeField]
@@ -17,14 +18,37 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
     private AllUI allUI;
     [SerializeField]
     private itemStore itemStore;
+    [SerializeField]
+    private ToolTip toolTip;
+
+    private void Awake()
+    {
+        
+        playerStat = FindObjectOfType<PlayerStat>();
+        slots = SlotsParent.GetComponentsInChildren<Slot>();
+        allUI = FindObjectOfType<AllUI>();
+        itemStore = FindObjectOfType<itemStore>();
+        toolTip = FindObjectOfType<ToolTip>();
+        inven = this;
+        iDown = false;
+        
+
+    }
 
     private void Start()
     {
-        playerStat = FindObjectOfType<PlayerStat>();
-        slots =  SlotsParent.GetComponentsInChildren<Slot>();
-        allUI = FindObjectOfType<AllUI>();
-        itemStore= FindObjectOfType<itemStore>();
+        
         GoldUpdate();
+
+        StartCoroutine(invenSet());
+        
+
+    }
+    IEnumerator invenSet() //playerstat을 슬롯이 받아오질못해 없으면 처음시작할때 인벤을 키지않고 아이템을 먹으면 널리퍼런스가뜸 그러나 인벤을 한번키면 안뜸 이유는 모르겠음.
+    {
+        invenOn();
+        yield return new WaitForSeconds(0.1f);
+        invenOff();
 
 
     }
@@ -32,22 +56,7 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
 
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.I)) //인벤토리 켜기/끄기
-        {
-            iDown = !iDown;
-            if (!iDown) //끔
-            {
-                               
-                invenOff();
-                
-            }
-            else //킴
-            {
-                
-                invenOn();
-                allUI.InvenTop();
-            }
-        }        
+        
     }
 
     public void invenOn()
@@ -65,6 +74,7 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
         Inven.SetActive(false);
         allUI.MouseCursor.transform_cursor.gameObject.SetActive(false);
         allUI.MouseCursor.Init_Cursor();
+        toolTip.ToolTipOff();
         iDown = false;
         Cursor.lockState = CursorLockMode.Locked;
     }
@@ -72,6 +82,7 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
    
     public void GoldUpdate()
     {
+        playerStat.MONEY = (int)playerStat.MONEY;
         Gold.text = "Gold : " + playerStat.MONEY.ToString();
     }
 
@@ -202,6 +213,17 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
         }
     }
 
+    public void AllSlotItemLimitColor()
+    {
+        for (int i = 0; i < slots.Length; i++)
+        { if (slots[i].item!=null)
+                slots[i].ItemLimitColorRed(); }
+    }
+
+    public void ToolTIpOff()
+    {
+        toolTip.ToolTipOff();
+    }
 
     public void OnPointerClick(PointerEventData eventData)
     {
@@ -213,4 +235,5 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
     {
         allUI.InvenTop();
     }
+
 }

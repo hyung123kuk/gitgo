@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyBoss2 : MonoBehaviour
+public class EnemyBoss2 : MonsterBoss
 {
-    public float maxHealth = 100; //�ִ� ü��
-    public float curHealth = 100; //���� ü��
+   
     public BoxCollider meleeArea; //���� ���ݹ���
     public bool isChase; //�������� ����
     public bool isAttack; //���� ������
@@ -15,7 +14,7 @@ public class EnemyBoss2 : MonoBehaviour
     private bool isStun;
     public Transform respawn;
     public SphereCollider nuckarea;
-
+    
 
 
     public GameObject sohwane;
@@ -50,13 +49,19 @@ public class EnemyBoss2 : MonoBehaviour
         mat = GetComponentsInChildren<SkinnedMeshRenderer>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        
+
+        StartBossMonster();
         StartCoroutine(Pattern());
+        BossItemSet();
+
     }
-    private void Start()
+
+    public void BossItemSet()
     {
-       
+        item = Resources.LoadAll<GameObject>("DROP/BOSS2");
+
     }
+
 
     void Update()
     {
@@ -368,9 +373,16 @@ public class EnemyBoss2 : MonoBehaviour
             foreach (SkinnedMeshRenderer mesh in mat)
                 mesh.material.color = Color.gray;
         }
+        // foreach (SkinnedMeshRenderer mesh in mat)
+        //   mesh.material.color = Color.red;
+        ShakeOn();
+        SetHpBar();
 
         if (curHealth < 0)
         {
+            BossDrop();
+            MonsterDie();
+
             nav.isStopped = true;
             isDie = true;
             boxCollider.enabled = false;

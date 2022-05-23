@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
 
-public class EnemySlime : MonoBehaviour
+public class EnemySlime  : Monster
 {
 
     public float maxHealth;
@@ -25,6 +25,10 @@ public class EnemySlime : MonoBehaviour
     public GameObject Geteff;
 
     public Transform movepoint;
+    public ParticleSystem Hiteff; //������ ����Ʈ
+    public ParticleSystem Hiteff2; //������ ����Ʈ
+    [SerializeField]
+  
     Transform target;
     Rigidbody rigid;
     BoxCollider boxCollider;
@@ -32,6 +36,8 @@ public class EnemySlime : MonoBehaviour
     NavMeshAgent nav;
     Animator anim;
     public static EnemySlime enemySlime;
+
+
 
     void Awake()
     {
@@ -51,6 +57,10 @@ public class EnemySlime : MonoBehaviour
         curHealth = maxHealth;
         mat.color = Color.white;
         isStun = false;
+        anim=GetComponent<Animator>();
+       
+        StartMonster();
+        
     }
     void Update()
     {
@@ -74,7 +84,7 @@ public class EnemySlime : MonoBehaviour
                     anim.SetBool("isWalk", true);
                 }
             }
-            else if (Vector3.Distance(target.position, transform.position) > 20f && nav.enabled) //슬라임사냥터 영역 나가면 리셋!
+            else if (Vector3.Distance(target.position, transform.position) > 20f && nav.enabled) //리셋
             {
                 nav.SetDestination(respawn.transform.position);
                 nav.speed = 20f;
@@ -207,6 +217,10 @@ public class EnemySlime : MonoBehaviour
         if (!isDie)
         {
             HitSoundManager.hitsoundManager.SlimeHit();
+            ShakeOn();
+        }
+        if (!isDie)
+        {
             isDamage = true;
             mat.color = Color.red;
             Hiteff.Play();
@@ -215,11 +229,13 @@ public class EnemySlime : MonoBehaviour
             isDamage = false;
             if (curHealth > 0)
             {
+                SetHpBar();
                 mat.color = Color.white;
             }
             else
             {
                 Instantiate(Geteff, transform.position, Quaternion.identity);
+                MonsterDie();
                 nav.isStopped = true;
                 boxCollider.enabled = false;
                 mat.color = Color.black;

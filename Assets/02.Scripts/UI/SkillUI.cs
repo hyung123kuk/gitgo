@@ -6,12 +6,16 @@ using UnityEngine;
 public class SkillUI : ScriptableObject
 {
     public Sprite SkillImage;
-    public enum SkillCharacter { Warrior,Archer,Mage}
+    public enum SkillCharacter { Warrior,Archer,Mage,Common}
     public  SkillCharacter skillCharacter;
     public int skillNum;
     public int Level;
-   
-    
+    public string skillName;
+    public enum SkillType { Attack, Buff, Move}
+    public SkillType skillType;
+
+    [TextArea]
+    public string skillText;
 
     
 }

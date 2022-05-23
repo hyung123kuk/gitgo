@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyBoss1 : MonoBehaviour
+public class EnemyBoss1 : MonsterBoss 
 {
-    public float maxHealth = 100; //�ִ� ü��
-    public float curHealth = 100; //���� ü��
+   
     public BoxCollider meleeArea; //���� ���ݹ���
     public BoxCollider nuckArea; //���Ͻ�ų 
     public SphereCollider nuckarea;
@@ -40,8 +39,24 @@ public class EnemyBoss1 : MonoBehaviour
         mat = GetComponentsInChildren<SkinnedMeshRenderer>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+
+
         StartCoroutine(Pattern());
+        StartBossMonster();
+        BossItemSet();
+
     }
+
+
+
+    public void BossItemSet()
+    {
+
+        item = Resources.LoadAll<GameObject>("DROP/BOSS1");
+
+    }
+
+
     void Update()
     {
         if (isDie)  //�׾����� ����������� �ڷ�ƾ ��������
@@ -104,19 +119,19 @@ public class EnemyBoss1 : MonoBehaviour
                 case 1:
                 case 2:
                 case 3:
-                    //����
+                
                     StartCoroutine(Stun());
                     break;
                 case 4:
                 case 5:
                 case 6:
-                    //����
+                  
                     StartCoroutine(Rush());
                     break;
                 case 7:
                 case 8:
                 case 9:
-                    //��������(�ݻ絩)
+                   
                     StartCoroutine(Reflect());
                     break;
             }
@@ -313,8 +328,12 @@ public class EnemyBoss1 : MonoBehaviour
         if(curHealth > 0)
             foreach (SkinnedMeshRenderer mesh in mat)
                 mesh.material.color = Color.white;
+        ShakeOn();
+        SetHpBar();
         if (curHealth < 0)
         {
+            BossDrop();
+            MonsterDie();
             nav.isStopped = true;
             isDie = true;
             boxCollider.enabled = false;
@@ -331,4 +350,7 @@ public class EnemyBoss1 : MonoBehaviour
             
         
     }
+
+    
 }
+

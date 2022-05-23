@@ -133,6 +133,7 @@ public class Weapons : MonoBehaviour
     IEnumerator BombArrowPlay()
     {
         isBombArrow = true;
+        PlayerST.isCool2 = true;
         attackdamage.Skill_2_Cool();
         SoundManager.soundManager.ArcherSkill2_1Sound();
         anim.SetBool("isBomb", true);
@@ -156,6 +157,7 @@ public class Weapons : MonoBehaviour
         {
             if (!StopSoundManager.stopSoundManager.audioSource.isPlaying)
                 StopSoundManager.stopSoundManager.ArcherSkill3ChargeSound();
+            PlayerST.isCool3 = true;
             isEnergyReady = true;
             anim.SetBool("isReady", true);
             Arc3SkillBuff1.SetActive(true);
@@ -244,7 +246,9 @@ public class Weapons : MonoBehaviour
 
     IEnumerator LightningBallStart()
     {
-        attackdamage.Skill_1_Cool();
+        PlayerST.isCool1 = false;
+        attackdamage.Usable_Skill1 = false;
+
         isLightning = true;
         anim.SetBool("Skill1", true);
         SoundManager.soundManager.MageSkill1Voice();
@@ -265,9 +269,15 @@ public class Weapons : MonoBehaviour
         Destroy(darkball1, 1.1f);
         Destroy(darkball2, 1.1f);
         Destroy(darkball3, 1.1f);
+
+        PlayerST.isCool1 = true;
+        attackdamage.Skill_1_Cool();
+
+
         yield return new WaitForSeconds(0.5f);
         isLightning = false;
         anim.SetBool("Skill1", false);
+
     }
     public void IceAge()
     {
@@ -281,6 +291,9 @@ public class Weapons : MonoBehaviour
     {
         attackdamage.Skill_2_Cool();
         SoundManager.soundManager.MageSkill2Voice();
+        PlayerST.isCool2 = false;
+        attackdamage.Usable_Skill2 = false;
+        
         Mage2SkillReadyEff.SetActive(true);
         anim.SetBool("Skill2", true);
         isIceage = true;
@@ -295,12 +308,18 @@ public class Weapons : MonoBehaviour
         
         Mage2SkillReadyEff.SetActive(false);
         Mage2SkillEff.SetActive(true);
+
+        PlayerST.isCool2 = true;
+        attackdamage.Skill_2_Cool();
+
         yield return new WaitForSeconds(0.2f);
         CCare.enabled = false;
         Skillare.enabled = false;
         yield return new WaitForSeconds(0.4f);
         anim.SetBool("Skill2", false);
         isIceage = false;
+
+
         yield return new WaitForSeconds(1f);
         Mage2SkillEff.SetActive(false);
     }
@@ -309,6 +328,7 @@ public class Weapons : MonoBehaviour
         if ((mage_skill4_Order ==0|| mage_skill4_Order==1) && !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun && !playerST.isFlash
             && !isLightning && !isIceage && attackdamage.Usable_Skill3)
         {
+            PlayerST.isCool3 = true;
             if (mage_skill4_Order==0 && MeteoCasting < MeteoMaxCasting)
             {
                 if(!StopSoundManager.stopSoundManager.audioSource.isPlaying)

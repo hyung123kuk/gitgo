@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e11710ca97a0162498375a7e32dcba0e, type: 3}
+  m_Name: Coin
+  m_EditorClassIdentifier: 
+  itemType: 3
+  armortype: 3
+  equipType: 0
+  ItemGrade: 0
+  itemEquLevel: 0
+  SwordNames: 5
+  itemText: 
+  itemName: "\uCF54\uC778"
+  itemImage: {fileID: 0}
+  itemPrefab: {fileID: 5137509321368036168, guid: 5d0ca37f1ed49014482362d2ffb3af19, type: 3}
+  _PRICE: 0
+  _STR: 0
+  _DEX: 0
+  _INT: 0
+  _DAMAGE: 0
+  _DEFENCE: 0
+  _SKILL_COOLTIME_DEC_PER: 0
+  _SKILL_ADD_DAMAGE_PER: 0
+  _HP: 0
+  _MP: 0
+  _CRITICAL_PROBABILITY: 0
+  _CRITICAL_ADD_DAMAGE_PER: 0
+  _MOVE_SPEED: 0

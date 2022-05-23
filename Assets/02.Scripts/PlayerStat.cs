@@ -36,9 +36,14 @@ public class PlayerStat : MonoBehaviour
     private inventory inven;
     [SerializeField]
     private GameUI gameUI;
+    [SerializeField]
+    SkillWindow skillWindow;
     public Slot[] equSlots;
 
+
+
     public static PlayerStat playerstat;
+
 
  
     void Start()
@@ -47,16 +52,18 @@ public class PlayerStat : MonoBehaviour
         playerST = GetComponent<PlayerST>();
         inven = FindObjectOfType<inventory>();
         gameUI = FindObjectOfType<GameUI>();
-        //StatAllUpdate();
+        skillWindow = FindObjectOfType<SkillWindow>();
+        StatAllUpdate();
         TotalExp = LevelExp();
         _Hp = _MAXHP;
         _Mp = _MAXMP;
-       //gameUI.Hp_bar.text.text = (int)_Hp + "/" + (int)_MAXHP;
-       //gameUI.Mp_bar.text.text = (int)_Mp + "/" + (int)_MAXMP;
-       //gameUI.level_Text.text = "LV." + Level;
-       //gameUI.Exp_Text.text = (int)NowExp + "/" + (int)TotalExp +"  ("+ (int)(NowExp / TotalExp * 100) + "%)" ; 
-       //gameUI.ExpSet();
-
+       gameUI.Hp_bar.text.text = (int)_Hp + "/" + (int)_MAXHP;
+       gameUI.Mp_bar.text.text = (int)_Mp + "/" + (int)_MAXMP;
+       gameUI.level_Text.text = "LV." + Level;
+       gameUI.Exp_Text.text = (int)NowExp + "/" + (int)TotalExp +"  ("+ (int)(NowExp / TotalExp * 100) + "%)" ; 
+       gameUI.ExpSet();
+        StatWindow.statWindow.SetLevel();
+        StatWindow.statWindow.SetStat();
     }
 
     private void Update()
@@ -143,7 +150,9 @@ public class PlayerStat : MonoBehaviour
         _CRITICAL_PROBABILITY += (_STR * 0.25f) + (_DEX * 0.25f);
         _CRITICAL_ADD_DAMAGE_PER += (30 + (_STR * 1f) + (_DEX * 0.5f));
         _MOVE_SPEED += _DEX * 0.5f;
+        playerST.speed = 5 + (5 * _MOVE_SPEED / 100);
         MaxSet();
+        StatWindow.statWindow.SetStat();
 
     }
 
@@ -177,6 +186,9 @@ public class PlayerStat : MonoBehaviour
             gameUI.bar_set();
             gameUI.LevelSet();
             gameUI.ExpSet();
+            inven.AllSlotItemLimitColor();
+            skillWindow.AllSkillSlotColor();
+            StatWindow.statWindow.SetLevel();
         }
     }
 
@@ -227,7 +239,7 @@ public class PlayerStat : MonoBehaviour
     {
         _Mp += _MAXMP * _Mp_per / 100;
         if (_Mp > _MAXMP)
-            _Hp = _MAXMP;
+            _Mp = _MAXMP;
     }
     public void MaxHpSet()
     {
@@ -263,7 +275,7 @@ public class PlayerStat : MonoBehaviour
             _Hp = 0;
             Debug.Log("체력이 없다");
         }
-        //gameUI.bar_set();
+        gameUI.bar_set();
 
     }
 
@@ -280,7 +292,7 @@ public class PlayerStat : MonoBehaviour
             _Mp = 0;
             Debug.Log("마나가 없다");
         }
-        //gameUI.bar_set();
+        gameUI.bar_set();
     }
 
 }

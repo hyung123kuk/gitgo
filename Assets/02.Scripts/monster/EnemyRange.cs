@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyRange : MonoBehaviour
+public class EnemyRange : Monster
 {
-    public float maxHealth; //�ִ� ü��
-    public float curHealth; //���� ü��
+    
     public bool isChase; //�������� ����
     public bool isAttack; //���� ������
     public Transform respawn;
@@ -32,7 +31,8 @@ public class EnemyRange : MonoBehaviour
         boxCollider = GetComponent<BoxCollider>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        
+        StartMonster();
+
     }
     private void OnEnable()
     {
@@ -179,19 +179,23 @@ public class EnemyRange : MonoBehaviour
     }
     IEnumerator OnDamage()
     {
+        ShakeOn();
         isDamage = true;
         Hiteff.Play();
         Hiteff2.Play();
         mat.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         isDamage = false;
+        SetHpBar();
         if (curHealth > 0)
         {
+            
             mat.material.color = Color.white;
             
         }
         else
         {
+            MonsterDie();
             nav.isStopped = true;
             boxCollider.enabled = false;
             mat.material.color = Color.black;

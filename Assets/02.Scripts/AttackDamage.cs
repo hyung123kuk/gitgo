@@ -13,7 +13,7 @@ public class AttackDamage : MonoBehaviour
     public bool Usable_Buff = true;
     [Header("스킬 지속 시간")]
     [SerializeField]
-    private float Skill_Buff_duration = 3;
+    public float Skill_Buff_duration = 3;
     public bool Duration_Buff = false;
     [Header("스킬 사용 마나")]
     [SerializeField]
@@ -43,10 +43,10 @@ public class AttackDamage : MonoBehaviour
     [Header("스킬 퍼뎀")]
     [Header("       1번 스킬")]
     [SerializeField]
-    private float Skill_1_per_dam=1f;
+    public float Skill_1_per_dam=1f;
     [Header("스킬 고정뎀")]
     [SerializeField]
-    private float Skill_1_fixed_dam;
+    public float Skill_1_fixed_dam;
     [Header("스킬 기본 쿨타임")]
     [SerializeField]
     private float Skill_1_cooltime=5;    
@@ -59,10 +59,10 @@ public class AttackDamage : MonoBehaviour
     [Header("스킬 퍼뎀")]
     [Header("       2번 스킬")]
     [SerializeField]
-    private float Skill_2_per_dam=1f;
+    public float Skill_2_per_dam=1f;
     [Header("스킬 고정뎀")]
     [SerializeField]
-    private float Skill_2_fixed_dam;
+    public float Skill_2_fixed_dam;
     [Header("스킬 기본 쿨타임")]
     [SerializeField]
     private float Skill_2_cooltime = 5;
@@ -74,10 +74,10 @@ public class AttackDamage : MonoBehaviour
     [Header("스킬 퍼뎀")]
     [Header("       3번 스킬")]
     [SerializeField]
-    private float Skill_3_per_dam=1f;
+    public float Skill_3_per_dam=1f;
     [Header("스킬 고정뎀")]
     [SerializeField]
-    private float Skill_3_fixed_dam;
+    public float Skill_3_fixed_dam;
     [Header("스킬 기본 쿨타임")]
     [SerializeField]
     private float Skill_3_cooltime = 5;
@@ -89,10 +89,10 @@ public class AttackDamage : MonoBehaviour
     [Header("스킬 퍼뎀")]
     [Header("       4번 스킬")]
     [SerializeField]
-    private float Skill_4_per_dam=1f;
+    public float Skill_4_per_dam=1f;
     [Header("스킬 고정뎀")]
     [SerializeField]
-    private float Skill_4_fixed_dam;
+    public float Skill_4_fixed_dam;
     [Header("스킬 기본 쿨타임")]
     [SerializeField]
     private float Skill_4_cooltime = 5;
@@ -124,8 +124,14 @@ public class AttackDamage : MonoBehaviour
     void Start()
     {
         playerStat = FindObjectOfType<PlayerStat>();
+        Skill1_time = Skill_1_cooltime;
+        Skill2_time = Skill_2_cooltime;
+        Skill3_time = Skill_3_cooltime;
+        Skill4_time = Skill_4_cooltime;
+        SkillBuff_time = Skill_Buff_cooltime;
+        SkillDodge_time = Skill_Dodge_cooltime;
+        SkillTeleport_time = Skill_Teleport_cooltime;
 
-        
     }
     private void FixedUpdate()
     {
@@ -167,6 +173,7 @@ public class AttackDamage : MonoBehaviour
         }
 
     }
+    
 
 
 
@@ -218,6 +225,11 @@ public class AttackDamage : MonoBehaviour
 
     }
 
+    public float ReturnBuffCool()
+    {
+        return Skill_Buff_cooltime - Skill_Buff_cooltime * playerStat._SKILL_COOLTIME_DEC_PER / 100;
+    }
+
     public void Skill_Buff_Cool()
     {
         playerStat.SkillMp(Skill_Buff_use_Mp);
@@ -227,6 +239,12 @@ public class AttackDamage : MonoBehaviour
         Duration_Buff = true;
         Usable_Buff = false;
     }
+
+    public float ReturnTeleportCool()
+    {
+        return Skill_Teleport_cooltime - Skill_Teleport_cooltime * playerStat._SKILL_COOLTIME_DEC_PER / 100;
+    }
+ 
     public void Skill_Mage_Teleport_Cool()
     {
         playerStat.SkillMp(Skill_TelePort_Mp);
@@ -234,12 +252,22 @@ public class AttackDamage : MonoBehaviour
         SkillTeleport_passedTime = 0f;
         Usable_Teleport = false;
     }
+
+    public float ReturnDodgeCool()
+    {
+        return Skill_Dodge_cooltime - Skill_Dodge_cooltime * playerStat._SKILL_COOLTIME_DEC_PER / 100;
+    }
     public void Skill_Dodge_Cool()
     {
         playerStat.SkillMp(Skill_Dodge_Mp);
         SkillDodge_time = Skill_Dodge_cooltime - Skill_Dodge_cooltime * playerStat._SKILL_COOLTIME_DEC_PER / 100;
         SkillDodge_passedTime = 0f;
         Usable_Dodge = false;
+    }
+
+    public float ReturnSkill_1_Cool()
+    {
+        return Skill_1_cooltime - Skill_1_cooltime * playerStat._SKILL_COOLTIME_DEC_PER / 100;
     }
 
 
@@ -250,12 +278,22 @@ public class AttackDamage : MonoBehaviour
         Skill1_passedTime = 0f;
         Usable_Skill1 = false;
     }
+
+    public float ReturnSkill_2_Cool()
+    {
+        return Skill_2_cooltime - Skill_2_cooltime * playerStat._SKILL_COOLTIME_DEC_PER / 100;
+    }
     public void Skill_2_Cool()
     {
         playerStat.SkillMp(Skill_2_use_Mp);
         Skill2_time = Skill_2_cooltime - Skill_2_cooltime * playerStat._SKILL_COOLTIME_DEC_PER / 100;
         Skill2_passedTime = 0f;
         Usable_Skill2 = false;
+    }
+
+    public float ReturnSkill_3_Cool()
+    {
+        return Skill_3_cooltime - Skill_3_cooltime * playerStat._SKILL_COOLTIME_DEC_PER / 100;
     }
     public void Skill_3_Cool()
     {
@@ -264,6 +302,11 @@ public class AttackDamage : MonoBehaviour
         Skill3_passedTime = 0f;
         Usable_Skill3 = false;
     }
+
+    public float ReturnSkill_4_Cool()
+    {
+        return Skill_4_cooltime - Skill_4_cooltime * playerStat._SKILL_COOLTIME_DEC_PER / 100;
+    }
     public void Skill_4_Cool()
     {
         playerStat.SkillMp(Skill_4_use_Mp);
@@ -271,6 +314,8 @@ public class AttackDamage : MonoBehaviour
         Skill4_passedTime = 0f;
         Usable_Skill4 = false;
     }
+
+
 
 
     public void SkillPassedTimeFucn()

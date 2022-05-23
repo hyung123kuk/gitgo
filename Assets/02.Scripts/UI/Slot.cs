@@ -27,7 +27,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     private itemSellQuestion item_sell_question;
     public GameObject itemSellScope;
 
-    private void Start()
+    private void Awake()
     {
         gameUI = FindObjectOfType<GameUI>();
         playerSt = FindObjectOfType<PlayerST>();
@@ -35,11 +35,11 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         inven = FindObjectOfType<inventory>();
         playerStat = FindObjectOfType<PlayerStat>();
         item_sell_question = FindObjectOfType<itemSellQuestion>();
-       
+
         if (item != null)
         {
             itemImage.sprite = item.itemImage;
-            
+
 
             if (item.itemType != Item.ItemType.Equipment)
             {
@@ -54,12 +54,19 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             SetColor(1);
             ItemLimitColorRed();
         }
+       
+    }
+
+    private void Start()
+    {
+        
 
 
     }
 
     public void ItemLimitColorRed()
     {
+        
         if (item.itemEquLevel > playerStat.Level ||
            (item.armortype == Item.ArmorType.cloth && playerSt.CharacterType == PlayerST.Type.Archer) ||
             (item.armortype == Item.ArmorType.cloth && playerSt.CharacterType == PlayerST.Type.Warrior) ||
@@ -182,9 +189,9 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
                         if (item.equipType == Item.EquipType.Sword && playerSt.CharacterType == PlayerST.Type.Warrior) //전사 무기 기본으로 세팅
                             playerSt.WeaponChange(playerSt.basicSword);
                         else if (item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer) // 궁수 무기 기본으로 세팅
-                            ;
+                            playerSt.WeaponChange(playerSt.basicSword);
                         else if (item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage) //법사 무기 기본으로 세팅
-                            ;
+                            playerSt.WeaponChange(playerSt.basicSword);
 
                     }
 
@@ -379,7 +386,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     {
         if (item != null && item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer)
         {
-            //playerSt.WeaponChange(item.SwordNames); (궁수 무기 프리팹으로 만들어야함)
+            playerSt.WeaponChange(item.SwordNames);
 
 
             if (WarriorSlot.weapon.item != null) // ( 장착이 되어있을때 )
@@ -400,7 +407,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     {
         if (item != null && item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage)
         {
-            //playerSt.WeaponChange(item.SwordNames); (마법사 무기 프리팹으로 만들어야함)
+            playerSt.WeaponChange(item.SwordNames);
             if (WarriorSlot.weapon.item != null) // ( 장착이 되어있을때 )
             {
                 SwapSlot(WarriorSlot.weapon);
@@ -509,12 +516,12 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Bow)
             {
-                //궁수 일반 무기로 교체
+                playerSt.WeaponChange(playerSt.basicSword);
                 ChangeSlot();
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Staff)
             {
-                //법사 일반 무기로 교체
+                playerSt.WeaponChange(playerSt.basicSword);
                 ChangeSlot();
             }
             else
@@ -531,12 +538,12 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer)
             {
-                //궁수 무기 교체
+                DragSlot.instance.dragSlot.playerSt.WeaponChange(DragSlot.instance.dragSlot.item.SwordNames);
                 ChangeSlot();
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage)
             {
-                //법사 무기 교체
+                DragSlot.instance.dragSlot.playerSt.WeaponChange(DragSlot.instance.dragSlot.item.SwordNames);
                 ChangeSlot();
             }
         }
@@ -550,13 +557,13 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             }
             else if (item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer)
             {
-                //궁수 일반 무기로 교체
+                playerSt.WeaponChange(item.SwordNames);
 
                 ChangeSlot();
             }
             else if (item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage)
             {
-                //법사 일반 무기로 교체
+                playerSt.WeaponChange(item.SwordNames);
 
                 ChangeSlot();
             }
@@ -750,6 +757,8 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             }
 
         }
+        if (gameObject.layer == LayerMask.NameToLayer("quikSlot"))
+            gameObject.GetComponent<QuikSlot>().skill.skillToolTip.ToolTipOff();
         tooltip.ToolTipOff();
         playerStat.StatAllUpdate();
         gameUI.bar_set();
