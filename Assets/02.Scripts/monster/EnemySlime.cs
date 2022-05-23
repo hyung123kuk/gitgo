@@ -7,8 +7,6 @@ using DG.Tweening;
 public class EnemySlime  : Monster
 {
 
-    public float maxHealth;
-    public float curHealth;
     public BoxCollider meleeArea;
     public bool isChase;
     public bool isAttack;
@@ -16,8 +14,6 @@ public class EnemySlime  : Monster
     public bool isDie;
     public bool isStun;
     public bool isDamage; //현재맞고있나
-    public float speed = 5;
-    public bool check;
 
 
     public ParticleSystem Hiteff;
@@ -25,8 +21,6 @@ public class EnemySlime  : Monster
     public GameObject Geteff;
 
     public Transform movepoint;
-    public ParticleSystem Hiteff; //������ ����Ʈ
-    public ParticleSystem Hiteff2; //������ ����Ʈ
     [SerializeField]
   
     Transform target;
