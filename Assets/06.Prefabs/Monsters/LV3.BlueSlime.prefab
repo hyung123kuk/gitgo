@@ -352,8 +352,8 @@ GameObject:
   - component: {fileID: 4539361616615414647}
   - component: {fileID: 4588351644774815912}
   - component: {fileID: 4588351644774815913}
-  - component: {fileID: 4588351644774815914}
   - component: {fileID: 4588351644774815895}
+  - component: {fileID: 906335023856862872}
   m_Layer: 6
   m_Name: LV3.BlueSlime
   m_TagString: Enemy
@@ -426,26 +426,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.6429278, y: 2.2690046, z: 1.2843853}
   m_Center: {x: -0.06495133, y: 1.0942699, z: -0.033383552}
---- !u!114 &4588351644774815914
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4587981468562123035}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 09de4d2acb4ca0942a0eb45c10e626d7, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxHealth: 100
-  curHealth: 100
-  meleeArea: {fileID: 4588351644652540900}
-  isChase: 0
-  isAttack: 0
-  respawn: {fileID: 0}
-  Hiteff: {fileID: 8943668904488257969}
-  Hiteff2: {fileID: 8962442526015464097}
 --- !u!195 &4588351644774815895
 NavMeshAgent:
   m_ObjectHideFlags: 0
@@ -468,6 +448,32 @@ NavMeshAgent:
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
+--- !u!114 &906335023856862872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4587981468562123035}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 315ffbfcdd2c5e94281dfee7116c76a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 1000
+  curHealth: 1000
+  meleeArea: {fileID: 4588351644652540900}
+  isChase: 0
+  isAttack: 0
+  respawn: {fileID: 0}
+  isDie: 0
+  isStun: 0
+  isDamage: 0
+  speed: 5
+  check: 0
+  Hiteff: {fileID: 8962442526015464097}
+  Hiteff2: {fileID: 8943668904488257969}
+  movingpos: {fileID: 0}
 --- !u!1 &4588351645110088981
 GameObject:
   m_ObjectHideFlags: 0

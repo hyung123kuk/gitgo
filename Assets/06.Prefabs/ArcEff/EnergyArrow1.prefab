@@ -18762,11 +18762,10 @@ GameObject:
   - component: {fileID: 7198114869083991297}
   - component: {fileID: 7198114869083991302}
   - component: {fileID: 7198114869083991303}
-  - component: {fileID: 7198114869083991300}
-  - component: {fileID: 3519975017992761879}
+  - component: {fileID: 752749809516504852}
   m_Layer: 0
   m_Name: EnergyArrow1
-  m_TagString: Arrow
+  m_TagString: ArrowSkill
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -18864,7 +18863,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!114 &7198114869083991300
+--- !u!114 &752749809516504852
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -18873,20 +18872,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 7198114869083991301}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e9349333ca607d64798f57752b2efa19, type: 3}
+  m_Script: {fileID: 11500000, guid: 421441d7ba1154b45bfa4f8f25360281, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 20
---- !u!114 &3519975017992761879
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7198114869083991301}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3d95fbbfeed3b4a4591044b294adf4f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Boom: {fileID: 6286185627869230257, guid: b753746ac4f46b1488fda8736b6cfa38, type: 3}
+  damage: 0

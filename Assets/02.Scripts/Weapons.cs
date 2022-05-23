@@ -25,9 +25,10 @@ public class Weapons : MonoBehaviour
     public PlayerST playerST;
     public AttackDamage attackdamage;
     public PlayerStat playerstat;
-  
+
 
     /*=========================궁수 스킬 관련===================================*/
+    public bool isBombArrow; //2스킬 쓰고나서 공격딜레이
     public bool isEnergyReady; //3스킬쓰고있는상태
     public bool isEnergy1; //3스킬 1.5초장전상태
     public bool isEnergy2; //3스킬 5초 풀장전상태
@@ -48,6 +49,7 @@ public class Weapons : MonoBehaviour
     public GameObject Arc3SkillBuff3;  //기모을때 버프3차
     public GameObject Arc3SkillArrow1; //1화살 발사이펙트
     public GameObject Arc3SkillArrow2; //2화살 발사이펙트
+
 
     /*=========================마법사 스킬 관련===================================*/
     private float MeteoCasting; //3스킬 캐스팅시간
@@ -130,7 +132,9 @@ public class Weapons : MonoBehaviour
     }
     IEnumerator BombArrowPlay()
     {
+        isBombArrow = true;
         attackdamage.Skill_2_Cool();
+        SoundManager.soundManager.ArcherSkill2_1Sound();
         anim.SetBool("isBomb", true);
         GameObject bombarrow = Instantiate(Arc2Skilarrow, arrowPos.position, arrowPos.rotation);
         Rigidbody arrowRigid = bombarrow.GetComponent<Rigidbody>();
@@ -142,13 +146,16 @@ public class Weapons : MonoBehaviour
 
         yield return new WaitForSeconds(0.5f);
         anim.SetBool("isBomb", false);
+        yield return new WaitForSeconds(0.2f);
+        isBombArrow = false;
     }
     public void EnergyArrow()
     {
         if (archer_skill4_Order == 0 &&  !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun &&
             attackdamage.Usable_Skill3)
         {
-            
+            if (!StopSoundManager.stopSoundManager.audioSource.isPlaying)
+                StopSoundManager.stopSoundManager.ArcherSkill3ChargeSound();
             isEnergyReady = true;
             anim.SetBool("isReady", true);
             Arc3SkillBuff1.SetActive(true);
@@ -179,26 +186,30 @@ public class Weapons : MonoBehaviour
         {
             isEnergyReady = false;
             
+            StopSoundManager.stopSoundManager.audioSource.Stop();
+            
             anim.SetBool("isReady", false);
             anim.SetBool("isShot", true);
             if (isEnergy1)
             {
                 attackdamage.Skill_3_Cool();
+                SoundManager.soundManager.ArcherSkill3Sound();
                 GameObject intantArrow = Instantiate(Arc3SkillArrow1, Arc3SkillPos.position, Arc3SkillPos.rotation);
                 Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
                 arrowRigid.velocity = Arc3SkillPos.forward * 20;
-                Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
-                arrow.damage = attackdamage.Skill_3_Damamge();
+                ArrowSkill arrowskill = intantArrow.GetComponent<ArrowSkill>(); //스킬데미지설정
+                arrowskill.damage = attackdamage.Skill_3_Damamge();
                 Destroy(intantArrow, 2f);
             }
             else if (isEnergy2)
             {
                 attackdamage.Skill_3_Cool();
+                SoundManager.soundManager.ArcherSkill3Sound();
                 GameObject intantArrow = Instantiate(Arc3SkillArrow2, Arc3SkillPos.position, Arc3SkillPos.rotation);
                 Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
                 arrowRigid.velocity = Arc3SkillPos.forward * 20;
-                Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
-                arrow.damage = 1.5f*attackdamage.Skill_3_Damamge();
+                ArrowSkill arrowskill = intantArrow.GetComponent<ArrowSkill>(); //스킬데미지설정
+                arrowskill.damage = 1.5f*attackdamage.Skill_3_Damamge();
                 Destroy(intantArrow, 2f);
             }
 
@@ -236,8 +247,9 @@ public class Weapons : MonoBehaviour
         attackdamage.Skill_1_Cool();
         isLightning = true;
         anim.SetBool("Skill1", true);
+        SoundManager.soundManager.MageSkill1Voice();
         yield return new WaitForSeconds(1.2f);
-        
+        SoundManager.soundManager.MageSkill1Sound();
         GameObject darkball1 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation);
         GameObject darkball2 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation); 
         GameObject darkball3 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation); 
@@ -268,10 +280,12 @@ public class Weapons : MonoBehaviour
     IEnumerator IceAgeStart()
     {
         attackdamage.Skill_2_Cool();
+        SoundManager.soundManager.MageSkill2Voice();
         Mage2SkillReadyEff.SetActive(true);
         anim.SetBool("Skill2", true);
         isIceage = true;
         yield return new WaitForSeconds(1.8f);
+        SoundManager.soundManager.MageSkill2Sound();
         BoxCollider Skillare = Skillarea.GetComponent<BoxCollider>(); //데미지 콜라이더 활성화
         Skillare.enabled = true;
         ArrowSkill arrow = Skillarea.GetComponent<ArrowSkill>(); //스킬데미지설정
@@ -297,6 +311,9 @@ public class Weapons : MonoBehaviour
         {
             if (mage_skill4_Order==0 && MeteoCasting < MeteoMaxCasting)
             {
+                if(!StopSoundManager.stopSoundManager.audioSource.isPlaying)
+                StopSoundManager.stopSoundManager.MageSkill3CastSound();
+
                 isMeteo = true;
                 Mage3SkillPlayerEff.SetActive(true);
                 anim.SetBool("Skill3", true);
@@ -306,6 +323,9 @@ public class Weapons : MonoBehaviour
             }
             else if (mage_skill4_Order==1 && !isMeteoShot)
             {
+
+                StopSoundManager.stopSoundManager.audioSource.Stop();
+
                 MeteoCasting = 0f;
                 isMeteo = false;
                 Mage3SkillPlayerEff.SetActive(false);
@@ -315,6 +335,8 @@ public class Weapons : MonoBehaviour
             }
             if (MeteoCasting > MeteoMaxCasting)
             {
+                StopSoundManager.stopSoundManager.audioSource.Stop();
+                SoundManager.soundManager.MageSkill3Sound();
                 Debug.Log("메테오!!");
                 isMeteoShot = true;
                 anim.SetBool("Skill31", true);
@@ -334,11 +356,12 @@ public class Weapons : MonoBehaviour
     {
         Mage3SkillPlayerEff.SetActive(false);
         anim.SetBool("Skill3", false);
-        anim.SetBool("Skill31", false);
+        
     }
     void MeteoEnd2()
     {
         Mage3SkillPosEff.SetActive(false);
+        anim.SetBool("Skill31", false);
         isMeteoShot = false;
         isMeteo = false;
     }
@@ -411,6 +434,7 @@ public class Weapons : MonoBehaviour
     {
         anim.SetBool("isAttack", true);
         yield return new WaitForSeconds(0.3f); //애니메이션과 화살나가는속도와 맞추기위함
+        SoundManager.soundManager.MageAttackSound();
         GameObject intantArrow = Instantiate(MageDefaultAttack, MagicPos.position, MagicPos.rotation);
         Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
         arrowRigid.velocity = MagicPos.forward * 20;

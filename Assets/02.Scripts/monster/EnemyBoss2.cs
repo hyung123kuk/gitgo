@@ -31,9 +31,13 @@ public class EnemyBoss2 : MonoBehaviour
     Transform target;
     Rigidbody rigid;
     BoxCollider boxCollider;
-  //  SkinnedMeshRenderer[] mat; //�ǰݽ� �����ϰ�
+    SkinnedMeshRenderer[] mat; //�ǰݽ� �����ϰ�
     NavMeshAgent nav; //����
     Animator anim;
+
+    public ParticleSystem Hiteff; //피격이펙
+    public ParticleSystem Hiteff2;
+    public bool isDamage;
 
 
 
@@ -43,7 +47,7 @@ public class EnemyBoss2 : MonoBehaviour
         stunarea = GetComponentInChildren<Light>();
         rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
-   //     mat = GetComponentsInChildren<SkinnedMeshRenderer>();
+        mat = GetComponentsInChildren<SkinnedMeshRenderer>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         
@@ -73,7 +77,7 @@ public class EnemyBoss2 : MonoBehaviour
             Targerting();
             if (!isStun)
             {
-                if (Vector3.Distance(target.position, transform.position) <= 27f && nav.enabled) //15���� �ȿ� ����
+                if (Vector3.Distance(target.position, transform.position) <= 15f && nav.enabled) //15���� �ȿ� ����
                 {
                     if (!isAttack && !isDie)
                     {
@@ -86,7 +90,7 @@ public class EnemyBoss2 : MonoBehaviour
                         anim.SetBool("isRun", true);
                     }
                 }
-                else if (Vector3.Distance(target.position, transform.position) > 27f && nav.enabled) //15���� ��
+                else if (Vector3.Distance(target.position, transform.position) > 30f && nav.enabled) //15���� ��
                 {
                     nav.SetDestination(respawn.position);
                     isChase = false;
@@ -321,7 +325,9 @@ public class EnemyBoss2 : MonoBehaviour
 
     void OnTriggerEnter(Collider other)  //�ǰ�
     {
-        
+        if (!isDamage)
+        {
+
             if (other.tag == "Melee")
             {
                 Weapons weapon = other.GetComponent<Weapons>();
@@ -337,27 +343,43 @@ public class EnemyBoss2 : MonoBehaviour
 
                 StartCoroutine(OnDamage());
             }
+            else if (other.tag == "ArrowSkill")
+            {
+                ArrowSkill arrow = other.GetComponent<ArrowSkill>();
+                curHealth -= arrow.damage;
+
+                StartCoroutine(OnDamage());
+            }
+        }
     }
 
     IEnumerator OnDamage()
     {
-       // foreach (SkinnedMeshRenderer mesh in mat)
-         //   mesh.material.color = Color.red;
+         foreach (SkinnedMeshRenderer mesh in mat)
+           mesh.material.color = Color.red;
+        isDamage = true;
+        Hiteff.Play();
+        Hiteff2.Play();
+        yield return new WaitForSeconds(0.1f);
+        isDamage = false;
 
-        
+        if (curHealth > 0)
+        {
+            foreach (SkinnedMeshRenderer mesh in mat)
+                mesh.material.color = Color.gray;
+        }
 
         if (curHealth < 0)
         {
             nav.isStopped = true;
             isDie = true;
             boxCollider.enabled = false;
-            //foreach (SkinnedMeshRenderer mesh in mat)
-               // mesh.material.color = Color.white;
+            
             isChase = false; //�׾����� ��������
             anim.SetBool("isDie", true);
-            Destroy(gameObject, 200f);
-            //foreach (SkinnedMeshRenderer mesh in mat)
-              //  mesh.material.color = Color.white;
+            gameObject.SetActive(false);
+            foreach (SkinnedMeshRenderer mesh in mat)
+              mesh.material.color = Color.gray;
         }
         yield return null;
     }

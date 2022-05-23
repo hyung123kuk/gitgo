@@ -32,6 +32,8 @@ public class ComboHit : MonoBehaviour
             {
                 anim.SetBool("isAttack", true);
                 Weapons.weapons.StartCoroutine("Swing");
+                SoundManager.soundManager.WarriorAttackSound();
+                SoundManager.soundManager.WarriorAttackVoice();
             }
             noOfClicks = Mathf.Clamp(noOfClicks, 0, 3);
         }
@@ -43,7 +45,8 @@ public class ComboHit : MonoBehaviour
         {
             anim.SetBool("isAttack2", true);
             Weapons.weapons.StartCoroutine("Swing");
-
+            SoundManager.soundManager.WarriorAttackSound();
+            SoundManager.soundManager.WarriorAttackVoice();
         }
         else
         {
@@ -55,9 +58,9 @@ public class ComboHit : MonoBehaviour
     {
         if (noOfClicks >= 3)
         {
+            SoundManager.soundManager.WarriorAttackVoice2();
             anim.SetBool("isAttack3", true);
             Invoke("ThreeAttack", 0.2f);
-            
         }
         else
         {
@@ -74,6 +77,8 @@ public class ComboHit : MonoBehaviour
     }
     void ThreeAttack()
     {
+        SoundManager.soundManager.WarriorAttackSound();
+        
         Weapons.weapons.StartCoroutine("Swing");
     }
 }

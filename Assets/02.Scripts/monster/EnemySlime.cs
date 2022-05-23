@@ -2,52 +2,68 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using DG.Tweening;
 
 public class EnemySlime : MonoBehaviour
 {
 
-    public float maxHealth; //�ִ� ü��
-    public float curHealth; //���� ü��
-    public BoxCollider meleeArea; //���� ���ݹ���
-    public bool isChase; //�������� ����
-    public bool isAttack; //���� ������
+    public float maxHealth;
+    public float curHealth;
+    public BoxCollider meleeArea;
+    public bool isChase;
+    public bool isAttack;
     public Transform respawn;
-    private bool isDie;
+    public bool isDie;
     public bool isStun;
     public bool isDamage; //현재맞고있나
+    public float speed = 5;
+    public bool check;
 
-    public ParticleSystem Hiteff; //������ ����Ʈ
-    public ParticleSystem Hiteff2; //������ ����Ʈ
 
+    public ParticleSystem Hiteff;
+    public ParticleSystem Hiteff2;
+    public GameObject Geteff;
+
+    public Transform movepoint;
     Transform target;
     Rigidbody rigid;
     BoxCollider boxCollider;
-    Material mat; //�ǰݽ� �����ϰ�
-    NavMeshAgent nav; //����
+    Material mat;
+    NavMeshAgent nav;
     Animator anim;
+    public static EnemySlime enemySlime;
 
     void Awake()
     {
+        enemySlime = this;
         rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
         mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
-        anim=GetComponent<Animator>();
-        
+        anim = GetComponent<Animator>();
+    }
+    private void OnEnable()
+    {
+        boxCollider.enabled = true;
+        isAttack = false;
+        nav.isStopped = false;
+        isDie = false;
+        curHealth = maxHealth;
+        mat.color = Color.white;
+        isStun = false;
     }
     void Update()
     {
-        if (isDie)  //�׾����� ����������� �ڷ�ƾ ��������
+
+        if (isDie)
         {
             StopAllCoroutines();
         }
         target = GameObject.FindGameObjectWithTag("Player").transform;
-        if (!isStun)
+        if (!isStun && !isDie)
         {
-
-
             Targerting();
-            if (Vector3.Distance(target.position, transform.position) <= 15f && nav.enabled)
+            if (Vector3.Distance(target.position, transform.position) <= 20f && nav.enabled)
             {
                 nav.speed = 3.5f;
                 if (!isAttack)
@@ -58,25 +74,30 @@ public class EnemySlime : MonoBehaviour
                     anim.SetBool("isWalk", true);
                 }
             }
-            else if (Vector3.Distance(target.position, transform.position) > 15f && nav.enabled)
+            else if (Vector3.Distance(target.position, transform.position) > 20f && nav.enabled) //슬라임사냥터 영역 나가면 리셋!
             {
-                nav.SetDestination(respawn.position);
-                isChase = false;
+                nav.SetDestination(respawn.transform.position);
                 nav.speed = 20f;
                 curHealth = maxHealth;
+                isChase = false;
                 if (Vector3.Distance(respawn.position, transform.position) < 1f)
                 {
                     nav.isStopped = true;
                     anim.SetBool("isWalk", false);
+  
                 }
-
+            }
+            else
+            {
+ 
+                anim.SetBool("isWalk", false);
             }
         }
-
-        if (isChase || isAttack) //�����̳� �������϶���
-            if (!isDie && !PlayerST.isJump &&!PlayerST.isFall && !isStun)
-                transform.LookAt(target); //�÷��̾� �ٶ󺸱�
+        if (isChase || isAttack) //룩엣
+            if (!isDie && !PlayerST.isJump && !PlayerST.isFall && !isStun)
+                transform.LookAt(target);
     }
+
 
     void FreezeVelocity() //�̵�����
     {
@@ -88,14 +109,14 @@ public class EnemySlime : MonoBehaviour
     }
     void Targerting()//Ÿ����
     {
-        float targetRadius = 1f; 
-        float targetRange = 0.7f; 
+        float targetRadius = 1f;
+        float targetRange = 0.7f;
 
         RaycastHit[] rayHits =
             Physics.SphereCastAll(transform.position,
             targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));  //����ĳ��Ʈ
 
-        if(rayHits.Length>0 && !isAttack && !isDie) //����ĳ��Ʈ�� �÷��̾ �����ٸ� && ���� �������� �ƴ϶��
+        if (rayHits.Length > 0 && !isAttack && !isDie) //����ĳ��Ʈ�� �÷��̾ �����ٸ� && ���� �������� �ƴ϶��
         {
             StartCoroutine(Attack());
         }
@@ -114,7 +135,7 @@ public class EnemySlime : MonoBehaviour
         rigid.velocity = Vector3.zero;
         meleeArea.enabled = false;
 
-   
+
         isChase = true;
         isAttack = false;
         anim.SetBool("isAttack", false);
@@ -122,7 +143,7 @@ public class EnemySlime : MonoBehaviour
     }
     void FixedUpdate()
     {
-        
+
         FreezeVelocity();
     }
 
@@ -158,6 +179,20 @@ public class EnemySlime : MonoBehaviour
             StartCoroutine(Stun());
         }
     }
+
+    //void OnTriggerExit(Collider other)
+    //{
+    //    if(other.name == "SlimeArea")
+    //    {
+    //        curHealth = maxHealth;
+    //        int ranx = Random.Range(43, 134);
+    //        int ranz = Random.Range(-65, -110);
+
+    //        transform.position = new Vector3(ranx, 0.5f, ranz);
+    //    }
+    //}
+
+
     IEnumerator Stun()
     {
         isStun = true;
@@ -167,27 +202,39 @@ public class EnemySlime : MonoBehaviour
         anim.SetBool("isStun", false);
     }
 
-    IEnumerator OnDamage() 
+    IEnumerator OnDamage()
     {
-        isDamage = true;
-        mat.color = Color.red;
-        Hiteff.Play();
-        Hiteff2.Play();
-        yield return new WaitForSeconds(0.1f);
-        isDamage = false;
-        if (curHealth>0)
+        if (!isDie)
         {
-            mat.color = Color.white;
+            HitSoundManager.hitsoundManager.SlimeHit();
+            isDamage = true;
+            mat.color = Color.red;
+            Hiteff.Play();
+            Hiteff2.Play();
+            yield return new WaitForSeconds(0.1f);
+            isDamage = false;
+            if (curHealth > 0)
+            {
+                mat.color = Color.white;
+            }
+            else
+            {
+                Instantiate(Geteff, transform.position, Quaternion.identity);
+                nav.isStopped = true;
+                boxCollider.enabled = false;
+                mat.color = Color.black;
+                isChase = false; //�׾����� ��������
+                isDie = true;
+                anim.SetBool("isDie", true);
+                Invoke("Diegg", 1.5f);
+            }
         }
-        else
-        {
-            nav.isStopped = true;
-            boxCollider.enabled = false;
-            mat.color = Color.black;
-            isChase = false; //�׾����� ��������
-            isDie = true;
-            anim.SetBool("isDie",true);
-            Destroy(gameObject, 2f);
-        }
+    }
+    void Diegg()
+    {
+
+        respawn.GetChild(0).gameObject.SetActive(true);
+        --SpawnManager.spawnManager.SlimeObjs;
+        gameObject.SetActive(false);
     }
 }

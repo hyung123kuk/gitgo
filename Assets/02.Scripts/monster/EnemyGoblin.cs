@@ -34,6 +34,16 @@ public class EnemyGoblin : MonoBehaviour
         anim = GetComponent<Animator>();
        
     }
+    private void OnEnable()
+    {
+        boxCollider.enabled = true;
+        isAttack = false;
+        nav.isStopped = false;
+        isDie = false;
+        curHealth = maxHealth;
+        mat.color = Color.white;
+        isStun = false;
+    }
     void Update()
     {
         if (isDie)  //�׾����� ����������� �ڷ�ƾ ��������
@@ -64,15 +74,15 @@ public class EnemyGoblin : MonoBehaviour
             }
             else if (Vector3.Distance(target.position, transform.position) > 15f && nav.enabled) //15���� ��
             {
-                nav.SetDestination(respawn.position);
-                isChase = false;
+                anim.SetBool("isRun", false);
+                nav.SetDestination(respawn.transform.position);
                 nav.speed = 20f;
                 curHealth = maxHealth;
+                isChase = false;
                 if (Vector3.Distance(respawn.position, transform.position) < 1f)
                 {
                     nav.isStopped = true;
                     anim.SetBool("isWalk", false);
-                    anim.SetBool("isRun", false);
                 }
             }
         }
@@ -196,7 +206,13 @@ public class EnemyGoblin : MonoBehaviour
             isDie = true;
             isChase = false; //�׾����� ��������
             anim.SetBool("isDie",true);
-            Destroy(gameObject, 2f);
+            Invoke("Diegg", 1.5f);
         }
+    }
+    void Diegg()
+    {
+        respawn.GetChild(0).gameObject.SetActive(true);
+        --SpawnManager.spawnManager.GoblinObjs;
+        gameObject.SetActive(false);
     }
 }
