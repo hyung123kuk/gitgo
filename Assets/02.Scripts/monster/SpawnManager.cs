@@ -154,7 +154,7 @@ public class SpawnManager : MonoBehaviour
                 GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[1]);
 
                 enemy.transform.position = BlueSlimePoints[blueslimeidx].position;
-                enemy.GetComponent<EnemySlime>().respawn = BlueSlimePoints[blueslimeidx];
+                enemy.GetComponent<EnemyBlueSlime>().respawn = BlueSlimePoints[blueslimeidx];
                 BlueSlimePoints[blueslimeidx].GetChild(0).gameObject.SetActive(false);
                 blueslimeidx = 0;
                 break;
@@ -185,7 +185,7 @@ public class SpawnManager : MonoBehaviour
                 GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[2]);
 
                 enemy.transform.position = GoblinPoints[goblinidx].position;
-                enemy.GetComponent<EnemySlime>().respawn = GoblinPoints[goblinidx];
+                enemy.GetComponent<EnemyGoblin>().respawn = GoblinPoints[goblinidx];
                 GoblinPoints[goblinidx].GetChild(0).gameObject.SetActive(false);
                 goblinidx = 0;
                 break;
@@ -216,7 +216,7 @@ public class SpawnManager : MonoBehaviour
                 GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[3]);
 
                 enemy.transform.position = GoblinArcherPoints[goblinarcheridx].position;
-                enemy.GetComponent<EnemySlime>().respawn = GoblinArcherPoints[goblinarcheridx];
+                enemy.GetComponent<EnemyRange>().respawn = GoblinArcherPoints[goblinarcheridx];
                 GoblinArcherPoints[goblinarcheridx].GetChild(0).gameObject.SetActive(false);
                 goblinarcheridx = 0;
                 break;
