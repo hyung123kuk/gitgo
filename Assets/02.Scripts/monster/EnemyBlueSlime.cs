@@ -4,11 +4,11 @@ using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
 
-public class EnemyBlueSlime : MonoBehaviour
+public class EnemyBlueSlime : Monster
 {
 
-    public float maxHealth;
-    public float curHealth;
+    //public float maxHealth;
+    //public float curHealth;
     public BoxCollider meleeArea;
     public bool isChase;
     public bool isAttack;
@@ -48,6 +48,7 @@ public class EnemyBlueSlime : MonoBehaviour
         curHealth = maxHealth;
         mat.color = Color.white;
         isStun = false;
+        StartMonster();
     }
     void Update()
     {
@@ -181,6 +182,9 @@ public class EnemyBlueSlime : MonoBehaviour
     {
         if (!isDie)
         {
+            ShakeOn();
+            SetHpBar();
+
             HitSoundManager.hitsoundManager.SlimeHit();
             isDamage = true;
             mat.color = Color.red;
