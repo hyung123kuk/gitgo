@@ -10,10 +10,12 @@ public class MouseCursor : MonoBehaviour
     public Sprite CursorNormal;
     public Sprite CursorSell;
 
+
     public float CursorX = 0.3f; 
     public float CursorY;
     private void Start()
     {
+        
         Init_Cursor();
     }
     private void Update()
@@ -21,6 +23,8 @@ public class MouseCursor : MonoBehaviour
        
         Update_MousePosition();
         Init_Cursor();
+
+      
     }
 
     
