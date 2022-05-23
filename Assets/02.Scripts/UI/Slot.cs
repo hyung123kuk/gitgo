@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler 
 {
     public Item item; // 획득한 아이템
     public int itemCount; // 획득한 아이템의 개수
@@ -806,6 +806,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             if (eventData.position.y - 500f < 0f)
                 itemPosition.y = 500f;
             tooltip.ToolTipOn(item, itemPosition, 0); // 인벤토리는  0 , 아이템판매창은 1  // 판매골드가 다르게 나오기 때문이다.
+          
         }
     }
 
@@ -815,6 +816,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         {
 
             tooltip.ToolTipOff();
+            
         }
 
     }
