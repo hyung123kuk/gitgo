@@ -34,6 +34,16 @@ public class EnemyRange : Monster
         StartMonster();
 
     }
+    private void OnEnable()
+    {
+        boxCollider.enabled = true;
+        isAttack = false;
+        nav.isStopped = false;
+        isDie = false;
+        curHealth = maxHealth;
+        mat.material.color = Color.white;
+        isStun = false;
+    }
     void Update()
     {
         if (isDie)  //�׾����� ����������� �ڷ�ƾ ��������
@@ -58,10 +68,10 @@ public class EnemyRange : Monster
             }
             else if (Vector3.Distance(target.position, transform.position) > 25f && nav.enabled) //15���� ��
             {
-                nav.SetDestination(respawn.position);
-                isChase = false;
+                nav.SetDestination(respawn.transform.position);
                 nav.speed = 20f;
                 curHealth = maxHealth;
+                isChase = false;
                 if (Vector3.Distance(respawn.position, transform.position) < 1f)
                 {
                     nav.isStopped = true;
@@ -192,8 +202,14 @@ public class EnemyRange : Monster
             isDie = true;
             isChase = false; //�׾����� ��������
             anim.SetBool("isDie", true);
-          
-            Destroy(gameObject, 1f);
+            Invoke("Diegg", 1.5f);
+            
         }
+    }
+    void Diegg()
+    {
+        respawn.GetChild(0).gameObject.SetActive(true);
+        --SpawnManager.spawnManager.GoblinArObjs;
+        gameObject.SetActive(false);
     }
 }

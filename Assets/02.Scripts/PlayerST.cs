@@ -31,12 +31,12 @@ public class PlayerST : MonoBehaviour
 
     private bool fDown; //마우스 왼쪽버튼을 눌렀다면 true
     private bool fDowning; //마우스 왼쪽버튼을 눌르고 있다면 true
-    private bool fUp;
+    public bool fUp;
     private bool f2Down; //마우스 우클 눌렀다면
     public bool isFireReady = true;  //무기 rate가 fireDelay보다 작다면 true로 공격가능상태
     public bool isDamage; //무적타임. 연속으로 다다닥 맞을수있기때문에
     private bool sDown; //점프입력
-    private bool Rdown;//알트입력
+    public bool Rdown;//알트입력
     private bool Ddown; //쉬프트입력 
     private bool Key1; //키보드 1번입력
     private bool Key2; //키보드 2번입력
@@ -57,6 +57,9 @@ public class PlayerST : MonoBehaviour
     public GameObject Skillarea; //켜지면 데미지만
     public GameObject Skillarea2; //켜지면 데미지만
     public GameObject CCarea;  //켜지면 CC기 
+
+    public static PlayerST playerST;
+
 
 
     public static bool isFall; //공중에 떠있는상태? 몬스터들의 룩엣을 조정하기위함.
@@ -107,51 +110,198 @@ public class PlayerST : MonoBehaviour
         _transform = GetComponent<Transform>();
         anim = GetComponentInChildren<Animator>();
         rigid = GetComponent<Rigidbody>();
+        playerST = this;
     }
 
     void Anima() //애니메이션 
     {
-        anim.SetBool("isRun", Rdown);
-        if (v >= 0.1f) //앞
+        #region 전사 이동 애니메이션
+        if (CharacterType == Type.Warrior)
         {
-            anim.SetBool("forword", true);
-            anim.SetBool("back", false);
-            anim.SetBool("left", false);
-            anim.SetBool("right", false);
+            if (Rdown)
+            {
+                anim.SetBool("isRun", true);
+                if (!FootSound.footSound.audioSource.isPlaying)
+                    FootSound.footSound.FootRunSound();
+            }
+            else if (!Rdown)
+            {
+                anim.SetBool("isRun", false);
+            }
+            if (v >= 0.1f) //앞
+            {
+                if (!FootSound.footSound.audioSource.isPlaying)
+                    FootSound.footSound.War_F_FootSound();
+
+                anim.SetBool("forword", true);
+                anim.SetBool("back", false);
+                anim.SetBool("left", false);
+                anim.SetBool("right", false);
+            }
+            else if (v <= -0.1f) //뒤
+            {
+                if (!FootSound.footSound.audioSource.isPlaying)
+                    FootSound.footSound.War_B_FootSound();
+                anim.SetBool("back", true);
+                anim.SetBool("forword", false);
+                anim.SetBool("left", false);
+                anim.SetBool("right", false);
+            }
+            else if (h >= 0.1f) //오른쪽
+            {
+                if (!FootSound.footSound.audioSource.isPlaying)
+                    FootSound.footSound.War_L_R_FootSound();
+                anim.SetBool("right", true);
+                anim.SetBool("forword", false);
+                anim.SetBool("back", false);
+                anim.SetBool("left", false);
+            }
+            else if (h <= -0.1f) //왼쪽
+            {
+                if (!FootSound.footSound.audioSource.isPlaying)
+                    FootSound.footSound.War_L_R_FootSound();
+                anim.SetBool("left", true);
+                anim.SetBool("forword", false);
+                anim.SetBool("back", false);
+                anim.SetBool("right", false);
+            }
+            else
+            {
+                FootSound.footSound.audioSource.Stop();
+                anim.SetBool("forword", false);
+                anim.SetBool("back", false);
+                anim.SetBool("left", false);
+                anim.SetBool("right", false);
+            }
         }
-        else if (v <= -0.1f) //뒤
+        #endregion
+        #region 궁수 이동 애니메이션
+        if (CharacterType == Type.Archer)
         {
-            anim.SetBool("back", true);
-            anim.SetBool("forword", false);
-            anim.SetBool("left", false);
-            anim.SetBool("right", false);
+            if (Rdown)
+            {
+                anim.SetBool("isRun", true);
+                if (!FootSound.footSound.audioSource.isPlaying)
+                    FootSound.footSound.FootRunSound();
+            }
+            else if (!Rdown)
+            {
+                anim.SetBool("isRun", false);
+            }
+
+            if (v >= 0.1f) //앞
+            {
+                if (!FootSound.footSound.audioSource.isPlaying)
+                    FootSound.footSound.Arc_F_B_FootSound();
+
+                anim.SetBool("forword", true);
+                anim.SetBool("back", false);
+                anim.SetBool("left", false);
+                anim.SetBool("right", false);
+            }
+            else if (v <= -0.1f) //뒤
+            {
+                if (!FootSound.footSound.audioSource.isPlaying)
+                    FootSound.footSound.Arc_F_B_FootSound();
+                anim.SetBool("back", true);
+                anim.SetBool("forword", false);
+                anim.SetBool("left", false);
+                anim.SetBool("right", false);
+            }
+            else if (h >= 0.1f) //오른쪽
+            {
+                if (!FootSound.footSound.audioSource.isPlaying)
+                    FootSound.footSound.Arc_L_R_FootSound();
+                anim.SetBool("right", true);
+                anim.SetBool("forword", false);
+                anim.SetBool("back", false);
+                anim.SetBool("left", false);
+            }
+            else if (h <= -0.1f) //왼쪽
+            {
+                if (!FootSound.footSound.audioSource.isPlaying)
+                    FootSound.footSound.Arc_L_R_FootSound();
+                anim.SetBool("left", true);
+                anim.SetBool("forword", false);
+                anim.SetBool("back", false);
+                anim.SetBool("right", false);
+            }
+            else
+            {
+                FootSound.footSound.audioSource.Stop();
+                anim.SetBool("forword", false);
+                anim.SetBool("back", false);
+                anim.SetBool("left", false);
+                anim.SetBool("right", false);
+            }
         }
-        else if (h >= 0.1f) //오른쪽
+        #endregion
+        #region 법사 이동 애니메이션
+        if (CharacterType == Type.Mage)
         {
-            anim.SetBool("right", true);
-            anim.SetBool("forword", false);
-            anim.SetBool("back", false);
-            anim.SetBool("left", false);
+            if (Rdown)
+            {
+                anim.SetBool("isRun", true);
+                if (!FootSound.footSound.audioSource.isPlaying)
+                    FootSound.footSound.FootRunSound();
+            }
+            else if (!Rdown)
+            {
+                anim.SetBool("isRun", false);
+            }
+
+            if (v >= 0.1f) //앞
+            {
+                if (!FootSound.footSound.audioSource.isPlaying)
+                    FootSound.footSound.Mag_F_FootSound();
+
+                anim.SetBool("forword", true);
+                anim.SetBool("back", false);
+                anim.SetBool("left", false);
+                anim.SetBool("right", false);
+            }
+            else if (v <= -0.1f) //뒤
+            {
+                if (!FootSound.footSound.audioSource.isPlaying)
+                    FootSound.footSound.Mag_B_FootSound();
+                anim.SetBool("back", true);
+                anim.SetBool("forword", false);
+                anim.SetBool("left", false);
+                anim.SetBool("right", false);
+            }
+            else if (h >= 0.1f) //오른쪽
+            {
+                if (!FootSound.footSound.audioSource.isPlaying)
+                    FootSound.footSound.Mag_L_R_FootSound();
+                anim.SetBool("right", true);
+                anim.SetBool("forword", false);
+                anim.SetBool("back", false);
+                anim.SetBool("left", false);
+            }
+            else if (h <= -0.1f) //왼쪽
+            {
+                if (!FootSound.footSound.audioSource.isPlaying)
+                    FootSound.footSound.Mag_L_R_FootSound();
+                anim.SetBool("left", true);
+                anim.SetBool("forword", false);
+                anim.SetBool("back", false);
+                anim.SetBool("right", false);
+            }
+            else
+            {
+                FootSound.footSound.audioSource.Stop();
+                anim.SetBool("forword", false);
+                anim.SetBool("back", false);
+                anim.SetBool("left", false);
+                anim.SetBool("right", false);
+            }
         }
-        else if (h <= -0.1f) //왼쪽
-        {
-            anim.SetBool("left", true);
-            anim.SetBool("forword", false);
-            anim.SetBool("back", false);
-            anim.SetBool("right", false);
-        }
-        else
-        {
-            anim.SetBool("forword", false);
-            anim.SetBool("back", false);
-            anim.SetBool("left", false);
-            anim.SetBool("right", false);
-        }
+        #endregion
     }
 
     void Attack()   //공격
     {
-        if (CharacterType == Type.Warrior&& !isDodge && !isFlash && !weapons.isLightning &&
+        if (CharacterType == Type.Warrior && !isDodge && !isFlash && !weapons.isLightning &&
            !weapons.isIceage && !Weapons.isMeteo && !isJump && !isRun && !isBlock && !isRush && !isAura && !isStun)
         {
             fireDelay += Time.deltaTime;     //공격속도 계산
@@ -168,7 +318,7 @@ public class PlayerST : MonoBehaviour
                 }
             }
         }
-        else if (CharacterType == Type.Mage&& !isDodge && !isFlash && !weapons.isLightning &&
+        else if (CharacterType == Type.Mage && !isDodge && !isFlash && !weapons.isLightning &&
            !weapons.isIceage && !Weapons.isMeteo && !isJump && !isRun && !isBlock && !isRush && !isAura && !isStun)
         {
             fireDelay += Time.deltaTime;     //공격속도 계산
@@ -178,20 +328,26 @@ public class PlayerST : MonoBehaviour
             {
                 if (isFireReady)  //공격할수있을때
                 {
+
                     equipWeapon[NowWeapon].Use();
                     fireDelay = 0;
                 }
             }
         }
 
-        else if (CharacterType == Type.Archer && !isDodge && !isJump && !isRun && !isStun && !isBackStep && !weapons.isEnergyReady)
+        else if (CharacterType == Type.Archer && !isDodge && !isJump && !isRun && !isStun && !isBackStep && !weapons.isEnergyReady
+            && !weapons.isBombArrow)
         {
+
             fireDelay += Time.deltaTime;
 
             if (fDowning && bowPower < bowChargingTime)
             {
-
                 bowPower += Time.deltaTime;
+                if (bowPower > 0.31f && !StopSoundManager.stopSoundManager.audioSource.isPlaying)
+                {
+                    StopSoundManager.stopSoundManager.ArcherChargeSound();
+                }
             }
 
             if (fDowning && isFireReady && equipWeapon[NowWeapon].rate < fireDelay)
@@ -207,6 +363,11 @@ public class PlayerST : MonoBehaviour
             {
                 archerattack = true;
                 anim.SetBool("doShot", true);
+                StopSoundManager.stopSoundManager.audioSource.Stop();
+                if (!attackdamage.Duration_Buff)
+                    SoundManager.soundManager.ArcherAttackSound();
+                else if (attackdamage.Duration_Buff)
+                    SoundManager.soundManager.ArcherSkill1ShotSound();
 
                 equipWeapon[NowWeapon].Use();
             }
@@ -218,6 +379,15 @@ public class PlayerST : MonoBehaviour
             !weapons.isLightning && !weapons.isIceage && !Weapons.isMeteo && !isFlash && !isStun
             )
         {
+            if (CharacterType == Type.Archer)
+                SoundManager.soundManager.ArcherJump();
+
+            if (CharacterType == Type.Warrior)
+                SoundManager.soundManager.WarriorAttackVoice();
+
+            if (CharacterType == Type.Mage)
+                SoundManager.soundManager.MageJump();
+
             rigid.AddForce(Vector3.up * jump, ForceMode.Impulse); //애드포스 : 힘을주다/ 포스모드,임펄스 : 즉발적
             anim.SetBool("isJump", true);
             anim.SetTrigger("doJump");
@@ -230,6 +400,15 @@ public class PlayerST : MonoBehaviour
         if ( !isStun && !isJump && !isBlock && !isBackStep && !weapons.isEnergyReady && !isRush && !isAura && !isFlash &&
            !weapons.isLightning && !weapons.isIceage && !Weapons.isMeteo && attackdamage.Usable_Dodge)
         {
+            if (CharacterType == Type.Archer)
+                SoundManager.soundManager.ArcherJump();
+
+            if (CharacterType == Type.Warrior)
+                SoundManager.soundManager.WarriorAttackVoice();
+
+            if (CharacterType == Type.Mage)
+                SoundManager.soundManager.MageJump();
+
             isCooldodge = false;
             attackdamage.Usable_Dodge = false;
             dodgeVec = moveVec;
@@ -271,10 +450,12 @@ public class PlayerST : MonoBehaviour
         yield return new WaitForSeconds(0.3f);
         BoxCollider Skillare = Skillarea2.GetComponent<BoxCollider>(); // 데미지 콜라이더 활성화
         Skillare.enabled = true;
+        SoundManager.soundManager.WarriorShieldSound();
         ArrowSkill arrow = Skillarea2.GetComponent<ArrowSkill>(); //스킬데미지설정
         arrow.damage = attackdamage.Skill_1_Damamge();
         yield return new WaitForSeconds(0.2f);
         Skillare.enabled = false;
+
         yield return new WaitForSeconds(0.5f);
         isCool1 = true;
         anim.SetBool("isBlock", false);
@@ -288,6 +469,7 @@ public class PlayerST : MonoBehaviour
         if (!isRush && !isAura && !isJump && !isDodge && !isBlock && !isStun && !isRun &&
             attackdamage.Usable_Buff)
         {
+            SoundManager.soundManager.WarriorBuffSound();
             attackdamage.Skill_Buff_Cool();
             BuffEff.SetActive(true);
         }
@@ -310,8 +492,10 @@ public class PlayerST : MonoBehaviour
         isFall = true;
         anim.SetBool("isRush", true);
         yield return new WaitForSeconds(0.5f);
+        SoundManager.soundManager.WarriorRushVoice();
         rigid.AddForce(transform.forward * 40 + transform.up * 20, ForceMode.Impulse);
         yield return new WaitForSeconds(0.5f);
+        SoundManager.soundManager.WarriorRushSound();
         BoxCollider Skillare = Skillarea.GetComponent<BoxCollider>(); //돌진착지지점 데미지 콜라이더 활성화
         Skillare.enabled = true;
         ArrowSkill arrow = Skillarea.GetComponent<ArrowSkill>(); //스킬데미지설정
@@ -348,10 +532,11 @@ public class PlayerST : MonoBehaviour
         attackdamage.Usable_Skill3 = false;
         isAura = true;
         //AuraTimePrev = Time.time;
-        
-        anim.SetBool("isAura", true);
-        yield return new WaitForSeconds(0.7f);
 
+        anim.SetBool("isAura", true);
+        SoundManager.soundManager.WarriorRushVoice();
+        yield return new WaitForSeconds(0.7f);
+        SoundManager.soundManager.WarriorAuraSound();
         GameObject swordaura = Instantiate(SwordAura, Aurapos.position, Aurapos.rotation);
         Rigidbody aurarigid = swordaura.GetComponent<Rigidbody>();
         aurarigid.velocity = Aurapos.forward * 20;
@@ -368,7 +553,7 @@ public class PlayerST : MonoBehaviour
     //==================================여기서부터 궁수스킬=======================================
     public void Smoke() //마우스 우클릭 연막
     {
-        if ( !isJump && !isDodge && !isStun && !isRun && attackdamage.Usable_Skill1)
+        if (!isJump && !isDodge && !isStun && !isRun && attackdamage.Usable_Skill1)
         {
             StartCoroutine(SmokePlay());
         }
@@ -382,6 +567,7 @@ public class PlayerST : MonoBehaviour
         isBackStep = true;
         rigid.AddForce(transform.forward * -23 + transform.up * 10, ForceMode.Impulse);
         GameObject arceff = Instantiate(BackStepEff, BackStepPos.position, BackStepPos.rotation); //이펙트
+        SoundManager.soundManager.ArcherBackStepSound();
         BoxCollider Skillare = Skillarea.GetComponent<BoxCollider>(); // 데미지 콜라이더 활성화
         Skillare.enabled = true;
         BoxCollider CCare = CCarea.GetComponent<BoxCollider>(); // cc기 콜라이더 활성화
@@ -406,6 +592,7 @@ public class PlayerST : MonoBehaviour
         if (!isStun && !isRun && attackdamage.Usable_Buff)
         {
             attackdamage.Skill_Buff_Cool();
+            SoundManager.soundManager.ArcherSkill1Sound();
         }
     }
     //==================================여기서부터 마법사스킬=======================================
@@ -419,6 +606,8 @@ public class PlayerST : MonoBehaviour
     }
     IEnumerator FlashStart()
     {
+        SoundManager.soundManager.MageTeleportSound();
+        attackdamage.Skill_Mage_Teleport_Cool();
         isCoolTeleport = false;//쿨타임
         attackdamage.Usable_Teleport = false;
         

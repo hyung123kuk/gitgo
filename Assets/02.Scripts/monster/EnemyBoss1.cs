@@ -23,16 +23,20 @@ public class EnemyBoss1 : MonsterBoss
     Transform target;
     Rigidbody rigid;
     BoxCollider boxCollider;
-   // SkinnedMeshRenderer[] mat; //�ǰݽ� �����ϰ�
+    SkinnedMeshRenderer[] mat; //�ǰݽ� �����ϰ�
     NavMeshAgent nav; //����
     Animator anim;
+
+    public ParticleSystem Hiteff; //피격이펙
+    public ParticleSystem Hiteff2;
+    public bool isDamage;
 
     void Awake()
     {
         stunarea = GetComponentInChildren<Light>();
         rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
-        //   mat = GetComponentsInChildren<SkinnedMeshRenderer>();
+        mat = GetComponentsInChildren<SkinnedMeshRenderer>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
 
@@ -267,7 +271,7 @@ public class EnemyBoss1 : MonsterBoss
 
     void OnTriggerEnter(Collider other)  //�ǰ�
     {
-        if (!isbansa)
+        if (!isbansa && !isDamage)
         {
             if (other.tag == "Melee")
             {
@@ -280,6 +284,13 @@ public class EnemyBoss1 : MonsterBoss
             else if (other.tag == "Arrow")
             {
                 Arrow arrow = other.GetComponent<Arrow>();
+                curHealth -= arrow.damage;
+
+                StartCoroutine(OnDamage());
+            }
+            else if (other.tag == "ArrowSkill")
+            {
+                ArrowSkill arrow = other.GetComponent<ArrowSkill>();
                 curHealth -= arrow.damage;
 
                 StartCoroutine(OnDamage());
@@ -297,11 +308,26 @@ public class EnemyBoss1 : MonsterBoss
                 Arrow arrow = other.GetComponent<Arrow>();
                 PlayerStat.playerstat._Hp -= arrow.damage;
             }
+            else if (other.tag == "ArrowSkill")
+            {
+                ArrowSkill arrow = other.GetComponent<ArrowSkill>();
+                curHealth -= arrow.damage;
+
+                StartCoroutine(OnDamage());
+            }
         }
     }
 
     IEnumerator OnDamage()
     {
+        Hiteff.Play();
+        Hiteff2.Play();
+        isDamage = true;
+        yield return new WaitForSeconds(0.1f);
+        isDamage = false;
+        if(curHealth > 0)
+            foreach (SkinnedMeshRenderer mesh in mat)
+                mesh.material.color = Color.white;
         ShakeOn();
         SetHpBar();
         if (curHealth < 0)
@@ -311,17 +337,15 @@ public class EnemyBoss1 : MonsterBoss
             nav.isStopped = true;
             isDie = true;
             boxCollider.enabled = false;
-            //foreach (SkinnedMeshRenderer mesh in mat)
-            // mesh.material.color = Color.white;
+            foreach (SkinnedMeshRenderer mesh in mat)
+             mesh.material.color = Color.white;
             isChase = false; //�׾����� ��������
             anim.SetBool("isDie", true);
-
-
-            Destroy(gameObject, 200f);
+            gameObject.SetActive(false);
         }
         
 
-        yield return null;
+       
         
             
         
