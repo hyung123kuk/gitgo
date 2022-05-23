@@ -80,7 +80,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5110697513907735857
 Transform:
   m_ObjectHideFlags: 0
@@ -88,7 +88,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5595450833958410123}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalRotation: {x: -0.258819, y: 0, z: 0, w: 0.9659259}
   m_LocalPosition: {x: 62.388023, y: 2.9534628, z: -33.448}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -96,7 +96,7 @@ Transform:
   - {fileID: 1341172044}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -30, y: 0, z: 0}
 --- !u!33 &8161371188472201876
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -202,8 +202,48 @@ MonoBehaviour:
   type: 0
   damage: 25
   rate: 0.65
+  Key3: 0
+  Key3Up: 0
+  anim: {fileID: 0}
   meleeArea: {fileID: 1278150553}
-  trailEffect: {fileID: 0}
-  arrowPos: {fileID: 0}
-  arrow: {fileID: 0}
+  isSootReady: 1
   playerST: {fileID: 0}
+  attackdamage: {fileID: 0}
+  playerstat: {fileID: 0}
+  isEnergyReady: 0
+  isEnergy1: 0
+  isEnergy2: 0
+  EnergyReady: 0
+  EnergyReady2: 0
+  EnergyChargingTime: 5
+  archer_skill4_Order: 0
+  arrowPos: {fileID: 0}
+  Arc3SkillPos: {fileID: 0}
+  ArcDefaultAttack: {fileID: 0}
+  Arc1Skilarrow: {fileID: 0}
+  Arc2Skilarrow: {fileID: 0}
+  Arc3SkillBuff1: {fileID: 0}
+  Arc3SkillBuff2: {fileID: 0}
+  Arc3SkillBuff3: {fileID: 0}
+  Arc3SkillArrow1: {fileID: 0}
+  Arc3SkillArrow2: {fileID: 0}
+  isLightning: 0
+  isIceage: 0
+  isMeteoShot: 0
+  mage_skill4_Order: 0
+  MagicPos: {fileID: 0}
+  MageDefaultAttack: {fileID: 0}
+  Mage1SkillEff: {fileID: 0}
+  Mage1SkillPos1: {fileID: 0}
+  Mage1SkillPos2: {fileID: 0}
+  Mage1SkillPos3: {fileID: 0}
+  Mage2SkillEff: {fileID: 0}
+  Mage2SkillReadyEff: {fileID: 0}
+  Mage3SkillPos1: {fileID: 0}
+  Mage3SkillPos2: {fileID: 0}
+  Mage3SkillPosEff: {fileID: 0}
+  Mage3SkillEff: {fileID: 0}
+  Mage3SkillPlayerEff: {fileID: 0}
+  Skillarea: {fileID: 0}
+  Skillarea2: {fileID: 0}
+  CCarea: {fileID: 0}
