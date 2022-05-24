@@ -229,6 +229,7 @@ public class EnemySlime  : Monster
             }
             else
             {
+                
                 Instantiate(Geteff, transform.position, Quaternion.identity);
                 MonsterDie();
                 nav.isStopped = true;

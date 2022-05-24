@@ -10,10 +10,18 @@ public class LogManager : MonoBehaviour
     [SerializeField]
     public static LogManager logManager;
 
+
+    //½¦ÀÌÅ· °ü·Ã
+    float allX = 0;
+    float allY = 0;
+    float allZ = 0;
+    public float shakeTime = 0f;
+    Transform tr;
     void Start()
     {
         logManager = this;
-        logText = GetComponentsInChildren<Text>();    
+        logText = GetComponentsInChildren<Text>();
+        tr = FindObjectOfType<PlayerST>().gameObject.transform;
     }
 
     private void LogUp()
@@ -68,10 +76,42 @@ public class LogManager : MonoBehaviour
         logText[0].text = TextLog;
         if (!Error) { logText[0].color = Color.white; }
        
-        else if (Error) { logText[0].color = Color.red; }
+        else if (Error) { logText[0].color = Color.red;
+            ErrorShake();
+        }
         StopCoroutine(LogDisappear());
         StartCoroutine(LogDisappear());
     }
-    
-  
+
+
+    private void ErrorShake()
+    {
+        shakeTime = Time.time;
+        StartCoroutine(Shake());
+    }
+
+    IEnumerator Shake()
+    {
+        yield return new WaitForSeconds(0.05f);
+        float progress = 0;
+        float increment = 0.03f;
+        while (progress <= 0.15f)
+        {
+
+            float x = Random.Range(-0.3f, 0.3f);
+
+            float z = Random.Range(-0.3f, 0.3f);
+            allX += x;
+            allZ += z;
+            tr.position += new Vector3(x, 0, z);
+            progress += increment;
+            yield return new WaitForSeconds(increment);
+
+
+        }
+        transform.position -= new Vector3(allX, allY, allZ);
+        allX = 0; allY = 0; allZ = 0;
+    }
+
+
 }

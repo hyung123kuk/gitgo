@@ -50,6 +50,9 @@ public class EnemyBlueSlime : Monster
         isStun = false;
         StartMonster();
     }
+
+
+    
     void Update()
     {
         if (isDie)
@@ -198,6 +201,7 @@ public class EnemyBlueSlime : Monster
             }
             else
             {
+                MonsterDie();
                 nav.isStopped = true;
                 boxCollider.enabled = false;
                 mat.color = Color.black;

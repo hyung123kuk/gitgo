@@ -105,11 +105,9 @@ public class QuikSlot : MonoBehaviour
             #region 전사 스킬
             if(skill.skill.skillCharacter == SkillUI.SkillCharacter.Warrior)
             {
-                if(skill.skill.skillNum == 1 && attckDamage.Usable_Skill1 ) {
-                    
+                if(skill.skill.skillNum == 1 && attckDamage.Usable_Skill1 ) {                    
                     playerST.Block();
                     playerST.StartCoroutine(Skill1());
-                    
                 }
                 else if (skill.skill.skillNum == 2 && attckDamage.Usable_Buff) { playerST.Buff(); StartCoroutine(Buff()) ; buffSkillUI[0].BuffOn(BuffSkillUI.BuffSkills.WarriorBuff1, CoolTimeImage.sprite); }
                 else if (skill.skill.skillNum == 3 && attckDamage.Usable_Skill2) { playerST.Rush(); StartCoroutine(Skill2()); }
@@ -140,6 +138,7 @@ public class QuikSlot : MonoBehaviour
             if (skill.skill.skillCharacter == SkillUI.SkillCharacter.Common)
             {
                 if (skill.skill.skillNum == 0 && attckDamage.Usable_Dodge) { playerST.Dodge(); StartCoroutine(Dodge()); }
+              
 
 
             }
