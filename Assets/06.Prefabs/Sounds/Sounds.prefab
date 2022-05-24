@@ -349,6 +349,17 @@ MonoBehaviour:
   Mag_F_FootSound: {fileID: 8300000, guid: ab821fd040c96524296f60539b73aa6a, type: 3}
   Mag_B_FootSound: {fileID: 8300000, guid: 247a285111ec6094a902c9d562f30a96, type: 3}
   SlimeHitSound: {fileID: 8300000, guid: a37f44cbf8c2a7443a3c361efa2f233a, type: 3}
+  GoblinHitSound: {fileID: 8300000, guid: 90115a0fe3e8b4e098b1111cc014a9cc, type: 3}
+  SkeletonHitSound: {fileID: 8300000, guid: 5f81bdff582c2fc4488e1129bc037245, type: 3}
+  GolemHitSound: {fileID: 8300000, guid: 37f12e8bae0ff4b458e855f94ecc795f, type: 3}
+  InventoryOpenSound: {fileID: 8300000, guid: 914a4a2a124d040df96bf13308aadc2e, type: 3}
+  InventoryCloseSound: {fileID: 8300000, guid: ca056d4afe5e74498a0798f16e0e866d, type: 3}
+  UiSound: {fileID: 8300000, guid: 33b6cd7837c7642958dac012307e9086, type: 3}
+  BuySound: {fileID: 8300000, guid: 096ccd8ce05ce4e4bb02055c0a2c934e, type: 3}
+  BuyfailSound: {fileID: 8300000, guid: 4c8c56e2923cdab4b8aa27d1984b3188, type: 3}
+  GetCoinSound: {fileID: 8300000, guid: 45a80eed225ff3645839687214a81916, type: 3}
+  DrinkSound: {fileID: 8300000, guid: 2d09fc7865d21c244924d592fdd9decc, type: 3}
+  EquipSound: {fileID: 8300000, guid: c8566d7425b80dd4cb566270765ef048, type: 3}
 --- !u!1 &911383751155214385
 GameObject:
   m_ObjectHideFlags: 0

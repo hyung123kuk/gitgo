@@ -169,15 +169,18 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         {
             if(gameObject.GetComponent<QuikSlot>().slot.item != null) // 소비아이템이 있다면
             {
+                
                 Slot instanceSlot = gameObject.GetComponent<QuikSlot>().slot;
                 if (!instanceSlot.inven.HasEmptySlot() && !instanceSlot.inven.HasSameSlot(instanceSlot.item)) //인벤에 빈창 없으면 아이템 들어갈곳 없어서 스킬 못 넣음
                 {
                     Debug.Log("빈창이 없습니다.");
                     return;
                 }
+                
                 instanceSlot.inven.addItem(instanceSlot.item, instanceSlot.itemCount);
                 instanceSlot.ClearSlot();
             }
+            SoundManager.soundManager.EquipSound();
             skill = DragSkillSlot.instance.dragSkillSlot.skill;
             imageSkill.sprite = skill.SkillImage;
             SetColor(1);
@@ -192,7 +195,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             if (gameObject.GetComponent<QuikSlot>().slot.item != null) // 소비아이템이 있다면
             {
 
-
+                
                 Slot instanceSlot = DragSkillSlot.instance.dragSkillSlot.gameObject.GetComponent<QuikSlot>().slot;
                 instanceSlot.AddItem(gameObject.GetComponent<QuikSlot>().slot.item, gameObject.GetComponent<QuikSlot>().slot.itemCount);
                 
@@ -205,6 +208,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 imageSkill.sprite = skill.SkillImage;
                 DragSkillSlot.instance.dragSkillSlot.SetColor(1);
                 SetColor(1);
+                SoundManager.soundManager.EquipSound();
                 instanceSlot.itemImage.sprite = instanceSlot.item.itemImage;
 
              
@@ -217,6 +221,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 Debug.Log("1");
                 DragSkillSlot.instance.dragSkillSlot.skill = skill;
                 DragSkillSlot.instance.dragSkillSlot.Setimage();
+                SoundManager.soundManager.EquipSound();
                 skill = instanceSkill;
                 imageSkill.sprite = skill.SkillImage;
                 SetColor(1);
@@ -227,6 +232,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             {
                 SkillUI instanceSkill = DragSkillSlot.instance.dragSkillSlot.skill;
                 DragSkillSlot.instance.dragSkillSlot.ClearSlot();
+                SoundManager.soundManager.EquipSound();
                 skill = instanceSkill;
                 imageSkill.sprite = skill.SkillImage;
                 SetColor(1);

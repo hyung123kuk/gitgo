@@ -67,6 +67,7 @@ public class SkillWindow : MonoBehaviour , IPointerClickHandler
 
     public void SkillWindowOn()
     {
+        SoundManager.soundManager.UiSound();
         skillWindow.SetActive(true);
         Cursor.lockState = CursorLockMode.Confined;
         allUI.MouseCursor.transform_cursor.gameObject.SetActive(true);
@@ -76,7 +77,7 @@ public class SkillWindow : MonoBehaviour , IPointerClickHandler
 
     public void SkillWindowOff()
     {
-
+        SoundManager.soundManager.UiSound();
         skillWindow.SetActive(false);
         allUI.MouseCursor.transform_cursor.gameObject.SetActive(false);
         allUI.MouseCursor.Init_Cursor();

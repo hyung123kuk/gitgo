@@ -110,6 +110,7 @@ public class StatWindow : MonoBehaviour ,IPointerClickHandler
 
     public void StatWindowOn()
     {
+        SoundManager.soundManager.UiSound();
         StatWindowDesign.SetActive(true);
         Cursor.lockState = CursorLockMode.Confined;
         allUI.MouseCursor.transform_cursor.gameObject.SetActive(true);
@@ -119,7 +120,7 @@ public class StatWindow : MonoBehaviour ,IPointerClickHandler
 
     public void StatWindowOff()
     {
-       
+        SoundManager.soundManager.UiSound();
         StatWindowDesign.SetActive(false);
         allUI.MouseCursor.transform_cursor.gameObject.SetActive(false);
         allUI.MouseCursor.Init_Cursor();

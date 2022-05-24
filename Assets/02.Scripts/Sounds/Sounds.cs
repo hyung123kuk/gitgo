@@ -54,7 +54,20 @@ public class Sounds : MonoBehaviour
 
 
     [Header("몬스터 사운드")]
-    public AudioClip SlimeHitSound;
+    public AudioClip SlimeHitSound; //맞는소리
+    public AudioClip GoblinHitSound; //맞는소리
+    public AudioClip SkeletonHitSound; //맞는소리
+    public AudioClip GolemHitSound; //맞는소리
+
+    [Header("UI 사운드")]
+    public AudioClip InventoryOpenSound; //인벤열때소리
+    public AudioClip InventoryCloseSound; //인벤닫을때소리
+    public AudioClip UiSound; //다른UI 소리
+    public AudioClip BuySound; //구매할때소리
+    public AudioClip BuyfailSound; //구매실패소리
+    public AudioClip GetCoinSound; //판매&동전먹을때소리
+    public AudioClip DrinkSound; //물약빨때소리
+    public AudioClip EquipSound; //장비장착소리
 
     void Start()
     {

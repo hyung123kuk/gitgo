@@ -320,6 +320,7 @@ public class EnemyBoss1 : MonsterBoss
 
     IEnumerator OnDamage()
     {
+        HitSoundManager.hitsoundManager.SlimeHitSound();
         Hiteff.Play();
         Hiteff2.Play();
         isDamage = true;

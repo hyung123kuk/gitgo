@@ -188,6 +188,7 @@ public class EnemyGoblin : Monster
      IEnumerator OnDamage()
     {
         ShakeOn();
+        HitSoundManager.hitsoundManager.GoblinHitSound();
         isDamage = true;
         mat.color = Color.red;
         Hiteff.Play();

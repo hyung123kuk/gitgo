@@ -6,6 +6,7 @@ using UnityEngine.EventSystems;
 
 public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
 {
+    int invencheck = 0;
     public static inventory inven;
     public static bool iDown; // 인벤토리가 열려있으면 true
     public GameObject Inven; // 인벤토리 창
@@ -49,7 +50,7 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
         invenOn();
         yield return new WaitForSeconds(0.1f);
         invenOff();
-
+        invencheck = 1;
 
     }
 
@@ -61,6 +62,9 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
 
     public void invenOn()
     {
+        if(invencheck==1)
+            SoundManager.soundManager.InventoryOpenSound();
+
         Inven.SetActive(true);
         Cursor.lockState = CursorLockMode.Confined;
         allUI.MouseCursor.transform_cursor.gameObject.SetActive(true);
@@ -70,6 +74,9 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
 
     public void invenOff()
     {
+        if (invencheck == 1)
+            SoundManager.soundManager.InventoryCloseSound();
+
         itemStore.storeOff();
         Inven.SetActive(false);
         allUI.MouseCursor.transform_cursor.gameObject.SetActive(false);

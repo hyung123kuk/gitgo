@@ -360,7 +360,8 @@ public class EnemyBoss2 : MonsterBoss
 
     IEnumerator OnDamage()
     {
-         foreach (SkinnedMeshRenderer mesh in mat)
+        HitSoundManager.hitsoundManager.GolemHitSound();
+        foreach (SkinnedMeshRenderer mesh in mat)
            mesh.material.color = Color.red;
         isDamage = true;
         Hiteff.Play();

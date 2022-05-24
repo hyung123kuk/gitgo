@@ -210,7 +210,7 @@ public class EnemySlime  : Monster
     {
         if (!isDie)
         {
-            HitSoundManager.hitsoundManager.SlimeHit();
+            HitSoundManager.hitsoundManager.SlimeHitSound();
             ShakeOn();
         }
         if (!isDie)

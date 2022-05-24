@@ -185,7 +185,7 @@ public class EnemyBlueSlime : Monster
             ShakeOn();
             SetHpBar();
 
-            HitSoundManager.hitsoundManager.SlimeHit();
+            HitSoundManager.hitsoundManager.SlimeHitSound();
             isDamage = true;
             mat.color = Color.red;
             Hiteff.Play();

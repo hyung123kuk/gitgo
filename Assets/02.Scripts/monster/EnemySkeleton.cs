@@ -3,32 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class EnemyRange : Monster
+public class EnemySkeleton : Monster
 {
-    
-    public bool isChase; //�������� ����
-    public bool isAttack; //���� ������
+    public BoxCollider meleeArea; 
+    public bool isChase; 
+    public bool isAttack; 
     public Transform respawn;
-    public GameObject bullet;
-    public Transform firepos;
     private bool isDie;
     public bool isStun;
-    public bool isDamage; //현재맞고있나
+    public bool isDamage; //����°��ֳ�
 
-    public ParticleSystem Hiteff; //������ ����Ʈ
-    public ParticleSystem Hiteff2; //������ ����Ʈ
+    public ParticleSystem Hiteff; 
+    public ParticleSystem Hiteff2; 
+
     Transform target;
     Rigidbody rigid;
     BoxCollider boxCollider;
-    public SkinnedMeshRenderer mat; //�ǰݽ� �����ϰ�
-    NavMeshAgent nav; //����
+    Material mat; 
+    NavMeshAgent nav;
     Animator anim;
-    
 
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
+        mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         StartMonster();
@@ -41,12 +40,12 @@ public class EnemyRange : Monster
         nav.isStopped = false;
         isDie = false;
         curHealth = maxHealth;
-        mat.material.color = Color.white;
+        mat.color = Color.white;
         isStun = false;
     }
     void Update()
     {
-        if (isDie)  //�׾����� ����������� �ڷ�ƾ ��������
+        if (isDie)  
         {
             StopAllCoroutines();
         }
@@ -54,20 +53,27 @@ public class EnemyRange : Monster
         if (!isStun)
         {
             Targerting();
-            if (Vector3.Distance(target.position, transform.position) <= 25f && nav.enabled) //15���� �ȿ� ����
+            if (Vector3.Distance(target.position, transform.position) <= 15f && nav.enabled) 
             {
                 if (!isAttack)
                 {
-                    anim.SetBool("isWalk", true);
-                    nav.speed = 3.5f;
+                    anim.SetBool("isRun", false);
+                    nav.speed = 4.5f;
                     isChase = true;
                     nav.isStopped = false;
                     nav.destination = target.position;
-
+                    anim.SetBool("isWalk", true);
+                    if (Vector3.Distance(target.position, transform.position) >= 6f && nav.enabled)
+                    {
+                        anim.SetBool("isWalk", false);
+                        nav.speed = 10f;
+                        anim.SetBool("isRun", true);
+                    }
                 }
             }
-            else if (Vector3.Distance(target.position, transform.position) > 25f && nav.enabled) //15���� ��
+            else if (Vector3.Distance(target.position, transform.position) > 15f && nav.enabled) 
             {
+                anim.SetBool("isRun", false);
                 nav.SetDestination(respawn.transform.position);
                 nav.speed = 20f;
                 curHealth = maxHealth;
@@ -80,12 +86,12 @@ public class EnemyRange : Monster
             }
         }
 
-        if (isChase || isAttack) //�����̳� �������϶���
+        if (isChase || isAttack) 
             if (!isDie && !PlayerST.isJump && !PlayerST.isFall && !isStun)
-                transform.LookAt(target); //�÷��̾� �ٶ󺸱�
+                transform.LookAt(target);
     }
 
-    void FreezeVelocity() //�̵�����
+    void FreezeVelocity() 
     {
         if (isChase)
         {
@@ -93,38 +99,36 @@ public class EnemyRange : Monster
             rigid.angularVelocity = Vector3.zero;
         }
     }
-    void Targerting()//Ÿ����
+    void Targerting()
     {
-        float targetRadius = 0.5f;
-        float targetRange = 20f;
+        float targetRadius = 1f;
+        float targetRange = 0.5f;
 
         RaycastHit[] rayHits =
             Physics.SphereCastAll(transform.position,
-            targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));  //����ĳ��Ʈ
+            targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player")); 
 
-
-        if (rayHits.Length > 0 && !isAttack && !isDie) //����ĳ��Ʈ�� �÷��̾ �����ٸ� && ���� �������� �ƴ϶��
+        if (rayHits.Length > 0 && !isAttack && !isDie) 
         {
             StartCoroutine(Attack());
         }
     }
 
-    IEnumerator Attack() //������ �ϰ� �������ϰ� �ٽ� ������ ����
-    {
 
+    IEnumerator Attack()
+    {
         isChase = false;
         isAttack = true;
         nav.isStopped = true;
         anim.SetBool("isAttack", true);
-        GameObject instantBullet = Instantiate(bullet, firepos.position, firepos.rotation);
-        Rigidbody rigidBullet = instantBullet.GetComponent<Rigidbody>();
-        rigidBullet.velocity = transform.forward * 20;
-        Destroy(instantBullet, 2f);
+        yield return new WaitForSeconds(0.5f);
+        meleeArea.enabled = true;
+
+        yield return new WaitForSeconds(0.2f);
+        rigid.velocity = Vector3.zero;
+        meleeArea.enabled = false;
 
         yield return new WaitForSeconds(0.5f);
-        rigid.velocity = Vector3.zero;
-
-        yield return new WaitForSeconds(2f);
         isChase = true;
         isAttack = false;
         anim.SetBool("isAttack", false);
@@ -132,11 +136,10 @@ public class EnemyRange : Monster
     }
     void FixedUpdate()
     {
-
         FreezeVelocity();
     }
 
-    void OnTriggerEnter(Collider other)  //�ǰ�
+    void OnTriggerEnter(Collider other)
     {
         if (!isDamage)
         {
@@ -168,7 +171,10 @@ public class EnemyRange : Monster
         {
             StartCoroutine(Stun());
         }
+
+
     }
+
     IEnumerator Stun()
     {
         isStun = true;
@@ -177,40 +183,40 @@ public class EnemyRange : Monster
         isStun = false;
         anim.SetBool("isStun", false);
     }
+
     IEnumerator OnDamage()
     {
         ShakeOn();
-        HitSoundManager.hitsoundManager.GoblinHitSound();
+        HitSoundManager.hitsoundManager.SkeletonHitSound();
         isDamage = true;
+        mat.color = Color.red;
         Hiteff.Play();
         Hiteff2.Play();
-        mat.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         isDamage = false;
         SetHpBar();
         if (curHealth > 0)
         {
-            
-            mat.material.color = Color.white;
-            
+
+            mat.color = Color.white;
         }
         else
         {
             MonsterDie();
-            nav.isStopped = true;
+
             boxCollider.enabled = false;
-            mat.material.color = Color.black;
+            mat.color = Color.black;
+            nav.isStopped = true;
             isDie = true;
-            isChase = false; //�׾����� ��������
+            isChase = false; 
             anim.SetBool("isDie", true);
             Invoke("Diegg", 1.5f);
-            
         }
     }
     void Diegg()
     {
         respawn.GetChild(0).gameObject.SetActive(true);
-        --SpawnManager.spawnManager.GoblinArObjs;
+        --SpawnManager.spawnManager.GoblinObjs;
         gameObject.SetActive(false);
     }
 }

@@ -91,6 +91,7 @@ public class itemBuyQuestion : MonoBehaviour , IPointerClickHandler
         {
             if (!inven.HasEmptySlot())
             {
+                SoundManager.soundManager.BuyfailSound();
                 Debug.Log("빈창이 없습니다.");
                 BuyQuestionOff();
                 return;
@@ -99,6 +100,7 @@ public class itemBuyQuestion : MonoBehaviour , IPointerClickHandler
         else if(item.itemType == Item.ItemType.Used){
             if (!inven.HasEmptySlot()&& !inven.HasSameSlot(item))
             {
+                SoundManager.soundManager.BuyfailSound();
                 Debug.Log("빈창이 없습니다.");
                 BuyQuestionOff();
                 return;
@@ -108,6 +110,7 @@ public class itemBuyQuestion : MonoBehaviour , IPointerClickHandler
             inven.BuyItem(item, int.Parse(PortionNum.text));
         if (item.itemType == Item.ItemType.Equipment)
             inven.BuyItem(item, 1);
+        SoundManager.soundManager.BuySound();
         BuyQuestionOff();
 
      }
