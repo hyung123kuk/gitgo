@@ -225,7 +225,7 @@ public class PlayerST : MonoBehaviour
                 anim.SetBool("forword", false);
                 anim.SetBool("back", false);
                 anim.SetBool("right", false);
-            }
+            } 
             else
             {
                 FootSound.footSound.audioSource.Stop();
@@ -379,6 +379,8 @@ public class PlayerST : MonoBehaviour
             !weapons.isLightning && !weapons.isIceage && !Weapons.isMeteo && !isFlash && !isStun
             )
         {
+            FootSound.footSound.audioSource.Stop();
+
             if (CharacterType == Type.Archer)
                 SoundManager.soundManager.ArcherJump();
 
@@ -400,6 +402,7 @@ public class PlayerST : MonoBehaviour
         if ( !isStun && !isJump && !isBlock && !isBackStep && !weapons.isEnergyReady && !isRush && !isAura && !isFlash &&
            !weapons.isLightning && !weapons.isIceage && !Weapons.isMeteo && attackdamage.Usable_Dodge)
         {
+            FootSound.footSound.audioSource.Stop();
             if (CharacterType == Type.Archer)
                 SoundManager.soundManager.ArcherJump();
 
@@ -648,6 +651,14 @@ public class PlayerST : MonoBehaviour
     }
     private void Update()
     {
+        if (inventory.iDown || SkillWindow.kDown || StatWindow.tDown)
+        {
+            FootSound.footSound.audioSource.Stop();
+            anim.SetBool("forword", false);
+            anim.SetBool("back", false);
+            anim.SetBool("left", false);
+            anim.SetBool("right", false);
+        }
         ImWar = CharacterType == Type.Warrior;
         if (inventory.iDown || SkillWindow.kDown|| StatWindow.tDown)
             return;
