@@ -92,7 +92,7 @@ public class Monster : MonoBehaviour
     public void StartMonster()
     {
         StartHpbar();
-        SetColor(1);
+        SetColor(0);
         isSpread = false;
     }
 
@@ -115,7 +115,7 @@ public class Monster : MonoBehaviour
     public void SetHpBar()
     {
         hpBarImage.fillAmount = curHealth / maxHealth;
-
+        StartCoroutine(MonsterHpBarOn());
     }
 
 
@@ -168,6 +168,18 @@ public class Monster : MonoBehaviour
         isSpread = true;
     }
 
+    public void MonsterAttack()
+    {
+        StartCoroutine(MonsterHpBarOn());
+            
+    }
+
+    IEnumerator MonsterHpBarOn()
+    {
+        SetColor(1);
+        yield return new WaitForSeconds(5.0f);
+        SetColor(0);
+    }
 
     public void SetColor(float _alpha)
     {

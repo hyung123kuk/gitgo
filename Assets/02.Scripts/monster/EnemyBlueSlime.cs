@@ -109,6 +109,7 @@ public class EnemyBlueSlime : Monster
         if (rayHits.Length > 0 && !isAttack && !isDie) 
         {
             StartCoroutine(Attack());
+            MonsterAttack();
         }
     }
 

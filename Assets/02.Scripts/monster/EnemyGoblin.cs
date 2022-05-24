@@ -112,6 +112,7 @@ public class EnemyGoblin : Monster
         if (rayHits.Length > 0 && !isAttack && !isDie) //����ĳ��Ʈ�� �÷��̾ �����ٸ� && ���� �������� �ƴ϶��
         {
             StartCoroutine(Attack());
+            MonsterAttack();
         }
     }
 
