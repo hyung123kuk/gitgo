@@ -69,11 +69,14 @@ public class DropCoin : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.tag == "ground")
+        if (item.itemType == Item.ItemType.Used || item.itemType == Item.ItemType.ETC)
         {
-            col.enabled = false;
-            rbody.isKinematic = true;
-            StartCoroutine(Remove());
+            if (other.tag == "ground")
+            {
+                col.enabled = false;
+                rbody.isKinematic = true;
+                StartCoroutine(Remove());
+            }
         }
     }
 

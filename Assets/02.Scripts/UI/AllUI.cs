@@ -116,10 +116,7 @@ public class AllUI : MonoBehaviour
 
     public void CursorLock()
     {
-        Debug.Log("zz");
-        Debug.Log(inventory.iDown);
-        Debug.Log(SkillWindow.kDown);
-        Debug.Log(StatWindow.tDown);
+
         if (inventory.iDown == false && SkillWindow.kDown == false && StatWindow.tDown == false)
         {
             Cursor.lockState = CursorLockMode.Locked;
