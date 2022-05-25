@@ -49,12 +49,7 @@ public class EnemyBlueSlime : Monster
         mat.color = Color.white;
         isStun = false;
         StartMonster();
-        Monstername.text = "블루 슬라임";
-        level.text = "3";
     }
-
-
-    
     void Update()
     {
         if (isDie)
@@ -111,7 +106,6 @@ public class EnemyBlueSlime : Monster
         if (rayHits.Length > 0 && !isAttack && !isDie) 
         {
             StartCoroutine(Attack());
-            MonsterAttack();
         }
     }
 
@@ -204,7 +198,6 @@ public class EnemyBlueSlime : Monster
             }
             else
             {
-                MonsterDie();
                 nav.isStopped = true;
                 boxCollider.enabled = false;
                 mat.color = Color.black;

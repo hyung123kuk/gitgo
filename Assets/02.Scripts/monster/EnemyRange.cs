@@ -32,8 +32,6 @@ public class EnemyRange : Monster
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         StartMonster();
-        Monstername.text = "고블린 아처";
-        level.text = "6";
 
     }
     private void OnEnable()
@@ -148,7 +146,6 @@ public class EnemyRange : Monster
                 curHealth -= weapon.damage;
 
                 StartCoroutine(OnDamage());
-                MonsterAttack();
 
             }
             else if (other.tag == "Arrow")
@@ -157,7 +154,6 @@ public class EnemyRange : Monster
                 curHealth -= arrow.damage;
 
                 StartCoroutine(OnDamage());
-                MonsterAttack();
             }
             else if (other.tag == "ArrowSkill")
             {
@@ -165,14 +161,12 @@ public class EnemyRange : Monster
                 curHealth -= arrow.damage;
 
                 StartCoroutine(OnDamage());
-                MonsterAttack();
             }
         }
 
         if (other.tag == "CCAREA")
         {
             StartCoroutine(Stun());
-            MonsterAttack();
         }
     }
     IEnumerator Stun()

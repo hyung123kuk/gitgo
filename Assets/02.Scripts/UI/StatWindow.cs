@@ -122,9 +122,10 @@ public class StatWindow : MonoBehaviour ,IPointerClickHandler
     {
         SoundManager.soundManager.UiSound();
         StatWindowDesign.SetActive(false);
-
+        allUI.MouseCursor.transform_cursor.gameObject.SetActive(false);
+        allUI.MouseCursor.Init_Cursor();
         tDown = false;
-        AllUI.allUI.CursorLock();
+        Cursor.lockState = CursorLockMode.Locked;
     }
 
     public void OnPointerClick(PointerEventData eventData)

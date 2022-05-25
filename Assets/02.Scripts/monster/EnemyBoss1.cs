@@ -44,8 +44,6 @@ public class EnemyBoss1 : MonsterBoss
         StartCoroutine(Pattern());
         StartBossMonster();
         BossItemSet();
-        Monstername.text = "거북 슬라임";
-        level.text = "5";
 
     }
 
@@ -123,21 +121,18 @@ public class EnemyBoss1 : MonsterBoss
                 case 3:
                 
                     StartCoroutine(Stun());
-                    MonsterAttack();
                     break;
                 case 4:
                 case 5:
                 case 6:
                   
                     StartCoroutine(Rush());
-                    MonsterAttack();
                     break;
                 case 7:
                 case 8:
                 case 9:
                    
                     StartCoroutine(Reflect());
-                    MonsterAttack();
                     break;
             }
         }
@@ -169,7 +164,6 @@ public class EnemyBoss1 : MonsterBoss
             {
                 //StopCoroutine(Attack());
                 StartCoroutine(Attack());
-            MonsterAttack();
             }
 
     }
