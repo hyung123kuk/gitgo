@@ -21,13 +21,18 @@ public class AllUI : MonoBehaviour
     private Canvas statWindow;
     [SerializeField]
     public MouseCursor MouseCursor;
-    
 
+    public static AllUI allUI;
 
+    private void Awake()
+    {
+        allUI = this;
+    }
 
     private void Start()
     {
         MouseCursor=GetComponent<MouseCursor>();
+      
         
     }
 
@@ -58,6 +63,7 @@ public class AllUI : MonoBehaviour
 
                 inventory.inven.invenOff();
                 inventory.inven.ToolTIpOff();
+          
 
             }
             else //Ŵ
@@ -75,6 +81,7 @@ public class AllUI : MonoBehaviour
             {
                 SkillWindow.skillwindow.SkillWindowOff();
                 SkillWindow.skillwindow.SkillToolTipOff();
+      
 
             }
             else //Ŵ
@@ -92,6 +99,7 @@ public class AllUI : MonoBehaviour
             {
                 
                 StatWindow.statWindow.StatWindowOff();
+                
 
             }
             else //Ŵ
@@ -103,9 +111,23 @@ public class AllUI : MonoBehaviour
         }
 
 
-
-
     }
+
+
+    public void CursorLock()
+    {
+        Debug.Log("zz");
+        Debug.Log(inventory.iDown);
+        Debug.Log(SkillWindow.kDown);
+        Debug.Log(StatWindow.tDown);
+        if (inventory.iDown == false && SkillWindow.kDown == false && StatWindow.tDown == false)
+        {
+            Cursor.lockState = CursorLockMode.Locked;
+            allUI.MouseCursor.transform_cursor.gameObject.SetActive(false);
+            allUI.MouseCursor.Init_Cursor();
+        }
+    }
+
     public void InvenTop()
     {
         inven.sortingOrder = 1;
