@@ -53,6 +53,8 @@ public class EnemyBoss2 : MonsterBoss
         StartBossMonster();
         StartCoroutine(Pattern());
         BossItemSet();
+        Monstername.text = "골렘";
+        level.text = "10";
 
     }
 

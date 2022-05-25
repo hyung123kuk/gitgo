@@ -32,6 +32,8 @@ public class EnemyRange : Monster
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         StartMonster();
+        Monstername.text = "고블린 아처";
+        level.text = "6";
 
     }
     private void OnEnable()

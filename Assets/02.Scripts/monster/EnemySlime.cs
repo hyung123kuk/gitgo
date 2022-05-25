@@ -54,6 +54,8 @@ public class EnemySlime  : Monster
         anim=GetComponent<Animator>();
        
         StartMonster();
+        Monstername.text = "슬라임";
+        level.text = "1";
         
     }
     void Update()

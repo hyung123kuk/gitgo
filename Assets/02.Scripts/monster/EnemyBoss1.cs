@@ -44,6 +44,8 @@ public class EnemyBoss1 : MonsterBoss
         StartCoroutine(Pattern());
         StartBossMonster();
         BossItemSet();
+        Monstername.text = "거북 슬라임";
+        level.text = "5";
 
     }
 

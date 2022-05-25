@@ -15,6 +15,9 @@ public class Monster : MonoBehaviour
     public Image hpBarImage;
     public Image backHpBarImage;
     public Image hpBarFlame;
+    public Image levelFlame;
+    public Text level;
+    public Text Monstername;
     private Transform tr;
     
     public float maxHealth; //√÷¥Îhp
@@ -106,6 +109,9 @@ public class Monster : MonoBehaviour
         hpBarFlame = hpBar.GetComponentsInChildren<Image>()[0];
         backHpBarImage = hpBar.GetComponentsInChildren<Image>()[1];
         hpBarImage = hpBar.GetComponentsInChildren<Image>()[2];
+        level = hpBar.transform.GetChild(2).GetChild(0).GetComponent<Text>();
+        levelFlame = hpBar.transform.GetChild(2).GetComponent<Image>();
+        Monstername = hpBar.transform.GetChild(3).GetComponent<Text>();
 
         var _hpbar = hpBar.GetComponent<EnemyHpBar>();
         _hpbar.targetTr = this.gameObject.transform;
@@ -187,6 +193,10 @@ public class Monster : MonoBehaviour
         color.a = _alpha;
         backHpBarImage.color = color;
 
+        color = levelFlame.color;
+        color.a = _alpha;
+        levelFlame.color = color;
+
         color = hpBarFlame.color;
         color.a = _alpha;
         hpBarFlame.color = color;
@@ -194,6 +204,16 @@ public class Monster : MonoBehaviour
         color = hpBarImage.color;
         color.a = _alpha;
         hpBarImage.color = color;
+
+        color = level.color;
+        color.a = _alpha;
+        level.color = color;
+
+        color = Monstername.color;
+        color.a = _alpha;
+        Monstername.color = color;
+
+        
     }
 
 }

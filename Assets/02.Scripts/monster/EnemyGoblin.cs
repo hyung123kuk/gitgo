@@ -32,7 +32,8 @@ public class EnemyGoblin : Monster
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         StartMonster();
-
+        Monstername.text = "고블린";
+        level.text = "4";
     }
     private void OnEnable()
     {

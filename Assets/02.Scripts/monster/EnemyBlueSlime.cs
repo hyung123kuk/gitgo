@@ -49,6 +49,8 @@ public class EnemyBlueSlime : Monster
         mat.color = Color.white;
         isStun = false;
         StartMonster();
+        Monstername.text = "블루 슬라임";
+        level.text = "3";
     }
 
 
