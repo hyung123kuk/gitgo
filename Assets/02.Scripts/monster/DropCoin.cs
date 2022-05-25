@@ -19,7 +19,6 @@ public class DropCoin : MonoBehaviour
     private void Start()
     {
         playerStat = FindObjectOfType<PlayerStat>();
-       
     }
 
     public void SetCoin(float _coin)
