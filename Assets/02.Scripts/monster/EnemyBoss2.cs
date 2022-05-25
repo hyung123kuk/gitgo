@@ -53,6 +53,8 @@ public class EnemyBoss2 : MonsterBoss
         StartBossMonster();
         StartCoroutine(Pattern());
         BossItemSet();
+        Monstername.text = "골렘";
+        level.text = "10";
 
     }
 
@@ -136,12 +138,14 @@ public class EnemyBoss2 : MonsterBoss
                 case 1:
                     //���� : �̵��ӵ�,���ݷ�����
                     StartCoroutine(Pokju());
+                    MonsterAttack();
                     break;
                 case 2:
                 case 3:
                 case 4:
                     //���̷��� ��ȯ
                     StartCoroutine(Sohwan());
+                    MonsterAttack();
                     break;
                 case 5:
                 case 6:    
@@ -149,10 +153,12 @@ public class EnemyBoss2 : MonsterBoss
                 case 8:
                     //��������
                     StartCoroutine(FireBall());
+                    MonsterAttack();
                     break;
                 case 9:
                     //���� ���� ����
                     StartCoroutine(Stun());
+                    MonsterAttack();
                     break;
             }
         }
@@ -180,6 +186,7 @@ public class EnemyBoss2 : MonsterBoss
         {
             //StopCoroutine(Attack());
             StartCoroutine(Attack());
+            MonsterAttack();
         }
 
     }

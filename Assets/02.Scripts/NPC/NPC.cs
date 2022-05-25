@@ -71,7 +71,7 @@ public class NPC : MonoBehaviour
         }
         else if (NPCRange.gameObject.tag == "PETER")
         {
-            NPCRangeText.text = "피터를 클릭하시면 스킬 상점을 들어갑니다.";
+            NPCRangeText.text = "피터를 클릭하시면 퀘스트를 받을수 있습니다..";
         }
     }
  

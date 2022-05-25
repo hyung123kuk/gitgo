@@ -31,6 +31,8 @@ public class EnemySkeleton : Monster
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         StartMonster();
+        Monstername.text = "½ºÄÌ·¹Åæ";
+        level.text = "8";
 
     }
     private void OnEnable()

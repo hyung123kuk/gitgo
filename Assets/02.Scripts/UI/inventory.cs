@@ -79,11 +79,11 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
 
         itemStore.storeOff();
         Inven.SetActive(false);
-        allUI.MouseCursor.transform_cursor.gameObject.SetActive(false);
-        allUI.MouseCursor.Init_Cursor();
+        
         toolTip.ToolTipOff();
         iDown = false;
-        Cursor.lockState = CursorLockMode.Locked;
+        AllUI.allUI.CursorLock();
+       
     }
 
    
