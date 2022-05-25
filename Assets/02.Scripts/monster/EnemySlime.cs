@@ -54,6 +54,8 @@ public class EnemySlime  : Monster
         anim=GetComponent<Animator>();
        
         StartMonster();
+        Monstername.text = "슬라임";
+        level.text = "1";
         
     }
     void Update()
@@ -123,6 +125,7 @@ public class EnemySlime  : Monster
         if (rayHits.Length > 0 && !isAttack && !isDie) //����ĳ��Ʈ�� �÷��̾ �����ٸ� && ���� �������� �ƴ϶��
         {
             StartCoroutine(Attack());
+            MonsterAttack();
         }
     }
 
@@ -229,6 +232,7 @@ public class EnemySlime  : Monster
             }
             else
             {
+                
                 Instantiate(Geteff, transform.position, Quaternion.identity);
                 MonsterDie();
                 nav.isStopped = true;

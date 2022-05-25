@@ -6,20 +6,28 @@ public class DropCoin : MonoBehaviour
 {
     [SerializeField]
     public Transform tr;
-    [SerializeField]
-    SphereCollider col;
+
     [SerializeField]
     public Item item;
     [SerializeField]
     private PlayerStat playerStat;
     [SerializeField]
     public float Coin;
-
+    [SerializeField]
+    public CapsuleCollider col;
+    [SerializeField]
+    private Rigidbody rbody;
 
     private void Start()
     {
         playerStat = FindObjectOfType<PlayerStat>();
+        col = GetComponent<CapsuleCollider>();
+        rbody = GetComponent<Rigidbody>();
+        
+
     }
+   
+
 
     public void SetCoin(float _coin)
     {
@@ -30,7 +38,7 @@ public class DropCoin : MonoBehaviour
     public void SetDropITem()
     {
         tr = GetComponent<Transform>();
-        col = GetComponent<SphereCollider>();       
+     
     }
 
     private void OnTriggerStay(Collider other)
@@ -59,5 +67,23 @@ public class DropCoin : MonoBehaviour
         }
     }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (item.itemType == Item.ItemType.Used || item.itemType == Item.ItemType.ETC)
+        {
+            if (other.tag == "ground")
+            {
+                col.enabled = false;
+                rbody.isKinematic = true;
+                StartCoroutine(Remove());
+            }
+        }
+    }
 
+    IEnumerator Remove()
+    {
+        yield return new WaitForSeconds(20f);
+        Destroy(gameObject);
+
+    }
 }

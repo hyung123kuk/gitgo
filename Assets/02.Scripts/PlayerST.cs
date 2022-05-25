@@ -227,6 +227,7 @@ public class PlayerST : MonoBehaviour
             } 
             else
             {
+                if(FootSound.footSound)
                 FootSound.footSound.audioSource.Stop();
                 anim.SetBool("forword", false);
                 anim.SetBool("back", false);
@@ -343,7 +344,7 @@ public class PlayerST : MonoBehaviour
             if (fDowning && bowPower < bowChargingTime)
             {
                 bowPower += Time.deltaTime;
-                if (bowPower > 0.31f && !StopSoundManager.stopSoundManager.audioSource.isPlaying)
+                if (bowPower > 0.31f&&StopSoundManager.stopSoundManager && !StopSoundManager.stopSoundManager.audioSource.isPlaying)
                 {
                     StopSoundManager.stopSoundManager.ArcherChargeSound();
                 }
@@ -652,6 +653,7 @@ public class PlayerST : MonoBehaviour
     {
         if (inventory.iDown || SkillWindow.kDown || StatWindow.tDown)
         {
+            if(FootSound.footSound)
             FootSound.footSound.audioSource.Stop();
             anim.SetBool("forword", false);
             anim.SetBool("back", false);
@@ -792,7 +794,7 @@ public class PlayerST : MonoBehaviour
         {
             if (!isDamage) //무적타이밍이 아닐때만 실행
             {
-                Debug.Log("아야!");
+      
                 EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
                 PlayerStat.playerstat.DamagedHp(enemyRange.damage);
                 StartCoroutine(OnDamage());
@@ -803,6 +805,7 @@ public class PlayerST : MonoBehaviour
         {
             if (!isDamage) //무적타이밍이 아닐때만 실행
             {
+               
                 EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
                 PlayerStat.playerstat.DamagedHp(enemyRange.damage);
 
@@ -813,6 +816,7 @@ public class PlayerST : MonoBehaviour
         {
             if (!isDamage) //무적타이밍이 아닐때만 실행
             {
+           
                 EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
                 PlayerStat.playerstat.DamagedHp(enemyRange.damage);
 
@@ -824,6 +828,7 @@ public class PlayerST : MonoBehaviour
         {
             if (!isDamage) //무적타이밍이 아닐때만 실행
             {
+      
                 EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
                 PlayerStat.playerstat.DamagedHp(enemyRange.damage);
 

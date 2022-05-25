@@ -61,10 +61,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tr: {fileID: 0}
-  col: {fileID: 0}
   item: {fileID: 11400000, guid: 404d477749db98d47b4b3b18385f5d67, type: 2}
   playerStat: {fileID: 0}
   Coin: 20
+  col: {fileID: 0}
 --- !u!54 &2700804903477593208
 Rigidbody:
   m_ObjectHideFlags: 0

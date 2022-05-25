@@ -12,7 +12,12 @@ public class Monster : MonoBehaviour
     [SerializeField]
     private GameObject[] Portion;
     private Canvas uiCanvas;
-    private Image hpBarImage;
+    public Image hpBarImage;
+    public Image backHpBarImage;
+    public Image hpBarFlame;
+    public Image levelFlame;
+    public Text level;
+    public Text Monstername;
     private Transform tr;
     
     public float maxHealth; //최대hp
@@ -24,6 +29,7 @@ public class Monster : MonoBehaviour
     public float itemUpPoint;
     public float coin;
     public float coinCount=3;
+
     public bool isSpread = false;
     
     //쉐이킹 관련
@@ -32,19 +38,20 @@ public class Monster : MonoBehaviour
     float allZ = 0;
     public float shakeTime = 0f;
 
+
+
+
+    
+
     public void Start()
     {
         MonsterDropSet();
         tr = GetComponent<Transform>();
+       
  
     }
 
-    
-    public void Update()
-    {
-        
-        
-    }
+
 
     public void ShakeOn()
     {         
@@ -87,7 +94,9 @@ public class Monster : MonoBehaviour
 
     public void StartMonster()
     {
-        StartHpbar();        
+        StartHpbar();
+        SetColor(0);
+        isSpread = false;
     }
 
     private void StartHpbar()
@@ -97,7 +106,12 @@ public class Monster : MonoBehaviour
 
         uiCanvas = GameObject.Find("EnemyHp_Bar_UI").GetComponent<Canvas>();
         GameObject hpBar = Instantiate<GameObject>(hpBarPrefab, uiCanvas.transform);
+        hpBarFlame = hpBar.GetComponentsInChildren<Image>()[0];
+        backHpBarImage = hpBar.GetComponentsInChildren<Image>()[1];
         hpBarImage = hpBar.GetComponentsInChildren<Image>()[2];
+        level = hpBar.transform.GetChild(2).GetChild(0).GetComponent<Text>();
+        levelFlame = hpBar.transform.GetChild(2).GetComponent<Image>();
+        Monstername = hpBar.transform.GetChild(3).GetComponent<Text>();
 
         var _hpbar = hpBar.GetComponent<EnemyHpBar>();
         _hpbar.targetTr = this.gameObject.transform;
@@ -107,7 +121,7 @@ public class Monster : MonoBehaviour
     public void SetHpBar()
     {
         hpBarImage.fillAmount = curHealth / maxHealth;
-
+        StartCoroutine(MonsterHpBarOn());
     }
 
 
@@ -127,8 +141,8 @@ public class Monster : MonoBehaviour
                 }
             }
 
-        coinCount += Random.Range(-1, 2);
-        for (int i = 0; i < coinCount; i++)
+        
+        for (int i = 0; i < coinCount + Random.Range(-1, 2); i++)
         {
                     
              int point = Random.Range(-1, 2);
@@ -142,6 +156,7 @@ public class Monster : MonoBehaviour
 
     public void MonsterDie()
     {
+        SetColor(0);
         if (!isSpread)
         {
             MonsterDrop();
@@ -159,7 +174,46 @@ public class Monster : MonoBehaviour
         isSpread = true;
     }
 
+    public void MonsterAttack()
+    {
+        StartCoroutine(MonsterHpBarOn());
+            
+    }
 
+    IEnumerator MonsterHpBarOn()
+    {
+        SetColor(1);
+        yield return new WaitForSeconds(5.0f);
+        SetColor(0);
+    }
 
+    public void SetColor(float _alpha)
+    {
+        Color color = backHpBarImage.color;
+        color.a = _alpha;
+        backHpBarImage.color = color;
+
+        color = levelFlame.color;
+        color.a = _alpha;
+        levelFlame.color = color;
+
+        color = hpBarFlame.color;
+        color.a = _alpha;
+        hpBarFlame.color = color;
+
+        color = hpBarImage.color;
+        color.a = _alpha;
+        hpBarImage.color = color;
+
+        color = level.color;
+        color.a = _alpha;
+        level.color = color;
+
+        color = Monstername.color;
+        color.a = _alpha;
+        Monstername.color = color;
+
+        
+    }
 
 }

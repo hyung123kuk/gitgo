@@ -93,6 +93,7 @@ public class itemBuyQuestion : MonoBehaviour , IPointerClickHandler
             {
                 SoundManager.soundManager.BuyfailSound();
                 Debug.Log("빈창이 없습니다.");
+                LogManager.logManager.Log("빈창이 없습니다", true);
                 BuyQuestionOff();
                 return;
             }
@@ -102,6 +103,7 @@ public class itemBuyQuestion : MonoBehaviour , IPointerClickHandler
             {
                 SoundManager.soundManager.BuyfailSound();
                 Debug.Log("빈창이 없습니다.");
+                LogManager.logManager.Log("빈창이 없습니다", true);
                 BuyQuestionOff();
                 return;
             }
