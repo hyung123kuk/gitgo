@@ -51,7 +51,6 @@ public class PlayerST : MonoBehaviour
     Vector3 moveVec;
     Vector3 dodgeVec;
 
-    public Weapons weapons;
     public AttackDamage attackdamage;
     public PlayerStat playerstat;
     public GameObject Skillarea; //켜지면 데미지만
@@ -302,8 +301,8 @@ public class PlayerST : MonoBehaviour
 
     void Attack()   //공격
     {
-        if (CharacterType == Type.Warrior && !isDodge && !isFlash && !weapons.isLightning &&
-           !weapons.isIceage && !Weapons.isMeteo && !isJump && !isRun && !isBlock && !isRush && !isAura && !isStun)
+        if (CharacterType == Type.Warrior && !isDodge && !isFlash && !Weapons.weapons.isLightning &&
+           !Weapons.weapons.isIceage && !Weapons.isMeteo && !isJump && !isRun && !isBlock && !isRush && !isAura && !isStun)
         {
             fireDelay += Time.deltaTime;     //공격속도 계산
             isFireReady = equipWeapon[NowWeapon].rate < fireDelay;  //공격 가능 타임
@@ -313,14 +312,14 @@ public class PlayerST : MonoBehaviour
                 if (isFireReady)  //공격할수있을때
                 {
 
-                    weapons.damage = attackdamage.Attack_Dam(); //기본공격 데미지
+                    Weapons.weapons.damage = attackdamage.Attack_Dam(); //기본공격 데미지
                     //equipWeapon[NowWeapon].Use();
                     fireDelay = 0;
                 }
             }
         }
-        else if (CharacterType == Type.Mage && !isDodge && !isFlash && !weapons.isLightning &&
-           !weapons.isIceage && !Weapons.isMeteo && !isJump && !isRun && !isBlock && !isRush && !isAura && !isStun)
+        else if (CharacterType == Type.Mage && !isDodge && !isFlash && !Weapons.weapons.isLightning &&
+          !Weapons.weapons.isIceage && !Weapons.isMeteo && !isJump && !isRun && !isBlock && !isRush && !isAura && !isStun)
         {
             fireDelay += Time.deltaTime;     //공격속도 계산
             isFireReady = equipWeapon[NowWeapon].rate < fireDelay;  //공격 가능 타임
@@ -336,8 +335,8 @@ public class PlayerST : MonoBehaviour
             }
         }
 
-        else if (CharacterType == Type.Archer && !isDodge && !isJump && !isRun && !isStun && !isBackStep && !weapons.isEnergyReady
-            && !weapons.isBombArrow)
+        else if (CharacterType == Type.Archer && !isDodge && !isJump && !isRun && !isStun && !isBackStep && !Weapons.weapons.isEnergyReady
+            && !Weapons.weapons.isBombArrow)
         {
 
             fireDelay += Time.deltaTime;
@@ -376,8 +375,8 @@ public class PlayerST : MonoBehaviour
     }
     void Jump()
     {
-        if (sDown && !isJump && !isDodge && !isBlock && !isRush && !isAura && !isBackStep && !weapons.isEnergyReady &&
-            !weapons.isLightning && !weapons.isIceage && !Weapons.isMeteo && !isFlash && !isStun
+        if (sDown && !isJump && !isDodge && !isBlock && !isRush && !isAura && !isBackStep && !Weapons.weapons.isEnergyReady &&
+           !Weapons.weapons.isLightning && !Weapons.weapons.isIceage && !Weapons.isMeteo && !isFlash && !isStun
             )
         {
             FootSound.footSound.audioSource.Stop();
@@ -400,8 +399,8 @@ public class PlayerST : MonoBehaviour
 
     public void Dodge()
     {
-        if ( !isStun && !isJump && !isBlock && !isBackStep && !weapons.isEnergyReady && !isRush && !isAura && !isFlash &&
-           !weapons.isLightning && !weapons.isIceage && !Weapons.isMeteo && attackdamage.Usable_Dodge)
+        if ( !isStun && !isJump && !isBlock && !isBackStep && !Weapons.weapons.isEnergyReady && !isRush && !isAura && !isFlash &&
+           !Weapons.weapons.isLightning && !Weapons.weapons.isIceage && !Weapons.isMeteo && attackdamage.Usable_Dodge)
         {
             FootSound.footSound.audioSource.Stop();
             if (CharacterType == Type.Archer)
@@ -602,7 +601,7 @@ public class PlayerST : MonoBehaviour
     //==================================여기서부터 마법사스킬=======================================
     public void Flash()
     {
-        if (!isDodge && !isJump && !isRun && !isStun && !weapons.isLightning && !weapons.isIceage && !Weapons.isMeteo &&
+        if (!isDodge && !isJump && !isRun && !isStun && !Weapons.weapons.isLightning && !Weapons.weapons.isIceage && !Weapons.isMeteo &&
             attackdamage.Usable_Teleport)
         {
             StartCoroutine(FlashStart());
@@ -718,8 +717,8 @@ public class PlayerST : MonoBehaviour
     //}
     void MageMove()
     {
-        if (!isStun && !weapons.isLightning && !weapons.isIceage && !Weapons.isMeteo
-            && !weapons.isEnergyReady && CharacterType == Type.Mage)
+        if (!isStun && !Weapons.weapons.isLightning && !Weapons.weapons.isIceage && !Weapons.isMeteo
+            && !Weapons.weapons.isEnergyReady && CharacterType == Type.Mage)
         {
             if (isDodge)
                 moveVec = dodgeVec;
@@ -738,7 +737,7 @@ public class PlayerST : MonoBehaviour
     }
     void ArcherMove()
     {
-        if (!isStun && !isBackStep && !weapons.isEnergyReady && CharacterType == Type.Archer)
+        if (!isStun && !isBackStep && !Weapons.weapons.isEnergyReady && CharacterType == Type.Archer)
         {
             if (isDodge)
                 moveVec = dodgeVec;
@@ -904,9 +903,9 @@ public class PlayerST : MonoBehaviour
     public void WeaponChange(SwordNames WeaponNum) //무기를 바꿨을때 캐릭터에 적용시키기 위해 사용하는 함수
     {
         equipWeapon[NowWeapon].gameObject.SetActive(false);
-        NowWeapon = (int)WeaponNum;
+        NowWeapon = (int)WeaponNum; 
         equipWeapon[NowWeapon].gameObject.SetActive(true);
-
+        //QuikSlot.quikSlot.weapons = FindObjectOfType<Weapons>();
     }
 
 }
