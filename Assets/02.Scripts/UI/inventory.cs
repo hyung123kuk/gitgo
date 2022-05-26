@@ -41,7 +41,7 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
         
         GoldUpdate();
 
-        //StartCoroutine(invenSet());
+        StartCoroutine(invenSet());
         
 
     }
