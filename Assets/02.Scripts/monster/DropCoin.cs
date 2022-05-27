@@ -50,7 +50,8 @@ public class DropCoin : MonoBehaviour
                 {
                     
                     Debug.Log("아이템 창이 없습니다.");
-                    return;
+                LogManager.logManager.Log("빈창이 없습니다", true);
+                return;
                 }
                 else
                 {

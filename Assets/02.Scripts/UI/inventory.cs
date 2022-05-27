@@ -95,13 +95,20 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
 
     
 
-    public bool HasEmptySlot()
+    public bool HasEmptySlot(int num=1)
     {
+        int _num = 1;
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].item == null)
             {
-                return true;
+                
+                if (_num >= num)
+                {
+                    return true;
+                }
+                _num++;
+
             }
         }
         
@@ -112,9 +119,12 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            if (slots[i].item == item)
+            if (slots[i].item != null)
             {
-                return true;
+                if (slots[i].item.itemName == item.itemName)
+                {
+                    return true;
+                }
             }
         }
        

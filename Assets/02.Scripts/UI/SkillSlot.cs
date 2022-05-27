@@ -174,6 +174,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 if (!instanceSlot.inven.HasEmptySlot() && !instanceSlot.inven.HasSameSlot(instanceSlot.item)) //인벤에 빈창 없으면 아이템 들어갈곳 없어서 스킬 못 넣음
                 {
                     Debug.Log("빈창이 없습니다.");
+                    LogManager.logManager.Log("빈창이 없습니다", true);
                     return;
                 }
                 

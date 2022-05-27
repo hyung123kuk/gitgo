@@ -20,6 +20,8 @@ public class AllUI : MonoBehaviour
     [SerializeField]
     private Canvas statWindow;
     [SerializeField]
+    private Canvas QuestStoreWindow;
+    [SerializeField]
     public MouseCursor MouseCursor;
 
     public static AllUI allUI;
@@ -133,6 +135,7 @@ public class AllUI : MonoBehaviour
         itemSellQuestion.sortingOrder--;
         skillWindow.sortingOrder--;
         statWindow.sortingOrder--;
+        QuestStoreWindow.sortingOrder--;
     }
     public void StoreTop()
     {
@@ -142,6 +145,7 @@ public class AllUI : MonoBehaviour
         itemSellQuestion.sortingOrder--;
         skillWindow.sortingOrder--;
         statWindow.sortingOrder--;
+        QuestStoreWindow.sortingOrder--;
     }
     public void ItemBuyTop()
     {
@@ -151,6 +155,7 @@ public class AllUI : MonoBehaviour
         itemSellQuestion.sortingOrder--;
         skillWindow.sortingOrder--;
         statWindow.sortingOrder--;
+        QuestStoreWindow.sortingOrder--;
     }
     public void ItemSellTop()
     {
@@ -160,6 +165,7 @@ public class AllUI : MonoBehaviour
         itemSellQuestion.sortingOrder=1;
         skillWindow.sortingOrder--;
         statWindow.sortingOrder--;
+        QuestStoreWindow.sortingOrder--;
     }
     public void SkillWindowTop()
     {
@@ -169,6 +175,7 @@ public class AllUI : MonoBehaviour
         itemSellQuestion.sortingOrder --;
         skillWindow.sortingOrder=1;
         statWindow.sortingOrder--;
+        QuestStoreWindow.sortingOrder--;
     }
 
     public void StatWindowTop()
@@ -179,8 +186,20 @@ public class AllUI : MonoBehaviour
         itemSellQuestion.sortingOrder--;
         skillWindow.sortingOrder--;
         statWindow.sortingOrder=1;
+        QuestStoreWindow.sortingOrder--;
     }
 
+    public void QuestStroeTop()
+    {
+        inven.sortingOrder--;
+        store.sortingOrder--;
+        itemBuyQuestion.sortingOrder--;
+        itemSellQuestion.sortingOrder--;
+        skillWindow.sortingOrder--;
+        statWindow.sortingOrder --;
+        QuestStoreWindow.sortingOrder=1;
+
+    }
 
 
 }

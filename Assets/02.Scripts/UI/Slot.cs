@@ -186,7 +186,9 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
                 if (gameObject.layer == LayerMask.NameToLayer("equip")) //장착하고 있는 아이템 장착 빼기
                 {
                     if (!inven.HasEmptySlot())
-                    { Debug.Log("빈창이 없습니다."); return; } //빈슬롯 없으면 못뺀다.
+                    {
+                        LogManager.logManager.Log("빈창이 없습니다", true);
+                        Debug.Log("빈창이 없습니다."); return; } //빈슬롯 없으면 못뺀다.
                     if (gameObject.tag == "weaponslot")
                     {
 
