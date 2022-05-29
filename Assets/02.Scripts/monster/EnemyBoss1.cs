@@ -349,6 +349,7 @@ public class EnemyBoss1 : MonsterBoss
             isChase = false; //�׾����� ��������
             anim.SetBool("isDie", true);
             gameObject.SetActive(false);
+            QuestStore.qustore.MainQuestSuccess(3);
         }
         
 

@@ -124,7 +124,7 @@ public class StatWindow : MonoBehaviour ,IPointerClickHandler
         StatWindowDesign.SetActive(false);
 
         tDown = false;
-        AllUI.allUI.CursorLock();
+        AllUI.allUI.CheckCursorLock();
     }
 
     public void OnPointerClick(PointerEventData eventData)

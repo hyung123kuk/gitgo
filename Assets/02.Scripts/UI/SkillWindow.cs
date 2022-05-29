@@ -81,7 +81,7 @@ public class SkillWindow : MonoBehaviour , IPointerClickHandler
         skillWindow.SetActive(false);
 
         kDown = false;
-        AllUI.allUI.CursorLock();
+        AllUI.allUI.CheckCursorLock();
     }
 
 

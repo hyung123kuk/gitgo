@@ -6,9 +6,11 @@ using UnityEngine.UI;
 
 public class QuestStore : MonoBehaviour , IPointerClickHandler
 {
+    [SerializeField]
+    public static QuestStore qustore;
     GameObject questStore;
     QuestTyping questTyping;
-    Text MainText;
+    public Text MainText;
     Image MainImage;
     Text Quest1Text;
     Image Quest1Image;
@@ -17,7 +19,7 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
     Text Quest3Text;
     Image Quest3Image;
 
-    int mainNum = 1;
+    public int mainNum = 1;
     public bool isMainRecive = false; //메인 퀘스트 받았는가?
     public bool MainSuccess = false; //메인 퀘스트 성공 했는가?
 
@@ -39,7 +41,7 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
         Quest3Text = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>();
         Quest3Image = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(3).GetComponent<Image>();
         questStore = transform.GetChild(0).gameObject;
-
+        qustore = this;
     }
 
     public void storeOn()
@@ -48,122 +50,102 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
         questStore.SetActive(true);
     }
 
+    public void QuestStart()
+    {
+        
+        MainSuccess = false;
+        isMainRecive = true;
+
+        MainText.color = MainSelColor;
+        MainImage.color = ButtonSelColor;
+    }
+    public void QuestEnd(Item[] items)
+    {
+        if (ItemCompensation(items))
+        {
+            mainNum++;
+            isMainRecive = false;
+            MainText.color = MainbasicColor;
+            MainImage.color = Color.white;
+        }
+    }
+
+    public void TypingStart()
+    {
+        questTyping.Textnum = 1;
+        questTyping.QuestStartKey();
+    }
+
+
     public void MainQuest()
     {
 
-            if (mainNum == 1 && !isMainRecive) 
-            {
-                questTyping.mainnum = 1;
-                questTyping.Textnum = 1;
-                questTyping.QuestStartKey();
-                MainSuccess = false;
-                isMainRecive = true;
-
-                MainText.color = MainSelColor;
-                MainImage.color = ButtonSelColor;
-            }
-            else if(mainNum ==1 && MainSuccess)
-            {
-            if (ItemCompensation(questTyping.main1_item))
-            {
-                mainNum++;
-                isMainRecive = false;
-                MainText.color = MainbasicColor;
-                MainImage.color = Color.white;
-            }
-               
-            }
-
-
-            else if (mainNum == 2 && !isMainRecive)  //아이템구매 (3레벨)
-            {
-                questTyping.mainnum = 2;
-                questTyping.Textnum = 1;
-                questTyping.QuestStartKey();
-                MainSuccess = false;
-                isMainRecive = true;
-
-                MainText.color = MainSelColor;
-                MainImage.color = ButtonSelColor;
-
-            }
-        else if (mainNum == 2 && MainSuccess)
+        if (mainNum == 1 && !isMainRecive)
         {
-            if (ItemCompensation(questTyping.main1_item))
-            {
-                mainNum++;
-                isMainRecive = false;
-                MainText.color = MainbasicColor;
-                MainImage.color = Color.white;
+            questTyping.mainnum = 1;
+            TypingStart();
 
-            }
         }
+        else if (mainNum == 1 && isMainRecive)
+        {
+            QuestExplain.questExplain.Main1(questTyping.main1_item, true, MainSuccess);
+
+
+        }
+
+
+        else if (mainNum == 2 && !isMainRecive)  //아이템구매 (3레벨)
+        {
+            questTyping.mainnum = 2;
+            TypingStart();
+
+        }
+        else if (mainNum == 2 && isMainRecive)
+        {
+            QuestExplain.questExplain.Main2(questTyping.main2_item, true, MainSuccess);
+        }
+
+
         else if (mainNum == 3 && !isMainRecive) //말 보상, 보스몹 잡기
-            {
-                questTyping.mainnum = 3;
-                questTyping.Textnum = 1;
-                questTyping.QuestStartKey();
-                MainSuccess = false;
-                isMainRecive = true;
-
-                MainText.color = MainSelColor;
-                MainImage.color = ButtonSelColor;
-
-            }
-        else if (mainNum == 3 && MainSuccess)
         {
-            if (ItemCompensation(questTyping.main1_item))
-            {
-                mainNum++;
-                isMainRecive = false;
-                MainText.color = MainbasicColor;
-                MainImage.color = Color.white;
-            }
+            questTyping.mainnum = 3;
+            TypingStart();
+
         }
+        else if (mainNum == 3 && isMainRecive)
+        {
+            QuestExplain.questExplain.Main3(questTyping.main3_item, true, MainSuccess);
+        }
+
+
         else if (mainNum == 4 && !isMainRecive) // 7레벨 달성
-            {
-                questTyping.mainnum = 4;
-                questTyping.Textnum = 1;
-                questTyping.QuestStartKey();
-                MainSuccess = false;
-                isMainRecive = true;
-
-                MainText.color = MainSelColor;
-                MainImage.color = ButtonSelColor;
-
-            }
-        else if (mainNum == 4 && MainSuccess)
         {
-            if (ItemCompensation(questTyping.main1_item))
-            {
-                mainNum++;
-                isMainRecive = false;
-                MainText.color = MainbasicColor;
-                MainImage.color = Color.white;
-            }
+            questTyping.mainnum = 4;
+            TypingStart();
+
         }
-        else if (mainNum == 5 && !isMainRecive) //보스잡기
-            {
-                questTyping.mainnum = 5;
-                questTyping.Textnum = 1;
-                questTyping.QuestStartKey();
-                MainSuccess = false;
-                isMainRecive = true;
-
-                MainText.color = MainSelColor;
-                MainImage.color = ButtonSelColor;
-
-            }
-        else if (mainNum == 5 && MainSuccess)
+        else if (mainNum == 4 && isMainRecive)
         {
-            if (ItemCompensation(questTyping.main1_item))
+            if (PlayerStat.playerstat.Level >= 7)
             {
-                mainNum++;
-                isMainRecive = false;
-                MainText.color = MainbasicColor;
-                MainImage.color = Color.white;
-                ItemCompensation(questTyping.main5_item);
+                MainSuccess = true;
             }
+            QuestExplain.questExplain.Main4(questTyping.main4_item, true, MainSuccess);
+        }
+
+
+        else if (mainNum == 5 && !isMainRecive) //보스잡기
+        {
+            questTyping.mainnum = 5;
+            TypingStart();
+
+        }
+        else if (mainNum == 5 && isMainRecive)
+        {
+            QuestExplain.questExplain.Main5(questTyping.main5_item, true, MainSuccess);
+        }
+        else {
+            LogManager.logManager.Log("모든 메인 퀘스트를 완료 하였습니다.", true);
         }
 
 
@@ -174,7 +156,8 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
         if(SuccessNum == mainNum && isMainRecive)
         {
             MainSuccess = true;
-            mainNum++;
+            MainQuest();
+
         }
     }
 

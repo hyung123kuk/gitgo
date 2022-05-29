@@ -36,7 +36,7 @@ public class Shopia : NPC
                     if (hit.transform.gameObject.tag == "SHOPIA")
                     {
                         itemStore.storeOn();
-
+                        AllUI.allUI.CheckCursorLock();
 
 
                     }

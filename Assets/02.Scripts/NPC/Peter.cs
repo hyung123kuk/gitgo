@@ -34,7 +34,7 @@ public class Peter : NPC
                     if (hit.transform.gameObject.tag == "PETER")
                     {
                         questStore.storeOn();
-
+                        AllUI.allUI.CheckCursorLock();
 
 
                     }

@@ -14,7 +14,6 @@ public class QuestTyping : MonoBehaviour
     public bool istyping = false;
     public bool endExplain = false;
     
-    public Image[] itemImage;
     public Text[] itemNum;
 
 
@@ -66,8 +65,7 @@ public class QuestTyping : MonoBehaviour
     {
         questTyping = this;
         Quest = transform.GetChild(0).gameObject;
-        tx = transform.GetChild(0).GetChild(2).GetComponent<Text>();
-        itemImage = transform.GetChild(0).GetChild(1).GetComponentsInChildren<Image>();
+        tx = transform.GetChild(0).GetChild(1).GetComponent<Text>();
         main1_item = Resources.LoadAll<Item>("Quest/Main1");
         main2_item = Resources.LoadAll<Item>("Quest/Main2");
         main3_item = Resources.LoadAll<Item>("Quest/Main3");
@@ -80,52 +78,30 @@ public class QuestTyping : MonoBehaviour
     {
         tx.text = "";
         Texting = true;
-        AllColorReset(0); 
         Quest.SetActive(true);
         
         
     }
 
-    public void AllColorReset(int _alpha)
-    {
-        for(int i = 0; i < itemImage.Length; i++)
-        {
-            Color color = itemImage[i].color;
-            color.a = _alpha;
-            itemImage[i].color = color;
-        }
-    }
-    public void SetColor(int _alpha,int i)
-    {
-        Color color = itemImage[i].color;
-        color.a = _alpha;
-        itemImage[i].color = color;
-    }
 
     void Update()
     {
         if (Quest.activeSelf && (Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(0)))
         {
-            if(endExplain)
-            {
-                endExplain = false;
-                Textnum = 1;
-
-                Quest.SetActive(false);
-            }
+            
             if (Texting)
             {
-           
+
                 StopAllCoroutines();
                 tx.text = ing_text;
                 Texting = false;
                 istyping = false;
 
             }
-             else if (!Texting)
-            {            
-                  Texting = true;
-                  Textnum++;
+            else if (!Texting)
+            {
+                Texting = true;
+                Textnum++;
             }
         }
         if (Texting&&!istyping)
@@ -153,6 +129,16 @@ public class QuestTyping : MonoBehaviour
         }
     }
 
+    private void EndExplain()
+    {
+        if (endExplain)
+        {
+            endExplain = false;
+            Textnum = 1;
+
+            Quest.SetActive(false);
+        }
+    }
 
     public void Main1()
     {
@@ -168,8 +154,10 @@ public class QuestTyping : MonoBehaviour
         }
         else if(Textnum==4)
         {
+            
+            QuestExplain.questExplain.Main1(main1_item,false);
             endExplain = true;
-            ItemSet(main1_item);
+            EndExplain();
         }
 
     }
@@ -190,8 +178,10 @@ public class QuestTyping : MonoBehaviour
         }
         else if (Textnum == 4)
         {
+
+            QuestExplain.questExplain.Main2(main2_item, false);
             endExplain = true;
-            ItemSet(main2_item);
+            EndExplain();
         }
 
     }
@@ -212,8 +202,10 @@ public class QuestTyping : MonoBehaviour
         }
         else if (Textnum == 4)
         {
+           
+            QuestExplain.questExplain.Main3(main3_item, false);
             endExplain = true;
-            ItemSet(main3_item);
+            EndExplain();
         }
 
     }
@@ -234,8 +226,10 @@ public class QuestTyping : MonoBehaviour
         }
         else if (Textnum == 4)
         {
+           
+            QuestExplain.questExplain.Main4(main4_item, false);
             endExplain = true;
-            ItemSet(main4_item);
+            EndExplain();
         }
 
     }
@@ -256,22 +250,15 @@ public class QuestTyping : MonoBehaviour
         }
         else if (Textnum == 4)
         {
+        
+            QuestExplain.questExplain.Main5(main5_item, false);
             endExplain = true;
-            ItemSet(main5_item);
+            EndExplain();
         }
 
     }
 
-    void ItemSet(Item[] items)
-    {
-        int i = 0;
-        foreach (Item item in items)
-        {            
-            itemImage[i].sprite = item.itemImage;
-            SetColor(1, i);
-            i++;
-        }
-    }
+
 
 
     IEnumerator typing(string text)

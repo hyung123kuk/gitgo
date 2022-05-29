@@ -735,27 +735,30 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         }
         else if (DragSlot.instance.dragSlot != null && DragSlot.instance.dragSlot.gameObject.layer != LayerMask.NameToLayer("equip") && gameObject.layer != LayerMask.NameToLayer("equip")) //서로 장비가 아니면 교체
         {
-            if (DragSlot.instance.dragSlot.item.itemType == Item.ItemType.Used && DragSlot.instance.dragSlot.item == item) //같은 아이템은 합친다.
+            if (DragSlot.instance.dragSlot.item != null && item != null)
             {
-                SetSlotCount(DragSlot.instance.dragSlot.itemCount);
-                DragSlot.instance.dragSlot.SetSlotCount(DragSlot.instance.dragSlot.itemCount * -1);
+                if (DragSlot.instance.dragSlot.item.itemType == Item.ItemType.Used && DragSlot.instance.dragSlot.item.itemName == item.itemName) //같은 아이템은 합친다.
+                {
+                    SetSlotCount(DragSlot.instance.dragSlot.itemCount);
+                    DragSlot.instance.dragSlot.SetSlotCount(DragSlot.instance.dragSlot.itemCount * -1);
 
+                }
             }
-            
+
             else if (gameObject.GetComponent<QuikSlot>() != null && gameObject.GetComponent<QuikSlot>().skill.skill != null) //퀵 슬롯으로 옮길때 안에 스킬이 있으면
             {
                 if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("inven")) //인벤에서 옮길때
                 {
                     gameObject.GetComponent<QuikSlot>().skill.skill = null;
-                    
+
                     ChangeSlot();
                 }
                 else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot")) // 퀵슬롯 끼리 옮길때 (물약을 드래그해 스킬이있는 퀵슬롯에 드랍할때)
                 {
-                    DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().skill.skill= gameObject.GetComponent<QuikSlot>().skill.skill;
+                    DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().skill.skill = gameObject.GetComponent<QuikSlot>().skill.skill;
                     gameObject.GetComponent<QuikSlot>().skill.ClearSlot();
                     DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().skill.imageSkill.sprite = DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().skill.skill.SkillImage;
-                    
+
                     gameObject.GetComponent<QuikSlot>().slot.AddItem(DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().slot.item, DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().slot.itemCount);
                     DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().slot.item = null;
                     DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().slot.itemCount = 0;
@@ -767,7 +770,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
                 }
                 gameObject.GetComponent<QuikSlot>().setCoolImage();
                 if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot"))
-                      DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().setCoolImage();
+                    DragSlot.instance.dragSlot.gameObject.GetComponent<QuikSlot>().setCoolImage();
 
 
             }
