@@ -7,7 +7,7 @@ public class PlayerST : MonoBehaviour
     public enum Type { Warrior, Archer, Mage };
     public Type CharacterType; //원래 앞에 static이 붙어있었는데 테스트할때 인스펙터창에 타입이 안떠서 임시로 뻈어요
     Transform _transform;
-    Rigidbody rigid;
+    public Rigidbody rigid;
 
     public float jump = 5.0f; //점프력
     public float speed = 5.0f;  //플레이어 이동속도
@@ -58,7 +58,14 @@ public class PlayerST : MonoBehaviour
     public GameObject CCarea;  //켜지면 CC기 
 
     public static PlayerST playerST;
+    public bool HorseMode; //말타고있는지
+    public GameObject Horsee; //말 안장
+    public GameObject HorseSpawn; //말 부모객체
+    public Transform horsepos1; //말 소환시 나오는곳
+    public Transform horsepos2; //말 소환시 나오는곳
 
+    public bool DunjeonBossArena; //현재 위치가 보스아레나
+    public bool NoMove; //벽뚫방지
 
 
     public static bool isFall; //공중에 떠있는상태? 몬스터들의 룩엣을 조정하기위함.
@@ -71,7 +78,7 @@ public class PlayerST : MonoBehaviour
     private bool isAura; //현재 검기날리는 상태? ㅣ 키보드 3번
     private bool isYes; //돌진 벽에서 쓰는행위 막는용도
 
-    
+
 
     [Header("전사 관련")]
     public GameObject BuffEff;
@@ -105,6 +112,9 @@ public class PlayerST : MonoBehaviour
 
     void Start()
     {
+        Horsee = GameObject.Find("HorseSpawn").transform.GetChild(0).transform
+            .GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
+        HorseSpawn = GameObject.Find("HorseSpawn");
         bowPower = bowMinPower;
         _transform = GetComponent<Transform>();
         anim = GetComponentInChildren<Animator>();
@@ -172,6 +182,7 @@ public class PlayerST : MonoBehaviour
                 anim.SetBool("left", false);
                 anim.SetBool("right", false);
             }
+
         }
         #endregion
         #region 궁수 이동 애니메이션
@@ -224,11 +235,11 @@ public class PlayerST : MonoBehaviour
                 anim.SetBool("forword", false);
                 anim.SetBool("back", false);
                 anim.SetBool("right", false);
-            } 
+            }
             else
             {
-                if(FootSound.footSound)
-                FootSound.footSound.audioSource.Stop();
+                if (FootSound.footSound)
+                    FootSound.footSound.audioSource.Stop();
                 anim.SetBool("forword", false);
                 anim.SetBool("back", false);
                 anim.SetBool("left", false);
@@ -344,7 +355,7 @@ public class PlayerST : MonoBehaviour
             if (fDowning && bowPower < bowChargingTime)
             {
                 bowPower += Time.deltaTime;
-                if (bowPower > 0.31f&&StopSoundManager.stopSoundManager && !StopSoundManager.stopSoundManager.audioSource.isPlaying)
+                if (bowPower > 0.31f && StopSoundManager.stopSoundManager && !StopSoundManager.stopSoundManager.audioSource.isPlaying)
                 {
                     StopSoundManager.stopSoundManager.ArcherChargeSound();
                 }
@@ -399,7 +410,7 @@ public class PlayerST : MonoBehaviour
 
     public void Dodge()
     {
-        if ( !isStun && !isJump && !isBlock && !isBackStep && !Weapons.weapons.isEnergyReady && !isRush && !isAura && !isFlash &&
+        if (!isStun && !isJump && !isBlock && !isBackStep && !Weapons.weapons.isEnergyReady && !isRush && !isAura && !isFlash &&
            !Weapons.weapons.isLightning && !Weapons.weapons.isIceage && !Weapons.isMeteo && attackdamage.Usable_Dodge)
         {
             FootSound.footSound.audioSource.Stop();
@@ -421,7 +432,7 @@ public class PlayerST : MonoBehaviour
             isDamage = true;
 
             Invoke("DodgeOut", 0.4f); //구르기를 하면 0.4초후에 이동속도가 정상으로돌아옴
-           
+
         }
     }
 
@@ -464,7 +475,7 @@ public class PlayerST : MonoBehaviour
         anim.SetBool("isBlock", false);
         isBlock = false;
         isDamage = false;
-      
+
         attackdamage.Skill_1_Cool();  //방패치기쿨타임
     }
     public void Buff()
@@ -482,7 +493,7 @@ public class PlayerST : MonoBehaviour
         if (!isYes && !isJump && !isDodge && !isBlock && !isAura && !isStun && !isRun &&
             attackdamage.Usable_Skill2)
         {
-            
+
             StartCoroutine(RushPlay());
         }
     }
@@ -525,7 +536,7 @@ public class PlayerST : MonoBehaviour
         if (!isRun && !isJump && !isDodge && !isBlock && !isRush && !isStun &&
             attackdamage.Usable_Skill3)
         {
-            
+
             StartCoroutine(AuraPlay());
         }
     }
@@ -613,8 +624,8 @@ public class PlayerST : MonoBehaviour
         attackdamage.Skill_Mage_Teleport_Cool();
         isCoolTeleport = false;//쿨타임
         attackdamage.Usable_Teleport = false;
-        
-       
+
+
         gameObject.layer = LayerMask.NameToLayer("Back");
         isFlash = true;
         isFall = true;
@@ -632,12 +643,15 @@ public class PlayerST : MonoBehaviour
 
         isCoolTeleport = true;//쿨타임
         attackdamage.Skill_Mage_Teleport_Cool();
-       
+
     }
     void InputManager()
     {
+
+
         h = Input.GetAxisRaw("Horizontal");    //X좌표 입력받기
         v = Input.GetAxisRaw("Vertical"); //Z좌표 입력받기
+
         fDown = Input.GetButtonDown("Fire1"); //마우스1번키 입력
         fDowning = Input.GetButton("Fire1");
         fUp = Input.GetButtonUp("Fire1");
@@ -651,10 +665,25 @@ public class PlayerST : MonoBehaviour
     }
     private void Update()
     {
+        if (Input.GetKeyDown(KeyCode.G) && !HorseMode) // 말 소환&소환해제
+        {
+            if (!HorseSpawn.transform.GetChild(0).gameObject.activeSelf)
+            {
+                SoundManager.soundManager.Horse();
+                HorseSpawn.transform.GetChild(0).gameObject.SetActive(true);
+                HorseSpawn.transform.GetChild(0).gameObject.transform.position = horsepos1.position;
+                HorseSpawn.transform.GetChild(0).gameObject.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
+            }
+            else if (HorseSpawn.transform.GetChild(0).gameObject.activeSelf)
+            {
+                SoundManager.soundManager.Horse2();
+                HorseSpawn.transform.GetChild(0).gameObject.SetActive(false);
+            }
+        }
         if (AllUI.isUI)
         {
-            if(FootSound.footSound)
-            FootSound.footSound.audioSource.Stop();
+            if (FootSound.footSound)
+                FootSound.footSound.audioSource.Stop();
             anim.SetBool("forword", false);
             anim.SetBool("back", false);
             anim.SetBool("left", false);
@@ -683,6 +712,18 @@ public class PlayerST : MonoBehaviour
             speed = 2.5f;
         else if (!fDowning && CharacterType == Type.Archer)
             speed = 6f;
+
+        //말 관련//
+        if (!HorseMode)
+        {
+            transform.parent = null;
+        }
+        if (HorseMode)
+        {
+            rigid.constraints = RigidbodyConstraints.FreezePositionX;
+            rigid.constraints = RigidbodyConstraints.FreezePositionY;
+            rigid.constraints = RigidbodyConstraints.FreezePositionZ;
+        }
 
         //Debug.Log("shield");
         InputManager(); //입력매니저
@@ -718,11 +759,12 @@ public class PlayerST : MonoBehaviour
     void MageMove()
     {
         if (!isStun && !Weapons.weapons.isLightning && !Weapons.weapons.isIceage && !Weapons.isMeteo
-            && !Weapons.weapons.isEnergyReady && CharacterType == Type.Mage)
+            && !Weapons.weapons.isEnergyReady && CharacterType == Type.Mage && !NoMove)
         {
             if (isDodge)
                 moveVec = dodgeVec;
             moveVec = (Vector3.forward * v) + (Vector3.right * h);
+
             if (Rdown)
             {
                 isRun = true;
@@ -737,7 +779,7 @@ public class PlayerST : MonoBehaviour
     }
     void ArcherMove()
     {
-        if (!isStun && !isBackStep && !Weapons.weapons.isEnergyReady && CharacterType == Type.Archer)
+        if (!isStun && !isBackStep && !Weapons.weapons.isEnergyReady && CharacterType == Type.Archer && !NoMove)
         {
             if (isDodge)
                 moveVec = dodgeVec;
@@ -756,11 +798,13 @@ public class PlayerST : MonoBehaviour
     }
     void WarriorMove()
     {
-        if (!isStun && !isBlock && !isRush && !isAura && !isBackStep && CharacterType == Type.Warrior)
+        if (!isStun && !isBlock && !isRush && !isAura && !isBackStep && CharacterType == Type.Warrior && !NoMove)
         {
             if (isDodge) //회피중이면 다른방향으로 전환이 느리게
                 moveVec = dodgeVec;
+
             moveVec = (Vector3.forward * v) + (Vector3.right * h); //전 후진과 좌우 이동값 저장
+
             if (Rdown)//달리는 중이면 1.4배 이속증가
             {
                 isRun = true;
@@ -772,6 +816,11 @@ public class PlayerST : MonoBehaviour
                 _transform.Translate(moveVec.normalized * Time.deltaTime * speed, Space.Self);
             }
         }
+    }
+    void StopMove()
+    {
+        Debug.DrawRay(transform.position, transform.forward * 5, Color.green);
+        NoMove = Physics.Raycast(transform.position, transform.forward, 1.5f, LayerMask.GetMask("WALL"));
     }
     void FreezeVelocity()  //카메라 버그 안생기게하는거
     {
@@ -786,6 +835,7 @@ public class PlayerST : MonoBehaviour
     {
         //attackdamage.SkillPassedTimeFucn(); (weapons스크립트의 117줄, attackDamage의125줄 , playerST의 553줄에 총 3개가 있어 쿨타임이 3배로 돌아갑니다. 그래서 2개 주석처리 해놨습니다. 문제시에 알려주세요)
         FreezeVelocity();
+        StopMove();
     }
 
     void OnTriggerEnter(Collider other) //충돌감지
@@ -794,7 +844,7 @@ public class PlayerST : MonoBehaviour
         {
             if (!isDamage) //무적타이밍이 아닐때만 실행
             {
-      
+
                 EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
                 PlayerStat.playerstat.DamagedHp(enemyRange.damage);
                 StartCoroutine(OnDamage());
@@ -805,7 +855,7 @@ public class PlayerST : MonoBehaviour
         {
             if (!isDamage) //무적타이밍이 아닐때만 실행
             {
-               
+
                 EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
                 PlayerStat.playerstat.DamagedHp(enemyRange.damage);
 
@@ -816,7 +866,7 @@ public class PlayerST : MonoBehaviour
         {
             if (!isDamage) //무적타이밍이 아닐때만 실행
             {
-           
+
                 EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
                 PlayerStat.playerstat.DamagedHp(enemyRange.damage);
 
@@ -828,7 +878,7 @@ public class PlayerST : MonoBehaviour
         {
             if (!isDamage) //무적타이밍이 아닐때만 실행
             {
-      
+
                 EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
                 PlayerStat.playerstat.DamagedHp(enemyRange.damage);
 
@@ -837,11 +887,49 @@ public class PlayerST : MonoBehaviour
 
         }
     }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "Horse")
+        {
+            if (Input.GetKeyDown(KeyCode.C)) //말탑승
+            {
+                rigid.constraints = RigidbodyConstraints.FreezeAll;
+                HorseMode = true;
+                anim.SetBool("isHorse", true);
+                rigid.useGravity = false;
+                transform.parent = Horsee.transform;
+                transform.position = Horsee.transform.position + Vector3.up * -0.5f;
+                transform.rotation = HorseSpawn.transform.GetChild(0).gameObject.transform.rotation;
+                //Quaternion.LookRotation(new Vector3(h, 0f, v));
+            }
+        }
+
+        if (other.name == "In-Portal" && Input.GetKeyDown(KeyCode.F))
+        {
+            Portal.portal.InDunJeonPortal(gameObject);
+        }
+
+        if (other.name == "Out-Portal" && Input.GetKeyDown(KeyCode.F))
+        {
+            Portal.portal.OutDunJeonPortal(gameObject);
+        }
+
+        if (other.name == "Boss2Arena")
+        {
+            DunjeonBossArena = true;
+        }
+    }
+    private void OnTriggerExit(Collider other)
+    {
+        if (other.name == "Boss2Arena")
+        {
+            DunjeonBossArena = false;
+        }
+    }
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "ground")
+        if (collision.gameObject.tag == "ground" || collision.gameObject.tag == "GROUND") //이 태그가 붙은곳에서만 점프착지가능
         {
-            rigid.velocity = Vector3.zero;
             anim.SetBool("isJump", false);
             isJump = false;
         }
@@ -907,7 +995,7 @@ public class PlayerST : MonoBehaviour
             QuestStore.qustore.MainQuestSuccess(2);
         }
         equipWeapon[NowWeapon].gameObject.SetActive(false);
-        NowWeapon = (int)WeaponNum; 
+        NowWeapon = (int)WeaponNum;
         equipWeapon[NowWeapon].gameObject.SetActive(true);
         //QuikSlot.quikSlot.weapons = FindObjectOfType<Weapons>();
     }

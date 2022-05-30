@@ -8,7 +8,7 @@ public class Arrow : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag=="Enemy")
+        if (other.gameObject.tag=="Enemy" || other.gameObject.tag == "Build" || other.gameObject.tag == "WALL")
         {
             Destroy(gameObject,0.1f);  
         }

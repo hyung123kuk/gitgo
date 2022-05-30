@@ -24,8 +24,15 @@ public class SoundManager : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
     //==============================공용 사운드=========================================//
-   
 
+    public void Horse() //말 소환소리
+    {
+        audioSource.PlayOneShot(Sounds.sounds.Horse);
+    }
+    public void Horse2() //말 소환해제소리
+    {
+        audioSource.PlayOneShot(Sounds.sounds.Horse2);
+    }
     //==============================전사 사운드=========================================//
 
     public void WarriorAttackSound() //전사 일반공격

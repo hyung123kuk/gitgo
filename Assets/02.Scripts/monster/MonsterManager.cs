@@ -47,33 +47,41 @@ public class MonsterManager : MonoBehaviour
         {
             Slime[i] = Instantiate(SlimePrefabs, SlimePools.transform);
             Slime[i].SetActive(false);
+            Slime[i].transform.position = SpawnManager.spawnManager.SlimePoints[i].transform.position;
+
         }
         for (int i = 0; i < BlueSlime.Length; i++)
         {
             BlueSlime[i] = Instantiate(BlueSlimePrefabs, BlueSlimePools.transform);
             BlueSlime[i].SetActive(false);
+            BlueSlime[i].transform.position = SpawnManager.spawnManager.BlueSlimePoints[i].transform.position;
         }
         for (int i = 0; i < Goblin.Length; i++)
         {
             Goblin[i] = Instantiate(GoblinPrefabs, GoblinPools.transform);
             Goblin[i].SetActive(false);
+            Goblin[i].transform.position = SpawnManager.spawnManager.GoblinPoints[i].transform.position;
         }
         for (int i = 0; i < GoblinArcher.Length; i++)
         {
             GoblinArcher[i] = Instantiate(GoblinArcherPrefabs, GoblinArcherPools.transform);
             GoblinArcher[i].SetActive(false);
+            GoblinArcher[i].transform.position = SpawnManager.spawnManager.GoblinArcherPoints[i].transform.position;
         }
         for (int i = 0; i < Skeleton.Length; i++)
         {
             Skeleton[i] = Instantiate(SkeletonPrefabs, SkeletonPools.transform);
             Skeleton[i].SetActive(false);
+            Skeleton[i].transform.position = SpawnManager.spawnManager.SkeletonPoints[i].transform.position;
         }
 
         TurtleSlime = Instantiate(TurtleSlimePrefabs);
         TurtleSlime.SetActive(false);
+        TurtleSlime.transform.position = SpawnManager.spawnManager.TurtleSlimePoint.transform.position;
 
         Golem = Instantiate(GolemPrefabs);
         Golem.SetActive(false);
+        Golem.transform.position = SpawnManager.spawnManager.GolemPoint.transform.position;
 
     }
 

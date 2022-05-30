@@ -9,6 +9,9 @@ public class Sounds : MonoBehaviour
 
     [Header("공용 사운드")]
     public AudioClip FootRunSound; //달리는 발소리
+    public AudioClip Horse; //말 소환소리
+    public AudioClip Horse2; //말 소환해제소리
+    public AudioClip HorseRunSound; //말 달리는소리
 
     [Header("전사 사운드")]
     public AudioClip WarriorAttackSound;//전사 기본공격

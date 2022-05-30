@@ -41,7 +41,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: 4f692dca7018be645a24a54d3c8689f7, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 14a1cf915de1c2448b200ab123c01445, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.459
   m_Pitch: 1
@@ -313,6 +313,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   FootRunSound: {fileID: 8300000, guid: aa9d74433c06a41a9b25cc9175d3f3ae, type: 3}
+  Horse: {fileID: 8300000, guid: cd445231e522bb040a1299dbb7e4931a, type: 3}
+  Horse2: {fileID: 8300000, guid: d189d6b0a0a9d7942b5087a830178c55, type: 3}
+  HorseRunSound: {fileID: 8300000, guid: 84187551ff85ef24989ce1e8f99ae9ec, type: 3}
   WarriorAttackSound: {fileID: 8300000, guid: 13182107f288fdc47a11f9216c8f062b, type: 3}
   WarriorAttackVoice: {fileID: 8300000, guid: a390f9932470d264da3696567a4a581c, type: 3}
   WarriorAttackVoice2: {fileID: 8300000, guid: 33b254c7c6a9bd544942d22f9324246a, type: 3}

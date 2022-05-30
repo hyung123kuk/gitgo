@@ -30,7 +30,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1762256484}
-  m_RootOrder: 1
+  m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &57631811
 BoxCollider:
@@ -68,12 +68,14 @@ MonoBehaviour:
   playerST: {fileID: 0}
   attackdamage: {fileID: 0}
   playerstat: {fileID: 0}
+  isBombArrow: 0
   isEnergyReady: 0
   isEnergy1: 0
   isEnergy2: 0
   EnergyReady: 0
   EnergyReady2: 0
   EnergyChargingTime: 5
+  archer_skill4_Order: 0
   arrowPos: {fileID: 0}
   Arc3SkillPos: {fileID: 0}
   ArcDefaultAttack: {fileID: 0}
@@ -87,6 +89,7 @@ MonoBehaviour:
   isLightning: 0
   isIceage: 0
   isMeteoShot: 0
+  mage_skill4_Order: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -216,12 +219,12 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 670969464}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.13399887, y: 0.9100001, z: 0.87000084}
+  m_LocalRotation: {x: 0.22444257, y: -0.605919, z: 0.75897026, w: 0.080323845}
+  m_LocalPosition: {x: 1.2313488, y: -0.59896857, z: 0.11064458}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
-  m_Father: {fileID: 1762256484}
-  m_RootOrder: 0
+  m_Father: {fileID: 8007892901330923048}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &670969465
 BoxCollider:
@@ -259,12 +262,14 @@ MonoBehaviour:
   playerST: {fileID: 2186467341851780087}
   attackdamage: {fileID: 1080333990}
   playerstat: {fileID: 1080333989}
+  isBombArrow: 0
   isEnergyReady: 0
   isEnergy1: 0
   isEnergy2: 0
   EnergyReady: 0
   EnergyReady2: 0
   EnergyChargingTime: 5
+  archer_skill4_Order: 0
   arrowPos: {fileID: 0}
   Arc3SkillPos: {fileID: 0}
   ArcDefaultAttack: {fileID: 0}
@@ -278,6 +283,7 @@ MonoBehaviour:
   isLightning: 0
   isIceage: 0
   isMeteoShot: 0
+  mage_skill4_Order: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -354,7 +360,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1762256484}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &854964871
 BoxCollider:
@@ -392,12 +398,14 @@ MonoBehaviour:
   playerST: {fileID: 0}
   attackdamage: {fileID: 0}
   playerstat: {fileID: 0}
+  isBombArrow: 0
   isEnergyReady: 0
   isEnergy1: 0
   isEnergy2: 0
   EnergyReady: 0
   EnergyReady2: 0
   EnergyChargingTime: 5
+  archer_skill4_Order: 0
   arrowPos: {fileID: 0}
   Arc3SkillPos: {fileID: 0}
   ArcDefaultAttack: {fileID: 0}
@@ -411,6 +419,7 @@ MonoBehaviour:
   isLightning: 0
   isIceage: 0
   isMeteoShot: 0
+  mage_skill4_Order: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -487,7 +496,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1762256484}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1018018019
 BoxCollider:
@@ -525,12 +534,14 @@ MonoBehaviour:
   playerST: {fileID: 0}
   attackdamage: {fileID: 0}
   playerstat: {fileID: 0}
+  isBombArrow: 0
   isEnergyReady: 0
   isEnergy1: 0
   isEnergy2: 0
   EnergyReady: 0
   EnergyReady2: 0
   EnergyChargingTime: 5
+  archer_skill4_Order: 0
   arrowPos: {fileID: 0}
   Arc3SkillPos: {fileID: 0}
   ArcDefaultAttack: {fileID: 0}
@@ -544,6 +555,7 @@ MonoBehaviour:
   isLightning: 0
   isIceage: 0
   isMeteoShot: 0
+  mage_skill4_Order: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -587,7 +599,6 @@ Transform:
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 670969466}
   - {fileID: 57631809}
   - {fileID: 1970996718}
   - {fileID: 1018018017}
@@ -625,7 +636,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 1762256484}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &1970996720
 BoxCollider:
@@ -663,12 +674,14 @@ MonoBehaviour:
   playerST: {fileID: 0}
   attackdamage: {fileID: 0}
   playerstat: {fileID: 0}
+  isBombArrow: 0
   isEnergyReady: 0
   isEnergy1: 0
   isEnergy2: 0
   EnergyReady: 0
   EnergyReady2: 0
   EnergyChargingTime: 5
+  archer_skill4_Order: 0
   arrowPos: {fileID: 0}
   Arc3SkillPos: {fileID: 0}
   ArcDefaultAttack: {fileID: 0}
@@ -682,6 +695,7 @@ MonoBehaviour:
   isLightning: 0
   isIceage: 0
   isMeteoShot: 0
+  mage_skill4_Order: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -10783,6 +10797,7 @@ Transform:
   - {fileID: 1667770742469517036}
   - {fileID: 624697073}
   - {fileID: 883279891}
+  - {fileID: 670969466}
   m_Father: {fileID: 8007892902811645010}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -11896,7 +11911,6 @@ MonoBehaviour:
   cam: {fileID: 2186467342567312789}
   SelectPlayer: {fileID: 2186467341851780073}
   anim: {fileID: 8007892901880628137}
-  maxhealth: 100
   equipWeapon:
   - {fileID: 2186467342729674037}
   - {fileID: 7682452639250992842}
@@ -11909,12 +11923,13 @@ MonoBehaviour:
   bowPower: 0.2
   bowChargingTime: 1
   isSootReady: 1
+  fUp: 0
   isFireReady: 1
   isDamage: 0
+  Rdown: 0
   ImWar: 0
   archerattack: 0
   isRun: 0
-  weapons: {fileID: 670969467}
   attackdamage: {fileID: 1080333990}
   playerstat: {fileID: 1080333989}
   Skillarea: {fileID: 400565390}
@@ -12040,6 +12055,7 @@ MonoBehaviour:
   playerST: {fileID: 2186467341851780087}
   inven: {fileID: 0}
   gameUI: {fileID: 0}
+  skillWindow: {fileID: 0}
   equSlots:
   - {fileID: 0}
   - {fileID: 0}
@@ -12069,8 +12085,10 @@ MonoBehaviour:
   Skill_Buff_use_Mp: 50
   Skill_Teleport_cooltime: 5
   Usable_Teleport: 1
+  Skill_TelePort_Mp: 50
   Skill_Dodge_cooltime: 10
   Usable_Dodge: 1
+  Skill_Dodge_Mp: 50
   Skill_1_per_dam: 1
   Skill_1_fixed_dam: 0
   Skill_1_cooltime: 5
@@ -12091,6 +12109,21 @@ MonoBehaviour:
   Skill_4_cooltime: 5
   Usable_Skill4: 1
   Skill_4_use_Mp: 50
+  SkillBuff_time: 0
+  SkillBuff_passedTime: 0
+  SkillTeleport_time: 0
+  SkillTeleport_passedTime: 0
+  SkillDodge_time: 0
+  SkillDodge_passedTime: 0
+  SkillBuff_passedDurationgTime: 0
+  Skill1_time: 0
+  Skill1_passedTime: 0
+  Skill2_time: 0
+  Skill2_passedTime: 0
+  Skill3_time: 0
+  Skill3_passedTime: 0
+  Skill4_time: 0
+  Skill4_passedTime: 0
 --- !u!1 &8007892901913705074
 GameObject:
   m_ObjectHideFlags: 0
@@ -14539,14 +14572,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 26375630282790c4a8776b1f228cee8f, type: 3}
---- !u!1 &2526837147360492531 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2599801314156192713, guid: 26375630282790c4a8776b1f228cee8f, type: 3}
-  m_PrefabInstance: {fileID: 505944098938640442}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2526837147360126931 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2599801314155708393, guid: 26375630282790c4a8776b1f228cee8f, type: 3}
+  m_PrefabInstance: {fileID: 505944098938640442}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2526837147360492531 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2599801314156192713, guid: 26375630282790c4a8776b1f228cee8f, type: 3}
   m_PrefabInstance: {fileID: 505944098938640442}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1460869439865681579
@@ -14623,11 +14656,6 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 533605418, guid: 8871ca12a89cd574e9743098ef9ebce3, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 8871ca12a89cd574e9743098ef9ebce3, type: 3}
---- !u!4 &5303530098049703535 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 6764373129494177988, guid: 8871ca12a89cd574e9743098ef9ebce3, type: 3}
-  m_PrefabInstance: {fileID: 1460869439865681579}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1460869439517153922 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 533605417, guid: 8871ca12a89cd574e9743098ef9ebce3, type: 3}
@@ -14639,6 +14667,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc6d7d0affedf744d9af5e9dfd666b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &5303530098049703535 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 6764373129494177988, guid: 8871ca12a89cd574e9743098ef9ebce3, type: 3}
+  m_PrefabInstance: {fileID: 1460869439865681579}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &6160746005912135922
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14803,11 +14836,6 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 4584180211978936642, guid: dd14d2e12f763be4d9e1729458e22642, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: dd14d2e12f763be4d9e1729458e22642, type: 3}
---- !u!4 &8588741634601576588 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1814899695383674555, guid: dd14d2e12f763be4d9e1729458e22642, type: 3}
-  m_PrefabInstance: {fileID: 7934927661535991351}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &7682452639250992842 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 325116045420878077, guid: dd14d2e12f763be4d9e1729458e22642, type: 3}
@@ -14819,6 +14847,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc6d7d0affedf744d9af5e9dfd666b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!4 &8588741634601576588 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 1814899695383674555, guid: dd14d2e12f763be4d9e1729458e22642, type: 3}
+  m_PrefabInstance: {fileID: 7934927661535991351}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8007892902296359351
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14888,14 +14921,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 39ec6af3eb8c70848b3da75dbf39628f, type: 3}
---- !u!1 &4545026285663297738 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 5778942376948609405, guid: 39ec6af3eb8c70848b3da75dbf39628f, type: 3}
-  m_PrefabInstance: {fileID: 8007892902296359351}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &4545026285663010026 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 5778942376948968797, guid: 39ec6af3eb8c70848b3da75dbf39628f, type: 3}
+  m_PrefabInstance: {fileID: 8007892902296359351}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &4545026285663297738 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 5778942376948609405, guid: 39ec6af3eb8c70848b3da75dbf39628f, type: 3}
   m_PrefabInstance: {fileID: 8007892902296359351}
   m_PrefabAsset: {fileID: 0}
 --- !u!65 &2186467342729674035
@@ -14934,12 +14967,14 @@ MonoBehaviour:
   playerST: {fileID: 0}
   attackdamage: {fileID: 0}
   playerstat: {fileID: 0}
+  isBombArrow: 0
   isEnergyReady: 0
   isEnergy1: 0
   isEnergy2: 0
   EnergyReady: 0
   EnergyReady2: 0
   EnergyChargingTime: 5
+  archer_skill4_Order: 0
   arrowPos: {fileID: 0}
   Arc3SkillPos: {fileID: 0}
   ArcDefaultAttack: {fileID: 0}
@@ -14953,6 +14988,7 @@ MonoBehaviour:
   isLightning: 0
   isIceage: 0
   isMeteoShot: 0
+  mage_skill4_Order: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -15043,6 +15079,11 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 1278150552, guid: af287952f2ee29348b64bb603caa1f68, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: af287952f2ee29348b64bb603caa1f68, type: 3}
+--- !u!4 &3012090549343287374 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5110697513907735857, guid: af287952f2ee29348b64bb603caa1f68, type: 3}
+  m_PrefabInstance: {fileID: 8007892903191623039}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &8007892902186627813 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1278150554, guid: af287952f2ee29348b64bb603caa1f68, type: 3}
@@ -15054,11 +15095,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc6d7d0affedf744d9af5e9dfd666b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &3012090549343287374 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 5110697513907735857, guid: af287952f2ee29348b64bb603caa1f68, type: 3}
-  m_PrefabInstance: {fileID: 8007892903191623039}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &8007892903207054480
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -15186,12 +15222,14 @@ MonoBehaviour:
   playerST: {fileID: 0}
   attackdamage: {fileID: 0}
   playerstat: {fileID: 0}
+  isBombArrow: 0
   isEnergyReady: 0
   isEnergy1: 0
   isEnergy2: 0
   EnergyReady: 0
   EnergyReady2: 0
   EnergyChargingTime: 5
+  archer_skill4_Order: 0
   arrowPos: {fileID: 0}
   Arc3SkillPos: {fileID: 0}
   ArcDefaultAttack: {fileID: 0}
@@ -15205,6 +15243,7 @@ MonoBehaviour:
   isLightning: 0
   isIceage: 0
   isMeteoShot: 0
+  mage_skill4_Order: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}

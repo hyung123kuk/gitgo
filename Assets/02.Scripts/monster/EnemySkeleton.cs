@@ -14,7 +14,9 @@ public class EnemySkeleton : Monster
     public bool isDamage; //현재맞고있나
 
     public ParticleSystem Hiteff; 
-    public ParticleSystem Hiteff2; 
+    public ParticleSystem Hiteff2;
+
+    public bool NoMove; //벽있으면 추적X
 
     Transform target;
     Rigidbody rigid;
@@ -55,27 +57,21 @@ public class EnemySkeleton : Monster
         if (!isStun)
         {
             Targerting();
-            if (Vector3.Distance(target.position, transform.position) <= 15f && nav.enabled) 
+            if (Vector3.Distance(target.position, transform.position) <= 10f && nav.enabled) 
             {
                 if (!isAttack)
                 {
-                    anim.SetBool("isRun", false);
-                    nav.speed = 4.5f;
+                    nav.speed = 10f;
                     isChase = true;
                     nav.isStopped = false;
                     nav.destination = target.position;
                     anim.SetBool("isWalk", true);
-                    if (Vector3.Distance(target.position, transform.position) >= 6f && nav.enabled)
-                    {
-                        anim.SetBool("isWalk", false);
-                        nav.speed = 10f;
-                        anim.SetBool("isRun", true);
-                    }
+
                 }
             }
-            else if (Vector3.Distance(target.position, transform.position) > 15f && nav.enabled) 
+            else if (Vector3.Distance(target.position, transform.position) > 10f && nav.enabled) 
             {
-                anim.SetBool("isRun", false);
+                anim.SetBool("isWalk", true);
                 nav.SetDestination(respawn.transform.position);
                 nav.speed = 20f;
                 curHealth = maxHealth;
@@ -140,6 +136,7 @@ public class EnemySkeleton : Monster
     {
         FreezeVelocity();
     }
+
 
     void OnTriggerEnter(Collider other)
     {
@@ -218,7 +215,7 @@ public class EnemySkeleton : Monster
     void Diegg()
     {
         respawn.GetChild(0).gameObject.SetActive(true);
-        --SpawnManager.spawnManager.GoblinObjs;
+        --SpawnManager.spawnManager.SkeletonObjs;
         gameObject.SetActive(false);
     }
 }
