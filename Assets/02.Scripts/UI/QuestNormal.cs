@@ -62,7 +62,7 @@ public class QuestNormal : MonoBehaviour
         slimeImage.color = ButtonSelColor;
     }
     
-    public void SilmeQuest()
+    public void SlimeQuest()
     {
         questExplain.SlimeExplain(slime_item, Quest_slime, slime_Success);
     }

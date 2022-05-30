@@ -48,6 +48,7 @@ public class PlayerStat : MonoBehaviour
  
     void Start()
     {
+       
         playerstat = this;
         playerST = GetComponent<PlayerST>();
         inven = FindObjectOfType<inventory>();
