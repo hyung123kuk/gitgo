@@ -24,6 +24,21 @@ public class SpawnManager : MonoBehaviour
     bool GoblinArcherready;
     public int goblinarcheridx = 0;
 
+    public Transform[] SkeletonPoints;
+    public int SkeletonObjs;
+    bool Skeletonready;
+    public int Skeletonidx = 0;
+
+    public Transform TurtleSlimePoint;
+    public int TurtleSlimeObjs;
+    bool TurtleSlimeready;
+    public int TurtleSlimeidx = 0;
+
+    public Transform GolemPoint;
+    public int GolemObjs;
+    bool Golemready;
+    public int Golemidx = 0;
+
     public string[] monsters;
 
     public static SpawnManager spawnManager;
@@ -31,6 +46,9 @@ public class SpawnManager : MonoBehaviour
     private float blueslimetime;
     private float goblintime;
     private float goblinarchertime;
+    private float turtleslimetime;
+    private float skeletontime;
+    private float golemtime;
 
     private void Awake()
     { 
@@ -38,10 +56,13 @@ public class SpawnManager : MonoBehaviour
         BlueSlimeObjs = 20;
         GoblinObjs = 20;
         GoblinArObjs = 10;
+        TurtleSlimeObjs = 1;
+        SkeletonObjs = 20;
+        GolemObjs = 1;
         spawnManager = this;
         monsters = new string[] { "Slime", "BlueSlime", "Goblin", "GoblinArcher", "Skeleton", "TurtleSlime", "Golem" };
     }
-    private void Start()
+    private void Start() //소환해놓기
     {
         for (int i = 0; i < MonsterManager.monsterManager.Slime.Length; i++)
         {
@@ -76,6 +97,27 @@ public class SpawnManager : MonoBehaviour
             enemy.GetComponent<EnemyRange>().respawn = GoblinArcherPoints[i];
             GoblinArcherPoints[i].GetChild(0).gameObject.SetActive(false);
         }
+        for (int i = 0; i < MonsterManager.monsterManager.Skeleton.Length; i++)
+        {
+            GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[4]);
+
+            enemy.transform.position = SkeletonPoints[i].position;
+            enemy.GetComponent<EnemySkeleton>().respawn = SkeletonPoints[i];
+            SkeletonPoints[i].GetChild(0).gameObject.SetActive(false);
+        }
+
+        GameObject boss1 = MonsterManager.monsterManager.MakeObj(monsters[5]); // 터틀슬라임
+
+        boss1.transform.position = TurtleSlimePoint.position; //위치지정
+        boss1.GetComponent<EnemyBoss1>().respawn = TurtleSlimePoint; //리스폰위치지정
+        TurtleSlimePoint.GetChild(0).gameObject.SetActive(false);  //몬스터가 살아있는지 스위치용도
+
+
+        GameObject boss2 = MonsterManager.monsterManager.MakeObj(monsters[6]); // 골렘
+
+        boss2.transform.position = GolemPoint.position; //위치지정
+        boss2.GetComponent<EnemyBoss2>().respawn = GolemPoint; //리스폰위치지정
+        GolemPoint.GetChild(0).gameObject.SetActive(false);  //몬스터가 살아있는지 스위치용도
     }
     private void Update()
     {
@@ -98,6 +140,21 @@ public class SpawnManager : MonoBehaviour
         {
             GoblinArObjs++;
             StartCoroutine(GoblinArSpawn());
+        }
+        if (SkeletonObjs < 20)
+        {
+            SkeletonObjs++;
+            StartCoroutine(SkeletonSpawn());
+        }
+        if (TurtleSlimeObjs < 1)
+        {
+            TurtleSlimeObjs++;
+            StartCoroutine(TurtleSlimeSpawn());
+        }
+        if (GolemObjs < 1)
+        {
+            GolemObjs++;
+            StartCoroutine(GolemSpawn());
         }
     }
     IEnumerator SlimeSpawn()
@@ -219,6 +276,100 @@ public class SpawnManager : MonoBehaviour
                 enemy.GetComponent<EnemyRange>().respawn = GoblinArcherPoints[goblinarcheridx];
                 GoblinArcherPoints[goblinarcheridx].GetChild(0).gameObject.SetActive(false);
                 goblinarcheridx = 0;
+                break;
+            }
+            InfiniteLoopDetector.Run(); //무한루프로 유니티 뻗는거 방지
+        }
+    }
+    IEnumerator TurtleSlimeSpawn()
+    {
+        while (true)
+        {
+            turtleslimetime = 200;
+            yield return new WaitForSeconds(turtleslimetime);
+
+            for (int i = 0; i < 1; i++)
+            {
+                TurtleSlimeidx = i;
+                if (TurtleSlimePoint.GetChild(0).gameObject.activeSelf)
+                {
+                    TurtleSlimeready = true;
+                    break;
+                }
+            }
+
+            if (TurtleSlimeready)
+            {
+
+                GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[5]);
+
+                enemy.transform.position = TurtleSlimePoint.position;
+                enemy.GetComponent<EnemyRange>().respawn = TurtleSlimePoint;
+                TurtleSlimePoint.GetChild(0).gameObject.SetActive(false);
+                TurtleSlimeidx = 0;
+                break;
+            }
+            InfiniteLoopDetector.Run(); //무한루프로 유니티 뻗는거 방지
+        }
+    }
+    IEnumerator SkeletonSpawn()
+    {
+        while (true)
+        {
+            skeletontime = Random.Range(5,7);
+            yield return new WaitForSeconds(skeletontime);
+
+            for (int i = 0; i < MonsterManager.monsterManager.Skeleton.Length; i++)
+            {
+                Skeletonidx = i;
+                if (SkeletonPoints[i].GetChild(0).gameObject.activeSelf)
+                {
+                    Skeletonready = true;
+                    break;
+                }
+            }
+
+            if (GoblinArcherready)
+            {
+
+                GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[4]);
+
+                enemy.transform.position = SkeletonPoints[goblinarcheridx].position;
+                enemy.GetComponent<EnemyRange>().respawn = SkeletonPoints[goblinarcheridx];
+                SkeletonPoints[goblinarcheridx].GetChild(0).gameObject.SetActive(false);
+                Skeletonidx = 0;
+                break;
+            }
+            InfiniteLoopDetector.Run(); //무한루프로 유니티 뻗는거 방지
+        }
+    }
+
+    IEnumerator GolemSpawn()
+    {
+        while (true)
+        {
+            golemtime = 200f;
+            yield return new WaitForSeconds(golemtime);
+
+            for (int i = 0; i < 1; i++)
+            {
+                Golemidx = i;
+                if (GolemPoint.GetChild(0).gameObject.activeSelf)
+                {
+                    Golemready = true;
+                    break;
+                }
+            }
+
+            if (Golemready)
+            {
+
+                GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[6]);
+
+                enemy.transform.position = GolemPoint.position;
+                enemy.GetComponent<EnemyRange>().respawn = GolemPoint;
+                GolemPoint.GetChild(0).gameObject.SetActive(false);
+                Golemidx = 0;
                 break;
             }
             InfiniteLoopDetector.Run(); //무한루프로 유니티 뻗는거 방지

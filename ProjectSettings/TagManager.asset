@@ -51,6 +51,9 @@ TagManager:
   - DodgeSlot
   - RangeText
   - GROUND
+  - Build
+  - Horse
+  - DunJeonPortal
   layers:
   - Default
   - TransparentFX
@@ -68,8 +71,8 @@ TagManager:
   - Back
   - Skill
   - Foot
-  - 
-  - 
+  - Horse
+  - WALL
   - 
   - 
   - OverUI
