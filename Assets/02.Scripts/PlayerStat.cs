@@ -177,6 +177,7 @@ public class PlayerStat : MonoBehaviour
     {
         if(NowExp >= TotalExp)
         {
+
             Level++;
             NowExp = 0;
             TotalExp=LevelExp();
@@ -189,6 +190,10 @@ public class PlayerStat : MonoBehaviour
             inven.AllSlotItemLimitColor();
             skillWindow.AllSkillSlotColor();
             StatWindow.statWindow.SetLevel();
+            if(Level >= 7)
+            {
+                QuestStore.qustore.MainQuestSuccess(4);
+            }
         }
     }
 

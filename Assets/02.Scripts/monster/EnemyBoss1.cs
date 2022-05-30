@@ -359,6 +359,15 @@ public class EnemyBoss1 : MonsterBoss
                 mesh.material.color = Color.white;
             isChase = false; //�׾����� ��������
             anim.SetBool("isDie", true);
+            gameObject.SetActive(false);
+            QuestStore.qustore.MainQuestSuccess(3);
+        }
+        
+
+       
+        
+            
+        
             Invoke("Diegg", 1.5f);
         }
     }

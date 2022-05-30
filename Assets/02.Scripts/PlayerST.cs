@@ -665,6 +665,7 @@ public class PlayerST : MonoBehaviour
     }
     private void Update()
     {
+        if (AllUI.isUI)
 
         if (Input.GetKeyDown(KeyCode.G) && !HorseMode) // 말 소환&소환해제
         {
@@ -691,7 +692,7 @@ public class PlayerST : MonoBehaviour
             anim.SetBool("right", false);
         }
         ImWar = CharacterType == Type.Warrior;
-        if (inventory.iDown || SkillWindow.kDown || StatWindow.tDown || HorseMode)
+        if (AllUI.isUI)
             return;
         if (!NPC.isNPCRange)
             Cursor.lockState = CursorLockMode.Locked;//마우스커서 고정
@@ -991,6 +992,10 @@ public class PlayerST : MonoBehaviour
 
     public void WeaponChange(SwordNames WeaponNum) //무기를 바꿨을때 캐릭터에 적용시키기 위해 사용하는 함수
     {
+        if(WeaponNum != basicSword)
+        {
+            QuestStore.qustore.MainQuestSuccess(2);
+        }
         equipWeapon[NowWeapon].gameObject.SetActive(false);
         NowWeapon = (int)WeaponNum;
         equipWeapon[NowWeapon].gameObject.SetActive(true);

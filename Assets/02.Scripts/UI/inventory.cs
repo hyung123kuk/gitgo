@@ -41,7 +41,7 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
         
         GoldUpdate();
 
-       StartCoroutine(invenSet());
+        StartCoroutine(invenSet());
         
 
     }
@@ -82,7 +82,7 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
         
         toolTip.ToolTipOff();
         iDown = false;
-        AllUI.allUI.CursorLock();
+        AllUI.allUI.CheckCursorLock();
        
     }
 
@@ -95,13 +95,20 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
 
     
 
-    public bool HasEmptySlot()
+    public bool HasEmptySlot(int num=1)
     {
+        int _num = 1;
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].item == null)
             {
-                return true;
+                
+                if (_num >= num)
+                {
+                    return true;
+                }
+                _num++;
+
             }
         }
         
@@ -112,9 +119,12 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
     {
         for (int i = 0; i < slots.Length; i++)
         {
-            if (slots[i].item == item)
+            if (slots[i].item != null)
             {
-                return true;
+                if (slots[i].item.itemName == item.itemName)
+                {
+                    return true;
+                }
             }
         }
        
@@ -126,15 +136,19 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
        
         if (buyitem.itemType == Item.ItemType.Used)
         {
+            
             for (int i = 0; i < slots.Length; i++)
             {
-                if(buyitem == slots[i].item)
+                if (slots[i].item != null)
                 {
-                    
-                    slots[i].SetSlotCount(num);
-                    playerStat.MONEY -= buyitem._PRICE*num;
-                    GoldUpdate();
-                    return;
+                    if (buyitem.itemName == slots[i].item.itemName)
+                    {
+
+                        slots[i].SetSlotCount(num);
+                        playerStat.MONEY -= buyitem._PRICE * num;
+                        GoldUpdate();
+                        return;
+                    }
                 }
             }
         }
@@ -190,11 +204,14 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
         {
             for (int i = 0; i < slots.Length; i++)
             {
-                if (item == slots[i].item)
+                if (slots[i].item != null)
                 {
+                    if (item.name == slots[i].item.name)
+                    {
 
-                    slots[i].SetSlotCount(num);
-                    return;
+                        slots[i].SetSlotCount(num);
+                        return;
+                    }
                 }
             }
         }

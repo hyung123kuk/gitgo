@@ -10,12 +10,12 @@ GameObject:
   m_Component:
   - component: {fileID: 5376546848068929859}
   m_Layer: 5
-  m_Name: inventoryDesign
+  m_Name: QuestDesign
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &5376546848068929859
 RectTransform:
   m_ObjectHideFlags: 0
@@ -49,7 +49,7 @@ GameObject:
   - component: {fileID: 8763239972957832787}
   - component: {fileID: 2629921303931211484}
   m_Layer: 5
-  m_Name: invenExitButton
+  m_Name: QuestExitButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -156,19 +156,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 8763239972957832787}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 7958978829796136350}
-        m_TargetAssemblyTypeName: inventory, Assembly-CSharp
-        m_MethodName: invenOff
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+      m_Calls: []
 --- !u!1 &3993659075600344333
 GameObject:
   m_ObjectHideFlags: 0
@@ -181,7 +169,7 @@ GameObject:
   - component: {fileID: 3993659075600344334}
   - component: {fileID: 3993659075600344335}
   m_Layer: 5
-  m_Name: inventory_base
+  m_Name: Quest_base
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -335,7 +323,7 @@ GameObject:
   - component: {fileID: 3993659076502030388}
   - component: {fileID: 3993659076502030389}
   m_Layer: 5
-  m_Name: inventory_text
+  m_Name: Quest_text
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -411,7 +399,7 @@ GameObject:
   - component: {fileID: 3993659076559947949}
   - component: {fileID: 3993659076559947938}
   - component: {fileID: 3993659076559947939}
-  - component: {fileID: 7958978829796136350}
+  - component: {fileID: 2143522193}
   m_Layer: 5
   m_Name: QuestWindow
   m_TagString: Untagged
@@ -500,7 +488,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &7958978829796136350
+--- !u!114 &2143522193
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -509,15 +497,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3993659076559947936}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: afef7917a2514cd4b87b0f2ee2d2602a, type: 3}
+  m_Script: {fileID: 11500000, guid: cbc0fc8d06fac3643be5116c28bb9f99, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Inven: {fileID: 74984453450748326}
-  SlotsParent: {fileID: 0}
-  Gold: {fileID: 0}
-  allUI: {fileID: 0}
-  itemStore: {fileID: 0}
-  toolTip: {fileID: 0}
 --- !u!1 &3993659076925155806
 GameObject:
   m_ObjectHideFlags: 0
@@ -530,7 +512,7 @@ GameObject:
   - component: {fileID: 3993659076925155803}
   - component: {fileID: 3993659076925155800}
   m_Layer: 5
-  m_Name: inventory_back
+  m_Name: Quest_back
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -606,7 +588,7 @@ GameObject:
   - component: {fileID: 3130619470805819454}
   - component: {fileID: 4345951406902395045}
   m_Layer: 5
-  m_Name: Inven_Drag
+  m_Name: Quest_Drag
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

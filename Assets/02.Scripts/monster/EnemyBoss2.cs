@@ -420,6 +420,9 @@ public class EnemyBoss2 : MonsterBoss
             gameObject.SetActive(false);
             foreach (SkinnedMeshRenderer mesh in mat)
               mesh.material.color = Color.gray;
+            QuestStore.qustore.MainQuestSuccess(5);
+        }
+        yield return null;
             Invoke("Diegg", 1.5f);
         }
     }

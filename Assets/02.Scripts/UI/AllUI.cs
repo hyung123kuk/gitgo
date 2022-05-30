@@ -20,8 +20,11 @@ public class AllUI : MonoBehaviour
     [SerializeField]
     private Canvas statWindow;
     [SerializeField]
+    private Canvas QuestStoreWindow;
+    [SerializeField]
     public MouseCursor MouseCursor;
-
+    [SerializeField]
+    public static bool isUI = false;
     public static AllUI allUI;
 
     private void Awake()
@@ -50,8 +53,10 @@ public class AllUI : MonoBehaviour
             SkillWindow.kDown = false;
             StatWindow.tDown = false;
             itemStore.sellButton = false;
+            QuestExplain.isQuestExplain = false;
             MouseCursor.transform_cursor.gameObject.SetActive(false);
             MouseCursor.SetNormalCursor();
+            CheckCursorLock();
 
         }
 
@@ -63,7 +68,9 @@ public class AllUI : MonoBehaviour
 
                 inventory.inven.invenOff();
                 inventory.inven.ToolTIpOff();
-          
+                CheckCursorLock();
+
+
 
             }
             else //Ŵ
@@ -71,6 +78,7 @@ public class AllUI : MonoBehaviour
 
                 inventory.inven.invenOn();
                 InvenTop();
+                CheckCursorLock();
             }
         }
 
@@ -81,13 +89,16 @@ public class AllUI : MonoBehaviour
             {
                 SkillWindow.skillwindow.SkillWindowOff();
                 SkillWindow.skillwindow.SkillToolTipOff();
-      
+                CheckCursorLock();
+
+
 
             }
             else //Ŵ
             {
                 SkillWindow.skillwindow.SkillWindowOn();
                 SkillWindowTop();
+                CheckCursorLock();
 
             }
         }
@@ -99,13 +110,16 @@ public class AllUI : MonoBehaviour
             {
                 
                 StatWindow.statWindow.StatWindowOff();
-                
+                CheckCursorLock();
+
+
 
             }
             else //Ŵ
             {
                 StatWindow.statWindow.StatWindowOn();
                 StatWindowTop();
+                CheckCursorLock();
 
             }
         }
@@ -114,14 +128,21 @@ public class AllUI : MonoBehaviour
     }
 
 
-    public void CursorLock()
+    public void CheckCursorLock()
     {
 
-        if (inventory.iDown == false && SkillWindow.kDown == false && StatWindow.tDown == false)
+        if (inventory.iDown == false && SkillWindow.kDown == false && StatWindow.tDown == false && QuestExplain.isQuestExplain == false)
         {
+            isUI = false;
             Cursor.lockState = CursorLockMode.Locked;
             allUI.MouseCursor.transform_cursor.gameObject.SetActive(false);
             allUI.MouseCursor.Init_Cursor();
+        }
+        else
+        { 
+            isUI = true;
+            Cursor.lockState = CursorLockMode.Confined;
+            allUI.MouseCursor.transform_cursor.gameObject.SetActive(true);
         }
     }
 
@@ -133,6 +154,7 @@ public class AllUI : MonoBehaviour
         itemSellQuestion.sortingOrder--;
         skillWindow.sortingOrder--;
         statWindow.sortingOrder--;
+        QuestStoreWindow.sortingOrder--;
     }
     public void StoreTop()
     {
@@ -142,6 +164,7 @@ public class AllUI : MonoBehaviour
         itemSellQuestion.sortingOrder--;
         skillWindow.sortingOrder--;
         statWindow.sortingOrder--;
+        QuestStoreWindow.sortingOrder--;
     }
     public void ItemBuyTop()
     {
@@ -151,6 +174,7 @@ public class AllUI : MonoBehaviour
         itemSellQuestion.sortingOrder--;
         skillWindow.sortingOrder--;
         statWindow.sortingOrder--;
+        QuestStoreWindow.sortingOrder--;
     }
     public void ItemSellTop()
     {
@@ -160,6 +184,7 @@ public class AllUI : MonoBehaviour
         itemSellQuestion.sortingOrder=1;
         skillWindow.sortingOrder--;
         statWindow.sortingOrder--;
+        QuestStoreWindow.sortingOrder--;
     }
     public void SkillWindowTop()
     {
@@ -169,6 +194,7 @@ public class AllUI : MonoBehaviour
         itemSellQuestion.sortingOrder --;
         skillWindow.sortingOrder=1;
         statWindow.sortingOrder--;
+        QuestStoreWindow.sortingOrder--;
     }
 
     public void StatWindowTop()
@@ -179,8 +205,20 @@ public class AllUI : MonoBehaviour
         itemSellQuestion.sortingOrder--;
         skillWindow.sortingOrder--;
         statWindow.sortingOrder=1;
+        QuestStoreWindow.sortingOrder--;
     }
 
+    public void QuestStroeTop()
+    {
+        inven.sortingOrder--;
+        store.sortingOrder--;
+        itemBuyQuestion.sortingOrder--;
+        itemSellQuestion.sortingOrder--;
+        skillWindow.sortingOrder--;
+        statWindow.sortingOrder --;
+        QuestStoreWindow.sortingOrder=1;
+
+    }
 
 
 }

@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class QuikSlot : MonoBehaviour
 {
-
-    
+    [SerializeField]
+    QuestStore questStore;
     [SerializeField]
     public Slot slot;
     [SerializeField]
@@ -35,6 +35,7 @@ public class QuikSlot : MonoBehaviour
         quikSlot = this;
         attckDamage = FindObjectOfType<AttackDamage>();
         buffSkillUI = FindObjectsOfType<BuffSkillUI>();
+        questStore = FindObjectOfType<QuestStore>();
     }
 
 
@@ -141,10 +142,12 @@ public class QuikSlot : MonoBehaviour
             #region 공용 스킬
             if (skill.skill.skillCharacter == SkillUI.SkillCharacter.Common)
             {
-                if (skill.skill.skillNum == 0 && attckDamage.Usable_Dodge) { playerST.Dodge(); StartCoroutine(Dodge()); }
-              
+                if (skill.skill.skillNum == 0 && attckDamage.Usable_Dodge) { 
+                    playerST.Dodge(); 
+                    StartCoroutine(Dodge());
+                    QuestStore.qustore.MainQuestSuccess(1);
 
-
+                }              
             }
             #endregion
 
@@ -169,8 +172,7 @@ public class QuikSlot : MonoBehaviour
 
     IEnumerator Skill1()
     {
-       
-       
+              
         float fillmount = 1 - attckDamage.Skill1_passedTime / attckDamage.Skill1_time; 
         while (fillmount >= 0f)
         {
