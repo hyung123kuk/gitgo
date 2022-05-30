@@ -275,7 +275,6 @@ MonoBehaviour:
   Texting: 0
   istyping: 0
   endExplain: 0
-  itemImage: []
   itemNum: []
   main1_item: []
   main2_item: []
@@ -369,7 +368,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2300079106616082837}
   m_Layer: 5
-  m_Name: QuestDesing
+  m_Name: QuestTalkDesing
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

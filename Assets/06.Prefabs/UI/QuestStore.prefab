@@ -236,7 +236,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\uBA54\uC778 1  :  \uAE30\uBCF8\uAE30\uC758 \uC911\uC694\uC131"
+  m_Text: "\uBA54\uC778 : \uAE30\uBCF8\uAE30\uC758 \uC911\uC694\uC131!"
 --- !u!1 &715117446
 GameObject:
   m_ObjectHideFlags: 0
@@ -344,10 +344,10 @@ RectTransform:
   m_Father: {fileID: 715117447}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 230, y: -350}
-  m_SizeDelta: {x: 460, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &920049621
 CanvasRenderer:
@@ -430,7 +430,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 920049620}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1701608524}
+        m_TargetAssemblyTypeName: QuestNormal, Assembly-CSharp
+        m_MethodName: GoblinQuest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1018406000
 GameObject:
   m_ObjectHideFlags: 0
@@ -544,10 +556,10 @@ RectTransform:
   m_Father: {fileID: 715117447}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 230, y: -200}
-  m_SizeDelta: {x: 460, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1390875108
 CanvasRenderer:
@@ -630,7 +642,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1390875107}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1701608524}
+        m_TargetAssemblyTypeName: QuestNormal, Assembly-CSharp
+        m_MethodName: SilmeQuest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1426537253
 GameObject:
   m_ObjectHideFlags: 0
@@ -665,10 +689,10 @@ RectTransform:
   m_Father: {fileID: 715117447}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 230, y: -50}
-  m_SizeDelta: {x: 460, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1426537257
 CanvasRenderer:
@@ -798,10 +822,10 @@ RectTransform:
   m_Father: {fileID: 715117447}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 230, y: -500}
-  m_SizeDelta: {x: 460, y: 100}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1429223440
 CanvasRenderer:
@@ -884,7 +908,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1429223439}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1701608524}
+        m_TargetAssemblyTypeName: QuestNormal, Assembly-CSharp
+        m_MethodName: SkelletonQuest
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1909977415469108818
 GameObject:
   m_ObjectHideFlags: 0
@@ -1129,6 +1165,7 @@ GameObject:
   - component: {fileID: 1909977416193397149}
   - component: {fileID: 1909977416193397150}
   - component: {fileID: 544139797}
+  - component: {fileID: 1701608524}
   m_Layer: 5
   m_Name: QuestStore
   m_TagString: Untagged
@@ -1229,8 +1266,39 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47c15ec64ec9f2d4d8751b09625b471a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MainText: {fileID: 0}
+  mainNum: 1
   isMainRecive: 0
   MainSuccess: 1
+--- !u!114 &1701608524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1909977416193397151}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4ac829c48f635b54990877469890afe3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  questExplain: {fileID: 0}
+  slimeText: {fileID: 0}
+  slimeQuestKill: 20
+  slimeKill: 0
+  Quest_slime: 0
+  slime_Success: 0
+  slime_item: []
+  goblinQuestKill: 20
+  goblinKill: 0
+  Quest_goblin: 0
+  goblin_Success: 0
+  goblin_item: []
+  skelletonQuestKill: 20
+  skelletonKill: 0
+  Quest_skelleton: 0
+  skelleton_Success: 0
+  skelleton_item: []
 --- !u!1 &1909977416263964282
 GameObject:
   m_ObjectHideFlags: 0
@@ -1487,7 +1555,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1909977417370588119
 RectTransform:
   m_ObjectHideFlags: 0

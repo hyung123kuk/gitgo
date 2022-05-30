@@ -26,9 +26,8 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
      Color MainbasicColor = new Color(0.17f,0.85f,0.16f); //메인 이름 컬러
      Color MainSelColor= new Color(0.3f,0.6f,0.3f);   //메인 받았을때 이름 컬러
 
-     Color QuestSelColor = new Color(0.3f, 0.3f, 0.3f); //퀘스트 받았을때 이름 컬러
-     
-     Color ButtonSelColor = new Color(0.7f, 0.7f, 0.7f); //퀘스트 받았을때 버튼 컬러
+    Color ButtonSelColor = new Color(0.7f, 0.7f, 0.7f); //퀘스트 받았을때 버튼 컬러
+
     void Awake()
     {
        questTyping = FindObjectOfType<QuestTyping>();

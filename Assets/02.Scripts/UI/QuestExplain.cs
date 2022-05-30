@@ -24,7 +24,13 @@ public class QuestExplain : MonoBehaviour
     Image[] conpensation;
     [SerializeField]
     QuestTyping questTyping;
-    
+    [SerializeField]
+    QuestNormal questNormal;
+
+    bool mainQ =false;
+    bool slimeQ=false;
+    bool goblinQ=false;
+    bool skelletonQ=false;
 
     bool QuestSuccess;
     int QuestNum;
@@ -43,6 +49,7 @@ public class QuestExplain : MonoBehaviour
         conpensation = transform.GetChild(0).GetChild(7).GetComponentsInChildren<Image>();
         questTyping = FindObjectOfType<QuestTyping>();
         questStore = FindObjectOfType<QuestStore>();
+        questNormal = FindObjectOfType<QuestNormal>();
         questExplain = this;
 
     }
@@ -81,6 +88,14 @@ public class QuestExplain : MonoBehaviour
         
     }
 
+    private void SuccessButtonSet()
+    {
+        mainQ = false;
+        slimeQ = false;
+        goblinQ = false;
+        skelletonQ = false;
+    }
+
     void ItemSet(Item[] items)
     {
         int i = 0;
@@ -112,6 +127,8 @@ public class QuestExplain : MonoBehaviour
         
         ItemSet(items);
         QuestNum = 1;
+        SuccessButtonSet();
+        mainQ = true;
     }
 
     public void Main2(Item[] items, bool isRecieve, bool clear = false)
@@ -125,6 +142,8 @@ public class QuestExplain : MonoBehaviour
         
         ItemSet(items);
         QuestNum = 2;
+        SuccessButtonSet();
+        mainQ = true;
     }
 
     public void Main3(Item[] items, bool isRecieve, bool clear = false)
@@ -138,6 +157,8 @@ public class QuestExplain : MonoBehaviour
      
         ItemSet(items);
         QuestNum = 3;
+        SuccessButtonSet();
+        mainQ = true;
     }
 
     public void Main4(Item[] items, bool isRecieve, bool clear = false)
@@ -151,7 +172,9 @@ public class QuestExplain : MonoBehaviour
 
         ItemSet(items);
         QuestNum = 4;
-       
+        SuccessButtonSet();
+        mainQ = true;
+
     }
 
     public void Main5(Item[] items, bool isRecieve, bool clear = false)
@@ -165,6 +188,47 @@ public class QuestExplain : MonoBehaviour
 
         ItemSet(items);
         QuestNum = 5;
+        SuccessButtonSet();
+        mainQ = true;
+    }
+
+    public void SlimeExplain(Item[] items,bool isRecieve,bool clear = false)
+    {
+        QuestExplainOn();
+        questName.text = "슬라임 잡기";
+        questName.color = Color.white;
+        explainText.text = "슬라임을 20마리 사냥!\n" + questNormal.slimeKill + " / 20";
+        Clear(clear);
+        Recieve(isRecieve);
+        ItemSet(items);
+        SuccessButtonSet();
+        slimeQ = true;
+    }
+
+    public void GoblinExplain(Item[] items, bool isRecieve, bool clear = false)
+    {
+        QuestExplainOn();
+        questName.text = "고블린 잡기";
+        questName.color = Color.white;
+        explainText.text = "고블린을 20마리 사냥!\n" + questNormal.goblinKill + " / 20"; ;
+        Clear(clear);
+        Recieve(isRecieve);
+        ItemSet(items);
+        SuccessButtonSet();
+        goblinQ = true;
+    }
+
+    public void SkeletonExplain(Item[] items, bool isRecieve, bool clear = false)
+    {
+        QuestExplainOn();
+        questName.text = "스켈레톤 잡기";
+        questName.color = Color.white;
+        explainText.text = "스켈레톤을 20마리 사냥!\n" + questNormal.skelletonKill + " / 20"; ;
+        Clear(clear);
+        Recieve(isRecieve);
+        ItemSet(items);
+        SuccessButtonSet();
+        skelletonQ = true;
     }
 
     public void AllColorReset(int _alpha)
@@ -185,58 +249,125 @@ public class QuestExplain : MonoBehaviour
 
     public void ClearButton()
     {
-        
-        if (questStore.isMainRecive) //퀘스트 받았을때
+        if (mainQ)
         {
-            if (QuestSuccess) //퀘스트 성공후 완료 누름
+            if (questStore.isMainRecive) //메인 퀘스트 받았을때
             {
-                
-                
-                if (QuestNum == 1)
+                if (QuestSuccess) //퀘스트 성공후 완료 누름
                 {
-                    questStore.QuestEnd(questTyping.main1_item);
-                    questStore.MainText.text = "메인 : 장비의 중요성!";
-                    questStore.mainNum=2;
+
+
+                    if (QuestNum == 1)
+                    {
+                        questStore.QuestEnd(questTyping.main1_item);
+                        questStore.MainText.text = "메인 : 장비의 중요성!";
+                        questStore.mainNum = 2;
+                    }
+                    else if (QuestNum == 2)
+                    {
+                        questStore.QuestEnd(questTyping.main2_item);
+                        questStore.MainText.text = "메인 : 악동! 거북슬라임!";
+                        questStore.mainNum = 3;
+                    }
+                    else if (QuestNum == 3)
+                    {
+                        questStore.QuestEnd(questTyping.main3_item);
+                        questStore.MainText.text = "메인 : 마지막 준비!";
+                        questStore.mainNum = 4;
+                    }
+                    else if (QuestNum == 4)
+                    {
+                        questStore.QuestEnd(questTyping.main4_item);
+                        questStore.MainText.text = "메인 : 최강의 생물체!";
+                        questStore.mainNum = 5;
+                    }
+                    else if (QuestNum == 5)
+                    {
+                        questStore.QuestEnd(questTyping.main5_item);
+                        questStore.MainText.text = "퀘스트 모두 완료";
+                        questStore.mainNum = 6;
+                    }
+                    QuestExplainOff();
+
                 }
-                else if (QuestNum == 2)
+                else //퀘스트 아직 성공 못했는데 완료 누름
                 {
-                    questStore.QuestEnd(questTyping.main2_item);
-                    questStore.MainText.text = "메인 : 악동! 거북슬라임!";
-                    questStore.mainNum = 3;
+                    LogManager.logManager.Log("퀘스트를 완료하지 못했습니다.", true);
                 }
-                else if (QuestNum == 3)
-                {
-                    questStore.QuestEnd(questTyping.main3_item);
-                    questStore.MainText.text = "메인 : 마지막 준비!";
-                    questStore.mainNum = 4;
-                }
-                else if (QuestNum == 4)
-                {
-                    questStore.QuestEnd(questTyping.main4_item);
-                    questStore.MainText.text = "메인 : 최강의 생물체!";
-                    questStore.mainNum = 5;
-                }
-                else if (QuestNum == 5)
-                {
-                    questStore.QuestEnd(questTyping.main5_item);
-                    questStore.MainText.text = "퀘스트 모두 완료";
-                    questStore.mainNum = 6;
-                }
+            }
+            else  //아직 퀘스트를 받지 않았을때
+            {
+                questStore.QuestStart();
+                RecieveText.text = "완료";
+                RecieveText.color = NonClearColor;
                 QuestExplainOff();
-                
-            }
-            else //퀘스트 아직 성공 못했는데 완료 누름
-            {
-                LogManager.logManager.Log("퀘스트를 완료하지 못했습니다.", true);
             }
         }
-        else  //아직 퀘스트를 받지 않았을때
+        else if(slimeQ)
         {
-            questStore.QuestStart();
-            RecieveText.text = "완료";
-            RecieveText.color = NonClearColor;
-            QuestExplainOff();
+            if(questNormal.Quest_slime)
+            {
+                if (questNormal.slime_Success)
+                {
+                    questNormal.QuestEnd(questNormal.slime_item,0);
+                }
+                else
+                {
+                    LogManager.logManager.Log("퀘스트를 완료하지 못했습니다.", true);
+                }
+            }
+            else
+            {
+                questNormal.SlimeQuestStart();
+                RecieveText.text = "완료";
+                RecieveText.color = NonClearColor;
+                QuestExplainOff();
+            }
         }
+
+        else if (goblinQ)
+        {
+            if (questNormal.Quest_goblin)
+            {
+                if (questNormal.goblin_Success)
+                {
+                    questNormal.QuestEnd(questNormal.goblin_item,1);
+                }
+                else
+                {
+                    LogManager.logManager.Log("퀘스트를 완료하지 못했습니다.", true);
+                }
+            }
+            else
+            {
+                questNormal.GoblinQuestStart();
+                RecieveText.text = "완료";
+                RecieveText.color = NonClearColor;
+                QuestExplainOff();
+            }
+        }
+        else if (skelletonQ)
+        {
+            if (questNormal.Quest_skelleton)
+            {
+                if (questNormal.skelleton_Success)
+                {
+                    questNormal.QuestEnd(questNormal.skelleton_item,2);
+                }
+                else
+                {
+                    LogManager.logManager.Log("퀘스트를 완료하지 못했습니다.", true);
+                }
+            }
+            else
+            {
+                questNormal.SkelletonQuestStart();
+                RecieveText.text = "완료";
+                RecieveText.color = NonClearColor;
+                QuestExplainOff();
+            }
+        }
+
         AllUI.allUI.CheckCursorLock();
     }
     
