@@ -665,8 +665,6 @@ public class PlayerST : MonoBehaviour
     }
     private void Update()
     {
-        if (AllUI.isUI)
-
         if (Input.GetKeyDown(KeyCode.G) && !HorseMode) // 말 소환&소환해제
         {
             if (!HorseSpawn.transform.GetChild(0).gameObject.activeSelf)
@@ -682,7 +680,7 @@ public class PlayerST : MonoBehaviour
                 HorseSpawn.transform.GetChild(0).gameObject.SetActive(false);
             }
         }
-        if (inventory.iDown || SkillWindow.kDown || StatWindow.tDown)
+        if (AllUI.isUI)
         {
             if (FootSound.footSound)
                 FootSound.footSound.audioSource.Stop();

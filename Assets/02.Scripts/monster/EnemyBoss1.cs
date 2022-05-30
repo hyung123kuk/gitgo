@@ -196,7 +196,7 @@ public class EnemyBoss1 : MonsterBoss
         anim.SetBool("isStun", false);
         yield return new WaitForSeconds(0.2f);
         nuckarea.enabled = false;
-        
+
         isSkill = false;
 
 
@@ -240,7 +240,7 @@ public class EnemyBoss1 : MonsterBoss
         meleeArea.enabled = true;
         yield return new WaitForSeconds(0.2f);
         rigid.AddForce(transform.forward * 40 + transform.up * 20, ForceMode.Impulse);
-        
+
         yield return new WaitForSeconds(1f);
         transform.position = target.position + Vector3.back * 2;
         isRush = false;
@@ -360,18 +360,12 @@ public class EnemyBoss1 : MonsterBoss
             isChase = false; //�׾����� ��������
             anim.SetBool("isDie", true);
             gameObject.SetActive(false);
+            Invoke("Diegg", 1.5f);
             QuestStore.qustore.MainQuestSuccess(3);
         }
-        
 
-       
         
-            
-        
-            Invoke("Diegg", 1.5f);
-        }
     }
-
     void Diegg()
     {
 
@@ -379,7 +373,10 @@ public class EnemyBoss1 : MonsterBoss
         --SpawnManager.spawnManager.TurtleSlimeObjs;
         gameObject.SetActive(false);
     }
-
-
 }
+
+
+
+
+
 
