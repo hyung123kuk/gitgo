@@ -310,6 +310,7 @@ public class QuestExplain : MonoBehaviour
                 if (questNormal.slime_Success)
                 {
                     questNormal.QuestEnd(questNormal.slime_item,0);
+                    QuestExplainOff();
                 }
                 else
                 {
@@ -332,6 +333,7 @@ public class QuestExplain : MonoBehaviour
                 if (questNormal.goblin_Success)
                 {
                     questNormal.QuestEnd(questNormal.goblin_item,1);
+                    QuestExplainOff();
                 }
                 else
                 {
@@ -353,6 +355,7 @@ public class QuestExplain : MonoBehaviour
                 if (questNormal.skelleton_Success)
                 {
                     questNormal.QuestEnd(questNormal.skelleton_item,2);
+                    QuestExplainOff();
                 }
                 else
                 {
