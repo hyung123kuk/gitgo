@@ -8,6 +8,8 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
 {
     [SerializeField]
     public static QuestStore qustore;
+    [SerializeField]
+    QuestWindow questWindow;
     GameObject questStore;
     QuestTyping questTyping;
     public Text MainText;
@@ -27,10 +29,11 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
      Color MainSelColor= new Color(0.3f,0.6f,0.3f);   //메인 받았을때 이름 컬러
 
     Color ButtonSelColor = new Color(0.7f, 0.7f, 0.7f); //퀘스트 받았을때 버튼 컬러
-
+  
     void Awake()
     {
        questTyping = FindObjectOfType<QuestTyping>();
+        questWindow = FindObjectOfType<QuestWindow>();
         MainText = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>();
         MainImage = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
         Quest1Text = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(1).GetChild(0).GetComponent<Text>();
@@ -45,8 +48,13 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
 
     public void storeOn()
     {
+        questWindow.questWindowOn();
         AllUI.allUI.QuestStroeTop();
         questStore.SetActive(true);
+    }
+    public void storeOff()
+    {
+        questStore.SetActive(false);
     }
 
     public void QuestStart()
@@ -57,8 +65,9 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
 
         MainText.color = MainSelColor;
         MainImage.color = ButtonSelColor;
+        questWindow.QuestRecieve(QuestSlot.QuestName.main);
     }
-    public void QuestEnd(Item[] items)
+    public bool QuestEnd(Item[] items)
     {
         if (ItemCompensation(items))
         {
@@ -66,7 +75,9 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
             isMainRecive = false;
             MainText.color = MainbasicColor;
             MainImage.color = Color.white;
+            return true;
         }
+        return false;
     }
 
     public void TypingStart()
@@ -76,7 +87,7 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
     }
 
 
-    public void MainQuest()
+    public void MainQuest() //메인퀘스트 창 열기
     {
 
         if (mainNum == 1 && !isMainRecive)
@@ -125,7 +136,7 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
         }
         else if (mainNum == 4 && isMainRecive)
         {
-            if (PlayerStat.playerstat.Level >= 7)
+            if (PlayerStat.playerstat.Level >= 8)
             {
                 MainSuccess = true;
             }

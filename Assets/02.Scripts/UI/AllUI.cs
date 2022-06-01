@@ -22,6 +22,11 @@ public class AllUI : MonoBehaviour
     [SerializeField]
     private Canvas QuestStoreWindow;
     [SerializeField]
+    private Canvas QusetExplainWindow;
+    [SerializeField]
+    private Canvas questWindow;
+
+    [SerializeField]
     public MouseCursor MouseCursor;
     [SerializeField]
     public static bool isUI = false;
@@ -54,6 +59,7 @@ public class AllUI : MonoBehaviour
             StatWindow.tDown = false;
             itemStore.sellButton = false;
             QuestExplain.isQuestExplain = false;
+            QuestWindow.isQuestWindow = false;
             MouseCursor.transform_cursor.gameObject.SetActive(false);
             MouseCursor.SetNormalCursor();
             CheckCursorLock();
@@ -124,6 +130,27 @@ public class AllUI : MonoBehaviour
             }
         }
 
+        if (Input.GetKeyDown(KeyCode.U)) //½ºÅÈÃ¢ ÄÑ±â/ ²ô±â
+        {
+            QuestWindow.isQuestWindow = !QuestWindow.isQuestWindow;
+            if (!QuestWindow.isQuestWindow) //²û
+            {
+
+                QuestWindow.qWIndow.questWindowOff();
+                CheckCursorLock();
+
+
+
+            }
+            else //Å´
+            {
+                QuestWindow.qWIndow.questWindowOn();
+                QuestWindowTop();
+                CheckCursorLock();
+
+            }
+        }
+
 
     }
 
@@ -131,7 +158,7 @@ public class AllUI : MonoBehaviour
     public void CheckCursorLock()
     {
 
-        if (inventory.iDown == false && SkillWindow.kDown == false && StatWindow.tDown == false && QuestExplain.isQuestExplain == false)
+        if (!inventory.iDown&& !SkillWindow.kDown && !StatWindow.tDown && !QuestExplain.isQuestExplain &&!QuestWindow.isQuestWindow)
         {
             isUI = false;
             Cursor.lockState = CursorLockMode.Locked;
@@ -155,6 +182,8 @@ public class AllUI : MonoBehaviour
         skillWindow.sortingOrder--;
         statWindow.sortingOrder--;
         QuestStoreWindow.sortingOrder--;
+        QusetExplainWindow.sortingOrder--;
+        questWindow.sortingOrder--;
     }
     public void StoreTop()
     {
@@ -165,6 +194,8 @@ public class AllUI : MonoBehaviour
         skillWindow.sortingOrder--;
         statWindow.sortingOrder--;
         QuestStoreWindow.sortingOrder--;
+        QusetExplainWindow.sortingOrder--;
+        questWindow.sortingOrder--;
     }
     public void ItemBuyTop()
     {
@@ -175,6 +206,8 @@ public class AllUI : MonoBehaviour
         skillWindow.sortingOrder--;
         statWindow.sortingOrder--;
         QuestStoreWindow.sortingOrder--;
+        QusetExplainWindow.sortingOrder--;
+        questWindow.sortingOrder--;
     }
     public void ItemSellTop()
     {
@@ -185,6 +218,8 @@ public class AllUI : MonoBehaviour
         skillWindow.sortingOrder--;
         statWindow.sortingOrder--;
         QuestStoreWindow.sortingOrder--;
+        QusetExplainWindow.sortingOrder--;
+        questWindow.sortingOrder--;
     }
     public void SkillWindowTop()
     {
@@ -195,6 +230,8 @@ public class AllUI : MonoBehaviour
         skillWindow.sortingOrder=1;
         statWindow.sortingOrder--;
         QuestStoreWindow.sortingOrder--;
+        QusetExplainWindow.sortingOrder--;
+        questWindow.sortingOrder--;
     }
 
     public void StatWindowTop()
@@ -206,6 +243,8 @@ public class AllUI : MonoBehaviour
         skillWindow.sortingOrder--;
         statWindow.sortingOrder=1;
         QuestStoreWindow.sortingOrder--;
+        QusetExplainWindow.sortingOrder--;
+        questWindow.sortingOrder--;
     }
 
     public void QuestStroeTop()
@@ -217,6 +256,34 @@ public class AllUI : MonoBehaviour
         skillWindow.sortingOrder--;
         statWindow.sortingOrder --;
         QuestStoreWindow.sortingOrder=1;
+        QusetExplainWindow.sortingOrder=2;
+        questWindow.sortingOrder--;
+
+    }
+    public void QuestExplainTop()
+    {
+        inven.sortingOrder--;
+        store.sortingOrder--;
+        itemBuyQuestion.sortingOrder--;
+        itemSellQuestion.sortingOrder--;
+        skillWindow.sortingOrder--;
+        statWindow.sortingOrder--;
+        QuestStoreWindow.sortingOrder--;
+        QusetExplainWindow.sortingOrder=1;
+        questWindow.sortingOrder--;
+
+    }
+    public void QuestWindowTop()
+    {
+        inven.sortingOrder--;
+        store.sortingOrder--;
+        itemBuyQuestion.sortingOrder--;
+        itemSellQuestion.sortingOrder--;
+        skillWindow.sortingOrder--;
+        statWindow.sortingOrder--;
+        QuestStoreWindow.sortingOrder--;
+        QusetExplainWindow.sortingOrder=2;
+        questWindow.sortingOrder=1;
 
     }
 
