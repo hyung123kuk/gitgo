@@ -55,7 +55,7 @@ public class CharacterSel : MonoBehaviour
         else
         {
             
-            SceneManager.LoadScene("Play");
+            SceneManager.LoadScene(1);
             
             DontDestroyOnLoad(characterScene);
         }
@@ -81,7 +81,7 @@ public class CharacterSel : MonoBehaviour
         else
         {
 
-            SceneManager.LoadScene("Play");
+            SceneManager.LoadScene(1);
             
             DontDestroyOnLoad(characterScene);
         }

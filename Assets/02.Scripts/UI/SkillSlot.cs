@@ -30,21 +30,22 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     private void Awake()
     {
-        playerST = FindObjectOfType<PlayerST>();
+        
         skillToolTip = FindObjectOfType<SkillToolTip>();
-        playerStat = FindObjectOfType<PlayerStat>();
        
-        SkillSet();
-        SetSkillColor();
+       
+        
     }
 
 
 
     void Start()
     {
-       
-        
-        
+        playerStat = FindObjectOfType<PlayerStat>();
+        playerST = FindObjectOfType<PlayerST>();
+        SkillSet();
+        SetSkillColor();
+
 
     }
 

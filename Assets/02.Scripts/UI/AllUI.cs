@@ -26,6 +26,7 @@ public class AllUI : MonoBehaviour
     [SerializeField]
     private Canvas questWindow;
 
+
     [SerializeField]
     public MouseCursor MouseCursor;
     [SerializeField]
@@ -47,11 +48,25 @@ public class AllUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            for(int i = 0; i < UIWIndow.Length; i++)
+            for(int i=0; i < UIWIndow.Length; i++)
             {
-                
+                if (UIWIndow[i].activeSelf == true)
+                    break;
+
+                if(UIWIndow.Length-1 == i)
+                {
+                    ExitWindow.ExWindow.ExitWindowOn();
+                    CheckCursorLock();
+                    return;
+                }
+            }
+
+            for(int i = 0; i < UIWIndow.Length; i++)
+            {               
                UIWIndow[i].SetActive(false);
             }
             inventory.iDown = false;
@@ -60,11 +75,18 @@ public class AllUI : MonoBehaviour
             itemStore.sellButton = false;
             QuestExplain.isQuestExplain = false;
             QuestWindow.isQuestWindow = false;
+            ExitWindow.isExitMenu = false;
             MouseCursor.transform_cursor.gameObject.SetActive(false);
             MouseCursor.SetNormalCursor();
             CheckCursorLock();
 
         }
+
+      
+        
+        if (ExitWindow.isExitMenu ==true)
+            return;
+        
 
         if (Input.GetKeyDown(KeyCode.I)) //인벤토리 켜기/끄기
         {
@@ -158,7 +180,7 @@ public class AllUI : MonoBehaviour
     public void CheckCursorLock()
     {
 
-        if (!inventory.iDown&& !SkillWindow.kDown && !StatWindow.tDown && !QuestExplain.isQuestExplain &&!QuestWindow.isQuestWindow)
+        if (!inventory.iDown&& !SkillWindow.kDown && !StatWindow.tDown && !QuestExplain.isQuestExplain &&!QuestWindow.isQuestWindow&& !ExitWindow.isExitMenu)
         {
             isUI = false;
             Cursor.lockState = CursorLockMode.Locked;

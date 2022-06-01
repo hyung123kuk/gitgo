@@ -25,7 +25,7 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
     private void Awake()
     {
         
-        playerStat = FindObjectOfType<PlayerStat>();
+        
         slots = SlotsParent.GetComponentsInChildren<Slot>();
         allUI = FindObjectOfType<AllUI>();
         itemStore = FindObjectOfType<itemStore>();
@@ -38,7 +38,8 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
 
     private void Start()
     {
-        
+        playerStat = FindObjectOfType<PlayerStat>();
+
         GoldUpdate();
 
         StartCoroutine(invenSet());
@@ -62,14 +63,16 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
 
     public void invenOn()
     {
-        if(invencheck==1)
+        if (invencheck == 1)
+        {
             SoundManager.soundManager.InventoryOpenSound();
 
-        Inven.SetActive(true);
-        Cursor.lockState = CursorLockMode.Confined;
-        allUI.MouseCursor.transform_cursor.gameObject.SetActive(true);
-        iDown = true;
-        GoldUpdate();
+            Inven.SetActive(true);
+            Cursor.lockState = CursorLockMode.Confined;
+            allUI.MouseCursor.transform_cursor.gameObject.SetActive(true);
+            iDown = true;
+            GoldUpdate();
+        }
     }
 
     public void invenOff()

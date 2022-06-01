@@ -35,10 +35,15 @@ public class SkillWindow : MonoBehaviour , IPointerClickHandler
         warriorSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(2).gameObject;
         acherSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(3).gameObject;
         mageSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(4).gameObject;
-        playerST = FindObjectOfType<PlayerST>();
+       
         skillslots = GetComponentsInChildren<SkillSlot>();
         skillToolTip = FindObjectOfType<SkillToolTip>();
 
+        
+    }
+    private void Start()
+    {
+        playerST = FindObjectOfType<PlayerST>();
         if (playerST.CharacterType == PlayerST.Type.Warrior)
         {
             warriorSkillWIndow.SetActive(true);
