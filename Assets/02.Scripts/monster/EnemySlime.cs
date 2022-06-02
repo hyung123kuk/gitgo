@@ -31,7 +31,7 @@ public class EnemySlime  : Monster
     Animator anim;
     public static EnemySlime enemySlime;
 
-
+    QuestNormal questNormal;
 
     void Awake()
     {
@@ -41,6 +41,7 @@ public class EnemySlime  : Monster
         mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+        questNormal = FindObjectOfType<QuestNormal>();
     }
     private void OnEnable()
     {
@@ -242,6 +243,7 @@ public class EnemySlime  : Monster
                 isDie = true;
                 anim.SetBool("isDie", true);
                 Invoke("Diegg", 1.5f);
+                questNormal.SlimeKillCount();
             }
         }
     }

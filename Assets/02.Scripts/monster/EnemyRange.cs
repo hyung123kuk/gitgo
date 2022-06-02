@@ -23,7 +23,7 @@ public class EnemyRange : Monster
     public SkinnedMeshRenderer mat; //�ǰݽ� �����ϰ�
     NavMeshAgent nav; //����
     Animator anim;
-    
+    QuestNormal questNormal;
 
     void Awake()
     {
@@ -34,6 +34,7 @@ public class EnemyRange : Monster
         StartMonster();
         Monstername.text = "고블린 아처";
         level.text = "6";
+        questNormal = FindObjectOfType<QuestNormal>();
 
     }
     private void OnEnable()
@@ -202,6 +203,7 @@ public class EnemyRange : Monster
         }
         else
         {
+            questNormal.GoblinKillCount();
             MonsterDie();
             nav.isStopped = true;
             boxCollider.enabled = false;

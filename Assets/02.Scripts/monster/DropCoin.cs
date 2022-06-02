@@ -76,15 +76,10 @@ public class DropCoin : MonoBehaviour
             {
                 col.enabled = false;
                 rbody.isKinematic = true;
-                StartCoroutine(Remove());
+                Destroy(gameObject, 10f);
             }
         }
     }
 
-    IEnumerator Remove()
-    {
-        yield return new WaitForSeconds(20f);
-        Destroy(gameObject);
 
-    }
 }

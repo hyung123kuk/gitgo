@@ -22,8 +22,10 @@ public class EnemySkeleton : Monster
     Rigidbody rigid;
     BoxCollider boxCollider;
     Material mat; 
+    [SerializeField]
     NavMeshAgent nav;
     Animator anim;
+    QuestNormal questNormal;
 
     void Awake()
     {
@@ -35,6 +37,7 @@ public class EnemySkeleton : Monster
         StartMonster();
         Monstername.text = "½ºÄÌ·¹Åæ";
         level.text = "8";
+        questNormal = FindObjectOfType<QuestNormal>();
 
     }
     private void OnEnable()
@@ -202,7 +205,7 @@ public class EnemySkeleton : Monster
         else
         {
             MonsterDie();
-
+            questNormal.SkelletonKillCount();
             boxCollider.enabled = false;
             mat.color = Color.black;
             nav.isStopped = true;

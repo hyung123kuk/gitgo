@@ -23,7 +23,7 @@ public class EnemyGoblin : Monster
     Material mat; //�ǰݽ� �����ϰ�
     NavMeshAgent nav; //����
     Animator anim;
-
+    QuestNormal questNormal;
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -34,6 +34,7 @@ public class EnemyGoblin : Monster
         StartMonster();
         Monstername.text = "고블린";
         level.text = "4";
+        questNormal = FindObjectOfType<QuestNormal>();
     }
     private void OnEnable()
     {
@@ -206,7 +207,7 @@ public class EnemyGoblin : Monster
         else
         {
             MonsterDie();
-
+            questNormal.GoblinKillCount();
             boxCollider.enabled = false;
             mat.color = Color.black;
             nav.isStopped = true;

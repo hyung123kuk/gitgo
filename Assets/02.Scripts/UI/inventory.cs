@@ -25,7 +25,7 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
     private void Awake()
     {
         
-        playerStat = FindObjectOfType<PlayerStat>();
+        
         slots = SlotsParent.GetComponentsInChildren<Slot>();
         allUI = FindObjectOfType<AllUI>();
         itemStore = FindObjectOfType<itemStore>();
@@ -38,7 +38,8 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
 
     private void Start()
     {
-        
+        playerStat = FindObjectOfType<PlayerStat>();
+
         GoldUpdate();
 
         StartCoroutine(invenSet());
@@ -48,7 +49,7 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
     IEnumerator invenSet() //playerstat을 슬롯이 받아오질못해 없으면 처음시작할때 인벤을 키지않고 아이템을 먹으면 널리퍼런스가뜸 그러나 인벤을 한번키면 안뜸 이유는 모르겠음.
     {
         invenOn();
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.03f);
         invenOff();
         invencheck = 1;
 
@@ -62,14 +63,16 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
 
     public void invenOn()
     {
-        if(invencheck==1)
+        if (invencheck == 1)
+        {
             SoundManager.soundManager.InventoryOpenSound();
 
-        Inven.SetActive(true);
-        Cursor.lockState = CursorLockMode.Confined;
-        allUI.MouseCursor.transform_cursor.gameObject.SetActive(true);
-        iDown = true;
-        GoldUpdate();
+            Inven.SetActive(true);
+            Cursor.lockState = CursorLockMode.Confined;
+            allUI.MouseCursor.transform_cursor.gameObject.SetActive(true);
+            iDown = true;
+            GoldUpdate();
+        }
     }
 
     public void invenOff()

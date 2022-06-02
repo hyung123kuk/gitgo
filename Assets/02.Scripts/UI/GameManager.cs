@@ -8,10 +8,10 @@ public class GameManager : MonoBehaviour
     public GameObject Wor;
     public GameObject Arc;
     public GameObject mage;
-
+    public Vector3 StartPosition = new Vector3(30, 3, 50);
     public Transform startPoint;
     
-    void Start()
+    void Awake()
     {
 
         CharSel = GameObject.FindGameObjectWithTag("SelManager").GetComponent<CharacterSel>();
@@ -21,30 +21,36 @@ public class GameManager : MonoBehaviour
             if (CharSel.character1 == CharacterSel.Type.Warrior)
             {
                 
-                Instantiate(Wor, startPoint.position, Quaternion.identity);
+                GameObject character=Instantiate(Wor, startPoint.position, Quaternion.identity);
+                character.transform.GetChild(0).position = StartPosition;
             }
             else if (CharSel.character1 == CharacterSel.Type.Archer)
             {
-                Instantiate(Arc, startPoint.position, Quaternion.identity);
+                GameObject character = Instantiate(Arc, startPoint.position, Quaternion.identity);
+                character.transform.GetChild(0).position = StartPosition;
             }
             else if (CharSel.character1 == CharacterSel.Type.Mage)
             {
-                Instantiate(mage, startPoint.position, Quaternion.identity);
+                GameObject character = Instantiate(mage, startPoint.position, Quaternion.identity);
+                character.transform.GetChild(0).position = StartPosition;
             }
         }
         else if (CharSel.charSel == 2)
         {
             if (CharSel.character2 == CharacterSel.Type.Warrior)
             {
-                Instantiate(Wor, startPoint.position, Quaternion.identity);
+                GameObject character = Instantiate(Wor, startPoint.position, Quaternion.identity);
+                character.transform.GetChild(0).position = StartPosition;
             }
             else if (CharSel.character2 == CharacterSel.Type.Archer)
             {
-                Instantiate(Arc, startPoint.position, Quaternion.identity);
+                GameObject character = Instantiate(Arc, startPoint.position, Quaternion.identity);
+                character.transform.GetChild(0).position = StartPosition;
             }
             else if (CharSel.character2 == CharacterSel.Type.Mage)
             {
-                Instantiate(mage, startPoint.position, Quaternion.identity);
+                GameObject character = Instantiate(mage, startPoint.position, Quaternion.identity);
+                character.transform.GetChild(0).position = StartPosition;
             }
         }
 

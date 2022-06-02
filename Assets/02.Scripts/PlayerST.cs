@@ -4,6 +4,9 @@ using UnityEngine;
 using DG.Tweening;
 public class PlayerST : MonoBehaviour
 {
+
+    
+
     public enum Type { Warrior, Archer, Mage };
     public Type CharacterType; //원래 앞에 static이 붙어있었는데 테스트할때 인스펙터창에 타입이 안떠서 임시로 뻈어요
     Transform _transform;

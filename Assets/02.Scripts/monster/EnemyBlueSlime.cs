@@ -29,7 +29,7 @@ public class EnemyBlueSlime : Monster
     Material mat;
     NavMeshAgent nav;
     Animator anim;
-
+    QuestNormal questNormal;
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -37,6 +37,7 @@ public class EnemyBlueSlime : Monster
         mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
+        questNormal = FindObjectOfType<QuestNormal>();
 
     }
     private void OnEnable()
@@ -212,6 +213,7 @@ public class EnemyBlueSlime : Monster
                 isDie = true;
                 anim.SetBool("isDie", true);
                 Invoke("Diegg", 1.5f);
+                questNormal.SlimeKillCount();
             }
         }
     }

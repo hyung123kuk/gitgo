@@ -15,7 +15,7 @@ public class QuestTyping : MonoBehaviour
     public bool endExplain = false;
     
     public Text[] itemNum;
-
+    
 
 
     private string ing_text;
@@ -49,7 +49,7 @@ public class QuestTyping : MonoBehaviour
     private string main4_text2 = "그렇게 현상금을 걸게 되었고 많은 사람들이 왔지만 모두 실패 하고 말았지 \n" +
        "자네가 왔을 때 항상 그랬던 것처럼 중간에 포기할 것이라 생각했는데 이제는 믿음이 가는구만..";
     private string main4_text3 = "하지만 아직 그 골렘을 죽이기에 자네는 부족하네,\n" +
-        "우선 7레벨을 찍어 최종스킬을 배우게나 !!";
+        "우선 8레벨을 찍어 최종스킬을 배우게나 !!";
     public Item[] main4_item;
 
     private string main5_text1 = "어느덧 이 모험의 끝이 보이는 구만.. 지금까지 따라와줘서 감사하구만..\n" +

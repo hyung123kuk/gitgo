@@ -7,6 +7,8 @@ public class QuestNormal : MonoBehaviour
 {
     [SerializeField]
     private QuestExplain questExplain;
+    [SerializeField]
+    private QuestWindow questWindow;
 
     [SerializeField]
     private Text slimeText;
@@ -45,7 +47,7 @@ public class QuestNormal : MonoBehaviour
     private void Start()
     {
         questExplain = FindObjectOfType<QuestExplain>();
-
+        questWindow = FindObjectOfType<QuestWindow>();
         slimeText = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(1).GetChild(0).GetComponent<Text>();
         goblinText = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(2).GetChild(0).GetComponent<Text>();
         skeletonText = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>();
@@ -55,14 +57,16 @@ public class QuestNormal : MonoBehaviour
         skeletonImage = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(3).GetComponent<Image>();
     }
 
-    public void SlimeQuestStart()
+    public void SlimeQuestStart() 
     {
         Quest_slime = true;
         slimeText.color = QuestSelColor;
         slimeImage.color = ButtonSelColor;
+        questWindow.QuestRecieve(QuestSlot.QuestName.slime);
+
     }
     
-    public void SilmeQuest()
+    public void SlimeQuest() 
     {
         questExplain.SlimeExplain(slime_item, Quest_slime, slime_Success);
     }
@@ -87,6 +91,7 @@ public class QuestNormal : MonoBehaviour
         Quest_goblin = true;
         goblinText.color = QuestSelColor;
         goblinImage.color = ButtonSelColor;
+        questWindow.QuestRecieve(QuestSlot.QuestName.goblin);
     }
 
     public void GoblinQuest()
@@ -114,6 +119,7 @@ public class QuestNormal : MonoBehaviour
         Quest_skelleton = true;
         skeletonText.color = QuestSelColor;
         skeletonImage.color = ButtonSelColor;
+        questWindow.QuestRecieve(QuestSlot.QuestName.skelleton);
     }
 
     public void SkelletonQuest()
@@ -121,7 +127,7 @@ public class QuestNormal : MonoBehaviour
         questExplain.SkeletonExplain(skelleton_item, Quest_skelleton, skelleton_Success);
     }
 
-    public void SkelletonKillCount()
+    public void SkelletonKillCount() 
     {
         if (Quest_skelleton)
         {
@@ -135,7 +141,7 @@ public class QuestNormal : MonoBehaviour
         }
     }
 
-    public void QuestEnd(Item[] items, int QuestNum)
+    public bool QuestEnd(Item[] items, int QuestNum) //퀘스트 끝났을때 보상 체크하고 메세지 세팅하는곳
     {
         if (ItemCompensation(items))
         {
@@ -146,6 +152,7 @@ public class QuestNormal : MonoBehaviour
                 slimeText.color = Color.white;
                 slimeImage.color = Color.white;
                 slimeKill = 0;
+                return true;
             }
             else if (QuestNum == 1)
             {
@@ -154,6 +161,7 @@ public class QuestNormal : MonoBehaviour
                 goblinText.color = Color.white;
                 goblinImage.color = Color.white;
                 goblinKill = 0;
+                return true;
             }
             else if (QuestNum ==2)
             {
@@ -162,10 +170,12 @@ public class QuestNormal : MonoBehaviour
                 skeletonText.color = Color.white;
                 skeletonImage.color = Color.white;
                 skelletonKill = 0;
+                return true;
             }
         }
+        return false;
     }
-    public bool ItemCompensation(Item[] items)
+    public bool ItemCompensation(Item[] items) //보상 체크 하는 함수
     {
         int usedItemCount = 0;
         for (int i = 0; i < items.Length; i++)
