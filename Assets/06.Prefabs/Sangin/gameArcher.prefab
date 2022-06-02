@@ -14358,6 +14358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  NoDestroy: 0
 --- !u!1 &1677130659726406179
 GameObject:
   m_ObjectHideFlags: 0

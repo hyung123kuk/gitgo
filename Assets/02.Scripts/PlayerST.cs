@@ -475,7 +475,7 @@ public class PlayerST : MonoBehaviour
         anim.SetBool("isBlock", false);
         isBlock = false;
         isDamage = false;
-
+        
         attackdamage.Skill_1_Cool();  //방패치기쿨타임
     }
     public void Buff()
@@ -499,6 +499,7 @@ public class PlayerST : MonoBehaviour
     }
     IEnumerator RushPlay()
     {
+        ArrowSkill.arrowSkill.NoDestroy = true;
         isCool2 = false;
         attackdamage.Usable_Skill2 = false;
 
@@ -527,7 +528,7 @@ public class PlayerST : MonoBehaviour
         attackdamage.Skill_2_Cool();  //돌진쿨타임
         yield return new WaitForSeconds(0.5f);
 
-
+        ArrowSkill.arrowSkill.NoDestroy = false;
         RushEff.SetActive(false);
 
     }
@@ -574,6 +575,7 @@ public class PlayerST : MonoBehaviour
     }
     IEnumerator SmokePlay()
     {
+        ArrowSkill.arrowSkill.NoDestroy = true;
         isCool1 = true;
         attackdamage.Skill_1_Cool();
         gameObject.layer = LayerMask.NameToLayer("Back");
@@ -600,6 +602,8 @@ public class PlayerST : MonoBehaviour
         anim.SetBool("isSmoke", false);
         isBackStep = false;
         isFall = false;
+        yield return new WaitForSeconds(0.5f);
+        ArrowSkill.arrowSkill.NoDestroy = false;
     }
     public void PoisonArrow()
     {
@@ -690,7 +694,7 @@ public class PlayerST : MonoBehaviour
             anim.SetBool("right", false);
         }
         ImWar = CharacterType == Type.Warrior;
-        if (AllUI.isUI)
+        if (AllUI.isUI || HorseMode)
             return;
         if (!NPC.isNPCRange)
             Cursor.lockState = CursorLockMode.Locked;//마우스커서 고정
@@ -718,12 +722,15 @@ public class PlayerST : MonoBehaviour
         {
             transform.parent = null;
         }
-        if (HorseMode)
+        if (HorseMode) //말탔을때 플레이어의 프리즈포지션 체크
         {
             rigid.constraints = RigidbodyConstraints.FreezePositionX;
             rigid.constraints = RigidbodyConstraints.FreezePositionY;
             rigid.constraints = RigidbodyConstraints.FreezePositionZ;
         }
+
+        
+
 
         //Debug.Log("shield");
         InputManager(); //입력매니저
@@ -804,7 +811,8 @@ public class PlayerST : MonoBehaviour
                 moveVec = dodgeVec;
 
             moveVec = (Vector3.forward * v) + (Vector3.right * h); //전 후진과 좌우 이동값 저장
-
+            anim.SetFloat("SpeedX", h, 0.1f, Time.deltaTime);
+            anim.SetFloat("SpeedY", v, 0.1f, Time.deltaTime);
             if (Rdown)//달리는 중이면 1.4배 이속증가
             {
                 isRun = true;
@@ -817,7 +825,7 @@ public class PlayerST : MonoBehaviour
             }
         }
     }
-    void StopMove()
+    void StopMove() //벽뚫기방지 벽앞에가면 멈춤
     {
         Debug.DrawRay(transform.position, transform.forward * 5, Color.green);
         NoMove = Physics.Raycast(transform.position, transform.forward, 1.5f, LayerMask.GetMask("WALL"));
@@ -884,8 +892,37 @@ public class PlayerST : MonoBehaviour
 
                 StartCoroutine(OnDamageNuck3());
             }
-
         }
+
+        if (other.tag == "BGM1")   //마을입장
+        {
+           // BGM.bgm.audioSource.Stop();
+            BGM.bgm.audioSource.clip = Sounds.sounds.TownBGM;
+          //  BGM.bgm.audioSource.Play();
+        }
+        if (other.tag == "BGM2")  //슬라임사냥터 입장
+        {
+          //  BGM.bgm.audioSource.Stop();
+            BGM.bgm.audioSource.clip = Sounds.sounds.BeginnerGroundBGM;
+           // BGM.bgm.audioSource.Play();
+        }
+        if (other.tag == "BGM3") //고블린마을 입장
+        {
+          //  BGM.bgm.audioSource.Stop();
+            BGM.bgm.audioSource.clip = Sounds.sounds.MiddleGroundBGM;
+           // BGM.bgm.audioSource.Play();
+        }
+        if (other.tag == "BGM4") //던전입장
+        {
+           // BGM.bgm.audioSource.Stop();
+            BGM.bgm.audioSource.clip = Sounds.sounds.DunjeonBGM;
+           // BGM.bgm.audioSource.Play();
+        }
+        if (other.tag == "BGM5") //골렘존입장
+        {
+            BGM.bgm.audioSource.clip = Sounds.sounds.BossBGM;
+        }
+
     }
     private void OnTriggerStay(Collider other)
     {
@@ -918,6 +955,8 @@ public class PlayerST : MonoBehaviour
         {
             DunjeonBossArena = true;
         }
+
+        
     }
     private void OnTriggerExit(Collider other)
     {

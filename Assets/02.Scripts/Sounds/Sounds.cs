@@ -6,6 +6,12 @@ public class Sounds : MonoBehaviour
 {
     public static Sounds sounds;
 
+    [Header("배경 사운드")]
+    public AudioClip TownBGM; //마을 배경음악
+    public AudioClip BeginnerGroundBGM; //초보사냥터 배경음악 (슬라임)
+    public AudioClip MiddleGroundBGM; //중급사냥터 배경음악 (고블린,슬라임보스)
+    public AudioClip DunjeonBGM; //던전브금
+    public AudioClip BossBGM; //보스존 브금
 
     [Header("공용 사운드")]
     public AudioClip FootRunSound; //달리는 발소리

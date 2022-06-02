@@ -33,6 +33,8 @@ public class SoundManager : MonoBehaviour
     {
         audioSource.PlayOneShot(Sounds.sounds.Horse2);
     }
+
+    
     //==============================전사 사운드=========================================//
 
     public void WarriorAttackSound() //전사 일반공격
