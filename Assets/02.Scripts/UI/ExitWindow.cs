@@ -36,18 +36,21 @@ public class ExitWindow : MonoBehaviour
 
     public void ExitWindowOff()
     {
+        UiSound.uiSound.UiOptionSound();
         exitWindow.SetActive(false);
         isExitMenu = false;
     }
 
     public void ChangeExitMenu()
     {
+        UiSound.uiSound.UiOptionSound();
         exitMenu.SetActive(true);
         soundMenu.SetActive(false);
     }
 
     public void ChangeSoundMenu()
     {
+        UiSound.uiSound.UiOptionSound();
         exitMenu.SetActive(false);
         soundMenu.SetActive(true);
     }

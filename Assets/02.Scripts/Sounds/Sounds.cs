@@ -77,6 +77,8 @@ public class Sounds : MonoBehaviour
     public AudioClip GetCoinSound; //판매&동전먹을때소리
     public AudioClip DrinkSound; //물약빨때소리
     public AudioClip EquipSound; //장비장착소리
+    public AudioClip Quest1; //퀘스트 수락소리
+    public AudioClip Quest2; //퀘스트 완료소리
 
     void Start()
     {

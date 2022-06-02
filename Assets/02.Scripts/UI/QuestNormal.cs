@@ -59,6 +59,7 @@ public class QuestNormal : MonoBehaviour
 
     public void SlimeQuestStart() 
     {
+        UiSound.uiSound.Quest1();
         Quest_slime = true;
         slimeText.color = QuestSelColor;
         slimeImage.color = ButtonSelColor;
@@ -68,6 +69,7 @@ public class QuestNormal : MonoBehaviour
     
     public void SlimeQuest() 
     {
+        
         questExplain.SlimeExplain(slime_item, Quest_slime, slime_Success);
     }
 
@@ -88,6 +90,7 @@ public class QuestNormal : MonoBehaviour
 
     public void GoblinQuestStart()
     {
+        UiSound.uiSound.Quest1();
         Quest_goblin = true;
         goblinText.color = QuestSelColor;
         goblinImage.color = ButtonSelColor;
@@ -116,6 +119,7 @@ public class QuestNormal : MonoBehaviour
 
     public void SkelletonQuestStart()
     {
+        UiSound.uiSound.Quest1();
         Quest_skelleton = true;
         skeletonText.color = QuestSelColor;
         skeletonImage.color = ButtonSelColor;
@@ -147,7 +151,8 @@ public class QuestNormal : MonoBehaviour
         {
             if (QuestNum == 0)
             {
-                 Quest_slime = false;
+                UiSound.uiSound.Quest2();
+                Quest_slime = false;
                  slime_Success = false;
                 slimeText.color = Color.white;
                 slimeImage.color = Color.white;
@@ -156,6 +161,7 @@ public class QuestNormal : MonoBehaviour
             }
             else if (QuestNum == 1)
             {
+                UiSound.uiSound.Quest2();
                 Quest_goblin = false;
                 goblin_Success = false;
                 goblinText.color = Color.white;
@@ -165,6 +171,7 @@ public class QuestNormal : MonoBehaviour
             }
             else if (QuestNum ==2)
             {
+                UiSound.uiSound.Quest2();
                 Quest_skelleton = false;
                 skelleton_Success = false;
                 skeletonText.color = Color.white;
@@ -173,6 +180,7 @@ public class QuestNormal : MonoBehaviour
                 return true;
             }
         }
+
         return false;
     }
     public bool ItemCompensation(Item[] items) //보상 체크 하는 함수

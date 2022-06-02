@@ -62,7 +62,7 @@ public class DropCoin : MonoBehaviour
         if(other.gameObject.tag == "Player"&& item.itemType == Item.ItemType.ETC)
         {            
             playerStat.AddGold(Coin);
-            SoundManager.soundManager.GetCoinSound();
+            UiSound.uiSound.GetCoinSound();
 
             Destroy(gameObject);
         }

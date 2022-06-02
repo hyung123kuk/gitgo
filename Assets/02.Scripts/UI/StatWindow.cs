@@ -105,7 +105,7 @@ public class StatWindow : MonoBehaviour ,IPointerClickHandler
         DAMAGE.text = "공격력 : " + (int)playerStat._DAMAGE;
         DEFENCE.text = "방어력 : " + (int)playerStat._DEFENCE;
 
-        MOVESPEED.text = "이동속도 : " + (int)PlayerST.playerST.speed*10;
+        MOVESPEED.text = "이동속도 : " + (int)playerST.speed*10; //에러나서 앞에 PlayerST 지웠습니다
         Critical_Probable.text = "크리티컬 확률 : " + (int)playerStat._CRITICAL_PROBABILITY ;
         Critical_Damage.text = "크리티컬 데미지 : " + (int)playerStat._CRITICAL_ADD_DAMAGE_PER ;
 
@@ -114,7 +114,7 @@ public class StatWindow : MonoBehaviour ,IPointerClickHandler
 
     public void StatWindowOn()
     {
-        SoundManager.soundManager.UiSound();
+        UiSound.uiSound.UiOptionSound();
         StatWindowDesign.SetActive(true);
         Cursor.lockState = CursorLockMode.Confined;
         allUI.MouseCursor.transform_cursor.gameObject.SetActive(true);
@@ -124,7 +124,7 @@ public class StatWindow : MonoBehaviour ,IPointerClickHandler
 
     public void StatWindowOff()
     {
-        SoundManager.soundManager.UiSound();
+        UiSound.uiSound.UiOptionSound();
         StatWindowDesign.SetActive(false);
 
         tDown = false;

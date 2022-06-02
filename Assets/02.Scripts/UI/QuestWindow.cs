@@ -38,6 +38,7 @@ public class QuestWindow : MonoBehaviour, IPointerClickHandler
     }
     public void questWindowOff() //퀘스트 윈도우창 끄기
     {
+        UiSound.uiSound.UiOptionSound();
         QuestStore.qustore.storeOff();
         questWindow.SetActive(false);       
         isQuestWindow = false;
@@ -45,6 +46,7 @@ public class QuestWindow : MonoBehaviour, IPointerClickHandler
     }
     public void questWindowOn() //퀘스트 윈도우창 키기
     {
+        UiSound.uiSound.UiOptionSound();
         questWindow.SetActive(true);
         isQuestWindow = true;
         AllUI.allUI.QuestWindowTop();

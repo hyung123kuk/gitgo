@@ -695,6 +695,9 @@ public class PlayerST : MonoBehaviour
             anim.SetBool("back", false);
             anim.SetBool("left", false);
             anim.SetBool("right", false);
+            anim.SetFloat("SpeedX",0f);
+            anim.SetFloat("SpeedY",0f);
+
         }
         ImWar = CharacterType == Type.Warrior;
         if (AllUI.isUI || HorseMode)
