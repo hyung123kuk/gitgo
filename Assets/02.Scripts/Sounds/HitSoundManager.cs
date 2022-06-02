@@ -8,7 +8,7 @@ public class HitSoundManager : MonoBehaviour
     public static HitSoundManager hitsoundManager;
 
     public AudioSource audioSource;
-
+    SoundBar soundbar;
     private void Awake()
     {
         if (hitsoundManager == null)
@@ -19,7 +19,12 @@ public class HitSoundManager : MonoBehaviour
 
     private void Start()
     {
+        soundbar = FindObjectOfType<SoundBar>();
         audioSource = GetComponent<AudioSource>();
+    }
+    private void Update()
+    {
+        audioSource.volume = soundbar.CharacterVolume;
     }
     //==============================몬스터 사운드=========================================//
     public void SlimeHitSound() //슬라임류 피격음

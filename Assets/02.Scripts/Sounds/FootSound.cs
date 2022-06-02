@@ -9,7 +9,7 @@ public class FootSound : MonoBehaviour
 
     public AudioSource audioSource;
 
-
+    SoundBar soundbar;
     private void Awake()
     {
         if (footSound == null)
@@ -19,7 +19,12 @@ public class FootSound : MonoBehaviour
     }
     private void Start()
     {
+        soundbar = FindObjectOfType<SoundBar>();
         audioSource = GetComponent<AudioSource>();
+    }
+    private void Update()
+    {
+        audioSource.volume = soundbar.CharacterVolume;
     }
 
     public void FootRunSound() //´Þ¸®±â

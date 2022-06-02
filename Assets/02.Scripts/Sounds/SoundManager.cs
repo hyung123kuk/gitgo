@@ -10,6 +10,7 @@ public class SoundManager : MonoBehaviour
     public AudioSource audioSource;
 
     public bool isArcSkill2; //스킬2 폭발사운드 안겹치게 
+    SoundBar soundbar;
 
     private void Awake()
     {
@@ -19,9 +20,15 @@ public class SoundManager : MonoBehaviour
         }
     }
 
+
     private void Start()
     {
         audioSource = GetComponent<AudioSource>();
+    }
+    private void Update()
+    {
+        soundbar = FindObjectOfType<SoundBar>();
+        audioSource.volume = soundbar.CharacterVolume;
     }
     //==============================공용 사운드=========================================//
 
