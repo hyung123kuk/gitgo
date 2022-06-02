@@ -20,6 +20,9 @@ public class QuestWindow : MonoBehaviour, IPointerClickHandler
     Color MainbasicColor = new Color(0.17f, 0.85f, 0.16f); //메인 이름 컬러
 
     public int questOrder =0;
+
+    [SerializeField]
+    private RectTransform QuestGrid;
     private void Start()
     {
         qWIndow = this;
@@ -29,6 +32,18 @@ public class QuestWindow : MonoBehaviour, IPointerClickHandler
         questExplain = FindObjectOfType<QuestExplain>();
         Slots = GetComponentsInChildren<QuestSlot>();
 
+    }
+
+    private void Update()
+    {
+        if (QuestGrid.anchoredPosition.y < -20)   // GRID 마우스 휠 제한
+        {
+            QuestGrid.anchoredPosition = new Vector2(20, -20);
+        }
+        if (QuestGrid.anchoredPosition.y > 550f)
+        {
+            QuestGrid.anchoredPosition = new Vector2(20, 550);
+        }
     }
     IEnumerator startSet() //슬롯의 enable이 false상태여서 슬롯이 안불러와져 잠깐 켜놓고 불러오고 끔
     {
