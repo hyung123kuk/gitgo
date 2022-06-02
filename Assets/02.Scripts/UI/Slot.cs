@@ -24,7 +24,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     public PlayerST playerSt;
     public ToolTip tooltip;
     private PlayerStat playerStat;
-    private itemSellQuestion item_sell_question;
+    public itemSellQuestion item_sell_question;
     public GameObject itemSellScope;
 
     private void Awake()
@@ -507,7 +507,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
 
         }
         //퀵슬롯에 장비 넣기 막기
-        else if (gameObject.layer == LayerMask.NameToLayer("quikSlot") && DragSlot.instance.dragSlot.item.itemType != Item.ItemType.Used) { }
+        else if (gameObject.layer == LayerMask.NameToLayer("quikSlot") && DragSlot.instance.dragSlot.item.itemType == Item.ItemType.Equipment) { }
         //퀵슬릇에서 인벤창으로 옮길때 장비왜 다른거 넣기 막기
         else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot") && item != null && item.itemType == Item.ItemType.Equipment) { }
 

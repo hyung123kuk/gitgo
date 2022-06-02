@@ -672,21 +672,7 @@ public class PlayerST : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G) && !HorseMode && QuestStore.qustore.mainNum>=4) // 말 소환&소환해제
-        {
-            if (!HorseSpawn.transform.GetChild(0).gameObject.activeSelf)
-            {
-                SoundManager.soundManager.Horse();
-                HorseSpawn.transform.GetChild(0).gameObject.SetActive(true);
-                HorseSpawn.transform.GetChild(0).gameObject.transform.position = horsepos1.position;
-                HorseSpawn.transform.GetChild(0).gameObject.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
-            }
-            else if (HorseSpawn.transform.GetChild(0).gameObject.activeSelf)
-            {
-                SoundManager.soundManager.Horse2();
-                HorseSpawn.transform.GetChild(0).gameObject.SetActive(false);
-            }
-        }
+        //HorseRide();
         if (AllUI.isUI)
         {
             if (FootSound.footSound)
@@ -695,8 +681,8 @@ public class PlayerST : MonoBehaviour
             anim.SetBool("back", false);
             anim.SetBool("left", false);
             anim.SetBool("right", false);
-            anim.SetFloat("SpeedX",0f);
-            anim.SetFloat("SpeedY",0f);
+            anim.SetFloat("SpeedX", 0f);
+            anim.SetFloat("SpeedY", 0f);
 
         }
         ImWar = CharacterType == Type.Warrior;
@@ -735,7 +721,7 @@ public class PlayerST : MonoBehaviour
             rigid.constraints = RigidbodyConstraints.FreezePositionZ;
         }
 
-        
+
 
 
         //Debug.Log("shield");
@@ -750,6 +736,26 @@ public class PlayerST : MonoBehaviour
 
         //SkillClass(); //스킬직업제한
     }
+
+    public void HorseRide()
+    {
+        if (!HorseMode) // 말 소환&소환해제
+        {
+            if (!HorseSpawn.transform.GetChild(0).gameObject.activeSelf)
+            {
+                SoundManager.soundManager.Horse();
+                HorseSpawn.transform.GetChild(0).gameObject.SetActive(true);
+                HorseSpawn.transform.GetChild(0).gameObject.transform.position = horsepos1.position;
+                HorseSpawn.transform.GetChild(0).gameObject.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
+            }
+            else if (HorseSpawn.transform.GetChild(0).gameObject.activeSelf)
+            {
+                SoundManager.soundManager.Horse2();
+                HorseSpawn.transform.GetChild(0).gameObject.SetActive(false);
+            }
+        }
+    }
+
     //void SkillClass()
     //{
     //    if (CharacterType == Type.Warrior)
