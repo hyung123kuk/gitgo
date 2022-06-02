@@ -33,6 +33,13 @@ public class SoundManager : MonoBehaviour
     {
         audioSource.PlayOneShot(Sounds.sounds.Horse2);
     }
+
+    public void DrinkSound() //물약빨때소리
+    {
+        audioSource.PlayOneShot(Sounds.sounds.DrinkSound);
+    }
+
+
     //==============================전사 사운드=========================================//
 
     public void WarriorAttackSound() //전사 일반공격
@@ -142,37 +149,5 @@ public class SoundManager : MonoBehaviour
         audioSource.PlayOneShot(Sounds.sounds.MageJump);
     }
 
-    //=====================유아이 사운드===============================
-    public void InventoryOpenSound() //인벤 여는소리
-    {
-        audioSource.PlayOneShot(Sounds.sounds.InventoryOpenSound);
-    }
-    public void InventoryCloseSound() //인벤 닫는소리
-    {
-        audioSource.PlayOneShot(Sounds.sounds.InventoryCloseSound);
-    }
-    public void UiSound() //유아이 여는소리
-    {
-        audioSource.PlayOneShot(Sounds.sounds.UiSound);
-    }
-    public void BuySound() //구매소리
-    {
-        audioSource.PlayOneShot(Sounds.sounds.BuySound);
-    }
-    public void BuyfailSound() //구매 실패소리
-    {
-        audioSource.PlayOneShot(Sounds.sounds.BuyfailSound);
-    }
-    public void GetCoinSound() //코인줍는소리 or 물건판매소리
-    {
-        audioSource.PlayOneShot(Sounds.sounds.GetCoinSound);
-    }
-    public void DrinkSound() //물약빨때소리
-    {
-        audioSource.PlayOneShot(Sounds.sounds.DrinkSound);
-    }
-    public void EquipSound() //장비장착소리
-    {
-        audioSource.PlayOneShot(Sounds.sounds.EquipSound);
-    }
+    
 }

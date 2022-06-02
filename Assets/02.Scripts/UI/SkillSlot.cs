@@ -182,7 +182,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 instanceSlot.inven.addItem(instanceSlot.item, instanceSlot.itemCount);
                 instanceSlot.ClearSlot();
             }
-            SoundManager.soundManager.EquipSound();
+            UiSound.uiSound.EquipSound();
             skill = DragSkillSlot.instance.dragSkillSlot.skill;
             imageSkill.sprite = skill.SkillImage;
             SetColor(1);
@@ -210,7 +210,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 imageSkill.sprite = skill.SkillImage;
                 DragSkillSlot.instance.dragSkillSlot.SetColor(1);
                 SetColor(1);
-                SoundManager.soundManager.EquipSound();
+                UiSound.uiSound.EquipSound();
                 instanceSlot.itemImage.sprite = instanceSlot.item.itemImage;
 
              
@@ -223,7 +223,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 Debug.Log("1");
                 DragSkillSlot.instance.dragSkillSlot.skill = skill;
                 DragSkillSlot.instance.dragSkillSlot.Setimage();
-                SoundManager.soundManager.EquipSound();
+                UiSound.uiSound.EquipSound();
                 skill = instanceSkill;
                 imageSkill.sprite = skill.SkillImage;
                 SetColor(1);
@@ -234,7 +234,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             {
                 SkillUI instanceSkill = DragSkillSlot.instance.dragSkillSlot.skill;
                 DragSkillSlot.instance.dragSkillSlot.ClearSlot();
-                SoundManager.soundManager.EquipSound();
+                UiSound.uiSound.EquipSound();
                 skill = instanceSkill;
                 imageSkill.sprite = skill.SkillImage;
                 SetColor(1);

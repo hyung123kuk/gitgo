@@ -48,18 +48,20 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
 
     public void storeOn()
     {
+        
         questWindow.questWindowOn();
         AllUI.allUI.QuestStroeTop();
         questStore.SetActive(true);
     }
     public void storeOff()
     {
+        
         questStore.SetActive(false);
     }
 
     public void QuestStart()
     {
-        
+        UiSound.uiSound.Quest1();
         MainSuccess = false;
         isMainRecive = true;
 

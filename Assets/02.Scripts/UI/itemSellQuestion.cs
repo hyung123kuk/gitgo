@@ -107,7 +107,7 @@ public class itemSellQuestion : MonoBehaviour ,IPointerClickHandler
         {            
             inven.SellItem(SellSlot);
         }
-        SoundManager.soundManager.GetCoinSound();
+        UiSound.uiSound.GetCoinSound();
         isSellQuestion = false;
         itemSellScope.SetActive(false);
         SellQuestionOff();

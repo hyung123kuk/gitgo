@@ -200,7 +200,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
                             playerSt.WeaponChange(playerSt.basicSword);
 
                     }
-                    SoundManager.soundManager.EquipSound();
+                    UiSound.uiSound.EquipSound();
                     EmptySlotEq(); //빈 슬롯 찾아 넣기
                     tooltip.ToolTipOff();
                     playerStat.StatAllUpdate();
@@ -250,7 +250,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
                         helm();  //모자 장착하기
                         pants(); //하의 장착하기
                     }
-                    SoundManager.soundManager.EquipSound();
+                    UiSound.uiSound.EquipSound();
                     tooltip.ToolTipOff();
                     playerStat.StatAllUpdate();
                     gameUI.bar_set();
@@ -766,7 +766,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
 
 
 
-                    SoundManager.soundManager.EquipSound();
+                    UiSound.uiSound.EquipSound();
                 }
                 gameObject.GetComponent<QuikSlot>().setCoolImage();
                 if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot"))
@@ -803,7 +803,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     {
         Item _tempItem = item;
         int _tempItemCount = itemCount;
-        SoundManager.soundManager.EquipSound();
+        UiSound.uiSound.EquipSound();
         AddItem(DragSlot.instance.dragSlot.item, DragSlot.instance.dragSlot.itemCount);
 
         if (_tempItem != null)

@@ -37,6 +37,7 @@ public class QuestSlot : MonoBehaviour
 
     public void OpenQuest() //캐릭터 퀘스트 슬롯에서 퀘스트를 열었을때
     {
+        UiSound.uiSound.UiOptionSound();
         if (questName == QuestName.slime)
         {
             questNormal.SlimeQuest();

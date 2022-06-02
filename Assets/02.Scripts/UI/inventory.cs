@@ -65,7 +65,7 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
     {
         if (invencheck == 1)
         {
-            SoundManager.soundManager.InventoryOpenSound();
+            UiSound.uiSound.InventoryOpenSound();
 
             Inven.SetActive(true);
             Cursor.lockState = CursorLockMode.Confined;
@@ -78,7 +78,7 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
     public void invenOff()
     {
         if (invencheck == 1)
-            SoundManager.soundManager.InventoryCloseSound();
+            UiSound.uiSound.InventoryCloseSound();
 
         itemStore.storeOff();
         Inven.SetActive(false);

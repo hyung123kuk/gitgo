@@ -71,6 +71,7 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
 
     public void QuestExplainOn() //퀘스트 설명창을 열었을때
     {
+
         AllUI.allUI.QuestExplainTop();
         questDesign.SetActive(true);
         isQuestExplain = true;
@@ -80,6 +81,8 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
 
     public void QuestExplainOff() //퀘스트 설명창을 닫았을때
     {
+        if(!UiSound.uiSound.audioSource.isPlaying)
+        UiSound.uiSound.UiOptionSound();
         questDesign.SetActive(false);
         isQuestExplain = false;
         AllUI.allUI.CheckCursorLock();
@@ -103,6 +106,7 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
         if (clear)
         {
             clearText.text = "Clear"; //퀘스트를 성공했으면 클리어 했다고 알려준다.
+            UiSound.uiSound.UiOptionSound();
         }
         else
         {
@@ -275,7 +279,7 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
         if (mainQ) //메인 퀘스트 일때
         {
             if (questStore.isMainRecive) //메인 퀘스트 받았을때
-            {
+            {       
                 if (QuestSuccess) //퀘스트 성공후 완료 누름
                 {
 
@@ -285,6 +289,7 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
 
                         if (questStore.QuestEnd(questTyping.main1_item))
                         {
+                            UiSound.uiSound.Quest2();
                             questWindow.QuestClear(QuestSlot.QuestName.main);
                             questStore.MainText.text = main2Name;
                             questStore.mainNum = 2;
@@ -295,6 +300,7 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
 
                         if (questStore.QuestEnd(questTyping.main2_item))
                         {
+                            UiSound.uiSound.Quest2();
                             questWindow.QuestClear(QuestSlot.QuestName.main);
                             questStore.MainText.text = main3Name;
                             questStore.mainNum = 3;
@@ -304,6 +310,7 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
                     {
                         if (questStore.QuestEnd(questTyping.main3_item))
                         {
+                            UiSound.uiSound.Quest2();
                             questWindow.QuestClear(QuestSlot.QuestName.main);
                             questStore.MainText.text = main4Name;
                             questStore.mainNum = 4;
@@ -313,6 +320,7 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
                     {
                         if (questStore.QuestEnd(questTyping.main4_item))
                         {
+                            UiSound.uiSound.Quest2();
                             questWindow.QuestClear(QuestSlot.QuestName.main);
                             questStore.MainText.text = main5Name;
                             questStore.mainNum = 5;
@@ -322,6 +330,7 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
                     {
                         if (questStore.QuestEnd(questTyping.main5_item))
                         {
+                            UiSound.uiSound.Quest2();
                             questWindow.QuestClear(QuestSlot.QuestName.main);
                             questStore.MainText.text = "퀘스트 모두 완료";
                             questStore.mainNum = 6;
@@ -332,6 +341,7 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
                 }
                 else //퀘스트 아직 성공 못했는데 완료 누름
                 {
+                    UiSound.uiSound.BuyfailSound();
                     LogManager.logManager.Log("퀘스트를 완료하지 못했습니다.", true);
                 }
             }

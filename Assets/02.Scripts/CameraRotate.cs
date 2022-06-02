@@ -21,7 +21,6 @@ public class CameraRotate : MonoBehaviour
     public float yMinLimit = -20f;
     public float yMaxLimit = 80f;
 
- 
 
 
     //앵글의 최소,최대 제한
@@ -54,6 +53,7 @@ public class CameraRotate : MonoBehaviour
         if (Weapons.isMeteo || AllUI.isUI)
             return;
 
+
         if (target)
         {
             //마우스 스크롤과의 거리계산
@@ -66,9 +66,9 @@ public class CameraRotate : MonoBehaviour
 
             }
 
-            if (dist >= 9)
+            if (dist >= 6)
             {
-                dist = 9;
+                dist = 6;
             }
 
             
