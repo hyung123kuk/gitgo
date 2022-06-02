@@ -672,7 +672,7 @@ public class PlayerST : MonoBehaviour
     }
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.G) && !HorseMode) // 말 소환&소환해제
+        if (Input.GetKeyDown(KeyCode.G) && !HorseMode && QuestStore.qustore.mainNum>=4) // 말 소환&소환해제
         {
             if (!HorseSpawn.transform.GetChild(0).gameObject.activeSelf)
             {
