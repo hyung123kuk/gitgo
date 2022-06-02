@@ -41,7 +41,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             itemImage.sprite = item.itemImage;
 
 
-            if (item.itemType != Item.ItemType.Equipment)
+            if (item.itemType == Item.ItemType.Used)
             {
 
                 text_Count.text = itemCount.ToString();
@@ -112,7 +112,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         itemCount = _count;
         itemImage.sprite = item.itemImage;
 
-        if (item.itemType != Item.ItemType.Equipment)
+        if (item.itemType == Item.ItemType.Used)
         {
           
             text_Count.text = itemCount.ToString();
@@ -264,6 +264,10 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
                     Debug.Log(item.itemName + " 을 사용했습니다.");
                     UseItem();
                     SetSlotCount(-1);
+                }
+                else if (item.itemType == Item.ItemType.Ride)
+                {
+                    playerSt.HorseRide();
                 }
             }
         }
@@ -498,7 +502,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         
         if (DragSlot.instance.dragSlot == null)
             return;
-        if (DragSlot.instance.dragSlot.gameObject == gameObject)
+        if (DragSlot.instance.dragSlot.gameObject == gameObject) //물약 마구드래그시 사라지는거 막기
             return;
         //판매    
         if (gameObject.tag == "sellslot")
@@ -508,7 +512,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         }
         //퀵슬롯에 장비 넣기 막기
         else if (gameObject.layer == LayerMask.NameToLayer("quikSlot") && DragSlot.instance.dragSlot.item.itemType == Item.ItemType.Equipment) { }
-        //퀵슬릇에서 인벤창으로 옮길때 장비왜 다른거 넣기 막기
+        //퀵슬릇에서 인벤창으로 옮길때 장비  넣기 막기
         else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot") && item != null && item.itemType == Item.ItemType.Equipment) { }
 
         //장비 착용
@@ -735,14 +739,13 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         }
         else if (DragSlot.instance.dragSlot != null && DragSlot.instance.dragSlot.gameObject.layer != LayerMask.NameToLayer("equip") && gameObject.layer != LayerMask.NameToLayer("equip")) //서로 장비가 아니면 교체
         {
-            if (DragSlot.instance.dragSlot.item != null && item != null)
+            
+            if (DragSlot.instance.dragSlot.item != null && item != null && DragSlot.instance.dragSlot.item.itemType == Item.ItemType.Used && DragSlot.instance.dragSlot.item.itemName == item.itemName)
             {
-                if (DragSlot.instance.dragSlot.item.itemType == Item.ItemType.Used && DragSlot.instance.dragSlot.item.itemName == item.itemName) //같은 아이템은 합친다.
-                {
+
                     SetSlotCount(DragSlot.instance.dragSlot.itemCount);
                     DragSlot.instance.dragSlot.SetSlotCount(DragSlot.instance.dragSlot.itemCount * -1);
 
-                }
             }
 
             else if (gameObject.GetComponent<QuikSlot>() != null && gameObject.GetComponent<QuikSlot>().skill.skill != null) //퀵 슬롯으로 옮길때 안에 스킬이 있으면
@@ -776,10 +779,12 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             }
             else
             {
+                Debug.Log("hello");
                 ChangeSlot();
             }
 
         }
+
         if (gameObject.layer == LayerMask.NameToLayer("quikSlot"))
             gameObject.GetComponent<QuikSlot>().skill.skillToolTip.ToolTipOff();
         tooltip.ToolTipOff();
