@@ -6,6 +6,8 @@ using UnityEngine.SceneManagement;
 
 public class CharacterSel : MonoBehaviour
 {
+    public static CharacterSel characterSel;
+
     public GameObject characterScene;
     public GameObject sel;
     public GameObject make;
@@ -32,6 +34,10 @@ public class CharacterSel : MonoBehaviour
     public Animator aniMage;
 
 
+    private void Start()
+    {
+        characterSel = this;
+    }
 
     public void CharButton1()
     {
@@ -57,7 +63,7 @@ public class CharacterSel : MonoBehaviour
             
             SceneManager.LoadScene(1);
             
-            DontDestroyOnLoad(characterScene);
+            DontDestroyOnLoad(gameObject);
         }
 
     }
@@ -83,7 +89,7 @@ public class CharacterSel : MonoBehaviour
 
             SceneManager.LoadScene(1);
             
-            DontDestroyOnLoad(characterScene);
+            DontDestroyOnLoad(gameObject);
         }
     }
 
