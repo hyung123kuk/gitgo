@@ -21,8 +21,10 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
 
     public Slot empSlot;
     
+    [SerializeField]
     public PlayerST playerSt;
     public ToolTip tooltip;
+    [SerializeField]
     private PlayerStat playerStat;
     public itemSellQuestion item_sell_question;
     public GameObject itemSellScope;
@@ -30,10 +32,10 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     private void Awake()
     {
         gameUI = FindObjectOfType<GameUI>();
-        playerSt = FindObjectOfType<PlayerST>();
+        
         allUI = FindObjectOfType<AllUI>();
         inven = FindObjectOfType<inventory>();
-        playerStat = FindObjectOfType<PlayerStat>();
+       
         item_sell_question = FindObjectOfType<itemSellQuestion>();
 
         if (item != null)
@@ -59,14 +61,16 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
 
     private void Start()
     {
-        
+        playerSt = FindObjectOfType<PlayerST>();
 
-
+        playerStat = FindObjectOfType<PlayerStat>();
     }
 
     public void ItemLimitColorRed()
     {
-        
+        if (item == null)
+            return;
+
         if (item.itemEquLevel > playerStat.Level ||
            (item.armortype == Item.ArmorType.cloth && playerSt.CharacterType == PlayerST.Type.Archer) ||
             (item.armortype == Item.ArmorType.cloth && playerSt.CharacterType == PlayerST.Type.Warrior) ||

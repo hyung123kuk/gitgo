@@ -29,6 +29,8 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
     QuestNormal questNormal;
     [SerializeField]
     QuestWindow questWindow;
+    [SerializeField]
+    dungeonOpen d_open;
     
     bool mainQ =false;
     bool slimeQ=false;
@@ -65,6 +67,7 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
         questStore = FindObjectOfType<QuestStore>();
         questNormal = FindObjectOfType<QuestNormal>();
         questWindow = FindObjectOfType<QuestWindow>();
+        d_open = FindObjectOfType<dungeonOpen>();
         questExplain = this;
 
     }
@@ -287,7 +290,7 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
                     if (QuestNum == 1)
                     {
 
-                        if (questStore.QuestEnd(questTyping.main1_item))
+                        if (questStore.QuestEnd(questTyping.main1_item)) //구르기 성공
                         {
                             UiSound.uiSound.Quest2();
                             questWindow.QuestClear(QuestSlot.QuestName.main);
@@ -298,7 +301,7 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
                     else if (QuestNum == 2)
                     {
 
-                        if (questStore.QuestEnd(questTyping.main2_item))
+                        if (questStore.QuestEnd(questTyping.main2_item)) //아이템장착 성공
                         {
                             UiSound.uiSound.Quest2();
                             questWindow.QuestClear(QuestSlot.QuestName.main);
@@ -308,7 +311,7 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
                     }
                     else if (QuestNum == 3)
                     {
-                        if (questStore.QuestEnd(questTyping.main3_item))
+                        if (questStore.QuestEnd(questTyping.main3_item)) //왕슬라임잡기 성공
                         {
                             UiSound.uiSound.Quest2();
                             questWindow.QuestClear(QuestSlot.QuestName.main);
@@ -318,17 +321,18 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
                     }
                     else if (QuestNum == 4)
                     {
-                        if (questStore.QuestEnd(questTyping.main4_item))
+                        if (questStore.QuestEnd(questTyping.main4_item)) //8레벨 달성 성공
                         {
                             UiSound.uiSound.Quest2();
                             questWindow.QuestClear(QuestSlot.QuestName.main);
                             questStore.MainText.text = main5Name;
                             questStore.mainNum = 5;
+                            d_open.DunGeonOpen();
                         }
                     }
                     else if (QuestNum == 5)
                     {
-                        if (questStore.QuestEnd(questTyping.main5_item))
+                        if (questStore.QuestEnd(questTyping.main5_item)) //보스잡기 성공
                         {
                             UiSound.uiSound.Quest2();
                             questWindow.QuestClear(QuestSlot.QuestName.main);
