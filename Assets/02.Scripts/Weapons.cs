@@ -428,7 +428,14 @@ public class Weapons : MonoBehaviour
             Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
             arrowRigid.velocity = arrowPos.forward * playerST.bowPower * 150;
             Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
-            arrow.damage = attackdamage.Attack_Dam();
+            if (PlayerST.playerST.FullChargeing)
+            {
+                arrow.damage = 1.3f * attackdamage.Attack_Dam();
+                PlayerST.playerST.FullChargeing = false;
+            }
+            else if (!PlayerST.playerST.FullChargeing)
+                arrow.damage = attackdamage.Attack_Dam();
+            
             Destroy(intantArrow, 1f);
         }
         else if (attackdamage.Duration_Buff)

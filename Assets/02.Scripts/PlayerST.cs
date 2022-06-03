@@ -26,6 +26,7 @@ public class PlayerST : MonoBehaviour
     public float bowPower; // 화살 충전 데미지
     public float bowChargingTime = 1.0f; //화살 최대 충전시간
     public bool isSootReady = true;
+    public bool FullChargeing; //일반공격 풀차징
 
 
     float h; //X값 좌표
@@ -361,6 +362,10 @@ public class PlayerST : MonoBehaviour
                 if (bowPower > 0.31f && StopSoundManager.stopSoundManager && !StopSoundManager.stopSoundManager.audioSource.isPlaying)
                 {
                     StopSoundManager.stopSoundManager.ArcherChargeSound();
+                }
+                if(bowPower>=bowChargingTime) //풀차징되면
+                {
+                    FullChargeing = true;
                 }
             }
 
