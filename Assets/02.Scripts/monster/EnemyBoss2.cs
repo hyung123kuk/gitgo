@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class EnemyBoss2 : MonsterBoss
 {
-   
+
     public BoxCollider meleeArea; //���� ���ݹ���
     public bool isChase; //�������� ����
     public bool isAttack; //���� ������
@@ -14,7 +14,7 @@ public class EnemyBoss2 : MonsterBoss
     private bool isStun;
     public Transform respawn;
     public SphereCollider nuckarea;
-    
+
 
 
     public GameObject sohwane;
@@ -30,8 +30,8 @@ public class EnemyBoss2 : MonsterBoss
     Transform target;
     Rigidbody rigid;
     BoxCollider boxCollider;
-    SkinnedMeshRenderer[] mat; 
-    NavMeshAgent nav; 
+    SkinnedMeshRenderer[] mat;
+    NavMeshAgent nav;
     Animator anim;
 
     public ParticleSystem Hiteff; //피격이펙
@@ -42,10 +42,11 @@ public class EnemyBoss2 : MonsterBoss
     public bool isSkill; //현재 스킬사용중?
 
 
-
+    [SerializeField]
+    Attacking attacking;
     void Awake()
     {
-        
+        attacking = transform.GetChild(2).GetComponent<Attacking>();
         stunarea = GetComponentInChildren<Light>();
         rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
@@ -69,12 +70,12 @@ public class EnemyBoss2 : MonsterBoss
 
     void Update()
     {
-        if(isDie && Patterning)  
+        if (isDie && Patterning)
         {
-            StopAllCoroutines(); 
+            StopAllCoroutines();
         }
         target = GameObject.FindGameObjectWithTag("Player").transform;
-        if(isBuff)
+        if (isBuff)
         {
             nav.speed = 10f;
             EnemyAttack enemyRange = GetComponentInChildren<EnemyAttack>();
@@ -124,7 +125,7 @@ public class EnemyBoss2 : MonsterBoss
                 if (!isDie && !PlayerST.isJump && !PlayerST.isFall)//플레이어가 공중에 뜬 상태가 아닐때만 바라보기
                     transform.LookAt(target);
             }
-        } 
+        }
 
 
 
@@ -142,7 +143,7 @@ public class EnemyBoss2 : MonsterBoss
     IEnumerator Pattern() //패턴생각
     {
         yield return new WaitForSeconds(7f);
-        
+
         if (!isDie)
         {
             int ranAction = Random.Range(0, 9);
@@ -162,8 +163,8 @@ public class EnemyBoss2 : MonsterBoss
                     MonsterAttack();
                     break;
                 case 5:
-                case 6:    
-                case 7:    
+                case 6:
+                case 7:
                 case 8:
                     //공굴리기 스킬
                     StartCoroutine(FireBall());
@@ -176,7 +177,7 @@ public class EnemyBoss2 : MonsterBoss
                     break;
             }
         }
-        
+
     }
     void FreezeVelocity()
     {
@@ -194,9 +195,9 @@ public class EnemyBoss2 : MonsterBoss
 
         RaycastHit[] rayHits =
             Physics.SphereCastAll(transform.position,
-            targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player")); 
+            targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));
 
-        if (rayHits.Length > 0 && !isAttack && !isDie && !isSkill) 
+        if (rayHits.Length > 0 && !isAttack && !isDie && !isSkill)
         {
             //StopCoroutine(Attack());
             StartCoroutine(Attack());
@@ -204,7 +205,7 @@ public class EnemyBoss2 : MonsterBoss
         }
 
     }
-    IEnumerator Sohwan() 
+    IEnumerator Sohwan()
     {
         isSkill = true;
         isChase = false;
@@ -215,7 +216,7 @@ public class EnemyBoss2 : MonsterBoss
         yield return new WaitForSeconds(2f);
         anim.SetBool("isSh", false);
         GameObject instantSkele1 = Instantiate(skele, Shpos1.position, Shpos1.rotation);
-        GameObject instantSkele2 =Instantiate(skele, Shpos2.position, Shpos2.rotation);
+        GameObject instantSkele2 = Instantiate(skele, Shpos2.position, Shpos2.rotation);
         Destroy(instantSkele1, 30f);
         Destroy(instantSkele2, 30f);
 
@@ -228,7 +229,7 @@ public class EnemyBoss2 : MonsterBoss
 
         yield return new WaitForSeconds(1.5f);
         Patterning = false;
-        
+
         //StartCoroutine(Pattern());
 
     }
@@ -249,7 +250,7 @@ public class EnemyBoss2 : MonsterBoss
         nuckarea.enabled = true;
         stunarea.enabled = false;
         yield return new WaitForSeconds(0.2f);
-        
+
         nuckarea.enabled = false;
         anim.SetBool("isStun", false);
         isStun = false;
@@ -264,7 +265,7 @@ public class EnemyBoss2 : MonsterBoss
         //StartCoroutine(Pattern());
 
     }
-    IEnumerator Pokju() 
+    IEnumerator Pokju()
     {
 
         isSkill = true;
@@ -272,7 +273,7 @@ public class EnemyBoss2 : MonsterBoss
         nav.isStopped = true;
         isAttack = true;
         anim.SetBool("isBuff", true);
-        
+
         yield return new WaitForSeconds(3f);
         isSkill = false;
         pokju.SetActive(true);
@@ -294,7 +295,7 @@ public class EnemyBoss2 : MonsterBoss
         pokju.SetActive(false);
     }
 
-    IEnumerator FireBall() 
+    IEnumerator FireBall()
     {
         isSkill = true;
         isChase = false;
@@ -307,7 +308,7 @@ public class EnemyBoss2 : MonsterBoss
         GameObject instantBullet = Instantiate(bullet, firepos.position, firepos.rotation);
         Rigidbody rigidBullet = instantBullet.GetComponent<Rigidbody>();
         rigidBullet.velocity = transform.forward * 5;
-       
+
         Destroy(instantBullet, 4f);
 
 
@@ -325,33 +326,33 @@ public class EnemyBoss2 : MonsterBoss
         //StartCoroutine(Pattern());
 
     }
-    
+
     IEnumerator Attack() //������ �ϰ� �������ϰ� �ٽ� ������ ����
     {
+        attacking.isAttacking = true;
         
-            isChase = false;
-            isAttack = true;
-            nav.isStopped = true;
-           
-            anim.SetBool("isAttack", true);
-            yield return new WaitForSeconds(0.8f);
-            meleeArea.enabled = true;
-            
 
-           yield return new WaitForSeconds(0.8f);
-           // rigid.velocity = Vector3.zero;
-            meleeArea.enabled = false;
+        isChase = false;
+        isAttack = true;
+        nav.isStopped = true;
 
+        anim.SetBool("isAttack", true);
+        yield return new WaitForSeconds(0.8f);
+        meleeArea.enabled = true;
+        yield return new WaitForSeconds(0.8f);
+        // rigid.velocity = Vector3.zero;
+        meleeArea.enabled = false;
+       
 
-            isChase = true;
-            isAttack = false;
-            anim.SetBool("isAttack", false);
-            nav.isStopped = false;
-        
+        isChase = true;
+        isAttack = false;
+        anim.SetBool("isAttack", false);
+        nav.isStopped = false;
+
     }
     void FixedUpdate()
     {
-        
+
         FreezeVelocity();
     }
 
@@ -389,7 +390,7 @@ public class EnemyBoss2 : MonsterBoss
     {
         HitSoundManager.hitsoundManager.GolemHitSound();
         foreach (SkinnedMeshRenderer mesh in mat)
-           mesh.material.color = Color.red;
+            mesh.material.color = Color.red;
         isDamage = true;
         Hiteff.Play();
         Hiteff2.Play();
@@ -414,19 +415,19 @@ public class EnemyBoss2 : MonsterBoss
             nav.isStopped = true;
             isDie = true;
             boxCollider.enabled = false;
-            
+
             isChase = false; //�׾����� ��������
             anim.SetBool("isDie", true);
             gameObject.SetActive(false);
             foreach (SkinnedMeshRenderer mesh in mat)
-              mesh.material.color = Color.gray;
+                mesh.material.color = Color.gray;
             Invoke("Diegg", 1.5f);
             QuestStore.qustore.MainQuestSuccess(5);
 
         }
         yield return null;
-            
-        }
+
+    }
     void Diegg()
     {
 

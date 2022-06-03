@@ -867,14 +867,18 @@ public class PlayerST : MonoBehaviour
     {
         if (other.gameObject.tag == "EnemyRange")  //적에게 맞았다면
         {
-            if (!isDamage) //무적타이밍이 아닐때만 실행
-            {
+            //if (!isDamage) //무적타이밍이 아닐때만 실행
+            //{
 
+            if (other.gameObject.GetComponent<Attacking>().isAttacking)
+            {
                 EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
                 PlayerStat.playerstat.DamagedHp(enemyRange.damage);
-                StartCoroutine(OnDamage());
-
+                other.gameObject.GetComponent<Attacking>().isAttacking = false;
             }
+                //StartCoroutine(OnDamage());
+
+            //}
         }
         else if (other.gameObject.tag == "Boss1Skill")  //1보스 스턴스킬
         {

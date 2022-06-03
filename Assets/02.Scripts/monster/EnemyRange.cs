@@ -24,9 +24,9 @@ public class EnemyRange : Monster
     NavMeshAgent nav; //����
     Animator anim;
     QuestNormal questNormal;
-
     void Awake()
     {
+        bullet = Resources.Load<GameObject>("Fireball");
         rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
         nav = GetComponent<NavMeshAgent>();
@@ -114,12 +114,13 @@ public class EnemyRange : Monster
 
     IEnumerator Attack() //������ �ϰ� �������ϰ� �ٽ� ������ ����
     {
-
         isChase = false;
         isAttack = true;
         nav.isStopped = true;
         anim.SetBool("isAttack", true);
         GameObject instantBullet = Instantiate(bullet, firepos.position, firepos.rotation);
+        Attacking attackingbullet = instantBullet.GetComponent<Attacking>();
+        attackingbullet.isAttacking = true;
         Rigidbody rigidBullet = instantBullet.GetComponent<Rigidbody>();
         rigidBullet.velocity = transform.forward * 20;
         Destroy(instantBullet, 2f);
