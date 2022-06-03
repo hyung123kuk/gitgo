@@ -19,7 +19,7 @@ public class Monster : MonoBehaviour
     public Text level;
     public Text Monstername;
     private Transform tr;
-    
+    public GameObject Geteff;
     public float maxHealth; //최대hp
     public float curHealth; //현재hp
 
@@ -38,7 +38,7 @@ public class Monster : MonoBehaviour
     float allZ = 0;
     public float shakeTime = 0f;
 
-
+    public float Exp;
 
 
     
@@ -47,7 +47,7 @@ public class Monster : MonoBehaviour
     {
         MonsterDropSet();
         tr = GetComponent<Transform>();
-       
+        Geteff = Resources.Load<GameObject>("GetEff");
  
     }
 
@@ -156,6 +156,8 @@ public class Monster : MonoBehaviour
 
     public void MonsterDie()
     {
+        GameObject eff = Instantiate(Geteff, transform.position, Quaternion.identity);
+        eff.GetComponent<GetEff>().SetExp(Exp);
         SetColor(0);
         if (!isSpread)
         {

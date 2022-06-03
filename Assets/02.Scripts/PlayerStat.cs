@@ -198,7 +198,7 @@ public class PlayerStat : MonoBehaviour
         }
     }
 
-    private float LevelExp()
+    public float LevelExp()
     {
         switch (Level)
         {

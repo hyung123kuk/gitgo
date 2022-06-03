@@ -18,7 +18,7 @@ public class EnemySlime  : Monster
 
     public ParticleSystem Hiteff;
     public ParticleSystem Hiteff2;
-    public GameObject Geteff;
+
 
     public Transform movepoint;
     [SerializeField]
@@ -57,7 +57,7 @@ public class EnemySlime  : Monster
         StartMonster();
         Monstername.text = "슬라임";
         level.text = "1";
-        
+        Exp = 10;
     }
     void Update()
     {
@@ -234,7 +234,7 @@ public class EnemySlime  : Monster
             else
             {
                 
-                Instantiate(Geteff, transform.position, Quaternion.identity);
+
                 MonsterDie();
                 nav.isStopped = true;
                 boxCollider.enabled = false;
