@@ -144,9 +144,11 @@ public class AttackDamage : MonoBehaviour
 
     public static float attackDamage=0;
     public static bool critical=false;
+    public static int DamageNum;
 
     public float Attack_Dam()
     {
+        DamageNum = 0;
         float DamRange = Random.Range(0.95f, 1.05f);
         if(Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) 
         {
@@ -166,6 +168,7 @@ public class AttackDamage : MonoBehaviour
     
     public float Skill_1_Damamge()
     {
+        DamageNum = 1;
         float DamRange = Random.Range(0.95f, 1.05f);
         float Skill_1_basedamage = (playerStat._DAMAGE * Skill_1_per_dam + Skill_1_fixed_dam) + (playerStat._DAMAGE * Skill_1_per_dam + Skill_1_fixed_dam) * playerStat._SKILL_ADD_DAMAGE_PER / 100;
         if (Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) 
@@ -189,6 +192,7 @@ public class AttackDamage : MonoBehaviour
 
     public float Skill_2_Damamge()
     {
+        DamageNum = 2;
         float DamRange = Random.Range(0.95f, 1.05f);
         float Skill_2_basedamage = (playerStat._DAMAGE * Skill_2_per_dam + Skill_2_fixed_dam) + (playerStat._DAMAGE * Skill_2_per_dam + Skill_2_fixed_dam) * playerStat._SKILL_ADD_DAMAGE_PER / 100;
         if (Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) //1~100 �� ũ��Ƽ�� Ȯ�������� �������̸� ũ��Ƽ�õ����� ����.
@@ -209,6 +213,7 @@ public class AttackDamage : MonoBehaviour
 
     public float Skill_3_Damamge()
     {
+        DamageNum = 3;
         float DamRange = Random.Range(0.95f, 1.05f);
         float Skill_3_basedamage = (playerStat._DAMAGE * Skill_3_per_dam + Skill_3_fixed_dam) + (playerStat._DAMAGE * Skill_3_per_dam + Skill_3_fixed_dam) * playerStat._SKILL_ADD_DAMAGE_PER / 100;
         if (Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) //1~100 �� ũ��Ƽ�� Ȯ�������� �������̸� ũ��Ƽ���� ������.
@@ -231,6 +236,7 @@ public class AttackDamage : MonoBehaviour
 
     public float Skill_4_Damamge()
     {
+        DamageNum = 4;
         float DamRange = Random.Range(0.95f, 1.05f);
         float Skill_4_basedamage = (playerStat._DAMAGE * Skill_4_per_dam + Skill_4_fixed_dam) + (playerStat._DAMAGE * Skill_4_per_dam + Skill_4_fixed_dam) * playerStat._SKILL_ADD_DAMAGE_PER / 100;
         if (Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) //1~100 �� ũ��Ƽ�� Ȯ�������� �������̸� ũ��Ƽ���� ������.

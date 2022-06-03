@@ -5,6 +5,7 @@ using UnityEngine.UI;
 
 public class Monster : MonoBehaviour
 {
+    public PlayerST playerST;
     public GameObject hpBarPrefab;
     public GameObject Damage;
     public Vector3 hpBarOffset = new Vector3(0, 2.2f, 0);
@@ -21,6 +22,8 @@ public class Monster : MonoBehaviour
     public Text Monstername;
     private Transform tr;
     public GameObject Geteff;
+
+    AttackDamage attackdamage;
     public float maxHealth; //최대hp
     public float curHealth; //현재hp
 
@@ -48,30 +51,134 @@ public class Monster : MonoBehaviour
     {
         MonsterDropSet();
         tr = GetComponent<Transform>();
-        
+        attackdamage = FindObjectOfType<AttackDamage>();
+
         Geteff = Resources.Load<GameObject>("GetEff");
         Damage = Resources.Load<GameObject>("Damage");
-        
+        playerST = FindObjectOfType<PlayerST>();
     }
 
 
 
     public void HitMonster()
     {
-           
-           GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
-            var _damage = damage.GetComponent<DamageUI>();
-          _damage.targetTr = this.gameObject.transform;
-           Text damagevalue = damage.GetComponent<Text>();
+
+        GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
+        var _damage = damage.GetComponent<DamageUI>();
+        _damage.targetTr = this.gameObject.transform;
+        Text damagevalue = damage.GetComponent<Text>();
         if (!AttackDamage.critical)
-          {
+        {
             damage.transform.GetChild(0).gameObject.SetActive(false);
             damage.GetComponent<Outline>().enabled = false;
             damagevalue.color = Color.red;
-          }
+        }
         damagevalue.text = ((int)AttackDamage.attackDamage).ToString();
+        DamageSet();
+
         shakeTime = Time.time;
-            StartCoroutine(HitShake());        
+        StartCoroutine(HitShake());
+    }
+
+    public void DamageSet()
+    {
+
+        if (playerST.CharacterType == PlayerST.Type.Warrior)
+        {
+            if (AttackDamage.DamageNum == 0)
+            {
+                Weapons.weapons.damage = attackdamage.Attack_Dam();
+
+            }
+            else if (AttackDamage.DamageNum == 1)
+            {
+                Weapons.weapons.damage = attackdamage.Skill_1_Damamge();
+            }
+            else if (AttackDamage.DamageNum == 2)
+            {
+                Weapons.weapons.damage = attackdamage.Skill_2_Damamge();
+            }
+            else if (AttackDamage.DamageNum == 3)
+            {
+                Weapons.weapons.damage = attackdamage.Skill_3_Damamge();
+            }
+            else if (AttackDamage.DamageNum == 4)
+            {
+                Weapons.weapons.damage = attackdamage.Skill_4_Damamge();
+            }
+        }
+        else if(playerST.CharacterType == PlayerST.Type.Archer || playerST.CharacterType == PlayerST.Type.Mage)
+        {
+            if (AttackDamage.DamageNum == 0)
+            {
+                if (!Weapons.weapons.ShotFull)
+                {
+                    Arrow arrow = FindObjectOfType<Arrow>();
+                    if(arrow!=null)
+                        arrow.damage = attackdamage.Attack_Dam();
+                }
+                else
+                {
+                    Arrow arrow = FindObjectOfType<Arrow>();
+                    if (arrow != null)
+                        arrow.damage = 1.3f *  attackdamage.Attack_Dam();
+                }
+
+            }
+            else if (AttackDamage.DamageNum == 1)
+            {
+                Arrow arrow = FindObjectOfType<Arrow>();
+                if (arrow != null)
+                    arrow.damage = attackdamage.Skill_1_Damamge();
+
+                ArrowSkill arrowskill = FindObjectOfType<ArrowSkill>();
+                if (arrowskill != null)
+                    arrowskill.damage = attackdamage.Skill_1_Damamge();
+            }
+            else if (AttackDamage.DamageNum == 2)
+            {
+                Arrow arrow = FindObjectOfType<Arrow>();
+                if (arrow != null)
+                    arrow.damage = attackdamage.Skill_2_Damamge();
+
+                ArrowSkill arrowskill = FindObjectOfType<ArrowSkill>();
+                if (arrowskill != null)
+                    arrowskill.damage = attackdamage.Skill_2_Damamge();
+            }
+            else if (AttackDamage.DamageNum == 3)
+            {
+                if (!Weapons.weapons.energyfullCharging)
+                {
+                    Arrow arrow = FindObjectOfType<Arrow>();
+                    if (arrow != null)
+                        arrow.damage = attackdamage.Skill_3_Damamge();
+
+                    ArrowSkill arrowskill = FindObjectOfType<ArrowSkill>();
+                    if (arrowskill != null)
+                        arrowskill.damage = attackdamage.Skill_3_Damamge();
+                }
+                else
+                {
+                    Arrow arrow = FindObjectOfType<Arrow>();
+                    if (arrow != null)
+                        arrow.damage = 1.5f* attackdamage.Skill_3_Damamge();
+
+                    ArrowSkill arrowskill = FindObjectOfType<ArrowSkill>();
+                    if (arrowskill != null)
+                        arrowskill.damage = 1.5f * attackdamage.Skill_3_Damamge();
+                }
+            }
+            else if (AttackDamage.DamageNum == 4)
+            {
+                Arrow arrow = FindObjectOfType<Arrow>();
+                if (arrow != null)
+                    arrow.damage = attackdamage.Skill_4_Damamge();
+
+                ArrowSkill arrowskill = FindObjectOfType<ArrowSkill>();
+                if (arrowskill != null)
+                    arrowskill.damage = attackdamage.Skill_4_Damamge();
+            }
+        }
     }
 
     IEnumerator HitShake()
