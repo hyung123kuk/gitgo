@@ -8,7 +8,7 @@ public class UiSound : MonoBehaviour
     public static UiSound uiSound;
 
     public AudioSource audioSource;
-
+    SoundBar soundbar;
     private void Awake()
     {
         if (uiSound == null)
@@ -19,11 +19,20 @@ public class UiSound : MonoBehaviour
 
     private void Start()
     {
+        soundbar = FindObjectOfType<SoundBar>();
         audioSource = GetComponent<AudioSource>();
+    
+
     }
     //=====================유아이 사운드===============================
+    private void Update()
+    {
+        audioSource.volume = soundbar.UIVolume;
+    }
+
     public void InventoryOpenSound() //인벤 여는소리
     {
+
         audioSource.PlayOneShot(Sounds.sounds.InventoryOpenSound);
     }
     public void InventoryCloseSound() //인벤 닫는소리

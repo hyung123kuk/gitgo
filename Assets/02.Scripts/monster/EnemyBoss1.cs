@@ -346,7 +346,7 @@ public class EnemyBoss1 : MonsterBoss
         if (curHealth > 0)
             foreach (SkinnedMeshRenderer mesh in mat)
                 mesh.material.color = Color.white;
-        ShakeOn();
+        HitMonster();
         SetHpBar();
         if (curHealth < 0)
         {

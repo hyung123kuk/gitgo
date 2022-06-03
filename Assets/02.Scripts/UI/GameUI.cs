@@ -37,7 +37,7 @@ public class GameUI : MonoBehaviour
 
 
         Exp_bar_Set();
-
+        Exp_Text.text = playerStat.NowExp + "/" + playerStat.TotalExp + "(" + (int)(playerStat.NowExp/playerStat.TotalExp*100) + "%)";
 
     }
 

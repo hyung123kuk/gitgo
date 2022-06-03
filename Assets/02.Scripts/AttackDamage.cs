@@ -139,21 +139,26 @@ public class AttackDamage : MonoBehaviour
         
     }
 
-   
 
 
-    
+
+    public static float attackDamage=0;
+    public static bool critical=false;
 
     public float Attack_Dam()
     {
         float DamRange = Random.Range(0.95f, 1.05f);
         if(Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) 
         {
-            return  ( playerStat._DAMAGE + (playerStat._DAMAGE * playerStat._CRITICAL_ADD_DAMAGE_PER /100f) ) *DamRange; 
+            critical = true;
+            attackDamage = (playerStat._DAMAGE + (playerStat._DAMAGE * playerStat._CRITICAL_ADD_DAMAGE_PER / 100f)) * DamRange;
+            return attackDamage; 
         }
         else
         {
-            return (playerStat._DAMAGE) * DamRange;
+            critical = false;
+            attackDamage = (playerStat._DAMAGE) * DamRange;
+            return attackDamage;
         }
         
     }
@@ -165,11 +170,15 @@ public class AttackDamage : MonoBehaviour
         float Skill_1_basedamage = (playerStat._DAMAGE * Skill_1_per_dam + Skill_1_fixed_dam) + (playerStat._DAMAGE * Skill_1_per_dam + Skill_1_fixed_dam) * playerStat._SKILL_ADD_DAMAGE_PER / 100;
         if (Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) 
         {
-            return (Skill_1_basedamage + (Skill_1_basedamage * playerStat._CRITICAL_ADD_DAMAGE_PER / 100f)) * DamRange; 
+            critical = true;
+            attackDamage = (Skill_1_basedamage + (Skill_1_basedamage * playerStat._CRITICAL_ADD_DAMAGE_PER / 100f)) * DamRange;
+            return attackDamage; 
         }
         else
         {
-            return Skill_1_basedamage * DamRange;
+            critical = false;
+            attackDamage = Skill_1_basedamage * DamRange;
+            return attackDamage;
         }
 
     }
@@ -184,11 +193,15 @@ public class AttackDamage : MonoBehaviour
         float Skill_2_basedamage = (playerStat._DAMAGE * Skill_2_per_dam + Skill_2_fixed_dam) + (playerStat._DAMAGE * Skill_2_per_dam + Skill_2_fixed_dam) * playerStat._SKILL_ADD_DAMAGE_PER / 100;
         if (Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) //1~100 �� ũ��Ƽ�� Ȯ�������� �������̸� ũ��Ƽ�õ����� ����.
         {
-            return (Skill_2_basedamage + (Skill_2_basedamage * playerStat._CRITICAL_ADD_DAMAGE_PER / 100f)) * DamRange; 
+            critical = true;
+            attackDamage = (Skill_2_basedamage + (Skill_2_basedamage * playerStat._CRITICAL_ADD_DAMAGE_PER / 100f)) * DamRange;
+            return attackDamage; 
         }
         else
         {
-            return Skill_2_basedamage * DamRange;
+            critical = false;
+            attackDamage = Skill_2_basedamage * DamRange;
+            return attackDamage;
         }
 
     }
@@ -200,11 +213,17 @@ public class AttackDamage : MonoBehaviour
         float Skill_3_basedamage = (playerStat._DAMAGE * Skill_3_per_dam + Skill_3_fixed_dam) + (playerStat._DAMAGE * Skill_3_per_dam + Skill_3_fixed_dam) * playerStat._SKILL_ADD_DAMAGE_PER / 100;
         if (Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) //1~100 �� ũ��Ƽ�� Ȯ�������� �������̸� ũ��Ƽ���� ������.
         {
-            return (Skill_3_basedamage + (Skill_3_basedamage * playerStat._CRITICAL_ADD_DAMAGE_PER / 100f)) * DamRange;
+            critical = true;
+            attackDamage = (Skill_3_basedamage + (Skill_3_basedamage * playerStat._CRITICAL_ADD_DAMAGE_PER / 100f)) * DamRange;
+            return attackDamage;
+   
         }
         else
         {
-            return Skill_3_basedamage * DamRange;
+            critical = false;
+            attackDamage = Skill_3_basedamage * DamRange;
+            return attackDamage;
+
         }
 
     }
@@ -216,11 +235,17 @@ public class AttackDamage : MonoBehaviour
         float Skill_4_basedamage = (playerStat._DAMAGE * Skill_4_per_dam + Skill_4_fixed_dam) + (playerStat._DAMAGE * Skill_4_per_dam + Skill_4_fixed_dam) * playerStat._SKILL_ADD_DAMAGE_PER / 100;
         if (Random.Range(1.0f, 100.0f) <= playerStat._CRITICAL_PROBABILITY) //1~100 �� ũ��Ƽ�� Ȯ�������� �������̸� ũ��Ƽ���� ������.
         {
-            return (Skill_4_basedamage + (Skill_4_basedamage * playerStat._CRITICAL_ADD_DAMAGE_PER / 100f)) * DamRange;
+            critical = true;
+            attackDamage = (Skill_4_basedamage + (Skill_4_basedamage * playerStat._CRITICAL_ADD_DAMAGE_PER / 100f)) * DamRange;
+            return attackDamage;
+
         }
         else
         {
-            return Skill_4_basedamage * DamRange;
+            critical = false;
+            attackDamage = Skill_4_basedamage * DamRange;
+            return attackDamage;
+
         }
 
     }

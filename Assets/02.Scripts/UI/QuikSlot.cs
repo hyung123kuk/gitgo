@@ -66,11 +66,16 @@ public class QuikSlot : MonoBehaviour
             return;
 
 
-        if (slot.item!=null && Input.GetButtonDown(gameObject.tag)) //아이템 사용
+        if (slot.item!=null && slot.item.itemType== Item.ItemType.Used && Input.GetButtonDown(gameObject.tag)) //아이템 사용
         {
             Debug.Log(slot.item.itemName + " 을 사용했습니다.");
             slot.UseItem();
             slot.SetSlotCount(-1);
+        }
+        else if (slot.item != null && slot.item.itemType == Item.ItemType.Ride && Input.GetButtonDown(gameObject.tag)) //말 사용
+        {
+            playerST.HorseRide();
+
         }
 
         else if(skill.skill != null && skill.skill.skillCharacter==SkillUI.SkillCharacter.Archer && skill.skill.skillNum == 4) // 궁수 충전형 스킬
@@ -152,6 +157,7 @@ public class QuikSlot : MonoBehaviour
             #endregion
 
         }
+     
 
 
     }

@@ -9,6 +9,7 @@ public class StopSoundManager : MonoBehaviour
 
     public AudioSource audioSource;
 
+    SoundBar soundbar;
     private void Awake()
     {
         if (stopSoundManager == null)
@@ -19,9 +20,14 @@ public class StopSoundManager : MonoBehaviour
 
     private void Start()
     {
+        soundbar = FindObjectOfType<SoundBar>();
         audioSource = GetComponent<AudioSource>();
     }
     //==============================도중에 끊어야할 사운드=========================================//
+    private void Update()
+    {
+        audioSource.volume = soundbar.CharacterVolume;
+    }
     public void ArcherChargeSound() //궁수 활시위 당기는소리
     {
         audioSource.PlayOneShot(Sounds.sounds.ArcherChargeSound);

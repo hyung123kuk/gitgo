@@ -11,6 +11,7 @@ public class Item : ScriptableObject
         Used,
         Ingredient,
         ETC,
+        Ride
     }
     public enum EquipType
     {
@@ -23,7 +24,8 @@ public class Item : ScriptableObject
         gloves,
         helm,
         pants,
-        shoulder
+        shoulder,
+
 
     }
     public enum Type { normal, rare }

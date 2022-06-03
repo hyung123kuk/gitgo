@@ -403,7 +403,7 @@ public class EnemyBoss2 : MonsterBoss
         }
         // foreach (SkinnedMeshRenderer mesh in mat)
         //   mesh.material.color = Color.red;
-        ShakeOn();
+        HitMonster();
         SetHpBar();
 
         if (curHealth < 0)

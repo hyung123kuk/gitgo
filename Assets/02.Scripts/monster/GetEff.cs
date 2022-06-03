@@ -7,9 +7,18 @@ public class GetEff : MonoBehaviour
 {
     Transform target;
     NavMeshAgent navi;
+    PlayerStat playerStat;
+    public float exp;
     void Start()
     {
         navi = GetComponent<NavMeshAgent>();
+        playerStat = FindObjectOfType<PlayerStat>();
+
+    }
+
+    public void SetExp(float _exp)
+    {
+        exp = _exp;
     }
 
     
@@ -22,6 +31,7 @@ public class GetEff : MonoBehaviour
     {
         if (other.gameObject.tag == "Player")
         {
+            playerStat.AddExp(exp);
             Destroy(gameObject,0.3f);
         }
     }

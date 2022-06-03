@@ -190,7 +190,7 @@ public class EnemyGoblin : Monster
 
      IEnumerator OnDamage()
     {
-        ShakeOn();
+        HitMonster();
         HitSoundManager.hitsoundManager.GoblinHitSound();
         isDamage = true;
         mat.color = Color.red;

@@ -40,6 +40,8 @@ public class QuestNormal : MonoBehaviour
     [SerializeField]
     public Item[] skelleton_item;
 
+    [SerializeField]
+    private RectTransform QuestGrid;
 
     Color QuestSelColor = new Color(0.3f, 0.3f, 0.3f); //퀘스트 받았을때 이름 컬러
     Color ButtonSelColor = new Color(0.7f, 0.7f, 0.7f); //퀘스트 받았을때 버튼 컬러
@@ -55,6 +57,18 @@ public class QuestNormal : MonoBehaviour
         slimeImage = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>();
         goblinImage = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(2).GetComponent<Image>();
         skeletonImage = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(3).GetComponent<Image>();
+    }
+
+    private void Update()
+    {
+        if (QuestGrid.anchoredPosition.y < -20)   // GRID 마우스 휠 제한
+        {
+            QuestGrid.anchoredPosition = new Vector2(20, -20);
+        }
+        if (QuestGrid.anchoredPosition.y > 550f)
+        {
+            QuestGrid.anchoredPosition = new Vector2(20, 550);
+        }
     }
 
     public void SlimeQuestStart() 

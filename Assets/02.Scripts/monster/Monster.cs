@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class Monster : MonoBehaviour
 {
     public GameObject hpBarPrefab;
+    public GameObject Damage;
     public Vector3 hpBarOffset = new Vector3(0, 2.2f, 0);
     [SerializeField]
     private GameObject Coin;
@@ -19,7 +20,7 @@ public class Monster : MonoBehaviour
     public Text level;
     public Text Monstername;
     private Transform tr;
-    
+    public GameObject Geteff;
     public float maxHealth; //최대hp
     public float curHealth; //현재hp
 
@@ -38,7 +39,7 @@ public class Monster : MonoBehaviour
     float allZ = 0;
     public float shakeTime = 0f;
 
-
+    public float Exp;
 
 
     
@@ -47,15 +48,29 @@ public class Monster : MonoBehaviour
     {
         MonsterDropSet();
         tr = GetComponent<Transform>();
-       
- 
+        
+        Geteff = Resources.Load<GameObject>("GetEff");
+        Damage = Resources.Load<GameObject>("Damage");
+        
     }
 
 
 
-    public void ShakeOn()
-    {         
-            shakeTime = Time.time;
+    public void HitMonster()
+    {
+           
+           GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
+            var _damage = damage.GetComponent<DamageUI>();
+          _damage.targetTr = this.gameObject.transform;
+           Text damagevalue = damage.GetComponent<Text>();
+        if (!AttackDamage.critical)
+          {
+            damage.transform.GetChild(0).gameObject.SetActive(false);
+            damage.GetComponent<Outline>().enabled = false;
+            damagevalue.color = Color.red;
+          }
+        damagevalue.text = ((int)AttackDamage.attackDamage).ToString();
+        shakeTime = Time.time;
             StartCoroutine(HitShake());        
     }
 
@@ -102,8 +117,8 @@ public class Monster : MonoBehaviour
     private void StartHpbar()
     {
         curHealth = maxHealth;
-        hpBarPrefab = Resources.Load<GameObject>("Enemy_HpBar");
 
+        hpBarPrefab = Resources.Load<GameObject>("Enemy_HpBar");
         uiCanvas = GameObject.Find("EnemyHp_Bar_UI").GetComponent<Canvas>();
         GameObject hpBar = Instantiate<GameObject>(hpBarPrefab, uiCanvas.transform);
         hpBarFlame = hpBar.GetComponentsInChildren<Image>()[0];
@@ -112,6 +127,8 @@ public class Monster : MonoBehaviour
         level = hpBar.transform.GetChild(2).GetChild(0).GetComponent<Text>();
         levelFlame = hpBar.transform.GetChild(2).GetComponent<Image>();
         Monstername = hpBar.transform.GetChild(3).GetComponent<Text>();
+
+       
 
         var _hpbar = hpBar.GetComponent<EnemyHpBar>();
         _hpbar.targetTr = this.gameObject.transform;
@@ -156,6 +173,8 @@ public class Monster : MonoBehaviour
 
     public void MonsterDie()
     {
+        GameObject eff = Instantiate(Geteff, transform.position, Quaternion.identity);
+        eff.GetComponent<GetEff>().SetExp(Exp);
         SetColor(0);
         if (!isSpread)
         {

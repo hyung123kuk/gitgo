@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour
     {
 
         CharSel = GameObject.FindGameObjectWithTag("SelManager").GetComponent<CharacterSel>();
-        CharSel.sel.SetActive(false);
+        //CharSel.sel.SetActive(false);
         if(CharSel.charSel == 1)
         {
             if (CharSel.character1 == CharacterSel.Type.Warrior)
