@@ -186,7 +186,7 @@ public class EnemyRange : Monster
     }
     IEnumerator OnDamage()
     {
-        ShakeOn();
+        HitMonster();
         HitSoundManager.hitsoundManager.GoblinHitSound();
         isDamage = true;
         Hiteff.Play();

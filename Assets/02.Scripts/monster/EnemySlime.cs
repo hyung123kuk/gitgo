@@ -215,7 +215,7 @@ public class EnemySlime  : Monster
         if (!isDie)
         {
             HitSoundManager.hitsoundManager.SlimeHitSound();
-            ShakeOn();
+            HitMonster();
         }
         if (!isDie)
         {

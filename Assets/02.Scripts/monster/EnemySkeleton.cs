@@ -188,7 +188,7 @@ public class EnemySkeleton : Monster
 
     IEnumerator OnDamage()
     {
-        ShakeOn();
+        HitMonster();
         HitSoundManager.hitsoundManager.SkeletonHitSound();
         isDamage = true;
         mat.color = Color.red;

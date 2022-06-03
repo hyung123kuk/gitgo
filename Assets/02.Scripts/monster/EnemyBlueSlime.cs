@@ -189,7 +189,7 @@ public class EnemyBlueSlime : Monster
     {
         if (!isDie)
         {
-            ShakeOn();
+            HitMonster();
             SetHpBar();
 
             HitSoundManager.hitsoundManager.SlimeHitSound();
