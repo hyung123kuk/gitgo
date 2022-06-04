@@ -31,6 +31,9 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
 
     private void Awake()
     {
+        playerSt = FindObjectOfType<PlayerST>();
+
+        playerStat = FindObjectOfType<PlayerStat>();
         gameUI = FindObjectOfType<GameUI>();
         
         allUI = FindObjectOfType<AllUI>();
@@ -59,11 +62,11 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
        
     }
 
-    private void Start()
+    private void Start()   //인벤을열때 잡아주지않아 에러가뜹니다 제꺼가 이상하네요 ㅠ Awake로 옮겼습니다
     {
-        playerSt = FindObjectOfType<PlayerST>();
+        //playerSt = FindObjectOfType<PlayerST>();
 
-        playerStat = FindObjectOfType<PlayerStat>();
+        //playerStat = FindObjectOfType<PlayerStat>();
     }
 
     public void ItemLimitColorRed()
