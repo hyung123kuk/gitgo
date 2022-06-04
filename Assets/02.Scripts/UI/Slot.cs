@@ -38,6 +38,15 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
        
         item_sell_question = FindObjectOfType<itemSellQuestion>();
 
+        
+       
+    }
+
+    private void Start()
+    {
+        playerSt = FindObjectOfType<PlayerST>();
+
+        playerStat = FindObjectOfType<PlayerStat>();
         if (item != null)
         {
             itemImage.sprite = item.itemImage;
@@ -56,14 +65,6 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             SetColor(1);
             ItemLimitColorRed();
         }
-       
-    }
-
-    private void Start()
-    {
-        playerSt = FindObjectOfType<PlayerST>();
-
-        playerStat = FindObjectOfType<PlayerStat>();
     }
 
     public void ItemLimitColorRed()
@@ -71,7 +72,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         if (item == null)
             return;
 
-        if (item.itemEquLevel > playerStat.Level ||
+        if (item.itemEquLevel > playerStat.Level || 
            (item.armortype == Item.ArmorType.cloth && playerSt.CharacterType == PlayerST.Type.Archer) ||
             (item.armortype == Item.ArmorType.cloth && playerSt.CharacterType == PlayerST.Type.Warrior) ||
            (item.armortype == Item.ArmorType.leather && playerSt.CharacterType == PlayerST.Type.Warrior) ||

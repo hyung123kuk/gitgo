@@ -33,11 +33,24 @@ public class CharacterSel : MonoBehaviour
     public Animator aniArc;
     public Animator aniMage;
 
+    private SaveManager saveManager;
 
-    private void Start()
+    private void Awake()
     {
-        characterSel = this;
+        saveManager = FindObjectOfType<SaveManager>();
+
+       if(CharacterSel.characterSel == null)
+        {
+            characterSel = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+
     }
+
+
 
     public void CharButton1()
     {
@@ -60,10 +73,24 @@ public class CharacterSel : MonoBehaviour
     
         else
         {
-            
-            SceneManager.LoadScene(1);
-            
             DontDestroyOnLoad(gameObject);
+            StartCoroutine(LoadCoroutine());
+            SceneManager.LoadScene(1);
+
+        }
+
+        IEnumerator LoadCoroutine()
+        {
+            AsyncOperation operation = SceneManager.LoadSceneAsync(1);
+
+            while(!operation.isDone)
+            {
+                yield return null;
+            }
+           
+            
+
+
         }
 
     }
@@ -86,10 +113,9 @@ public class CharacterSel : MonoBehaviour
         }
         else
         {
-
-            SceneManager.LoadScene(1);
-            
             DontDestroyOnLoad(gameObject);
+            SceneManager.LoadScene(1);
+ 
         }
     }
 
@@ -177,6 +203,7 @@ public class CharacterSel : MonoBehaviour
                 char1[1].SetActive(false);
                 char1[2].SetActive(true);
             }
+            saveManager.CharacterSelSave1();
 
         }
         if (charSel == 2)
@@ -201,8 +228,9 @@ public class CharacterSel : MonoBehaviour
                 char2[1].SetActive(false);
                 char2[2].SetActive(true);
             }
-
+            saveManager.CharacterSelSave2();
         }
+       
     }
 
 

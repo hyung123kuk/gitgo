@@ -54,6 +54,7 @@ public class PlayerStat : MonoBehaviour
         inven = FindObjectOfType<inventory>();
         gameUI = FindObjectOfType<GameUI>();
         skillWindow = FindObjectOfType<SkillWindow>();
+        equSlots = GameObject.FindGameObjectWithTag("EqueSlot").GetComponentsInChildren<Slot>(); //여기서 오류가 뜬다면 인벤토리디자인을 킨 상태로 시작해주세요.
         StatAllUpdate();
         TotalExp = LevelExp();
         _Hp = _MAXHP;
