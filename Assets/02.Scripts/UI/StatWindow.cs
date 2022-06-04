@@ -105,6 +105,7 @@ public class StatWindow : MonoBehaviour ,IPointerClickHandler
         DAMAGE.text = "공격력 : " + (int)playerStat._DAMAGE;
         DEFENCE.text = "방어력 : " + (int)playerStat._DEFENCE;
 
+        playerST = FindObjectOfType<PlayerST>();
         MOVESPEED.text = "이동속도 : " + (int) playerST.speed*10; 
         Critical_Probable.text = "크리티컬 확률 : " + (int)playerStat._CRITICAL_PROBABILITY ;
         Critical_Damage.text = "크리티컬 데미지 : " + (int)playerStat._CRITICAL_ADD_DAMAGE_PER ;

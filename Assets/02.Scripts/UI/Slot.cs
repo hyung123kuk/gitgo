@@ -31,9 +31,6 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
 
     private void Awake()
     {
-        playerSt = FindObjectOfType<PlayerST>();
-
-        playerStat = FindObjectOfType<PlayerStat>();
         gameUI = FindObjectOfType<GameUI>();
         
         allUI = FindObjectOfType<AllUI>();
@@ -41,6 +38,15 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
        
         item_sell_question = FindObjectOfType<itemSellQuestion>();
 
+        
+       
+    }
+
+    private void Start()
+    {
+        playerSt = FindObjectOfType<PlayerST>();
+
+        playerStat = FindObjectOfType<PlayerStat>();
         if (item != null)
         {
             itemImage.sprite = item.itemImage;
@@ -59,14 +65,6 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             SetColor(1);
             ItemLimitColorRed();
         }
-       
-    }
-
-    private void Start()   //인벤을열때 잡아주지않아 에러가뜹니다 제꺼가 이상하네요 ㅠ Awake로 옮겼습니다
-    {
-        //playerSt = FindObjectOfType<PlayerST>();
-
-        //playerStat = FindObjectOfType<PlayerStat>();
     }
 
     public void ItemLimitColorRed()
@@ -74,7 +72,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         if (item == null)
             return;
 
-        if (item.itemEquLevel > playerStat.Level ||
+        if (item.itemEquLevel > playerStat.Level || 
            (item.armortype == Item.ArmorType.cloth && playerSt.CharacterType == PlayerST.Type.Archer) ||
             (item.armortype == Item.ArmorType.cloth && playerSt.CharacterType == PlayerST.Type.Warrior) ||
            (item.armortype == Item.ArmorType.leather && playerSt.CharacterType == PlayerST.Type.Warrior) ||

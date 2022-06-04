@@ -150,6 +150,8 @@ public class Weapons : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         isBombArrow = false;
     }
+
+    public bool energyfullCharging = false;
     public void EnergyArrow()
     {
         if (archer_skill4_Order == 0 &&  !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun &&
@@ -201,6 +203,7 @@ public class Weapons : MonoBehaviour
                 arrowRigid.velocity = Arc3SkillPos.forward * 20;
                 ArrowSkill arrowskill = intantArrow.GetComponent<ArrowSkill>(); //스킬데미지설정
                 arrowskill.damage = attackdamage.Skill_3_Damamge();
+                energyfullCharging = false;
                 Destroy(intantArrow, 2f);
             }
             else if (isEnergy2)
@@ -212,6 +215,7 @@ public class Weapons : MonoBehaviour
                 arrowRigid.velocity = Arc3SkillPos.forward * 20;
                 ArrowSkill arrowskill = intantArrow.GetComponent<ArrowSkill>(); //스킬데미지설정
                 arrowskill.damage = 1.5f*attackdamage.Skill_3_Damamge();
+                energyfullCharging = true;
                 Destroy(intantArrow, 2f);
             }
 
@@ -417,7 +421,7 @@ public class Weapons : MonoBehaviour
 
 
     }
-
+    public bool ShotFull;
     IEnumerator Shot()
     {
         playerST.isSootReady = true;
@@ -432,9 +436,12 @@ public class Weapons : MonoBehaviour
             {
                 arrow.damage = 1.3f * attackdamage.Attack_Dam();
                 PlayerST.playerST.FullChargeing = false;
+                ShotFull = true;
             }
-            else if (!PlayerST.playerST.FullChargeing)
+            else if (!PlayerST.playerST.FullChargeing){
                 arrow.damage = attackdamage.Attack_Dam();
+                ShotFull = false;
+            }
             
             Destroy(intantArrow, 1f);
         }
@@ -445,6 +452,7 @@ public class Weapons : MonoBehaviour
             arrowRigid.velocity = arrowPos.forward * playerST.bowPower * 150;
             Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
             arrow.damage = 1.3f*attackdamage.Attack_Dam();
+            ShotFull = true;
             Destroy(intantArrow, 1f);
         }
 

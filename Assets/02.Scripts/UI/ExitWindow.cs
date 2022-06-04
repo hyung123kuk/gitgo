@@ -15,7 +15,8 @@ public class ExitWindow : MonoBehaviour
     GameObject exitMenu;
     [SerializeField]
     GameObject soundMenu;
-
+    [SerializeField]
+    CharacterSel characterSel;
     public static bool isExitMenu = false;
 
     private void Awake()
@@ -24,6 +25,8 @@ public class ExitWindow : MonoBehaviour
         exitWindow = transform.GetChild(0).gameObject;
         exitMenu = transform.GetChild(0).GetChild(3).gameObject;
         soundMenu = transform.GetChild(0).GetChild(4).gameObject;
+        
+        characterSel = FindObjectOfType<CharacterSel>();
     }
 
 
@@ -57,6 +60,9 @@ public class ExitWindow : MonoBehaviour
 
     public void SelCharacterMenu()
     {
+
+        characterSel.GameEnd();
+
         SceneManager.LoadScene(0);
     }
 

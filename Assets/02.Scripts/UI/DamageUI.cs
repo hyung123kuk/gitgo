@@ -44,8 +44,6 @@ public class DamageUI : MonoBehaviour
         rectDamage.localPosition = localPos;
 
         
-        Debug.Log(rectDamage.localPosition);
-        
     }
 
     

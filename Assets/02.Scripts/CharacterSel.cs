@@ -8,6 +8,8 @@ public class CharacterSel : MonoBehaviour
 {
     public static CharacterSel characterSel;
 
+    
+
     public GameObject characterScene;
     public GameObject sel;
     public GameObject make;
@@ -33,11 +35,24 @@ public class CharacterSel : MonoBehaviour
     public Animator aniArc;
     public Animator aniMage;
 
+    private SaveManager saveManager;
 
-    private void Start()
+    private void Awake()
     {
-        characterSel = this;
+        saveManager = FindObjectOfType<SaveManager>();
+
+       if(CharacterSel.characterSel == null)
+        {
+            characterSel = this;
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+        
     }
+
+
 
     public void CharButton1()
     {
@@ -60,12 +75,39 @@ public class CharacterSel : MonoBehaviour
     
         else
         {
-            
+            DontDestroyOnLoad(gameObject);
+            StartCoroutine(LoadCoroutine());
             SceneManager.LoadScene(1);
             
-            DontDestroyOnLoad(gameObject);
         }
 
+        IEnumerator LoadCoroutine()
+        {
+            AsyncOperation operation = SceneManager.LoadSceneAsync(1);
+
+            while(!operation.isDone)
+            {
+                yield return null;
+            }
+
+            GameStart();
+           
+            
+
+
+        }
+
+    }
+
+    void GameStart()
+    {
+
+        transform.GetChild(0).gameObject.SetActive(false);
+    }
+
+    public void GameEnd()
+    {
+        transform.GetChild(0).gameObject.SetActive(true);
     }
 
     public void CharButton2()
@@ -86,10 +128,9 @@ public class CharacterSel : MonoBehaviour
         }
         else
         {
-
-            SceneManager.LoadScene(1);
-            
             DontDestroyOnLoad(gameObject);
+            SceneManager.LoadScene(1);
+ 
         }
     }
 
@@ -177,6 +218,7 @@ public class CharacterSel : MonoBehaviour
                 char1[1].SetActive(false);
                 char1[2].SetActive(true);
             }
+            saveManager.CharacterSelSave1();
 
         }
         if (charSel == 2)
@@ -201,8 +243,9 @@ public class CharacterSel : MonoBehaviour
                 char2[1].SetActive(false);
                 char2[2].SetActive(true);
             }
-
+            saveManager.CharacterSelSave2();
         }
+       
     }
 
 
