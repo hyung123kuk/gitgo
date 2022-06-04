@@ -70,7 +70,7 @@ public class StatWindow : MonoBehaviour ,IPointerClickHandler
 
     private void Start()
     {
-        
+        playerST = FindObjectOfType<PlayerST>();
         if (playerST.CharacterType == PlayerST.Type.Warrior)
         {
             Character.text = "직업 : 전사";

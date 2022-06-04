@@ -8,6 +8,8 @@ public class CharacterSel : MonoBehaviour
 {
     public static CharacterSel characterSel;
 
+    
+
     public GameObject characterScene;
     public GameObject sel;
     public GameObject make;
@@ -47,7 +49,7 @@ public class CharacterSel : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
+        
     }
 
 
@@ -76,7 +78,7 @@ public class CharacterSel : MonoBehaviour
             DontDestroyOnLoad(gameObject);
             StartCoroutine(LoadCoroutine());
             SceneManager.LoadScene(1);
-
+            
         }
 
         IEnumerator LoadCoroutine()
@@ -87,12 +89,25 @@ public class CharacterSel : MonoBehaviour
             {
                 yield return null;
             }
+
+            GameStart();
            
             
 
 
         }
 
+    }
+
+    void GameStart()
+    {
+
+        transform.GetChild(0).gameObject.SetActive(false);
+    }
+
+    public void GameEnd()
+    {
+        transform.GetChild(0).gameObject.SetActive(true);
     }
 
     public void CharButton2()

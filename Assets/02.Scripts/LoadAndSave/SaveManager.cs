@@ -13,6 +13,14 @@ public class CharacterSelData
 
 }
 
+public class CharacterData
+{
+    public Vector3 Position;
+    public Vector3 Rotate;
+
+
+}
+
 
 public class SaveManager : MonoBehaviour
 {
@@ -40,7 +48,6 @@ public class SaveManager : MonoBehaviour
         }
 
         CharacterSelLoad();
-
 
     }
 
