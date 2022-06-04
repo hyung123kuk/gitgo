@@ -24,11 +24,14 @@ public class Bar : MonoBehaviour
     public float durationBarUp = 0.1f;
 
 
-
+    private void OnEnable()
+    {
+        playerStat = FindObjectOfType<PlayerStat>();
+    }
 
     void Start()
     {
-        playerStat = FindObjectOfType<PlayerStat>();
+       
         backColor = back.color;
         durationBar = duration + duration2;
     }

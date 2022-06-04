@@ -56,6 +56,7 @@ public class CharacterSel : MonoBehaviour
 
     public void CharButton1()
     {
+       
         charSel = 1;
         if(character1==Type.None)
         {
@@ -76,6 +77,7 @@ public class CharacterSel : MonoBehaviour
         else
         {
             DontDestroyOnLoad(gameObject);
+            transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
             StartCoroutine(LoadCoroutine());
             SceneManager.LoadScene(1);
             
@@ -90,24 +92,25 @@ public class CharacterSel : MonoBehaviour
                 yield return null;
             }
 
-            GameStart();
-           
-            
 
-
+            saveManager = FindObjectOfType<SaveManager>();
+            saveManager.CharacterNum = 0;
+            GameStart();                    
         }
 
     }
 
     void GameStart()
-    {
-
+    {       
+        saveManager.LoadCharacter();
+        saveManager.SaveOn = true;
         transform.GetChild(0).gameObject.SetActive(false);
     }
 
     public void GameEnd()
     {
         transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
     }
 
     public void CharButton2()
@@ -129,9 +132,26 @@ public class CharacterSel : MonoBehaviour
         else
         {
             DontDestroyOnLoad(gameObject);
+            transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+            StartCoroutine(LoadCoroutine2());
             SceneManager.LoadScene(1);
  
         }
+    }
+
+    IEnumerator LoadCoroutine2()
+    {
+        AsyncOperation operation = SceneManager.LoadSceneAsync(1);
+
+        while (!operation.isDone)
+        {
+            yield return null;
+        }
+
+
+        saveManager = FindObjectOfType<SaveManager>();
+        saveManager.CharacterNum = 1;
+        GameStart();
     }
 
     public void WorriorBut()

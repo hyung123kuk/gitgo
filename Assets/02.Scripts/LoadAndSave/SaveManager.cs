@@ -13,33 +13,57 @@ public class CharacterSelData
 
 }
 
-public class CharacterData
+public class Data
 {
+    //매번업데이트
     public Vector3 Position;
-    public Vector3 Rotate;
-
-
+    public float Hp;
+    public float Mp;
+    public int Level;
+    public float Exp;
 }
 
 
 public class SaveManager : MonoBehaviour
 {
-
-
+    
+    private string SAVE_DATA_DIRECTORY;//파일이름 Start에서 선언한다.
+    #region 캐릭터 선택창 관련 변수
     private CharacterSelData characterSelData = new CharacterSelData();
     private CharacterSel characterSel;
-
-    private string SAVE_DATA_DIRECTORY;
     private string Sel_SAVE_FILENAME = "/CharacterSelSaveFile.txt";
+    #endregion
 
+    public bool SaveOn;
+    public int CharacterNum;
 
-    private void OnEnable()
+    [SerializeField]
+    private PlayerStat playerStat;
+    [SerializeField]
+    Data[] data = new Data[2];
+        
+
+    
+    [SerializeField]
+    Data ch1;
+    [SerializeField]
+    Data ch2;
+    private string ch1_SAVE_FILENAME = "/Character1SaveFile.txt";
+
+    private string ch2_SAVE_FILENAME = "/Character2SaveFile.txt";
+
+    private void Awake()
     {
+        data[0] = new Data();
+
+        data[1] = new Data();
         
     }
 
     private void Start()
     {
+        
+
         SAVE_DATA_DIRECTORY = Application.dataPath + "/Saves/";
 
         if (!Directory.Exists(SAVE_DATA_DIRECTORY))
@@ -49,8 +73,95 @@ public class SaveManager : MonoBehaviour
 
         CharacterSelLoad();
 
+        if (SaveOn)
+        {
+            StartCoroutine(SaveStart());
+        }
     }
 
+    
+
+    private void Update()
+    {
+
+            
+
+    }
+
+    IEnumerator SaveStart()
+    {
+        yield return new WaitForSeconds(1.0f);
+        while (true)
+        {
+            PositionSave();
+            string json = JsonUtility.ToJson(data[CharacterNum]);
+
+            if (CharacterNum == 0)
+            {
+                File.WriteAllText(SAVE_DATA_DIRECTORY + ch1_SAVE_FILENAME, json);
+            }
+            else if (CharacterNum == 1)
+            {
+                File.WriteAllText(SAVE_DATA_DIRECTORY + ch2_SAVE_FILENAME, json);
+            }
+            
+            yield return new WaitForSeconds(0.2f); //0.2초마다 저장
+        }
+    }
+
+    public void PositionSave()
+    {
+        playerStat = FindObjectOfType<PlayerStat>();
+        data[CharacterNum].Hp = playerStat._Hp;
+        data[CharacterNum].Mp = playerStat._Mp;
+        data[CharacterNum].Position = playerStat.gameObject.transform.position;
+        data[CharacterNum].Exp = playerStat.NowExp;
+        data[CharacterNum].Level = playerStat.Level;
+
+    }
+
+    
+    public void LoadCharacter()
+    {
+        if (CharacterNum == 0) { 
+            if(File.Exists(SAVE_DATA_DIRECTORY+ ch1_SAVE_FILENAME))
+            {
+                string loadJson = File.ReadAllText(SAVE_DATA_DIRECTORY + ch1_SAVE_FILENAME);
+                LoadCh(loadJson);
+                
+            }
+        }
+        else if(CharacterNum == 1)
+        {
+            if(File.Exists(SAVE_DATA_DIRECTORY + ch2_SAVE_FILENAME))
+            {
+                string loadJson = File.ReadAllText(SAVE_DATA_DIRECTORY + ch2_SAVE_FILENAME);
+                LoadCh(loadJson);
+            }
+        }
+
+
+        
+    }
+
+    private void LoadCh(string _loadJson)
+    {
+        data[CharacterNum] = JsonUtility.FromJson<Data>(_loadJson);
+        playerStat = FindObjectOfType<PlayerStat>();
+        playerStat.gameObject.transform.position = data[CharacterNum].Position;
+        playerStat._Hp= data[CharacterNum].Hp;
+        playerStat._Mp = data[CharacterNum].Mp;
+        playerStat.Level = data[CharacterNum].Level;
+        playerStat.NowExp = data[CharacterNum].Exp;
+        playerStat.StartSet();
+
+    }
+
+
+
+
+
+    #region 캐릭터 선택창 관련 로드/세이브 함수
 
     public void CharacterSelSave1()
     {
@@ -125,6 +236,10 @@ public class SaveManager : MonoBehaviour
             Debug.Log("세이브 파일이 없습니다.");
 
     }
+
+    #endregion
+
+    
 
 
 }
