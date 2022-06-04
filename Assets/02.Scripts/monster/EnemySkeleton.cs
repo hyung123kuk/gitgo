@@ -26,9 +26,11 @@ public class EnemySkeleton : Monster
     NavMeshAgent nav;
     Animator anim;
     QuestNormal questNormal;
-
+    [SerializeField]
+    Attacking attacking;
     void Awake()
     {
+        attacking = transform.GetChild(2).GetComponent<Attacking>();
         rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
         mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
@@ -118,16 +120,19 @@ public class EnemySkeleton : Monster
 
     IEnumerator Attack()
     {
+        attacking.isAttacking = true;
+       
+
         isChase = false;
         isAttack = true;
         nav.isStopped = true;
         anim.SetBool("isAttack", true);
         yield return new WaitForSeconds(0.5f);
         meleeArea.enabled = true;
-
         yield return new WaitForSeconds(0.2f);
         rigid.velocity = Vector3.zero;
         meleeArea.enabled = false;
+       
 
         yield return new WaitForSeconds(0.5f);
         isChase = true;

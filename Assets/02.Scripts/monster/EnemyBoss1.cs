@@ -34,6 +34,8 @@ public class EnemyBoss1 : MonsterBoss
     public bool Patterning; //현재 패턴진행중?
     public bool isSkill; //현재 스킬사용중?
 
+    [SerializeField]
+    Attacking attacking;
     void Awake()
     {
         stunarea = GetComponentInChildren<Light>();
@@ -42,7 +44,7 @@ public class EnemyBoss1 : MonsterBoss
         mat = GetComponentsInChildren<SkinnedMeshRenderer>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-
+        attacking = transform.GetChild(2).GetComponent<Attacking>();
 
 
         StartBossMonster();
@@ -260,6 +262,8 @@ public class EnemyBoss1 : MonsterBoss
     }
     IEnumerator Attack() //������ �ϰ� �������ϰ� �ٽ� ������ ����
     {
+        attacking.isAttacking = true;
+        
 
         isChase = false;
         isAttack = true;
@@ -267,12 +271,10 @@ public class EnemyBoss1 : MonsterBoss
         anim.SetBool("isAttack", true);
         yield return new WaitForSeconds(0.4f);
         meleeArea.enabled = true;
-
-
+        
         yield return new WaitForSeconds(1f);
         rigid.velocity = Vector3.zero;
         meleeArea.enabled = false;
-
 
         isChase = true;
         isAttack = false;

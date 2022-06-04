@@ -30,8 +30,12 @@ public class EnemyBlueSlime : Monster
     NavMeshAgent nav;
     Animator anim;
     QuestNormal questNormal;
+
+    [SerializeField]
+    Attacking attacking;
     void Awake()
     {
+        attacking = transform.GetChild(2).GetComponent<Attacking>();
         rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
         mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
@@ -118,17 +122,18 @@ public class EnemyBlueSlime : Monster
 
     IEnumerator Attack() 
     {
+        attacking.isAttacking = true;
+        
+
         isChase = false;
         isAttack = true;
         nav.isStopped = true;
         anim.SetBool("isAttack", true);
         yield return new WaitForSeconds(0.2f);
         meleeArea.enabled = true;
-
         yield return new WaitForSeconds(0.7f);
         rigid.velocity = Vector3.zero;
         meleeArea.enabled = false;
-
 
         isChase = true;
         isAttack = false;

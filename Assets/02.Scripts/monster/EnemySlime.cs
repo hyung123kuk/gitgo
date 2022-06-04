@@ -16,6 +16,7 @@ public class EnemySlime  : Monster
     public bool isDamage; //현재맞고있나
 
 
+
     public ParticleSystem Hiteff;
     public ParticleSystem Hiteff2;
 
@@ -33,8 +34,12 @@ public class EnemySlime  : Monster
 
     QuestNormal questNormal;
 
+    [SerializeField]  
+    Attacking attacking;
+
     void Awake()
     {
+        attacking = transform.GetChild(2).GetComponent<Attacking>();
         enemySlime = this;
         rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
@@ -132,17 +137,18 @@ public class EnemySlime  : Monster
 
     IEnumerator Attack() //������ �ϰ� �������ϰ� �ٽ� ������ ����
     {
+        attacking.isAttacking = true;
+
         isChase = false;
         isAttack = true;
         nav.isStopped = true;
         anim.SetBool("isAttack", true);
         yield return new WaitForSeconds(0.2f);
         meleeArea.enabled = true;
-
         yield return new WaitForSeconds(0.7f);
         rigid.velocity = Vector3.zero;
         meleeArea.enabled = false;
-
+        
 
         isChase = true;
         isAttack = false;
