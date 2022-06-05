@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(AudioSource))] //자동으로 오디오소스 부착
 public class SoundManager : MonoBehaviour
@@ -28,6 +29,8 @@ public class SoundManager : MonoBehaviour
     private void Update()
     {
         soundbar = FindObjectOfType<SoundBar>();
+
+        
         audioSource.volume = soundbar.CharacterVolume;
     }
     //==============================공용 사운드=========================================//

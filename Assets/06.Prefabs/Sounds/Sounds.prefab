@@ -546,6 +546,14 @@ MonoBehaviour:
   Horse: {fileID: 8300000, guid: cd445231e522bb040a1299dbb7e4931a, type: 3}
   Horse2: {fileID: 8300000, guid: d189d6b0a0a9d7942b5087a830178c55, type: 3}
   HorseRunSound: {fileID: 8300000, guid: 84187551ff85ef24989ce1e8f99ae9ec, type: 3}
+  WarriorTalk1: {fileID: 8300000, guid: 2d94dbcbe75f68347a39aa3867b5fd31, type: 3}
+  WarriorTalk2: {fileID: 8300000, guid: 6878d2f44b94cc644b2ad41b6667b519, type: 3}
+  ArcherTalk1: {fileID: 8300000, guid: 8bf78f7b9e91ae748aa2a7ea927e849a, type: 3}
+  ArcherTalk2: {fileID: 8300000, guid: 5495eee8784a7b549bb3212d677c1791, type: 3}
+  SelArcherAttackSound: {fileID: 8300000, guid: e0112a59dcb6ac14eae90af9da4a0888, type: 3}
+  MageTalk1: {fileID: 8300000, guid: ac87049334452fa4c84f70d89c780ad1, type: 3}
+  MageTalk2: {fileID: 8300000, guid: 4bb25c993c0122a43af407b21362f4f4, type: 3}
+  SelMageAttackSound: {fileID: 8300000, guid: 2387a5110388d544cb1c473abb3f024f, type: 3}
   WarriorAttackSound: {fileID: 8300000, guid: 13182107f288fdc47a11f9216c8f062b, type: 3}
   WarriorAttackVoice: {fileID: 8300000, guid: a390f9932470d264da3696567a4a581c, type: 3}
   WarriorAttackVoice2: {fileID: 8300000, guid: 33b254c7c6a9bd544942d22f9324246a, type: 3}

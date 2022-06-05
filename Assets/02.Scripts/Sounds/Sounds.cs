@@ -19,6 +19,18 @@ public class Sounds : MonoBehaviour
     public AudioClip Horse2; //말 소환해제소리
     public AudioClip HorseRunSound; //말 달리는소리
 
+
+    [Header("캐릭터창 사운드")]
+    public AudioClip WarriorTalk1; //전사대사
+    public AudioClip WarriorTalk2; //전사대사2
+    public AudioClip ArcherTalk1; //궁수대사1
+    public AudioClip ArcherTalk2; //궁수대사2
+    public AudioClip SelArcherAttackSound; //궁수 공격소리
+    public AudioClip MageTalk1; //마법사대사1
+    public AudioClip MageTalk2; //마법사대사2
+    public AudioClip SelMageAttackSound; //마법사공격소리
+    public AudioClip SelMakeSound; //캐릭터생성소리
+
     [Header("전사 사운드")]
     public AudioClip WarriorAttackSound;//전사 기본공격
     public AudioClip WarriorAttackVoice; //전사 공격보이스;
