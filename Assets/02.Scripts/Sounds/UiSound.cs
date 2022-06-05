@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 [RequireComponent(typeof(AudioSource))]
 public class UiSound : MonoBehaviour
@@ -19,15 +20,17 @@ public class UiSound : MonoBehaviour
 
     private void Start()
     {
+
         soundbar = FindObjectOfType<SoundBar>();
         audioSource = GetComponent<AudioSource>();
-    
+
 
     }
     //=====================유아이 사운드===============================
     private void Update()
     {
-        audioSource.volume = soundbar.UIVolume;
+        if (SceneManager.GetActiveScene().name != "ChSel_sangin")  //캐릭터선택창 씬에서는 적용X
+            audioSource.volume = soundbar.UIVolume;
     }
 
     public void InventoryOpenSound() //인벤 여는소리
