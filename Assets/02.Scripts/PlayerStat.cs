@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PlayerStat : MonoBehaviour
 {
-    public int Level;
+    public int Level=1;
     public float TotalExp;
 
     public float NowExp;
@@ -48,7 +48,7 @@ public class PlayerStat : MonoBehaviour
  
     void Start()
     {
-       
+
         playerstat = this;
         playerST = GetComponent<PlayerST>();
         inven = FindObjectOfType<inventory>();
@@ -56,16 +56,21 @@ public class PlayerStat : MonoBehaviour
         skillWindow = FindObjectOfType<SkillWindow>();
         equSlots = GameObject.FindGameObjectWithTag("EqueSlot").GetComponentsInChildren<Slot>(); //여기서 오류가 뜬다면 인벤토리디자인을 킨 상태로 시작해주세요.
         StatAllUpdate();
-        TotalExp = LevelExp();
+        
         _Hp = _MAXHP;
         _Mp = _MAXMP;
-       gameUI.Hp_bar.text.text = (int)_Hp + "/" + (int)_MAXHP;
-       gameUI.Mp_bar.text.text = (int)_Mp + "/" + (int)_MAXMP;
-       gameUI.level_Text.text = "LV." + Level;
-       gameUI.Exp_Text.text = (int)NowExp + "/" + (int)TotalExp +"  ("+ (int)(NowExp / TotalExp * 100) + "%)" ; 
-       gameUI.ExpSet();
+        StartSet();
+    }
+
+    public void StartSet()
+    {
+        gameUI.LevelSet();
+        TotalExp = LevelExp();
+        StatAllUpdate();        
+        gameUI.ExpSet();
         StatWindow.statWindow.SetLevel();
         StatWindow.statWindow.SetStat();
+        gameUI.bar_set();
     }
 
     private void Update()
@@ -84,7 +89,7 @@ public class PlayerStat : MonoBehaviour
         _DEX = 0;
         _INT = 0;
         _MAXHP = 200 * Level;
-        _MAXMP = 200 * Level;
+        _MAXMP= 200 * Level;
         _DAMAGE = 0;
         _DEFENCE = 0;
         _SKILL_ADD_DAMAGE_PER = 0;

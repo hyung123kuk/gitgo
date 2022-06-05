@@ -41,8 +41,9 @@ public class AllUI : MonoBehaviour
     private void Start()
     {
         MouseCursor=GetComponent<MouseCursor>();
-      
-        
+        ExitWindow.isExitMenu = false;
+        CheckCursorLock();
+
     }
 
     // Update is called once per frame
