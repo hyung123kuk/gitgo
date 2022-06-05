@@ -39,6 +39,20 @@ public class QuikSlot : MonoBehaviour
     }
 
 
+    public void addItem(QuikSlot quikSlot,Item _item, int _itemCount)
+    {
+
+        quikSlot.GetComponent<Slot>().AddItem(_item, _itemCount);
+        
+    }
+
+    public void addSkill(QuikSlot quikSlot,SkillUI _skill)
+    {
+        quikSlot.GetComponent<SkillSlot>().skill = _skill;
+        quikSlot.GetComponent<SkillSlot>().Setimage();
+        quikSlot.GetComponent<SkillSlot>().SetColor(1);
+    }
+
     public void setCoolImage()
     {
         if(skill.skill == null)

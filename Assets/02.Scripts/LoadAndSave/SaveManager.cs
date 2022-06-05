@@ -21,6 +21,21 @@ public class Data
     public float Mp;
     public int Level;
     public float Exp;
+    public float Gold;
+
+    public List<int> invenArrNum = new List<int>();
+    public List<string> invenItemName = new List<string>();
+    public List<int> invenItemCount = new List<int>();
+
+    public List<int> QuickArrNum = new List<int>();
+    public List<string> QuickName = new List<string>();
+    public List<int> QuickitemCount = new List<int>();
+    public List<bool> QuickisItem = new List<bool>();
+
+    public List<int> EQitemArrNum = new List<int>();
+    public List<string> EQitemArrName = new List<string>();
+
+    
 }
 
 
@@ -37,6 +52,7 @@ public class SaveManager : MonoBehaviour
     public bool SaveOn;
     public int CharacterNum;
 
+    #region 캐릭터 기본스탯 관련 변수
     [SerializeField]
     private PlayerStat playerStat;
     [SerializeField]
@@ -51,6 +67,11 @@ public class SaveManager : MonoBehaviour
     private string ch1_SAVE_FILENAME = "/Character1SaveFile.txt";
 
     private string ch2_SAVE_FILENAME = "/Character2SaveFile.txt";
+    #endregion
+
+
+    inventory inven;
+    QuickSlots QuikSlots;
 
     private void Awake()
     {
@@ -79,14 +100,6 @@ public class SaveManager : MonoBehaviour
         }
     }
 
-    
-
-    private void Update()
-    {
-
-            
-
-    }
 
     IEnumerator SaveStart()
     {
@@ -117,8 +130,71 @@ public class SaveManager : MonoBehaviour
         data[CharacterNum].Position = playerStat.gameObject.transform.position;
         data[CharacterNum].Exp = playerStat.NowExp;
         data[CharacterNum].Level = playerStat.Level;
+        data[CharacterNum].Gold = playerStat.MONEY;
+        InvenSave();
+        QuickSave();
+        EquSlot();
+    }
+
+    public void InvenSave()
+    {
+        inven = FindObjectOfType<inventory>();
+        Slot[] slots = inven.GetSlots();
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if(slots[i].item != null)
+            {
+                data[CharacterNum].invenArrNum.Add(i);
+                data[CharacterNum].invenItemCount.Add(slots[i].itemCount);
+                data[CharacterNum].invenItemName.Add(slots[i].item.itemName);
+
+            }
+        }
+    }
+
+    public void QuickSave()
+    {
+        QuikSlots = FindObjectOfType<QuickSlots>();
+        QuikSlot[] quikslots = QuikSlots.GetSlots();
+
+        for (int i = 0; i < quikslots.Length; i++)
+        {
+            if (quikslots[i].slot.item != null)
+            {
+                data[CharacterNum].QuickisItem.Add(true);
+                data[CharacterNum].QuickArrNum.Add(i);
+                data[CharacterNum].QuickitemCount.Add(quikslots[i].slot.itemCount);
+                data[CharacterNum].QuickName.Add(quikslots[i].slot.item.itemName);
+
+            }
+            else if(quikslots[i].skill.skill !=null)
+            {
+                data[CharacterNum].QuickisItem.Add(false);
+                data[CharacterNum].QuickArrNum.Add(i);
+                data[CharacterNum].QuickitemCount.Add(0);
+                data[CharacterNum].QuickName.Add(quikslots[i].skill.skill.skillName);
+            }
+        }
 
     }
+
+    public void EquSlot()
+    {
+        inven = FindObjectOfType<inventory>();
+        Slot[] slots = inven.GetEqSlots();
+
+        for (int i = 0; i < slots.Length; i++)
+        {
+            if (slots[i].item != null)
+            {
+                data[CharacterNum].EQitemArrNum.Add(i);
+                data[CharacterNum].EQitemArrName.Add(slots[i].item.itemName);
+
+            }
+        }
+
+    }
+
 
     
     public void LoadCharacter()
@@ -148,12 +224,32 @@ public class SaveManager : MonoBehaviour
     {
         data[CharacterNum] = JsonUtility.FromJson<Data>(_loadJson);
         playerStat = FindObjectOfType<PlayerStat>();
+        inven = FindObjectOfType<inventory>();
+        QuikSlots = FindObjectOfType<QuickSlots>();
+
+
         playerStat.gameObject.transform.position = data[CharacterNum].Position;
         playerStat._Hp= data[CharacterNum].Hp;
         playerStat._Mp = data[CharacterNum].Mp;
         playerStat.Level = data[CharacterNum].Level;
         playerStat.NowExp = data[CharacterNum].Exp;
+        playerStat.MONEY = data[CharacterNum].Gold;
         playerStat.StartSet();
+
+        for(int i=0;i<data[CharacterNum].invenItemName.Count; i++)
+        {
+            inven.LoadToInven(data[CharacterNum].invenArrNum[i], data[CharacterNum].invenItemName[i], data[CharacterNum].invenItemCount[i]);
+        }
+
+        for(int i = 0; i < data[CharacterNum].QuickName.Count; i++)
+        {
+            QuikSlots.LoadToQuick(data[CharacterNum].QuickArrNum[i], data[CharacterNum].QuickName[i], data[CharacterNum].QuickitemCount[i], data[CharacterNum].QuickisItem[i]);
+        }
+
+        for (int i = 0; i < data[CharacterNum].EQitemArrName.Count; i++)
+        {
+            inven.LoadToEq(data[CharacterNum].EQitemArrNum[i], data[CharacterNum].EQitemArrName[i]);
+        }
 
     }
 

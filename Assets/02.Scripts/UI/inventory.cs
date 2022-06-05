@@ -4,13 +4,14 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
+public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
 {
     int invencheck = 0;
     public static inventory inven;
     public static bool iDown; // 인벤토리가 열려있으면 true
     public GameObject Inven; // 인벤토리 창
     static public Slot[] slots;
+    public Slot[] eqslots;
     [SerializeField]
     private GameObject SlotsParent;
     public Text Gold;
@@ -22,17 +23,50 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
     [SerializeField]
     private ToolTip toolTip;
 
+
+    public Slot[] GetSlots() { return slots; }
+    public Slot[] GetEqSlots() { return eqslots; }
+    [SerializeField]
+    Item[] items;
+
+    public void LoadToInven(int _arrNum, string _itemName, int _itemCount)
+    {
+        for(int i = 0; i < items.Length; i++)
+        { 
+            if(items[i].itemName == _itemName)
+            {
+                slots[_arrNum].AddItem(items[i], _itemCount);
+            }
+        }
+
+    }
+
+    public void LoadToEq(int _arrNum, string _itemName)
+    {
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i].itemName == _itemName)
+            {
+                eqslots[_arrNum].AddItem(items[i]);
+ 
+                
+            }
+        }
+    }
+
     private void Awake()
     {
 
         
         slots = SlotsParent.GetComponentsInChildren<Slot>();
+        
         allUI = FindObjectOfType<AllUI>();
         itemStore = FindObjectOfType<itemStore>();
         toolTip = FindObjectOfType<ToolTip>();
         inven = this;
         iDown = false;
         StartCoroutine(invenSet());
+        eqslots = GameObject.FindGameObjectWithTag("EqueSlot").GetComponentsInChildren<Slot>();
 
     }
 
@@ -54,6 +88,8 @@ public class inventory : MonoBehaviour ,IPointerClickHandler,IEndDragHandler
         invencheck = 1;
 
     }
+
+
 
 
     void Update()

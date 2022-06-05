@@ -49,6 +49,9 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     }
 
+
+
+
     public void SetSkillColor()
     {
         if (gameObject.layer == LayerMask.NameToLayer("SkillSlot"))

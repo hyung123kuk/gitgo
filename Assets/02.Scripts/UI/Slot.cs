@@ -37,9 +37,9 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         inven = FindObjectOfType<inventory>();
        
         item_sell_question = FindObjectOfType<itemSellQuestion>();
+        tooltip = FindObjectOfType<ToolTip>();
 
-        
-       
+
     }
 
     private void Start()
@@ -117,6 +117,8 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         itemCount = _count;
         itemImage.sprite = item.itemImage;
 
+        
+
         if (item.itemType == Item.ItemType.Used)
         {
           
@@ -125,10 +127,18 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         else
         {
             text_Count.text = "";
-            
+            if (gameObject.tag == "weaponslot")
+            {
+                playerSt.WeaponChange(item.SwordNames);
+                playerStat.StatAllUpdate();
+                gameUI.bar_set();
+            }
+
+
         }
 
         SetColor(1);
+
     }
 
     // 해당 슬롯의 아이템 갯수 업데이트
