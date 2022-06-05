@@ -870,7 +870,7 @@ public class PlayerST : MonoBehaviour
             //if (!isDamage) //무적타이밍이 아닐때만 실행
             //{
 
-            if (other.gameObject.GetComponent<Attacking>().isAttacking)
+            if (other.gameObject.GetComponent<Attacking>().isAttacking && !isDamage)
             {
                 EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
                 PlayerStat.playerstat.DamagedHp(enemyRange.damage);
@@ -1008,15 +1008,6 @@ public class PlayerST : MonoBehaviour
 
 
 
-    IEnumerator OnDamage() //무적타임
-    {
-        isDamage = true; //무적타임 true
-
-        yield return new WaitForSeconds(1f);
-
-        isDamage = false;
-
-    }
     IEnumerator OnDamageNuck() //무적타임
     {
         anim.SetBool("isStun", true);
