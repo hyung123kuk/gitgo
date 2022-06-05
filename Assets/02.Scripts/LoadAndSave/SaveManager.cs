@@ -140,14 +140,23 @@ public class SaveManager : MonoBehaviour
     {
         inven = FindObjectOfType<inventory>();
         Slot[] slots = inven.GetSlots();
+        data[CharacterNum].invenArrNum.Clear();
+        data[CharacterNum].invenItemCount.Clear();
+        data[CharacterNum].invenItemName.Clear();
         for (int i = 0; i < slots.Length; i++)
         {
+            
             if(slots[i].item != null)
             {
                 data[CharacterNum].invenArrNum.Add(i);
                 data[CharacterNum].invenItemCount.Add(slots[i].itemCount);
                 data[CharacterNum].invenItemName.Add(slots[i].item.itemName);
 
+            }
+            else {
+                data[CharacterNum].invenArrNum.Add(i);
+                data[CharacterNum].invenItemCount.Add(0);
+                data[CharacterNum].invenItemName.Add(" ");
             }
         }
     }
@@ -156,6 +165,11 @@ public class SaveManager : MonoBehaviour
     {
         QuikSlots = FindObjectOfType<QuickSlots>();
         QuikSlot[] quikslots = QuikSlots.GetSlots();
+
+        data[CharacterNum].QuickisItem.Clear();
+        data[CharacterNum].QuickArrNum.Clear();
+        data[CharacterNum].QuickitemCount.Clear();
+        data[CharacterNum].QuickName.Clear();
 
         for (int i = 0; i < quikslots.Length; i++)
         {
@@ -182,6 +196,8 @@ public class SaveManager : MonoBehaviour
     {
         inven = FindObjectOfType<inventory>();
         Slot[] slots = inven.GetEqSlots();
+        data[CharacterNum].EQitemArrNum.Clear();
+        data[CharacterNum].EQitemArrName.Clear();
 
         for (int i = 0; i < slots.Length; i++)
         {

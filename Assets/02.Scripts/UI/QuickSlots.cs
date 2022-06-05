@@ -29,6 +29,7 @@ public class QuickSlots : MonoBehaviour
                     quikSlots[_arrNum].addItem(quikSlots[_arrNum], items[i], _itemCount);
                 }
 
+
             }
         }
         else

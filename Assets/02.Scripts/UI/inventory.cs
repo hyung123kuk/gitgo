@@ -37,6 +37,8 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
             {
                 slots[_arrNum].AddItem(items[i], _itemCount);
             }
+
+            
         }
 
     }
@@ -49,8 +51,8 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
             {
                 eqslots[_arrNum].AddItem(items[i]);
  
-                
             }
+
         }
     }
 
