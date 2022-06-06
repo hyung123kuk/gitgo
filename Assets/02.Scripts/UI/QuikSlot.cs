@@ -6,8 +6,7 @@ using UnityEngine.UI;
 
 public class QuikSlot : MonoBehaviour
 {
-    [SerializeField]
-    QuestStore questStore;
+    
     [SerializeField]
     public Slot slot;
     [SerializeField]
@@ -35,7 +34,8 @@ public class QuikSlot : MonoBehaviour
         quikSlot = this;
         attckDamage = FindObjectOfType<AttackDamage>();
         buffSkillUI = FindObjectsOfType<BuffSkillUI>();
-        questStore = FindObjectOfType<QuestStore>();
+
+        
     }
 
 
@@ -51,6 +51,7 @@ public class QuikSlot : MonoBehaviour
         quikSlot.GetComponent<SkillSlot>().skill = _skill;
         quikSlot.GetComponent<SkillSlot>().Setimage();
         quikSlot.GetComponent<SkillSlot>().SetColor(1);
+        setCoolImage();
     }
 
     public void setCoolImage()
@@ -164,7 +165,8 @@ public class QuikSlot : MonoBehaviour
                 if (skill.skill.skillNum == 0 && attckDamage.Usable_Dodge) { 
                     playerST.Dodge(); 
                     StartCoroutine(Dodge());
-                    QuestStore.qustore.MainQuestSuccess(1);
+                    
+                   
 
                 }              
             }
@@ -301,6 +303,7 @@ public class QuikSlot : MonoBehaviour
 
         }
         CoolTimeImage.fillAmount = 0f;
+        
         yield return null;
     }
 }

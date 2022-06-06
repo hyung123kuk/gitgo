@@ -53,12 +53,12 @@ public class AllUI : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
-            for(int i=0; i < UIWIndow.Length; i++)
+            for (int i = 0; i < UIWIndow.Length; i++)
             {
                 if (UIWIndow[i].activeSelf == true)
                     break;
 
-                if(UIWIndow.Length-1 == i)
+                if (UIWIndow.Length - 1 == i)
                 {
                     ExitWindow.ExWindow.ExitWindowOn();
                     CheckCursorLock();
@@ -66,25 +66,15 @@ public class AllUI : MonoBehaviour
                 }
             }
 
-            for(int i = 0; i < UIWIndow.Length; i++)
-            {               
-               UIWIndow[i].SetActive(false);
-            }
-            inventory.iDown = false;
-            SkillWindow.kDown = false;
-            StatWindow.tDown = false;
-            itemStore.sellButton = false;
-            QuestExplain.isQuestExplain = false;
-            QuestWindow.isQuestWindow = false;
-            ExitWindow.isExitMenu = false;
+            AllWindowEnd();
             MouseCursor.transform_cursor.gameObject.SetActive(false);
             MouseCursor.SetNormalCursor();
             CheckCursorLock();
 
         }
 
-      
-        
+
+
         if (ExitWindow.isExitMenu ==true)
             return;
         
@@ -177,6 +167,21 @@ public class AllUI : MonoBehaviour
 
     }
 
+    public void AllWindowEnd()
+    {
+        for (int i = 0; i < UIWIndow.Length; i++)
+        {
+            UIWIndow[i].SetActive(false);
+        }
+        inventory.iDown = false;
+        SkillWindow.kDown = false;
+        StatWindow.tDown = false;
+        itemStore.sellButton = false;
+        QuestExplain.isQuestExplain = false;
+        QuestWindow.isQuestWindow = false;
+        ExitWindow.isExitMenu = false;
+        
+    }
 
     public void CheckCursorLock()
     {

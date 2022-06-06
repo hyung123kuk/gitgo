@@ -35,7 +35,27 @@ public class Data
     public List<int> EQitemArrNum = new List<int>();
     public List<string> EQitemArrName = new List<string>();
 
-    
+    public List<int> QuestNum = new List<int>();
+    public List<int> QuestName = new List<int>();
+    public int QuestMainNum; // 메인퀘스트 이름 띄우기 위한변수
+    public int QuestOrder;
+
+    public bool MainRecieve;
+    public bool MainClear;
+    public int MainNum;// 퀘스트 스토어에 이름 띄우기 위한 변수
+
+    public int slimeKill;
+    public bool Quest_slime;
+    public bool slime_Success;
+
+    public int goblinKill;
+    public bool Quest_goblin ;
+    public bool goblin_Success;
+
+    public int skelletonKill;
+    public bool Quest_skelleton;
+    public bool skelleton_Success;
+
 }
 
 
@@ -72,6 +92,10 @@ public class SaveManager : MonoBehaviour
 
     inventory inven;
     QuickSlots QuikSlots;
+    QuestWindow questWindow;
+    QuestExplain questExplain;
+    QuestStore questStore;
+    QuestNormal questNormal;
 
     private void Awake()
     {
@@ -133,7 +157,8 @@ public class SaveManager : MonoBehaviour
         data[CharacterNum].Gold = playerStat.MONEY;
         InvenSave();
         QuickSave();
-        EquSlot();
+        EquSlotSave();
+        QuestSave();
     }
 
     public void InvenSave()
@@ -192,7 +217,7 @@ public class SaveManager : MonoBehaviour
 
     }
 
-    public void EquSlot()
+    public void EquSlotSave()
     {
         inven = FindObjectOfType<inventory>();
         Slot[] slots = inven.GetEqSlots();
@@ -208,6 +233,55 @@ public class SaveManager : MonoBehaviour
 
             }
         }
+
+    }
+
+    public void QuestSave()
+    {
+        questWindow = FindObjectOfType<QuestWindow>();
+        QuestSlot[] slots = questWindow.ReturnQuestSlots();
+        data[CharacterNum].QuestName.Clear();
+        data[CharacterNum].QuestNum.Clear();
+        for(int i = 0; i < slots.Length; i++)
+        {
+            if(slots[i].questName != QuestSlot.QuestName.None)
+            {
+                data[CharacterNum].QuestNum.Add(i);
+                data[CharacterNum].QuestName.Add((int)slots[i].questName);
+            }
+
+        }
+
+        data[CharacterNum].QuestOrder = questWindow.questOrder;
+
+        questExplain = FindObjectOfType<QuestExplain>();
+        data[CharacterNum].QuestMainNum = questExplain.QuestNum;
+        if(data[CharacterNum].QuestMainNum>4)
+        {
+            questExplain.DungeonOpen();
+        }
+
+        questStore = FindObjectOfType<QuestStore>();
+        data[CharacterNum].MainNum = questStore.mainNum;
+        data[CharacterNum].MainRecieve = questStore.isMainRecive;
+        data[CharacterNum].MainClear = questStore.MainSuccess;
+
+        questNormal = FindObjectOfType<QuestNormal>();
+        data[CharacterNum].slimeKill = questNormal.slimeKill;
+        data[CharacterNum].slime_Success = questNormal.slime_Success;
+        data[CharacterNum].Quest_slime = questNormal.Quest_slime;
+
+        data[CharacterNum].goblinKill = questNormal.goblinKill;
+        data[CharacterNum].goblin_Success = questNormal.goblin_Success;
+        data[CharacterNum].Quest_goblin = questNormal.Quest_goblin;
+
+        data[CharacterNum].skelletonKill = questNormal.skelletonKill;
+        data[CharacterNum].skelleton_Success = questNormal.skelleton_Success;
+        data[CharacterNum].Quest_skelleton = questNormal.Quest_skelleton;
+
+
+
+
 
     }
 
@@ -242,7 +316,10 @@ public class SaveManager : MonoBehaviour
         playerStat = FindObjectOfType<PlayerStat>();
         inven = FindObjectOfType<inventory>();
         QuikSlots = FindObjectOfType<QuickSlots>();
-
+        questWindow = FindObjectOfType<QuestWindow>();
+        questStore = FindObjectOfType<QuestStore>();
+        questExplain = FindObjectOfType<QuestExplain>();
+        questNormal = FindObjectOfType<QuestNormal>();
 
         playerStat.gameObject.transform.position = data[CharacterNum].Position;
         playerStat._Hp= data[CharacterNum].Hp;
@@ -265,6 +342,31 @@ public class SaveManager : MonoBehaviour
         for (int i = 0; i < data[CharacterNum].EQitemArrName.Count; i++)
         {
             inven.LoadToEq(data[CharacterNum].EQitemArrNum[i], data[CharacterNum].EQitemArrName[i]);
+        }
+
+        questExplain.QuestNum = data[CharacterNum].QuestMainNum;
+        questStore.isMainRecive = data[CharacterNum].MainRecieve;
+        questStore.mainNum = data[CharacterNum].MainNum;
+
+        questStore.MainSuccess = data[CharacterNum].MainClear;
+        questNormal.slimeKill = data[CharacterNum].slimeKill;
+        questNormal.slime_Success = data[CharacterNum].slime_Success;
+        questNormal.Quest_slime = data[CharacterNum].Quest_slime;
+
+        questNormal.goblinKill = data[CharacterNum].goblinKill;
+        questNormal.goblin_Success = data[CharacterNum].goblin_Success;
+        questNormal.Quest_goblin = data[CharacterNum].Quest_goblin;
+
+        questNormal.skelletonKill = data[CharacterNum].skelletonKill;
+        questNormal.skelleton_Success = data[CharacterNum].skelleton_Success;
+        questNormal.Quest_skelleton = data[CharacterNum].Quest_skelleton;
+
+
+
+        questWindow.questOrder = data[CharacterNum].QuestOrder;
+        for (int i = 0; i < data[CharacterNum].QuestName.Count; i++)
+        {
+            questWindow.LoadToQuest(data[CharacterNum].QuestName[i], data[CharacterNum].QuestNum[i]);
         }
 
     }

@@ -197,7 +197,7 @@ public class PlayerStat : MonoBehaviour
             inven.AllSlotItemLimitColor();
             skillWindow.AllSkillSlotColor();
             StatWindow.statWindow.SetLevel();
-            if(Level >= 8)
+            if(Level == 8)
             {
                 QuestStore.qustore.MainQuestSuccess(4);
             }

@@ -140,7 +140,7 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
         {
             if (PlayerStat.playerstat.Level >= 8)
             {
-                MainSuccess = true;
+                MainQuestSuccess(4);
             }
             QuestExplain.questExplain.Main4(questTyping.main4_item, true, MainSuccess);
         }

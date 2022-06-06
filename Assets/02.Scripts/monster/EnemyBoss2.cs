@@ -41,7 +41,7 @@ public class EnemyBoss2 : MonsterBoss
     public bool Patterning; //현재 패턴진행중?
     public bool isSkill; //현재 스킬사용중?
 
-
+    QuestStore questStore;
     [SerializeField]
     Attacking attacking;
     void Awake()
@@ -53,7 +53,7 @@ public class EnemyBoss2 : MonsterBoss
         mat = GetComponentsInChildren<SkinnedMeshRenderer>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-
+        questStore = FindObjectOfType<QuestStore>();
         StartBossMonster();
         BossItemSet();
         Monstername.text = "골렘";
@@ -422,7 +422,10 @@ public class EnemyBoss2 : MonsterBoss
             foreach (SkinnedMeshRenderer mesh in mat)
                 mesh.material.color = Color.gray;
             Invoke("Diegg", 1.5f);
-            QuestStore.qustore.MainQuestSuccess(5);
+            if (!questStore.MainSuccess)
+            {
+                questStore.MainQuestSuccess(5);
+            }
 
         }
         yield return null;

@@ -15,9 +15,9 @@ public class QuestWindow : MonoBehaviour, IPointerClickHandler
     public static bool isQuestWindow =false;
 
     [SerializeField]
-    QuestSlot[] Slots;
+    QuestSlot[] Slots; public QuestSlot[] ReturnQuestSlots() { return Slots; }
 
-    Color MainbasicColor = new Color(0.17f, 0.85f, 0.16f); //메인 이름 컬러
+    Color MainbasicColor = new Color(0.17f, 0.85f, 0.16f,1f); //메인 이름 컬러
 
     public int questOrder =0;
 
@@ -32,6 +32,13 @@ public class QuestWindow : MonoBehaviour, IPointerClickHandler
         questExplain = FindObjectOfType<QuestExplain>();
         Slots = GetComponentsInChildren<QuestSlot>();
 
+    }
+
+    public void LoadToQuest(int _QuestName, int _QuestNum)
+    {
+
+        Slots[_QuestNum].questName = (QuestSlot.QuestName)_QuestName;
+        SlotSet();
     }
 
     private void Update()

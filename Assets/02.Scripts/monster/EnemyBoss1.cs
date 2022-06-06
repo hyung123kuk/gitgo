@@ -26,7 +26,7 @@ public class EnemyBoss1 : MonsterBoss
     SkinnedMeshRenderer[] mat;
     NavMeshAgent nav;
     Animator anim;
-
+    QuestStore questStore;
     public ParticleSystem Hiteff; //피격이펙
     public ParticleSystem Hiteff2;
     public bool isDamage;
@@ -45,7 +45,7 @@ public class EnemyBoss1 : MonsterBoss
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         attacking = transform.GetChild(2).GetComponent<Attacking>();
-
+        questStore = FindObjectOfType<QuestStore>();
 
         StartBossMonster();
         BossItemSet();
@@ -363,7 +363,11 @@ public class EnemyBoss1 : MonsterBoss
             anim.SetBool("isDie", true);
             gameObject.SetActive(false);
             Invoke("Diegg", 1.5f);
-            QuestStore.qustore.MainQuestSuccess(3);
+
+            if (!questStore.MainSuccess)
+            {
+                questStore.MainQuestSuccess(3);
+            }
         }
 
         

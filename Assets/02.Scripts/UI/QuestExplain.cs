@@ -327,7 +327,7 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
                             questWindow.QuestClear(QuestSlot.QuestName.main);
                             questStore.MainText.text = main5Name;
                             questStore.mainNum = 5;
-                            d_open.DunGeonOpen();
+                            DungeonOpen();
                         }
                     }
                     else if (QuestNum == 5)
@@ -437,6 +437,11 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
         }
 
         AllUI.allUI.CheckCursorLock();
+    }
+
+    public void DungeonOpen()
+    {
+        d_open.DunGeonOpen();
     }
 
     public void OnPointerClick(PointerEventData eventData)
