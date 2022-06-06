@@ -85,20 +85,13 @@ public class EnemyBoss1 : MonsterBoss
                     nav.isStopped = false;
                     nav.destination = target.position;
                     anim.SetBool("isRun", true);
+                    if (PlayerST.playerST.isDie)
+                        EnemyReset();
                 }
             }
             else if (Vector3.Distance(target.position, transform.position) > 27f && nav.enabled)
             {
-                nav.SetDestination(respawn.position);
-                isChase = false;
-                nav.speed = 20f;
-                nav.isStopped = false;
-                curHealth = maxHealth;
-                if (Vector3.Distance(respawn.position, transform.position) < 1f)
-                {
-                    nav.isStopped = true;
-                    anim.SetBool("isRun", false);
-                }
+                EnemyReset();
             }
         }
 
@@ -106,6 +99,19 @@ public class EnemyBoss1 : MonsterBoss
             if (!isDie && !PlayerST.isJump && !PlayerST.isFall)
                 transform.LookAt(target); //플레이어가 공중에 뜬 상태가 아닐때만 바라보기
 
+    }
+    void EnemyReset()
+    {
+        nav.SetDestination(respawn.position);
+        isChase = false;
+        nav.speed = 20f;
+        nav.isStopped = false;
+        curHealth = maxHealth;
+        if (Vector3.Distance(respawn.position, transform.position) < 1f)
+        {
+            nav.isStopped = true;
+            anim.SetBool("isRun", false);
+        }
     }
     void PatternStart()
     {
@@ -122,7 +128,7 @@ public class EnemyBoss1 : MonsterBoss
         yield return new WaitForSeconds(6f);
         if (!isDie)
         {
-            int ranAction = Random.Range(4, 6);
+            int ranAction = Random.Range(0,9);
             switch (ranAction)
             {
                 case 0:

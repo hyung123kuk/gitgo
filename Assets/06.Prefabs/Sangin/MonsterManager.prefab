@@ -172,7 +172,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 204528982859719654}
   m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 148.01, y: 8.9, z: 184.84}
+  m_LocalPosition: {x: 148.01, y: 7.56, z: 184.84}
   m_LocalScale: {x: 1.4142475, y: 1.4142474, z: 1.4142475}
   m_Children:
   - {fileID: 8768011908418913383}
@@ -7344,6 +7344,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 927447292136757000}
     m_Modifications:
+    - target: {fileID: 722789617, guid: b2092894a7e4d784ba2bb0bc1739703c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 35.19
+      objectReference: {fileID: 0}
+    - target: {fileID: 1225569174, guid: b2092894a7e4d784ba2bb0bc1739703c, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 36.52
+      objectReference: {fileID: 0}
     - target: {fileID: 845456106977473204, guid: b2092894a7e4d784ba2bb0bc1739703c, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -8022,6 +8030,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5093f25619f8dad479b1cc7acefbffaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  playerST: {fileID: 0}
   hpBarPrefab: {fileID: 0}
   Damage: {fileID: 0}
   hpBarOffset: {x: 0, y: 2.2, z: 0}

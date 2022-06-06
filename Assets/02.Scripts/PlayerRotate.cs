@@ -23,7 +23,7 @@ public class PlayerRotate : MonoBehaviour
 
     void LateUpdate()  //플레이어가 카메라를 바라봄
     {
-        if ( Weapons.isMeteo || AllUI.isUI)
+        if ( Weapons.isMeteo || AllUI.isUI || PlayerST.playerST.isDie)
             return;
 
         if (!PlayerST.playerST.HorseMode)

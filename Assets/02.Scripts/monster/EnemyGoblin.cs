@@ -76,26 +76,32 @@ public class EnemyGoblin : Monster
                         nav.speed = 10f;
                         anim.SetBool("isRun", true);
                     }
+                    if (PlayerST.playerST.isDie)
+                        EnemyReset();
                 }
             }
             else if (Vector3.Distance(target.position, transform.position) > 15f && nav.enabled) //15���� ��
             {
-                anim.SetBool("isRun", false);
-                nav.SetDestination(respawn.transform.position);
-                nav.speed = 20f;
-                curHealth = maxHealth;
-                isChase = false;
-                if (Vector3.Distance(respawn.position, transform.position) < 1f)
-                {
-                    nav.isStopped = true;
-                    anim.SetBool("isWalk", false);
-                }
+                EnemyReset();
             }
         }
 
-        if (isChase || isAttack) //�����̳� �������϶���
+        if (isChase || isAttack)
             if (!isDie && !PlayerST.isJump && !PlayerST.isFall && !isStun)
-                transform.LookAt(target); //�÷��̾� �ٶ󺸱�
+                transform.LookAt(target); 
+    }
+    void EnemyReset()
+    {
+        anim.SetBool("isRun", false);
+        nav.SetDestination(respawn.transform.position);
+        nav.speed = 20f;
+        curHealth = maxHealth;
+        isChase = false;
+        if (Vector3.Distance(respawn.position, transform.position) < 1f)
+        {
+            nav.isStopped = true;
+            anim.SetBool("isWalk", false);
+        }
     }
 
     void FreezeVelocity() //�̵�����

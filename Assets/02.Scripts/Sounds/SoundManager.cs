@@ -48,6 +48,14 @@ public class SoundManager : MonoBehaviour
     {
         audioSource.PlayOneShot(Sounds.sounds.DrinkSound);
     }
+    public void MaleDieSound() //남자죽음소리
+    {
+        audioSource.PlayOneShot(Sounds.sounds.MaleDieSound);
+    }
+    public void FeMaleDieSound() //여자죽음소리
+    {
+        audioSource.PlayOneShot(Sounds.sounds.FeMaleDieSound);
+    }
 
 
     //==============================전사 사운드=========================================//

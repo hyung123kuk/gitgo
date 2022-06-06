@@ -6,7 +6,7 @@ using UnityEngine.EventSystems;
 
 public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
 {
-    int invencheck = 0;
+    int invencheck = 0; //인벤 처음 열릴때 소리안나게하기위함
     public static inventory inven;
     public static bool iDown; // 인벤토리가 열려있으면 true
     public GameObject Inven; // 인벤토리 창

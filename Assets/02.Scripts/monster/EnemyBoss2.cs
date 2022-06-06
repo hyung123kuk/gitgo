@@ -100,20 +100,13 @@ public class EnemyBoss2 : MonsterBoss
                         nav.isStopped = false;
                         nav.destination = target.position;
                         anim.SetBool("isRun", true);
+                        if (PlayerST.playerST.isDie)
+                            EnemyReset();
                     }
                 }
                 else if (!PlayerST.playerST.DunjeonBossArena && nav.enabled) //복귀
                 {
-                    nav.SetDestination(respawn.position);
-                    isChase = false;
-                    nav.speed = 20f;
-                    nav.isStopped = false;
-                    curHealth = maxHealth;
-                    if (Vector3.Distance(respawn.position, transform.position) < 1f)
-                    {
-                        nav.isStopped = true;
-                        anim.SetBool("isRun", false);
-                    }
+                    EnemyReset();
                 }
             }
         }
@@ -131,9 +124,22 @@ public class EnemyBoss2 : MonsterBoss
 
 
     }
+    void EnemyReset()
+    {
+        nav.SetDestination(respawn.position);
+        isChase = false;
+        nav.speed = 20f;
+        nav.isStopped = false;
+        curHealth = maxHealth;
+        if (Vector3.Distance(respawn.position, transform.position) < 1f)
+        {
+            nav.isStopped = true;
+            anim.SetBool("isRun", false);
+        }
+    }
     void PatternStart()
     {
-        if (!Patterning)
+        if (!Patterning && !playerST.isDie)
         {
             StartCoroutine(Pattern());
             Patterning = true;

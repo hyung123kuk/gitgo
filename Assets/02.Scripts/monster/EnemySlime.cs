@@ -84,32 +84,32 @@ public class EnemySlime  : Monster
                     nav.isStopped = false;
                     nav.SetDestination(target.position);
                     anim.SetBool("isWalk", true);
+                    if (PlayerST.playerST.isDie)
+                        EnemyReset();
                 }
             }
             else if (Vector3.Distance(target.position, transform.position) > 20f && nav.enabled) //리셋
             {
-                nav.SetDestination(respawn.transform.position);
-                nav.speed = 20f;
-                curHealth = maxHealth;
-                isChase = false;
-                if (Vector3.Distance(respawn.position, transform.position) < 1f)
-                {
-                    nav.isStopped = true;
-                    anim.SetBool("isWalk", false);
-  
-                }
-            }
-            else
-            {
- 
-                anim.SetBool("isWalk", false);
+                EnemyReset();
             }
         }
         if (isChase || isAttack) //룩엣
             if (!isDie && !PlayerST.isJump && !PlayerST.isFall && !isStun)
                 transform.LookAt(target);
     }
+    void EnemyReset()
+    {
+        nav.SetDestination(respawn.transform.position);
+        nav.speed = 20f;
+        curHealth = maxHealth;
+        isChase = false;
+        if (Vector3.Distance(respawn.position, transform.position) < 1f)
+        {
+            nav.isStopped = true;
+            anim.SetBool("isWalk", false);
 
+        }
+    }
 
     void FreezeVelocity() //�̵�����
     {

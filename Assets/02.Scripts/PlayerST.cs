@@ -71,6 +71,9 @@ public class PlayerST : MonoBehaviour
     public bool DunjeonBossArena; //현재 위치가 보스아레나
     public bool NoMove; //벽뚫방지
 
+    public bool isDie; //플레이어 사망
+    public DieUI dieui;
+
 
     public static bool isFall; //공중에 떠있는상태? 몬스터들의 룩엣을 조정하기위함.
     //======================전사 스킬========================//
@@ -114,8 +117,11 @@ public class PlayerST : MonoBehaviour
     public static bool isCooldodge;
     public static bool isCoolTeleport;
 
+    
+
     void Start()
     {
+        playerstat = GetComponent<PlayerStat>();
         Horsee = GameObject.Find("HorseSpawn").transform.GetChild(0).transform
             .GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
         HorseSpawn = GameObject.Find("HorseSpawn");
@@ -124,6 +130,7 @@ public class PlayerST : MonoBehaviour
         anim = GetComponentInChildren<Animator>();
         rigid = GetComponent<Rigidbody>();
         playerST = this;
+        dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
     }
 
     void Anima() //애니메이션 
@@ -313,6 +320,7 @@ public class PlayerST : MonoBehaviour
         }
         #endregion
     }
+    
 
     void Attack()   //공격
     {
@@ -691,7 +699,7 @@ public class PlayerST : MonoBehaviour
 
         }
         ImWar = CharacterType == Type.Warrior;
-        if (AllUI.isUI || HorseMode)
+        if (AllUI.isUI || HorseMode || isDie)
             return;
         if (!NPC.isNPCRange)
             Cursor.lockState = CursorLockMode.Locked;//마우스커서 고정
@@ -862,6 +870,23 @@ public class PlayerST : MonoBehaviour
         FreezeVelocity();
         StopMove();
     }
+    void PlayerDie() //사망
+    {
+        SelectPlayer.enabled = false;
+        rigid.useGravity = false;
+        isDie = true;
+        anim.SetBool("isDie",true);
+        if(CharacterType == Type.Warrior || CharacterType == Type.Mage)
+            SoundManager.soundManager.MaleDieSound();
+        else if(CharacterType == Type.Archer)
+            SoundManager.soundManager.FeMaleDieSound();
+        dieui.DieOn();
+    }
+    public void PlayerResurrection() //죽고살아날때 갱신
+    {
+        playerstat._Hp = playerstat._MAXHP;
+        playerstat._Mp = playerstat._MAXMP;
+    }
 
     void OnTriggerEnter(Collider other) //충돌감지
     {
@@ -875,6 +900,10 @@ public class PlayerST : MonoBehaviour
                 EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
                 PlayerStat.playerstat.DamagedHp(enemyRange.damage);
                 other.gameObject.GetComponent<Attacking>().isAttacking = false;
+                if(PlayerStat.playerstat._Hp <= 0)
+                {
+                    PlayerDie();
+                }
             }
                 //StartCoroutine(OnDamage());
 
@@ -889,6 +918,10 @@ public class PlayerST : MonoBehaviour
                 PlayerStat.playerstat.DamagedHp(enemyRange.damage);
 
                 StartCoroutine(OnDamageNuck());
+                if (PlayerStat.playerstat._Hp <= 0)
+                {
+                    PlayerDie();
+                }
             }
         }
         else if (other.gameObject.tag == "Boss2Skill")  //최종보스 1.5초스턴스킬
@@ -900,6 +933,10 @@ public class PlayerST : MonoBehaviour
                 PlayerStat.playerstat.DamagedHp(enemyRange.damage);
 
                 StartCoroutine(OnDamageNuck2());
+                if (PlayerStat.playerstat._Hp <= 0)
+                {
+                    PlayerDie();
+                }
             }
 
         }
@@ -912,6 +949,10 @@ public class PlayerST : MonoBehaviour
                 PlayerStat.playerstat.DamagedHp(enemyRange.damage);
 
                 StartCoroutine(OnDamageNuck3());
+                if (PlayerStat.playerstat._Hp <= 0)
+                {
+                    PlayerDie();
+                }
             }
         }
 

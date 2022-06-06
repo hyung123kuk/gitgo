@@ -21,6 +21,7 @@ public class CameraRotate : MonoBehaviour
     public float yMinLimit = -20f;
     public float yMaxLimit = 80f;
 
+    public PlayerST playerst;
 
 
     //앵글의 최소,최대 제한
@@ -33,21 +34,21 @@ public class CameraRotate : MonoBehaviour
         return Mathf.Clamp(angle, min, max);
     }
 
-    
+
     void Start()
     {
-        
+        playerst = FindObjectOfType<PlayerST>();
         Vector3 angles = transform.eulerAngles;
         x = angles.y;
         y = angles.x;
 
-        
+
     }
 
 
 
 
-   
+
     void Update()
     {
         if (Weapons.isMeteo || AllUI.isUI)
@@ -71,25 +72,26 @@ public class CameraRotate : MonoBehaviour
                 dist = 6;
             }
 
-            
-            
-                //카메라 회전속도 계산
-                x += Input.GetAxis("Mouse X") * xSpeed * 0.015f;
+
+
+            //카메라 회전속도 계산
+            x += Input.GetAxis("Mouse X") * xSpeed * 0.015f;
+            if (!playerst.isDie) //죽었을땐 상하못움직이게
                 y -= Input.GetAxis("Mouse Y") * ySpeed * 0.015f;
-            
 
-                //앵글값 정하기
-                //y값의 Min과 MaX 없애면 y값이 360도 계속 돎
-                //x값은 계속 돌고 y값만 제한
-                y = ClampAngle(y, yMinLimit, yMaxLimit);
 
-                //카메라 위치 변화 계산
-                Quaternion rotation = Quaternion.Euler(y, x, 0);
-                Vector3 position = rotation * new Vector3(0, 0.0f, -dist) + target.position + new Vector3(0.0f, 0, 0.0f);
+            //앵글값 정하기
+            //y값의 Min과 MaX 없애면 y값이 360도 계속 돎
+            //x값은 계속 돌고 y값만 제한
+            y = ClampAngle(y, yMinLimit, yMaxLimit);
 
-                transform.rotation = rotation;
-                transform.position = position;
-            
+            //카메라 위치 변화 계산
+            Quaternion rotation = Quaternion.Euler(y, x, 0);
+            Vector3 position = rotation * new Vector3(0, 0.0f, -dist) + target.position + new Vector3(0.0f, 0, 0.0f);
+
+            transform.rotation = rotation;
+            transform.position = position;
+
         }
 
     }

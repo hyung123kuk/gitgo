@@ -18,6 +18,8 @@ public class Sounds : MonoBehaviour
     public AudioClip Horse; //富 家券家府
     public AudioClip Horse2; //富 家券秦力家府
     public AudioClip HorseRunSound; //富 崔府绰家府
+    public AudioClip MaleDieSound; //巢磊 磷澜家府
+    public AudioClip FeMaleDieSound; //咯磊 磷澜家府
 
 
     [Header("某腐磐芒 荤款靛")]

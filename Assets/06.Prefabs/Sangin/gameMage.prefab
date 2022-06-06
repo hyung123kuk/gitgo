@@ -9931,6 +9931,8 @@ MonoBehaviour:
   Skillarea: {fileID: 5819986176212987490}
   Skillarea2: {fileID: 0}
   CCarea: {fileID: 5819986175015447651}
+  energyfullCharging: 0
+  ShotFull: 0
 --- !u!1 &5819986174302913632
 GameObject:
   m_ObjectHideFlags: 0
@@ -19953,6 +19955,8 @@ MonoBehaviour:
   Skillarea: {fileID: 5819986176212987490}
   Skillarea2: {fileID: 0}
   CCarea: {fileID: 5819986175015447651}
+  energyfullCharging: 0
+  ShotFull: 0
 --- !u!1 &5819986174514030194
 GameObject:
   m_ObjectHideFlags: 0
@@ -30140,6 +30144,8 @@ MonoBehaviour:
   Skillarea: {fileID: 5819986176212987490}
   Skillarea2: {fileID: 0}
   CCarea: {fileID: 5819986175015447651}
+  energyfullCharging: 0
+  ShotFull: 0
 --- !u!1 &5819986175096967267
 GameObject:
   m_ObjectHideFlags: 0
@@ -30272,6 +30278,7 @@ MonoBehaviour:
   ySpeed: 80
   yMinLimit: -20
   yMaxLimit: 80
+  playerst: {fileID: 0}
 --- !u!1 &5819986175124122493
 GameObject:
   m_ObjectHideFlags: 0
@@ -30415,6 +30422,8 @@ MonoBehaviour:
   Skillarea: {fileID: 5819986176212987490}
   Skillarea2: {fileID: 0}
   CCarea: {fileID: 5819986175015447651}
+  energyfullCharging: 0
+  ShotFull: 0
 --- !u!1 &5819986175141326050
 GameObject:
   m_ObjectHideFlags: 0
@@ -35493,6 +35502,8 @@ MonoBehaviour:
   Skillarea: {fileID: 5819986176212987490}
   Skillarea2: {fileID: 0}
   CCarea: {fileID: 5819986175015447651}
+  energyfullCharging: 0
+  ShotFull: 0
 --- !u!1 &5819986175219329143
 GameObject:
   m_ObjectHideFlags: 0
@@ -35510,13 +35521,14 @@ GameObject:
   - component: {fileID: 5819986175219329141}
   - component: {fileID: 5819986175219329142}
   - component: {fileID: 5819986175219329137}
+  - component: {fileID: 745582439}
   m_Layer: 8
   m_Name: gameMage
   m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5819986175219329134
 Transform:
   m_ObjectHideFlags: 0
@@ -35623,6 +35635,7 @@ MonoBehaviour:
   bowPower: 0.2
   bowChargingTime: 1
   isSootReady: 1
+  FullChargeing: 0
   fUp: 0
   isFireReady: 1
   isDamage: 0
@@ -35642,6 +35655,8 @@ MonoBehaviour:
   horsepos2: {fileID: 780087211970976074}
   DunjeonBossArena: 0
   NoMove: 0
+  isDie: 0
+  dieui: {fileID: 0}
   isDodge: 0
   BuffEff: {fileID: 0}
   RushEff: {fileID: 0}
@@ -35803,6 +35818,24 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &745582439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5819986175219329143}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1131616d4850bda4a9585f1d95c25233, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Town: {fileID: 0}
+  Dunjeon: {fileID: 0}
+  WherePos: 0
+  playerst: {fileID: 0}
+  bar: {fileID: 0}
+  gameUI: {fileID: 0}
 --- !u!1 &5819986175232595117
 GameObject:
   m_ObjectHideFlags: 0
@@ -46157,6 +46190,8 @@ MonoBehaviour:
   Skillarea: {fileID: 5819986176212987490}
   Skillarea2: {fileID: 0}
   CCarea: {fileID: 5819986175015447651}
+  energyfullCharging: 0
+  ShotFull: 0
 --- !u!1 &5819986175509513746
 GameObject:
   m_ObjectHideFlags: 0
@@ -46300,6 +46335,8 @@ MonoBehaviour:
   Skillarea: {fileID: 5819986176212987490}
   Skillarea2: {fileID: 0}
   CCarea: {fileID: 5819986175015447651}
+  energyfullCharging: 0
+  ShotFull: 0
 --- !u!1 &5819986175524764583
 GameObject:
   m_ObjectHideFlags: 0
@@ -46705,6 +46742,8 @@ MonoBehaviour:
   Skillarea: {fileID: 5819986176212987490}
   Skillarea2: {fileID: 0}
   CCarea: {fileID: 5819986175015447651}
+  energyfullCharging: 0
+  ShotFull: 0
 --- !u!1 &5819986175661526458
 GameObject:
   m_ObjectHideFlags: 0
@@ -61776,6 +61815,8 @@ MonoBehaviour:
   Skillarea: {fileID: 5819986176212987490}
   Skillarea2: {fileID: 0}
   CCarea: {fileID: 5819986175015447651}
+  energyfullCharging: 0
+  ShotFull: 0
 --- !u!1 &5819986176212987490
 GameObject:
   m_ObjectHideFlags: 0

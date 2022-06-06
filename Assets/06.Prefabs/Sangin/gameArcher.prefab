@@ -14580,6 +14580,7 @@ MonoBehaviour:
   ySpeed: 80
   yMinLimit: -20
   yMaxLimit: 80
+  playerst: {fileID: 0}
 --- !u!1 &4821956287124234267
 GameObject:
   m_ObjectHideFlags: 0
@@ -17435,6 +17436,7 @@ GameObject:
   - component: {fileID: 3903715136687813261}
   - component: {fileID: 1677130659682823575}
   - component: {fileID: 1677130659682823598}
+  - component: {fileID: 1756327052}
   m_Layer: 8
   m_Name: gameArcher
   m_TagString: Player
@@ -17553,6 +17555,7 @@ MonoBehaviour:
   bowPower: 0
   bowChargingTime: 1
   isSootReady: 1
+  FullChargeing: 0
   fUp: 0
   isFireReady: 1
   isDamage: 0
@@ -17572,6 +17575,8 @@ MonoBehaviour:
   horsepos2: {fileID: 1391664169442277903}
   DunjeonBossArena: 0
   NoMove: 0
+  isDie: 0
+  dieui: {fileID: 0}
   isDodge: 0
   BuffEff: {fileID: 0}
   RushEff: {fileID: 0}
@@ -17733,6 +17738,24 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &1756327052
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4821956288904579606}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1131616d4850bda4a9585f1d95c25233, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Town: {fileID: 0}
+  Dunjeon: {fileID: 0}
+  WherePos: 0
+  playerst: {fileID: 0}
+  bar: {fileID: 0}
+  gameUI: {fileID: 0}
 --- !u!1 &4821956288924722532
 GameObject:
   m_ObjectHideFlags: 0
@@ -18817,6 +18840,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f11ebad43c676cf4685a52f8995f1775, type: 3}
+--- !u!4 &2813435086205427370 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 3772744891857177675, guid: f11ebad43c676cf4685a52f8995f1775, type: 3}
+  m_PrefabInstance: {fileID: 1391664170154595041}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1391664169672957077 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 592105076, guid: f11ebad43c676cf4685a52f8995f1775, type: 3}
@@ -18828,11 +18856,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cc6d7d0affedf744d9af5e9dfd666b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &2813435086205427370 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3772744891857177675, guid: f11ebad43c676cf4685a52f8995f1775, type: 3}
-  m_PrefabInstance: {fileID: 1391664170154595041}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &3903715135690498976
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -19105,3 +19128,5 @@ MonoBehaviour:
   Skillarea: {fileID: 0}
   Skillarea2: {fileID: 0}
   CCarea: {fileID: 0}
+  energyfullCharging: 0
+  ShotFull: 0
