@@ -107,7 +107,8 @@ public class PlayerST : MonoBehaviour
     public SkinnedMeshRenderer smesh;   //순간이동때 투명화
     public GameObject FlashEff;  //순간이동이펙트
     public bool isFlash; //현재 순간이동중?
-
+    [SerializeField]
+    QuestStore questStore;
 
     //쿨타임 돌아가게 하기
     public static bool isCool1;
@@ -129,6 +130,7 @@ public class PlayerST : MonoBehaviour
         _transform = GetComponent<Transform>();
         anim = GetComponentInChildren<Animator>();
         rigid = GetComponent<Rigidbody>();
+        questStore = FindObjectOfType<QuestStore>();
         playerST = this;
         dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
     }
@@ -449,6 +451,8 @@ public class PlayerST : MonoBehaviour
 
             Invoke("DodgeOut", 0.4f); //구르기를 하면 0.4초후에 이동속도가 정상으로돌아옴
 
+            
+
         }
     }
 
@@ -459,6 +463,10 @@ public class PlayerST : MonoBehaviour
         speed *= 0.5f;
         isDodge = false;
         isDamage = false;
+        if (!questStore.MainSuccess)
+        {
+            questStore.MainQuestSuccess(1);
+        }
     }
 
     //==================================여기서부터 전사스킬=======================================
@@ -1084,7 +1092,10 @@ public class PlayerST : MonoBehaviour
     {
         if(WeaponNum != basicSword)
         {
-            QuestStore.qustore.MainQuestSuccess(2);
+            if (!questStore.MainSuccess)
+            {
+                questStore.MainQuestSuccess(2);
+            }
         }
         equipWeapon[NowWeapon].gameObject.SetActive(false);
         NowWeapon = (int)WeaponNum;

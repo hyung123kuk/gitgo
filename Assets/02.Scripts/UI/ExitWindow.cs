@@ -60,7 +60,7 @@ public class ExitWindow : MonoBehaviour
 
     public void SelCharacterMenu()
     {
-
+        AllUI.allUI.AllWindowEnd();
         characterSel.GameEnd();
 
         SceneManager.LoadScene(0);
