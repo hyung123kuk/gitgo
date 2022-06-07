@@ -17,7 +17,7 @@ public class AttackDamage : MonoBehaviour
     public bool Duration_Buff = false;
     [Header("스킬 사용 마나")]
     [SerializeField]
-    private float Skill_Buff_use_Mp = 50;
+    public float Skill_Buff_use_Mp = 50;
 
 
     [SerializeField]
@@ -27,7 +27,7 @@ public class AttackDamage : MonoBehaviour
     public bool Usable_Teleport = true;
     [Header("스킬 사용 마나")]
     [SerializeField]
-    private float Skill_TelePort_Mp = 50;
+    public float Skill_TelePort_Mp = 50;
 
 
     [SerializeField]
@@ -37,7 +37,7 @@ public class AttackDamage : MonoBehaviour
     public bool Usable_Dodge = true;
     [Header("스킬 사용 마나")]
     [SerializeField]
-    private float Skill_Dodge_Mp = 50;
+    public float Skill_Dodge_Mp = 50;
 
 
     [Header("스킬 퍼뎀")]
@@ -53,7 +53,7 @@ public class AttackDamage : MonoBehaviour
     public bool Usable_Skill1 = true;
     [Header("스킬 사용 마나")]
     [SerializeField]
-    private float Skill_1_use_Mp = 50;
+    public float Skill_1_use_Mp = 50;
 
 
     [Header("스킬 퍼뎀")]
@@ -69,7 +69,7 @@ public class AttackDamage : MonoBehaviour
     public bool Usable_Skill2 = true;
     [Header("스킬 사용 마나")]
     [SerializeField]
-    private float Skill_2_use_Mp = 50;
+    public float Skill_2_use_Mp = 50;
 
     [Header("스킬 퍼뎀")]
     [Header("       3번 스킬")]
@@ -84,7 +84,7 @@ public class AttackDamage : MonoBehaviour
     public bool Usable_Skill3 = true;
     [Header("스킬 사용 마나")]
     [SerializeField]
-    private float Skill_3_use_Mp = 50;
+    public float Skill_3_use_Mp = 50;
 
     [Header("스킬 퍼뎀")]
     [Header("       4번 스킬")]
@@ -99,7 +99,7 @@ public class AttackDamage : MonoBehaviour
     public bool Usable_Skill4 = true;
     [Header("스킬 사용 마나")]
     [SerializeField]
-    private float Skill_4_use_Mp = 50;
+    public float Skill_4_use_Mp = 50;
 
     public float SkillBuff_time;
     public float SkillBuff_passedTime;

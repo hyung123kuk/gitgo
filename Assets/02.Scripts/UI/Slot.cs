@@ -170,6 +170,11 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
             SoundManager.soundManager.DrinkSound();
             playerStat.RecoverMp(25);
         }
+        else if(item.itemName == "코인")
+        {
+            UiSound.uiSound.GetCoinSound();
+            playerStat.MONEY += 100f;
+        }
         gameUI.bar_set();
     }
 

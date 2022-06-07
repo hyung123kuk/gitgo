@@ -16,6 +16,8 @@ public class QuikSlot : MonoBehaviour
     [SerializeField]
     private PlayerST playerST;
     [SerializeField]
+    private PlayerStat playerStat;
+    [SerializeField]
     public Weapons weapons;
 
     [SerializeField]
@@ -30,6 +32,7 @@ public class QuikSlot : MonoBehaviour
         slot=gameObject.GetComponent<Slot>();
         skill = gameObject.GetComponent<SkillSlot>();
         playerST = FindObjectOfType<PlayerST>();
+        playerStat = FindObjectOfType<PlayerStat>();
         weapons = FindObjectOfType<Weapons>();
         quikSlot = this;
         attckDamage = FindObjectOfType<AttackDamage>();
@@ -77,7 +80,7 @@ public class QuikSlot : MonoBehaviour
     {
         weapons = FindObjectOfType<Weapons>(); //무기 교체될때마다 갱신되어야해서 여기다 우선 뒀습니다 Playerst에서 찾으면 첫번째Q퀵슬롯은 되는데
         //그다음 퀵슬롯들은 바뀌지않습니다 ㅠㅠ
-        if (inventory.iDown || SkillWindow.kDown || StatWindow.tDown)
+        if (AllUI.isUI)
             return;
 
 
@@ -95,6 +98,11 @@ public class QuikSlot : MonoBehaviour
 
         else if(skill.skill != null && skill.skill.skillCharacter==SkillUI.SkillCharacter.Archer && skill.skill.skillNum == 4) // 궁수 충전형 스킬
         {
+            if (attckDamage.Skill_3_use_Mp > playerStat._Mp)
+            {
+                LogManager.logManager.Log("마나가 없습니다.", true);
+                return;
+            }
             if(Input.GetButton(gameObject.tag))
             {
                 weapons.archer_skill4_Order = 0;
@@ -110,6 +118,11 @@ public class QuikSlot : MonoBehaviour
 
         else if (skill.skill != null && skill.skill.skillCharacter == SkillUI.SkillCharacter.Mage && skill.skill.skillNum == 4) // 마법사 충전형 스킬
         {
+            if (attckDamage.Skill_3_use_Mp > playerStat._Mp)
+            {
+                LogManager.logManager.Log("마나가 없습니다.", true);
+                return;
+            }
             if (Input.GetButton(gameObject.tag))
             {
                 weapons.mage_skill4_Order = 0;
@@ -130,31 +143,96 @@ public class QuikSlot : MonoBehaviour
             #region 전사 스킬
             if(skill.skill.skillCharacter == SkillUI.SkillCharacter.Warrior)
             {
-                if(skill.skill.skillNum == 1 && attckDamage.Usable_Skill1 ) {                    
+
+                if(skill.skill.skillNum == 1 && attckDamage.Usable_Skill1 ) {
+                    if (attckDamage.Skill_1_use_Mp > playerStat._Mp)
+                    {
+                        LogManager.logManager.Log("마나가 없습니다.", true);
+                        return;
+                    }
                     playerST.Block();
                     playerST.StartCoroutine(Skill1());
                 }
-                else if (skill.skill.skillNum == 2 && attckDamage.Usable_Buff) { playerST.Buff(); StartCoroutine(Buff()) ; buffSkillUI[0].BuffOn(BuffSkillUI.BuffSkills.WarriorBuff1, CoolTimeImage.sprite); }
-                else if (skill.skill.skillNum == 3 && attckDamage.Usable_Skill2) { playerST.Rush(); StartCoroutine(Skill2()); }
-                else if (skill.skill.skillNum == 4 && attckDamage.Usable_Skill3) { playerST.Aura(); StartCoroutine(Skill3()); }
+
+                else if (skill.skill.skillNum == 2 && attckDamage.Usable_Buff) 
+                {
+                    if (attckDamage.Skill_Buff_use_Mp > playerStat._Mp)
+                    {
+                        LogManager.logManager.Log("마나가 없습니다.", true);
+                        return;
+                    }
+                    playerST.Buff(); StartCoroutine(Buff()) ; 
+                    buffSkillUI[0].BuffOn(BuffSkillUI.BuffSkills.WarriorBuff1, CoolTimeImage.sprite); }
+
+                else if (skill.skill.skillNum == 3 && attckDamage.Usable_Skill2) {
+                    if (attckDamage.Skill_2_use_Mp > playerStat._Mp)
+                    {
+                        LogManager.logManager.Log("마나가 없습니다.", true);
+                        return;
+                    }
+                    playerST.Rush(); StartCoroutine(Skill2()); }
+
+                else if (skill.skill.skillNum == 4 && attckDamage.Usable_Skill3) { playerST.Aura();
+                    if (attckDamage.Skill_3_use_Mp > playerStat._Mp)
+                    {
+                        LogManager.logManager.Log("마나가 없습니다.", true);
+                        return;
+                    }
+                    StartCoroutine(Skill3()); }
 
             }
             #endregion
             #region 궁수 스킬
             if (skill.skill.skillCharacter == SkillUI.SkillCharacter.Archer)
             {
-                if (skill.skill.skillNum == 1 && attckDamage.Usable_Skill1) { playerST.Smoke(); StartCoroutine(Skill1()); }
-                else if (skill.skill.skillNum == 2 && attckDamage.Usable_Buff) { playerST.PoisonArrow(); StartCoroutine(Buff()); buffSkillUI[0].BuffOn(BuffSkillUI.BuffSkills.ArcherBuff1 , CoolTimeImage.sprite); }
-                else if (skill.skill.skillNum == 3 && attckDamage.Usable_Skill2) { weapons.BombArrow(); StartCoroutine(Skill2()); }
+                if (skill.skill.skillNum == 1 && attckDamage.Usable_Skill1) {
+                    if (attckDamage.Skill_1_use_Mp > playerStat._Mp)
+                    {
+                        LogManager.logManager.Log("마나가 없습니다.", true);
+                        return;
+                    }
+                    playerST.Smoke(); StartCoroutine(Skill1()); }
+                else if (skill.skill.skillNum == 2 && attckDamage.Usable_Buff) {
+                    if (attckDamage.Skill_Buff_use_Mp > playerStat._Mp)
+                    {
+                        LogManager.logManager.Log("마나가 없습니다.", true);
+                        return;
+                    }
+                    playerST.PoisonArrow(); StartCoroutine(Buff()); buffSkillUI[0].BuffOn(BuffSkillUI.BuffSkills.ArcherBuff1 , CoolTimeImage.sprite); }
+                else if (skill.skill.skillNum == 3 && attckDamage.Usable_Skill2) {
+                    if (attckDamage.Skill_2_use_Mp > playerStat._Mp)
+                    {
+                        LogManager.logManager.Log("마나가 없습니다.", true);
+                        return;
+                    }
+                    weapons.BombArrow(); StartCoroutine(Skill2()); }
 
             }
             #endregion
             #region 법사 스킬
             if (skill.skill.skillCharacter == SkillUI.SkillCharacter.Mage)
             {
-                if (skill.skill.skillNum == 1 && attckDamage.Usable_Teleport) { playerST.Flash(); StartCoroutine(Telleport()); }
-                else if (skill.skill.skillNum == 2 && attckDamage.Usable_Skill1) { weapons.LightningBall(); StartCoroutine(Skill1()); }
-                else if (skill.skill.skillNum == 3 && attckDamage.Usable_Skill2) { weapons.IceAge(); StartCoroutine(Skill2()); }
+                if (skill.skill.skillNum == 1 && attckDamage.Usable_Teleport) {
+                    if (attckDamage.Skill_TelePort_Mp > playerStat._Mp)
+                    {
+                        LogManager.logManager.Log("마나가 없습니다.", true);
+                        return;
+                    }
+                    playerST.Flash(); StartCoroutine(Telleport()); }
+                else if (skill.skill.skillNum == 2 && attckDamage.Usable_Skill1) {
+                    if (attckDamage.Skill_1_use_Mp > playerStat._Mp)
+                    {
+                        LogManager.logManager.Log("마나가 없습니다.", true);
+                        return;
+                    }
+                    weapons.LightningBall(); StartCoroutine(Skill1()); }
+                else if (skill.skill.skillNum == 3 && attckDamage.Usable_Skill2) {
+                    if (attckDamage.Skill_2_use_Mp > playerStat._Mp)
+                    {
+                        LogManager.logManager.Log("마나가 없습니다.", true);
+                        return;
+                    }
+                    weapons.IceAge(); StartCoroutine(Skill2()); }
 
             }
             #endregion
@@ -162,7 +240,12 @@ public class QuikSlot : MonoBehaviour
             #region 공용 스킬
             if (skill.skill.skillCharacter == SkillUI.SkillCharacter.Common)
             {
-                if (skill.skill.skillNum == 0 && attckDamage.Usable_Dodge) { 
+                if (skill.skill.skillNum == 0 && attckDamage.Usable_Dodge) {
+                    if (attckDamage.Skill_Dodge_Mp > playerStat._Mp)
+                    {
+                        LogManager.logManager.Log("마나가 없습니다.", true);
+                        return;
+                    }
                     playerST.Dodge(); 
                     StartCoroutine(Dodge());
                     

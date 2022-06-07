@@ -130,11 +130,34 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 233269560, guid: 23d7ff6a27672934b9760261baabf12e, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: 23d7ff6a27672934b9760261baabf12e, type: 3}
+--- !u!1 &8194211467766478895 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7632967122769000195, guid: 23d7ff6a27672934b9760261baabf12e, type: 3}
+  m_PrefabInstance: {fileID: 1754733431973383980}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &8194211467766478897 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 7632967122769000221, guid: 23d7ff6a27672934b9760261baabf12e, type: 3}
   m_PrefabInstance: {fileID: 1754733431973383980}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &3113440298271129995
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8194211467766478895}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1131616d4850bda4a9585f1d95c25233, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Town: {fileID: 0}
+  Dunjeon: {fileID: 0}
+  WherePos: 0
+  playerst: {fileID: 0}
+  bar: {fileID: 0}
+  gameUI: {fileID: 0}
 --- !u!1001 &6679449566977552010
 PrefabInstance:
   m_ObjectHideFlags: 0
