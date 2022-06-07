@@ -173,7 +173,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         else if(item.itemName == "코인")
         {
             UiSound.uiSound.GetCoinSound();
-            playerStat.MONEY += 100f;
+            playerStat.AddGold(100);
         }
         gameUI.bar_set();
     }

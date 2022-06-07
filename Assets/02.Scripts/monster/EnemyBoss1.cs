@@ -51,6 +51,7 @@ public class EnemyBoss1 : MonsterBoss
         BossItemSet();
         Monstername.text = "거북 슬라임";
         level.text = "5";
+        coin = 30;
 
     }
 

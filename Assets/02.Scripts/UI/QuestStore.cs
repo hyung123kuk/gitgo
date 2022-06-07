@@ -12,6 +12,7 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
     QuestWindow questWindow;
     GameObject questStore;
     QuestTyping questTyping;
+    QuestExplain questExplain;
     public Text MainText;
     Image MainImage;
     Text Quest1Text;
@@ -34,6 +35,7 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
     {
        questTyping = FindObjectOfType<QuestTyping>();
         questWindow = FindObjectOfType<QuestWindow>();
+        questExplain = FindObjectOfType<QuestExplain>();
         MainText = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<Text>();
         MainImage = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(0).GetComponent<Image>();
         Quest1Text = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(1).GetChild(0).GetComponent<Text>();
@@ -43,7 +45,43 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
         Quest3Text = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>();
         Quest3Image = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(3).GetComponent<Image>();
         questStore = transform.GetChild(0).gameObject;
+       
         qustore = this;
+    }
+
+    public void QuestStoreLoad()
+    {
+        if (mainNum == 1)
+        {
+            MainText.text = questExplain.main1Name;
+        }
+        else if (mainNum == 2)
+        {
+            MainText.text = questExplain.main2Name;
+        }
+        else if (mainNum == 3)
+        { 
+            MainText.text = questExplain.main3Name;
+        }
+        else if (mainNum == 4)
+        {
+            MainText.text = questExplain.main4Name;
+        }
+        else if (mainNum == 5)
+        {
+            MainText.text = questExplain.main5Name;
+        }
+        if (isMainRecive)
+        {
+            MainText.color = MainSelColor;
+            MainImage.color = ButtonSelColor;
+        }
+        else
+        {
+            MainText.color = MainbasicColor;
+            MainImage.color = Color.white;
+
+        }
     }
 
     public void storeOn()
@@ -201,6 +239,10 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
                     inventory.inven.addItem(item, 10); 
             }
             else if (item.itemType == Item.ItemType.Equipment)
+            {
+                inventory.inven.addItem(item);
+            }
+            else if(item.itemType == Item.ItemType.Ride)
             {
                 inventory.inven.addItem(item);
             }

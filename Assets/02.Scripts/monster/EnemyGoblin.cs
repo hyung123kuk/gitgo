@@ -49,6 +49,7 @@ public class EnemyGoblin : Monster
         curHealth = maxHealth;
         mat.color = Color.white;
         isStun = false;
+        coin = 20;
     }
     void Update()
     {

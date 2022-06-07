@@ -43,8 +43,14 @@ public class DropCoin : MonoBehaviour
 
     private void OnTriggerStay(Collider other)
     {
-       
-        if (other.gameObject.tag == "Player" && item.itemType == Item.ItemType.Used)
+        if (other.gameObject.tag == "Player" && item.itemName == "ÄÚÀÎ")
+        {
+            playerStat.AddGold(Coin);
+            UiSound.uiSound.GetCoinSound();
+
+            Destroy(gameObject);
+        }
+        else if (other.gameObject.tag == "Player" && item.itemType == Item.ItemType.Used)
         {           
                 if (!inventory.inven.HasEmptySlot() && !inventory.inven.HasSameSlot(item))
                 {
@@ -59,13 +65,7 @@ public class DropCoin : MonoBehaviour
                     Destroy(gameObject);
                 }           
         }
-        if(other.gameObject.tag == "Player"&& item.itemType == Item.ItemType.ETC)
-        {            
-            playerStat.AddGold(Coin);
-            UiSound.uiSound.GetCoinSound();
-
-            Destroy(gameObject);
-        }
+        
     }
 
     private void OnTriggerEnter(Collider other)

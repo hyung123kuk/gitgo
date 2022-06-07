@@ -46,6 +46,7 @@ public class EnemyRange : Monster
         curHealth = maxHealth;
         mat.material.color = Color.white;
         isStun = false;
+        coin = 30;
     }
     void Update()
     {

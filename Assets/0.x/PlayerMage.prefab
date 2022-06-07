@@ -1037,7 +1037,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6557449619038255500, guid: da223274d6b1a3a44bb733975ea62d1d, type: 3}
       propertyPath: items.Array.size
-      value: 54
+      value: 55
       objectReference: {fileID: 0}
     - target: {fileID: 6557449619038255500, guid: da223274d6b1a3a44bb733975ea62d1d, type: 3}
       propertyPath: items.Array.data[0]
@@ -1255,6 +1255,10 @@ PrefabInstance:
       propertyPath: items.Array.data[53]
       value: 
       objectReference: {fileID: 11400000, guid: d52c375860d3a5a4f8fe1e5b94120164, type: 2}
+    - target: {fileID: 6557449619038255500, guid: da223274d6b1a3a44bb733975ea62d1d, type: 3}
+      propertyPath: items.Array.data[54]
+      value: 
+      objectReference: {fileID: 11400000, guid: 87f24d20ff556044490ebedfcc420f90, type: 2}
     - target: {fileID: 6557449619098877555, guid: da223274d6b1a3a44bb733975ea62d1d, type: 3}
       propertyPath: m_Name
       value: UIhyungkuk
@@ -1693,6 +1697,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d71e7371c1dd0f8489a8b1429b55f4d4, type: 2}
   - {fileID: 11400000, guid: 7da223ff1728a3243bf52e02c72dfa76, type: 2}
   - {fileID: 11400000, guid: d52c375860d3a5a4f8fe1e5b94120164, type: 2}
+  - {fileID: 11400000, guid: 87f24d20ff556044490ebedfcc420f90, type: 2}
   skills:
   - {fileID: 11400000, guid: 5376947d492ed3d4e857531164150da3, type: 2}
   - {fileID: 11400000, guid: 2a5af27697898bc488f9860d1d9fc071, type: 2}

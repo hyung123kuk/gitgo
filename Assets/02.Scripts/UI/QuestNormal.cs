@@ -57,6 +57,11 @@ public class QuestNormal : MonoBehaviour
         slimeImage = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(1).GetComponent<Image>();
         goblinImage = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(2).GetComponent<Image>();
         skeletonImage = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(3).GetComponent<Image>();
+
+        slime_item = Resources.LoadAll<Item>("Quest/Slime");
+        goblin_item = Resources.LoadAll<Item>("Quest/Goblin");
+        skelleton_item = Resources.LoadAll<Item>("Quest/Skelleton");
+
     }
 
     private void Update()
@@ -68,6 +73,43 @@ public class QuestNormal : MonoBehaviour
         if (QuestGrid.anchoredPosition.y > 550f)
         {
             QuestGrid.anchoredPosition = new Vector2(20, 550);
+        }
+    }
+
+    public void QuestNormalLoad()
+    {
+        if (Quest_slime)
+        {
+            slimeText.color = QuestSelColor;
+            slimeImage.color = ButtonSelColor;
+        }
+        else
+        {
+            slimeText.color = Color.white;
+            slimeImage.color = Color.white;
+          
+        }
+        if (Quest_goblin)
+        {
+            goblinText.color = QuestSelColor;
+            goblinImage.color = ButtonSelColor;
+        }
+        else
+        {
+            goblinText.color = Color.white;
+            goblinImage.color = Color.white;
+          
+        }
+        if (Quest_skelleton)
+        {
+            skeletonText.color = QuestSelColor;
+            skeletonImage.color = ButtonSelColor;
+        }
+        else
+        {
+            skeletonText.color = Color.white;
+            skeletonImage.color = Color.white;
+            
         }
     }
 
@@ -159,9 +201,10 @@ public class QuestNormal : MonoBehaviour
         }
     }
 
+    
     public bool QuestEnd(Item[] items, int QuestNum) //퀘스트 끝났을때 보상 체크하고 메세지 세팅하는곳
     {
-        if (ItemCompensation(items))
+        if (ItemCompensation(items,QuestNum))
         {
             if (QuestNum == 0)
             {
@@ -197,7 +240,7 @@ public class QuestNormal : MonoBehaviour
 
         return false;
     }
-    public bool ItemCompensation(Item[] items) //보상 체크 하는 함수
+    public bool ItemCompensation(Item[] items ,int _QuestNum) //보상 체크 하는 함수
     {
         int usedItemCount = 0;
         for (int i = 0; i < items.Length; i++)
@@ -222,7 +265,20 @@ public class QuestNormal : MonoBehaviour
         {
             if (item.itemType == Item.ItemType.Used)
             {
-                inventory.inven.addItem(item, 10);
+
+                if (_QuestNum == 0)
+                {
+                    inventory.inven.addItem(item, 3);
+                }
+                else if (_QuestNum == 1)
+                {
+                    inventory.inven.addItem(item, 5);
+                }
+                else if (_QuestNum == 2)
+                {
+                    inventory.inven.addItem(item, 10);
+                }
+                
             }
             else if (item.itemType == Item.ItemType.Equipment)
             {

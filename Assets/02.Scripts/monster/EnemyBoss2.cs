@@ -58,6 +58,7 @@ public class EnemyBoss2 : MonsterBoss
         BossItemSet();
         Monstername.text = "골렘";
         level.text = "10";
+        coin = 50;
 
     }
 

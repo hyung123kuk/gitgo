@@ -63,6 +63,7 @@ public class EnemySlime  : Monster
         Monstername.text = "슬라임";
         level.text = "1";
         Exp = 10;
+        coin = 3;
     }
     void Update()
     {

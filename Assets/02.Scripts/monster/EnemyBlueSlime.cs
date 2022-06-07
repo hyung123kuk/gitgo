@@ -56,6 +56,7 @@ public class EnemyBlueSlime : Monster
         StartMonster();
         Monstername.text = "블루 슬라임";
         level.text = "3";
+        coin = 10;
     }
 
 

@@ -265,6 +265,7 @@ public class SaveManager : MonoBehaviour
         data[CharacterNum].MainNum = questStore.mainNum;
         data[CharacterNum].MainRecieve = questStore.isMainRecive;
         data[CharacterNum].MainClear = questStore.MainSuccess;
+        questStore.QuestStoreLoad();
 
         questNormal = FindObjectOfType<QuestNormal>();
         data[CharacterNum].slimeKill = questNormal.slimeKill;
@@ -278,6 +279,7 @@ public class SaveManager : MonoBehaviour
         data[CharacterNum].skelletonKill = questNormal.skelletonKill;
         data[CharacterNum].skelleton_Success = questNormal.skelleton_Success;
         data[CharacterNum].Quest_skelleton = questNormal.Quest_skelleton;
+        questNormal.QuestNormalLoad();
 
 
 

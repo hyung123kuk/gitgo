@@ -261,6 +261,7 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
 
 
 
+
     public void AllColorReset(int _alpha)
     {
         for (int i = 0; i < conpensation.Length; i++)
@@ -327,6 +328,7 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
                             questWindow.QuestClear(QuestSlot.QuestName.main);
                             questStore.MainText.text = main5Name;
                             questStore.mainNum = 5;
+                            LogManager.logManager.Log("던전문이 열렸습니다!");
                             DungeonOpen();
                         }
                     }

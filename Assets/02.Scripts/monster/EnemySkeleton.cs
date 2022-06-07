@@ -40,6 +40,7 @@ public class EnemySkeleton : Monster
         Monstername.text = "½ºÄÌ·¹Åæ";
         level.text = "8";
         questNormal = FindObjectOfType<QuestNormal>();
+        coin = 50;
 
     }
     private void OnEnable()
