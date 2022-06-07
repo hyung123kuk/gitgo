@@ -26,7 +26,7 @@ public class CameraClear : MonoBehaviour
 
         if (Physics.Raycast(transform.position, (MainCamera.transform.position - transform.position).normalized, out hit, CameraMaxDistance)) //자신과 메인카메라의 사이에 레이캐스팅하기
         {
-            if (hit.transform.gameObject.tag != "Player")
+            if (hit.transform.gameObject.tag != "Player" && hit.transform.gameObject.tag != "Enemy") //여기 태그있으면 충돌X
             {
                 MainCamera.transform.localPosition = Vector3.Lerp(MainCamera.transform.localPosition, MainCamera.transform.localPosition + Vector3.forward, Time.deltaTime * 10);
                 MainCamera.transform.position = hit.point;
@@ -34,7 +34,7 @@ public class CameraClear : MonoBehaviour
             else
             {
                 MainCamera.transform.localPosition = Vector3.Lerp(MainCamera.transform.localPosition, new Vector3(0, 0, -CameraMaxDistance), Time.deltaTime * 5f);
-                //Debug.DrawRay(transform.position, MainCamera.transform.position, Color.red);        
+                //Debug.DrawRay(transform.position, MainCamera.transform.position, Color.red);
             }
         }
     }
