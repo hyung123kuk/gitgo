@@ -5,19 +5,28 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
-  - enabled: 0
-    path: 
-    guid: 00000000000000000000000000000000
   - enabled: 1
     path: Assets/01.Scenes/ChSel_sangin.unity
     guid: c4f1ce54d9acab34fb721896d5c7d4b6
+  - enabled: 1
+    path: Assets/01.Scenes/Play_SANGIN2.unity
+    guid: 2e50bcba89d678c4eb80d30027358ff1
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
-  - enabled: 1
-    path: Assets/01.Scenes/Hyungkuk3.unity
-    guid: 6c1bef0c8690b764c89973357e94fbf9
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/01.Scenes/CharacterSel.unity
+    guid: 6de2ae6a0187997499169e3a5f5b146b
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 0
+    path: Assets/01.Scenes/sangin.unity
+    guid: 46088c7f1bacbef499b767f278c3fb1c
+  - enabled: 0
+    path: Assets/01.Scenes/Play_sangin.unity
+    guid: 21427b1b0b7af2d4c8ecce63d8794cc9
   m_configObjects: {}

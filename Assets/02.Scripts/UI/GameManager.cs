@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoBehaviourPunCallbacks
 {
     public CharacterSel CharSel;
     public GameObject Wor;
@@ -20,9 +21,10 @@ public class GameManager : MonoBehaviour
         {
             if (CharSel.character1 == CharacterSel.Type.Warrior)
             {
-                
-                GameObject character=Instantiate(Wor, startPoint.position, Quaternion.identity);
+                GameObject character = PhotonNetwork.Instantiate("PlayerWorrior", startPoint.position, Quaternion.identity);
                 character.transform.GetChild(0).position = StartPosition;
+                //GameObject character=Instantiate(Wor, startPoint.position, Quaternion.identity);
+                //character.transform.GetChild(0).position = StartPosition;
             }
             else if (CharSel.character1 == CharacterSel.Type.Archer)
             {
@@ -39,8 +41,10 @@ public class GameManager : MonoBehaviour
         {
             if (CharSel.character2 == CharacterSel.Type.Warrior)
             {
-                GameObject character = Instantiate(Wor, startPoint.position, Quaternion.identity);
+                GameObject character = PhotonNetwork.Instantiate("PlayerWorrior", startPoint.position, Quaternion.identity);
                 character.transform.GetChild(0).position = StartPosition;
+                //GameObject character = Instantiate(Wor, startPoint.position, Quaternion.identity);
+                //character.transform.GetChild(0).position = StartPosition;
             }
             else if (CharSel.character2 == CharacterSel.Type.Archer)
             {

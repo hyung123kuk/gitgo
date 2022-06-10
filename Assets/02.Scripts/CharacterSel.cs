@@ -7,8 +7,9 @@ using UnityEngine.SceneManagement;
 public class CharacterSel : MonoBehaviour
 {
     public static CharacterSel characterSel;
+    [SerializeField]
+    public GameObject LobbyUi; 
 
-    
 
     public GameObject characterScene;
     public GameObject sel;
@@ -55,8 +56,8 @@ public class CharacterSel : MonoBehaviour
     private void Awake()
     {
         saveManager = FindObjectOfType<SaveManager>();
-
-       if (CharacterSel.characterSel == null)
+        LobbyUi = transform.GetChild(1).gameObject;
+        if (CharacterSel.characterSel == null)
         {
             characterSel = this;
         }
@@ -94,8 +95,9 @@ public class CharacterSel : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
             transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
-            StartCoroutine(LoadCoroutine());
-            SceneManager.LoadScene(1);
+            LobbyUi.SetActive(true);
+            // StartCoroutine(LoadCoroutine());
+            //SceneManager.LoadScene(1);
         }
 
         IEnumerator LoadCoroutine()
@@ -152,8 +154,9 @@ public class CharacterSel : MonoBehaviour
         {
             DontDestroyOnLoad(gameObject);
             transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
-            StartCoroutine(LoadCoroutine2());
-            SceneManager.LoadScene(1);
+            LobbyUi.SetActive(true);
+            //StartCoroutine(LoadCoroutine2());
+            //SceneManager.LoadScene(1);
  
         }
     }
@@ -364,7 +367,7 @@ public class CharacterSel : MonoBehaviour
                 char1[1].SetActive(false);
                 char1[2].SetActive(true);
             }
-            saveManager.CharacterSelSave1();
+            //saveManager.CharacterSelSave1();
 
         }
         if (charSel == 2)
@@ -389,7 +392,7 @@ public class CharacterSel : MonoBehaviour
                 char2[1].SetActive(false);
                 char2[2].SetActive(true);
             }
-            saveManager.CharacterSelSave2();
+            //saveManager.CharacterSelSave2();
         }
        
     }
