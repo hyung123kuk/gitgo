@@ -6,15 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 0
-    path: Assets/01.Scenes/Play 1.unity
-    guid: 111096ae75f54ad4ea37cd3cf11772d6
-  - enabled: 1
-    path: Assets/01.Scenes/Play.unity
-    guid: 9fc0d4010bbf28b4594072e72b8655ab
-  - enabled: 0
-    path: Assets/01.Scenes/CharacterSel.unity
-    guid: 6de2ae6a0187997499169e3a5f5b146b
+    path: 
+    guid: 00000000000000000000000000000000
   - enabled: 0
     path: 
     guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/01.Scenes/ChSel_sangin.unity
+    guid: c4f1ce54d9acab34fb721896d5c7d4b6
+  - enabled: 0
+    path: 
+    guid: 00000000000000000000000000000000
+  - enabled: 1
+    path: Assets/01.Scenes/Hyungkuk3.unity
+    guid: 6c1bef0c8690b764c89973357e94fbf9
   m_configObjects: {}
