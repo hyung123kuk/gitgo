@@ -72,7 +72,7 @@ public class EnemySkeleton : Monster
                     nav.isStopped = false;
                     nav.destination = target.position;
                     anim.SetBool("isWalk", true);
-                    if (PlayerST.playerST.isDie)
+                    if (playerST.isDie)
                         EnemyReset();
                 }
             }
@@ -83,7 +83,7 @@ public class EnemySkeleton : Monster
         }
 
         if (isChase || isAttack) 
-            if (!isDie && !PlayerST.isJump && !PlayerST.isFall && !isStun)
+            if (!isDie && !playerST.isJump && !playerST.isFall && !isStun)
                 transform.LookAt(target);
     }
     void EnemyReset()

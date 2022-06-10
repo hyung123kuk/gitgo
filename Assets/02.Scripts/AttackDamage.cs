@@ -142,9 +142,9 @@ public class AttackDamage : MonoBehaviour
 
 
 
-    public static float attackDamage=0;
-    public static bool critical=false;
-    public static int DamageNum;
+    public  float attackDamage=0;
+    public  bool critical=false;
+    public  int DamageNum;
 
     public float Attack_Dam()
     {

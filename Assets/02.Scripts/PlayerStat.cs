@@ -42,7 +42,7 @@ public class PlayerStat : MonoBehaviour
 
 
 
-    public static PlayerStat playerstat;
+    public PlayerStat playerstat;
 
 
  

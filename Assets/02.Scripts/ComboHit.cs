@@ -8,9 +8,11 @@ public class ComboHit : MonoBehaviour
     public int noOfClicks = 0; //Ŭ����
     float lastClickdTime = 0; //������ Ŭ���ð�
     public float maxComboDelay; //�޺����� �ð�
+    Weapons weapons;
 
     void Start()
     {
+        weapons = FindObjectOfType<Weapons>();
         anim = gameObject.GetComponent<Animator>();
     }
 
@@ -31,7 +33,7 @@ public class ComboHit : MonoBehaviour
             if (noOfClicks == 1)
             {
                 anim.SetBool("isAttack", true);
-                Weapons.weapons.StartCoroutine("Swing");
+                weapons.StartCoroutine("Swing");
                 SoundManager.soundManager.WarriorAttackSound();
                 SoundManager.soundManager.WarriorAttackVoice();
             }
@@ -44,7 +46,7 @@ public class ComboHit : MonoBehaviour
         if (noOfClicks >= 2)
         {
             anim.SetBool("isAttack2", true);
-            Weapons.weapons.StartCoroutine("Swing");
+            weapons.StartCoroutine("Swing");
             SoundManager.soundManager.WarriorAttackSound();
             SoundManager.soundManager.WarriorAttackVoice();
         }
@@ -79,6 +81,6 @@ public class ComboHit : MonoBehaviour
     {
         SoundManager.soundManager.WarriorAttackSound();
         
-        Weapons.weapons.StartCoroutine("Swing");
+        weapons.StartCoroutine("Swing");
     }
 }

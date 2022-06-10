@@ -67,7 +67,7 @@ public class EnemyRange : Monster
                     isChase = true;
                     nav.isStopped = false;
                     nav.destination = target.position;
-                    if (PlayerST.playerST.isDie)
+                    if (playerST.isDie)
                         EnemyReset();
                 }
             }
@@ -78,7 +78,7 @@ public class EnemyRange : Monster
         }
 
         if (isChase || isAttack) //�����̳� �������϶���
-            if (!isDie && !PlayerST.isJump && !PlayerST.isFall && !isStun)
+            if (!isDie && !playerST.isJump && !playerST.isFall && !isStun)
                 transform.LookAt(target); //�÷��̾� �ٶ󺸱�
     }
     void EnemyReset() //리셋

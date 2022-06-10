@@ -77,7 +77,7 @@ public class EnemyGoblin : Monster
                         nav.speed = 10f;
                         anim.SetBool("isRun", true);
                     }
-                    if (PlayerST.playerST.isDie)
+                    if (playerST.isDie)
                         EnemyReset();
                 }
             }
@@ -88,7 +88,7 @@ public class EnemyGoblin : Monster
         }
 
         if (isChase || isAttack)
-            if (!isDie && !PlayerST.isJump && !PlayerST.isFall && !isStun)
+            if (!isDie && !playerST.isJump && !playerST.isFall && !isStun)
                 transform.LookAt(target); 
     }
     void EnemyReset()

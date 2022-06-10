@@ -31,6 +31,7 @@ public class EnemyBlueSlime : Monster
     Animator anim;
     QuestNormal questNormal;
 
+
     [SerializeField]
     Attacking attacking;
     void Awake()
@@ -42,8 +43,10 @@ public class EnemyBlueSlime : Monster
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         questNormal = FindObjectOfType<QuestNormal>();
+        
 
     }
+
     private void OnEnable()
     {
         boxCollider.enabled = true;
@@ -81,7 +84,7 @@ public class EnemyBlueSlime : Monster
                     nav.isStopped = false;
                     nav.SetDestination(target.position);
                     anim.SetBool("isWalk", true);
-                    if (PlayerST.playerST.isDie)
+                    if (playerST.isDie)
                         EnemyReset();
                 }
             }
@@ -91,7 +94,7 @@ public class EnemyBlueSlime : Monster
             }
         }
         if (isChase || isAttack) //·è¿§
-            if (!isDie && !PlayerST.isJump && !PlayerST.isFall && !isStun)
+            if (!isDie && !playerST.isJump && !playerST.isFall && !isStun)
                 transform.LookAt(target);
     }
     void EnemyReset()

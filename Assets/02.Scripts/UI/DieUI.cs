@@ -11,25 +11,29 @@ public class DieUI : MonoBehaviour
     private AllUI allUI;
     [SerializeField]
     private GameObject DieUi;
-
+    Resurrection resurrection;
     void Awake()
     {
         dieUI = this;
         allUI = FindObjectOfType<AllUI>();
         DieUi = transform.GetChild(0).gameObject;
     }
+    private void Start()
+    {
+        resurrection = FindObjectOfType<Resurrection>();
+    }
 
 
     public void ResurrectionButton()
     {
         DieOff();
-        if(Resurrection.resurrection.WherePos == 1) //마을앞부활
+        if(resurrection.WherePos == 1) //마을앞부활
         {
-            Resurrection.resurrection.StartCoroutine("TownResurrection");
+            resurrection.StartCoroutine("TownResurrection");
         }
-        else if(Resurrection.resurrection.WherePos == 0) //던전앞부활
+        else if(resurrection.WherePos == 0) //던전앞부활
         {
-            Resurrection.resurrection.StartCoroutine("DunjeonResurrection");
+            resurrection.StartCoroutine("DunjeonResurrection");
         }
         
     }

@@ -17,6 +17,7 @@ public class EnemyBoss1 : MonsterBoss
     public bool isDie;
     public Transform respawn;
 
+    
 
 
     private Light stunarea;
@@ -86,7 +87,7 @@ public class EnemyBoss1 : MonsterBoss
                     nav.isStopped = false;
                     nav.destination = target.position;
                     anim.SetBool("isRun", true);
-                    if (PlayerST.playerST.isDie)
+                    if (playerST.isDie)
                         EnemyReset();
                 }
             }
@@ -97,7 +98,7 @@ public class EnemyBoss1 : MonsterBoss
         }
 
         if (isChase || isAttack)
-            if (!isDie && !PlayerST.isJump && !PlayerST.isFall)
+            if (!isDie && !playerST.isJump && !playerST.isFall)
                 transform.LookAt(target); //플레이어가 공중에 뜬 상태가 아닐때만 바라보기
 
     }
@@ -327,12 +328,12 @@ public class EnemyBoss1 : MonsterBoss
             if (other.tag == "Melee")
             {
                 Weapons weapon = other.GetComponent<Weapons>();
-                PlayerStat.playerstat._Hp -= weapon.damage;
+                playerStat._Hp -= weapon.damage;
             }
             else if (other.tag == "Arrow")
             {
                 Arrow arrow = other.GetComponent<Arrow>();
-                PlayerStat.playerstat._Hp -= arrow.damage;
+                playerStat._Hp -= arrow.damage;
             }
             else if (other.tag == "ArrowSkill")
             {

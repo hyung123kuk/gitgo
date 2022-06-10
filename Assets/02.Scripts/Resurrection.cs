@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Resurrection : MonoBehaviour
 {
-    public static Resurrection resurrection;
+    public Resurrection resurrection;
 
     public Transform Town; //마을앞 무덤
     public Transform Dunjeon;  //던전앞 무덤

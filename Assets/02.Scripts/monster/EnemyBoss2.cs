@@ -15,6 +15,7 @@ public class EnemyBoss2 : MonsterBoss
     public Transform respawn;
     public SphereCollider nuckarea;
 
+    public PlayerST playerST;
 
 
     public GameObject sohwane;
@@ -62,6 +63,12 @@ public class EnemyBoss2 : MonsterBoss
 
     }
 
+    private void Start()
+    {
+        playerST = GetComponent<PlayerST>();
+    }
+
+
     public void BossItemSet()
     {
         item = Resources.LoadAll<GameObject>("DROP/BOSS2");
@@ -88,7 +95,7 @@ public class EnemyBoss2 : MonsterBoss
             Targerting();
             if (!isStun)
             {
-                if (nav.enabled && PlayerST.playerST.DunjeonBossArena) //추적
+                if (nav.enabled && playerST.DunjeonBossArena) //추적
                 {
                     PatternStart();
                     if (!isAttack && !isDie)
@@ -101,22 +108,22 @@ public class EnemyBoss2 : MonsterBoss
                         nav.isStopped = false;
                         nav.destination = target.position;
                         anim.SetBool("isRun", true);
-                        if (PlayerST.playerST.isDie)
+                        if (playerST.isDie)
                             EnemyReset();
                     }
                 }
-                else if (!PlayerST.playerST.DunjeonBossArena && nav.enabled) //복귀
+                else if (!playerST.DunjeonBossArena && nav.enabled) //복귀
                 {
                     EnemyReset();
                 }
             }
         }
 
-        if (PlayerST.playerST.DunjeonBossArena)
+        if (playerST.DunjeonBossArena)
         {
             if (isChase || isAttack)
             {
-                if (!isDie && !PlayerST.isJump && !PlayerST.isFall)//플레이어가 공중에 뜬 상태가 아닐때만 바라보기
+                if (!isDie && !playerST.isJump && !playerST.isFall)//플레이어가 공중에 뜬 상태가 아닐때만 바라보기
                     transform.LookAt(target);
             }
         }

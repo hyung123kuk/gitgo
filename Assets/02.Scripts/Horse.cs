@@ -17,6 +17,8 @@ public class Horse : MonoBehaviour
 
     Camera _camera;
     CapsuleCollider _controller;
+    PlayerST playerST;
+    Weapons weapons;
     public float smoothness = 10f;
 
     private void OnEnable()
@@ -31,12 +33,18 @@ public class Horse : MonoBehaviour
         anim = GetComponent<Animator>();
         _camera = Camera.main;
         _controller = this.GetComponent<CapsuleCollider>();
+        
+    }
+    private void Start()
+    {
+        playerST = FindObjectOfType<PlayerST>();
+        weapons = FindObjectOfType<Weapons>();
     }
 
     void HorseSpawnAnim()
     {
         opning = true;
-        transform.LookAt(PlayerST.playerST.horsepos2.position);
+        transform.LookAt(playerST.horsepos2.position);
         anim.SetBool("isRun", true);
         Invoke("HorseSpawnAnimOut", 1.5f);
     }
@@ -48,10 +56,10 @@ public class Horse : MonoBehaviour
 
     void Update()
     {
-        if (!opning && PlayerST.playerST.HorseMode)
+        if (!opning && playerST.HorseMode)
         {
             #region 무브
-            if (PlayerST.playerST.HorseMode && !NoMove)
+            if (playerST.HorseMode && !NoMove)
             {
                 //h = Input.GetAxisRaw("Horizontal");    //X좌표 입력받기
                 v = Input.GetAxisRaw("Vertical"); //Z좌표 입력받기
@@ -81,13 +89,13 @@ public class Horse : MonoBehaviour
                 rigid.velocity = Vector3.zero;
             }
 
-            if (Input.GetKeyDown(KeyCode.V) && PlayerST.playerST.HorseMode) //탑승해제
+            if (Input.GetKeyDown(KeyCode.V) && playerST.HorseMode) //탑승해제
             {
                 anim.SetBool("isRun", false);
-                PlayerST.playerST.rigid.useGravity = true;
-                PlayerST.playerST.HorseMode = false;
-                PlayerST.playerST.anim.SetBool("isHorse", false);
-                PlayerST.playerST.rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY
+                playerST.rigid.useGravity = true;
+                playerST.HorseMode = false;
+                playerST.anim.SetBool("isHorse", false);
+                playerST.rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY
                     | RigidbodyConstraints.FreezeRotationZ;
             }
 
@@ -102,10 +110,10 @@ public class Horse : MonoBehaviour
 
     void LateUpdate()  //플레이어가 카메라를 바라봄
     {
-        if (inventory.iDown || Weapons.isMeteo || SkillWindow.kDown || StatWindow.tDown)
+        if (inventory.iDown || weapons.isMeteo || SkillWindow.kDown || StatWindow.tDown)
             return;
 
-        if (PlayerST.playerST.HorseMode)
+        if (playerST.HorseMode)
         {
             Vector3 playerRotate = Vector3.Scale(_camera.transform.forward, new Vector3(1, 0, 1));
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(playerRotate), Time.deltaTime * smoothness);

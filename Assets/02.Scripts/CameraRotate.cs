@@ -22,6 +22,7 @@ public class CameraRotate : MonoBehaviour
     public float yMaxLimit = 80f;
 
     public PlayerST playerst;
+    public Weapons weapons;
 
 
     //앵글의 최소,최대 제한
@@ -38,6 +39,7 @@ public class CameraRotate : MonoBehaviour
     void Start()
     {
         playerst = FindObjectOfType<PlayerST>();
+        weapons = FindObjectOfType<Weapons>();
         Vector3 angles = transform.eulerAngles;
         x = angles.y;
         y = angles.x;
@@ -51,7 +53,7 @@ public class CameraRotate : MonoBehaviour
 
     void Update()
     {
-        if (Weapons.isMeteo || AllUI.isUI)
+        if (weapons.isMeteo || AllUI.isUI)
             return;
 
 
