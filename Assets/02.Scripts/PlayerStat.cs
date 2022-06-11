@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Cinemachine;
+using Photon.Pun;
 
-public class PlayerStat : MonoBehaviour
+public class PlayerStat : MonoBehaviourPun //포톤으로 만들려고함.
 {
     public int Level=1;
     public float TotalExp;
@@ -64,27 +66,39 @@ public class PlayerStat : MonoBehaviour
 
     public void StartSet()
     {
-        gameUI.LevelSet();
-        TotalExp = LevelExp();
-        StatAllUpdate();        
-        gameUI.ExpSet();
-        StatWindow.statWindow.SetLevel();
-        StatWindow.statWindow.SetStat();
-        gameUI.bar_set();
+        if (!photonView.IsMine)
+            return;
+        
+            gameUI.LevelSet();
+            TotalExp = LevelExp();
+            StatAllUpdate();
+            gameUI.ExpSet();
+            StatWindow.statWindow.SetLevel();
+            StatWindow.statWindow.SetStat();
+            gameUI.bar_set();
+        
     }
 
     private void Update()
     {
+
+        if (!photonView.IsMine)
+            return;
+
         if (expup)
-        {
+         {
             AddExp(10);
             expup = false;
-        }
+         }
+        
     }
 
 
     public void StatAllUpdate()
     {
+        if (!photonView.IsMine)
+            return;
+
         _STR = 0;
         _DEX = 0;
         _INT = 0;
@@ -148,6 +162,10 @@ public class PlayerStat : MonoBehaviour
 
     public void Statcalculate()
     {
+
+        if (!photonView.IsMine)
+            return;
+
         _DAMAGE += ((_STR * 1f) + (_DEX * 0.5f) + (_INT * 0.25f)) * Level;
         _DEFENCE += ((_STR * 0.2f) + (_DEX * 0.1f)) * Level;
         _SKILL_COOLTIME_DEC_PER += _INT;
@@ -166,12 +184,20 @@ public class PlayerStat : MonoBehaviour
 
     public void AddGold(float _Gold)
     {
+
+        if (!photonView.IsMine)
+            return;
+
         MONEY += _Gold;
         inven.GoldUpdate();
     }
 
     public void AddExp(float _Exp)
     {
+
+        if (!photonView.IsMine)
+            return;
+
         if (Level < 10)
         {
             NowExp += _Exp;
@@ -182,7 +208,11 @@ public class PlayerStat : MonoBehaviour
 
     private void ExpFunc()
     {
-        if(NowExp >= TotalExp)
+
+        if (!photonView.IsMine)
+            return;
+
+        if (NowExp >= TotalExp)
         {
 
             Level++;
@@ -206,71 +236,99 @@ public class PlayerStat : MonoBehaviour
 
     public float LevelExp()
     {
-        switch (Level)
-        {
-            case 1:
-                return 62f;
-              
-            case 2:
-                return 82f;
-            
-            case 3:
-                return 262f;
-               
-            case 4:
-                return 344f;
-              
-            case 5:
-                return 445f;
-               
-            case 6:
-                return 1434f;
-                
-            case 7:
-                return 1926f;
-               
-            case 8:
-                return 2495f;
-              
-            case 9:
-                return 3392f;
-               
-            case 10:
-                return 1f;
-        }
-        return 0f;
+
+
+
+            switch (Level)
+            {
+                case 1:
+                    return 62f;
+
+                case 2:
+                    return 82f;
+
+                case 3:
+                    return 262f;
+
+                case 4:
+                    return 344f;
+
+                case 5:
+                    return 445f;
+
+                case 6:
+                    return 1434f;
+
+                case 7:
+                    return 1926f;
+
+                case 8:
+                    return 2495f;
+
+                case 9:
+                    return 3392f;
+
+                case 10:
+                    return 1f;
+            }
+            return 0f;
+        
     } 
 
     public void RecoverHp(float _Hp_per)
     {
+
+        if (!photonView.IsMine)
+            return;
+
         _Hp += _MAXHP * _Hp_per / 100;
         if (_Hp > _MAXHP)
             _Hp = _MAXHP;
     }
     public void RecoverMp(float _Mp_per)
     {
+
+        if (!photonView.IsMine)
+            return;
+
         _Mp += _MAXMP * _Mp_per / 100;
         if (_Mp > _MAXMP)
             _Mp = _MAXMP;
     }
     public void MaxHpSet()
     {
+
+        if (!photonView.IsMine)
+            return;
+
         if (_Hp > _MAXHP)
             _Hp = _MAXHP;
     }
     public void MaxMpSet()
     {
+
+        if (!photonView.IsMine)
+            return;
+
         if (_Mp > _MAXMP)
             _Mp = _MAXMP;
     }
     public void MaxSet()
     {
+
+        if (!photonView.IsMine)
+            return;
+
         MaxHpSet();
         MaxMpSet();
     }
 
     public void DamagedHp(float _damage)
     {
+
+        if (!photonView.IsMine)
+            return;
+
         _damage = _damage * Random.Range(0.95f, 1.05f);
 
         if (_DEFENCE >= _damage)
@@ -293,8 +351,13 @@ public class PlayerStat : MonoBehaviour
 
 
 
+
     public void SkillMp(float UseMp)
     {
+
+        if (!photonView.IsMine)
+            return;
+
         if (_Mp > UseMp)
         {
             _Mp -= UseMp;

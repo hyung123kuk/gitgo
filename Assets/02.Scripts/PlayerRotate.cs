@@ -1,8 +1,9 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class PlayerRotate : MonoBehaviour
+public class PlayerRotate : MonoBehaviourPun
 {
 
     Camera _camera;
@@ -28,6 +29,9 @@ public class PlayerRotate : MonoBehaviour
 
     void LateUpdate()  //플레이어가 카메라를 바라봄
     {
+        if (!photonView.IsMine)
+            return;
+
         if (weapons.isMeteo || AllUI.isUI || playerST.isDie)
             return;
 

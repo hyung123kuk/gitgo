@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Photon.Pun;
 
-public class CameraRotate : MonoBehaviour
+public class CameraRotate : MonoBehaviourPun
 {
 
     //추적할 대상
@@ -53,6 +54,9 @@ public class CameraRotate : MonoBehaviour
 
     void Update()
     {
+        if (!photonView.IsMine)
+            gameObject.SetActive(false);
+
         if (weapons.isMeteo || AllUI.isUI)
             return;
 

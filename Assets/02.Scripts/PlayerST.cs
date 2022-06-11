@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-public class PlayerST : MonoBehaviour
+using Photon.Pun;
+public class PlayerST : MonoBehaviourPun
 {
 
     
@@ -139,6 +140,10 @@ public class PlayerST : MonoBehaviour
 
     void Anima() //애니메이션 
     {
+
+        if (!photonView.IsMine)
+            return;
+
         #region 전사 이동 애니메이션
         if (CharacterType == Type.Warrior)
         {
@@ -328,6 +333,9 @@ public class PlayerST : MonoBehaviour
 
     void Attack()   //공격
     {
+        if (!photonView.IsMine)
+            return;
+
         if (CharacterType == Type.Warrior && !isDodge && !isFlash && !weapons.isLightning &&
            !weapons.isIceage && !weapons.isMeteo && !isJump && !isRun && !isBlock && !isRush && !isAura && !isStun)
         {
@@ -406,6 +414,10 @@ public class PlayerST : MonoBehaviour
     }
     void Jump()
     {
+
+        if (!photonView.IsMine)
+            return;
+
         if (sDown && !isJump && !isDodge && !isBlock && !isRush && !isAura && !isBackStep && !weapons.isEnergyReady &&
            !weapons.isLightning && !weapons.isIceage && !weapons.isMeteo && !isFlash && !isStun
             )
@@ -430,6 +442,10 @@ public class PlayerST : MonoBehaviour
 
     public void Dodge()
     {
+
+        if (!photonView.IsMine)
+            return;
+
         if (!isStun && !isJump && !isBlock && !isBackStep && !weapons.isEnergyReady && !isRush && !isAura && !isFlash &&
            !weapons.isLightning && !weapons.isIceage && !weapons.isMeteo && attackdamage.Usable_Dodge)
         {
@@ -474,6 +490,8 @@ public class PlayerST : MonoBehaviour
     //==================================여기서부터 전사스킬=======================================
     public void Block() //방패 치기
     {
+       
+
         if (!isRush && !isAura && !isJump && !isDodge && !isStun && !isRun &&
              attackdamage.Usable_Skill1)
         {
@@ -677,7 +695,8 @@ public class PlayerST : MonoBehaviour
     }
     void InputManager()
     {
-
+        if (!photonView.IsMine)
+            return;
 
         h = Input.GetAxisRaw("Horizontal");    //X좌표 입력받기
         v = Input.GetAxisRaw("Vertical"); //Z좌표 입력받기
@@ -695,6 +714,10 @@ public class PlayerST : MonoBehaviour
     }
     private void Update()
     {
+
+        if (!photonView.IsMine)
+            return;
+
         //HorseRide();
         if (AllUI.isUI)
         {
@@ -762,6 +785,10 @@ public class PlayerST : MonoBehaviour
 
     public void HorseRide()
     {
+
+        if (!photonView.IsMine)
+            return;
+
         if (!HorseMode) // 말 소환&소환해제
         {
             if (!HorseSpawn.transform.GetChild(0).gameObject.activeSelf)
@@ -800,6 +827,8 @@ public class PlayerST : MonoBehaviour
     //}
     void MageMove()
     {
+
+
         if (!isStun && !weapons.isLightning && !weapons.isIceage && !weapons.isMeteo
             && !weapons.isEnergyReady && CharacterType == Type.Mage && !NoMove)
         {
@@ -876,12 +905,17 @@ public class PlayerST : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (!photonView.IsMine)
+            return;
+
         //attackdamage.SkillPassedTimeFucn(); (weapons스크립트의 117줄, attackDamage의125줄 , playerST의 553줄에 총 3개가 있어 쿨타임이 3배로 돌아갑니다. 그래서 2개 주석처리 해놨습니다. 문제시에 알려주세요)
         FreezeVelocity();
         StopMove();
     }
     void PlayerDie() //사망
     {
+
+
         SelectPlayer.enabled = false;
         rigid.useGravity = false;
         isDie = true;

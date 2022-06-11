@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class ComboHit : MonoBehaviour
+public class ComboHit : MonoBehaviourPun
 {
     public Animator anim;
     public int noOfClicks = 0; //Ŭ����
@@ -19,6 +20,9 @@ public class ComboHit : MonoBehaviour
 
     void Update()
     {
+        if (!photonView.IsMine)
+            return;
+
         if (AllUI.isUI || NPC.isNPCRange)
             return;
         if (Time.time - lastClickdTime > maxComboDelay)
