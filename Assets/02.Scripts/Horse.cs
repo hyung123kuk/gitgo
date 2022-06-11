@@ -7,7 +7,6 @@ public class Horse : MonoBehaviour
     public float speed = 30f;
     Vector3 moveVec;
 
-    public static Horse horse;
     public Transform playertr;
     private float h = 0f, v = 0f;
     private Rigidbody rigid;
@@ -25,7 +24,6 @@ public class Horse : MonoBehaviour
     }
     void Awake()
     {
-        horse = this;
         playertr = GameObject.FindWithTag("Player").transform;
         rigid = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();

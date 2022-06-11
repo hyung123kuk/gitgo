@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class CameraClear : MonoBehaviour
+public class CameraClear : MonoBehaviourPunCallbacks
 {
     public Camera MainCamera;
 
@@ -21,6 +22,10 @@ public class CameraClear : MonoBehaviour
     }
     private void Update()
     {
+        if (!photonView.IsMine) //로컬상태가 아니면 리턴
+        {
+            return;
+        }
         Debug.DrawRay(transform.position, MainCamera.transform.position - transform.position, Color.red);
         Debug.DrawRay(transform.position, (MainCamera.transform.position - transform.position).normalized * CameraMaxDistance, Color.blue);
 

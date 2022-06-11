@@ -1,7 +1,8 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Photon.Pun;
 
-public class CameraRotate : MonoBehaviour
+public class CameraRotate : MonoBehaviourPunCallbacks
 {
 
     //추적할 대상
@@ -51,6 +52,10 @@ public class CameraRotate : MonoBehaviour
 
     void Update()
     {
+        if (!photonView.IsMine) //로컬상태가 아니면 리턴
+        {
+            return;
+        }
         if (Weapons.isMeteo || AllUI.isUI)
             return;
 

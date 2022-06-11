@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
-public class PlayerST : MonoBehaviour
+using Photon.Pun;
+public class PlayerST : MonoBehaviourPunCallbacks
 {
 
     
@@ -694,6 +695,11 @@ public class PlayerST : MonoBehaviour
     private void Update()
     {
         //HorseRide();
+
+        if(!photonView.IsMine) //로컬상태가 아니면 리턴
+        {
+            return;
+        }
         if (AllUI.isUI)
         {
             if (FootSound.footSound)
