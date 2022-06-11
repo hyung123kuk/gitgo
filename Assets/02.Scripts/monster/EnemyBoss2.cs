@@ -15,7 +15,7 @@ public class EnemyBoss2 : MonsterBoss
     public Transform respawn;
     public SphereCollider nuckarea;
 
-    public PlayerST playerST;
+ 
 
 
     public GameObject sohwane;
@@ -61,11 +61,6 @@ public class EnemyBoss2 : MonsterBoss
         level.text = "10";
         coin = 50;
 
-    }
-
-    private void Start()
-    {
-        playerST = GetComponent<PlayerST>();
     }
 
 
