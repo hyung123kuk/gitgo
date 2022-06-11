@@ -21,6 +21,7 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
     Image Quest2Image;
     Text Quest3Text;
     Image Quest3Image;
+    PlayerStat playerstat;
 
     public int mainNum = 1;
     public bool isMainRecive = false; //메인 퀘스트 받았는가?
@@ -45,10 +46,14 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
         Quest3Text = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(3).GetChild(0).GetComponent<Text>();
         Quest3Image = transform.GetChild(0).GetChild(3).GetChild(0).GetChild(0).GetChild(0).GetChild(3).GetComponent<Image>();
         questStore = transform.GetChild(0).gameObject;
-       
-        qustore = this;
+        
+         qustore = this;
     }
 
+    private void Start()
+    {
+        playerstat = FindObjectOfType<PlayerStat>();
+    }
     public void QuestStoreLoad()
     {
         if (mainNum == 1)
@@ -176,7 +181,7 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
         }
         else if (mainNum == 4 && isMainRecive)
         {
-            if (PlayerStat.playerstat.Level >= 8)
+            if (playerstat.Level >= 8)
             {
                 MainQuestSuccess(4);
             }

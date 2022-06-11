@@ -5,6 +5,8 @@ using UnityEngine.UI;
 
 public class Monster : MonoBehaviour
 {
+
+    public PlayerStat playerStat;
     public PlayerST playerST;
     public GameObject hpBarPrefab;
     public GameObject Damage;
@@ -22,6 +24,7 @@ public class Monster : MonoBehaviour
     public Text Monstername;
     private Transform tr;
     public GameObject Geteff;
+    public Weapons weapons;
 
     AttackDamage attackdamage;
     public float maxHealth; //√÷¥Îhp
@@ -56,6 +59,8 @@ public class Monster : MonoBehaviour
         Geteff = Resources.Load<GameObject>("GetEff");
         Damage = Resources.Load<GameObject>("Damage");
         playerST = FindObjectOfType<PlayerST>();
+        playerStat = FindObjectOfType<PlayerStat>();
+        weapons = FindObjectOfType<Weapons>();
     }
 
 
@@ -67,13 +72,13 @@ public class Monster : MonoBehaviour
         var _damage = damage.GetComponent<DamageUI>();
         _damage.targetTr = this.gameObject.transform;
         Text damagevalue = damage.GetComponent<Text>();
-        if (!AttackDamage.critical)
+        if (!attackdamage.critical)
         {
             damage.transform.GetChild(0).gameObject.SetActive(false);
             damage.GetComponent<Outline>().enabled = false;
             damagevalue.color = Color.red;
         }
-        damagevalue.text = ((int)AttackDamage.attackDamage).ToString();
+        damagevalue.text = ((int)attackdamage.attackDamage).ToString();
         DamageSet();
 
         shakeTime = Time.time;
@@ -85,33 +90,33 @@ public class Monster : MonoBehaviour
 
         if (playerST.CharacterType == PlayerST.Type.Warrior)
         {
-            if (AttackDamage.DamageNum == 0)
+            if (attackdamage.DamageNum == 0)
             {
-                Weapons.weapons.damage = attackdamage.Attack_Dam();
+                weapons.damage = attackdamage.Attack_Dam();
 
             }
-            else if (AttackDamage.DamageNum == 1)
+            else if (attackdamage.DamageNum == 1)
             {
-                Weapons.weapons.damage = attackdamage.Skill_1_Damamge();
+                weapons.damage = attackdamage.Skill_1_Damamge();
             }
-            else if (AttackDamage.DamageNum == 2)
+            else if (attackdamage.DamageNum == 2)
             {
-                Weapons.weapons.damage = attackdamage.Skill_2_Damamge();
+                weapons.damage = attackdamage.Skill_2_Damamge();
             }
-            else if (AttackDamage.DamageNum == 3)
+            else if (attackdamage.DamageNum == 3)
             {
-                Weapons.weapons.damage = attackdamage.Skill_3_Damamge();
+                weapons.damage = attackdamage.Skill_3_Damamge();
             }
-            else if (AttackDamage.DamageNum == 4)
+            else if (attackdamage.DamageNum == 4)
             {
-                Weapons.weapons.damage = attackdamage.Skill_4_Damamge();
+                weapons.damage = attackdamage.Skill_4_Damamge();
             }
         }
         else if(playerST.CharacterType == PlayerST.Type.Archer || playerST.CharacterType == PlayerST.Type.Mage)
         {
-            if (AttackDamage.DamageNum == 0)
+            if (attackdamage.DamageNum == 0)
             {
-                if (!Weapons.weapons.ShotFull)
+                if (!weapons.ShotFull)
                 {
                     Arrow arrow = FindObjectOfType<Arrow>();
                     if(arrow!=null)
@@ -125,7 +130,7 @@ public class Monster : MonoBehaviour
                 }
 
             }
-            else if (AttackDamage.DamageNum == 1)
+            else if (attackdamage.DamageNum == 1)
             {
                 Arrow arrow = FindObjectOfType<Arrow>();
                 if (arrow != null)
@@ -135,7 +140,7 @@ public class Monster : MonoBehaviour
                 if (arrowskill != null)
                     arrowskill.damage = attackdamage.Skill_1_Damamge();
             }
-            else if (AttackDamage.DamageNum == 2)
+            else if (attackdamage.DamageNum == 2)
             {
                 Arrow arrow = FindObjectOfType<Arrow>();
                 if (arrow != null)
@@ -145,9 +150,9 @@ public class Monster : MonoBehaviour
                 if (arrowskill != null)
                     arrowskill.damage = attackdamage.Skill_2_Damamge();
             }
-            else if (AttackDamage.DamageNum == 3)
+            else if (attackdamage.DamageNum == 3)
             {
-                if (!Weapons.weapons.energyfullCharging)
+                if (!weapons.energyfullCharging)
                 {
                     Arrow arrow = FindObjectOfType<Arrow>();
                     if (arrow != null)
@@ -168,7 +173,7 @@ public class Monster : MonoBehaviour
                         arrowskill.damage = 1.5f * attackdamage.Skill_3_Damamge();
                 }
             }
-            else if (AttackDamage.DamageNum == 4)
+            else if (attackdamage.DamageNum == 4)
             {
                 Arrow arrow = FindObjectOfType<Arrow>();
                 if (arrow != null)

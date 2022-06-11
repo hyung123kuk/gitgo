@@ -283,7 +283,7 @@ public class QuikSlot : MonoBehaviour
         {
 
             fillmount = 1 - attckDamage.Skill1_passedTime / attckDamage.Skill1_time;
-            if (fillmount != 1 && PlayerST.isCool1)      
+            if (fillmount != 1 && playerST.isCool1)      
                     CoolTimeImage.fillAmount = fillmount; 
             
             yield return new WaitForSeconds(0.02f);
@@ -299,7 +299,7 @@ public class QuikSlot : MonoBehaviour
         while (fillmount2 >= 0f)
         {
             fillmount2 = 1 - attckDamage.Skill2_passedTime / attckDamage.Skill2_time;
-            if (fillmount2 != 1&& PlayerST.isCool2)
+            if (fillmount2 != 1&& playerST.isCool2)
                 CoolTimeImage.fillAmount = fillmount2;
 
             yield return new WaitForSeconds(0.02f);
@@ -315,7 +315,7 @@ public class QuikSlot : MonoBehaviour
         while (fillmount3 >= 0f)
         {
             fillmount3 = 1 - attckDamage.Skill3_passedTime / attckDamage.Skill3_time;
-            if (fillmount3 != 1 && PlayerST.isCool3)
+            if (fillmount3 != 1 && playerST.isCool3)
                 CoolTimeImage.fillAmount = fillmount3;
 
             yield return new WaitForSeconds(0.02f);
@@ -331,7 +331,7 @@ public class QuikSlot : MonoBehaviour
         while (fillmount4 >= 0f)
         {
             fillmount4 = 1 - attckDamage.Skill4_passedTime / attckDamage.Skill4_time;
-            if (fillmount4 != 1&& PlayerST.isCool4)
+            if (fillmount4 != 1&& playerST.isCool4)
                 CoolTimeImage.fillAmount = fillmount4;
 
             yield return new WaitForSeconds(0.02f);
@@ -363,7 +363,7 @@ public class QuikSlot : MonoBehaviour
         while (fillmount5 >= 0f)
         {
             fillmount5 = 1 - attckDamage.SkillTeleport_passedTime / attckDamage.SkillTeleport_time;
-            if (fillmount5 != 1 && PlayerST.isCoolTeleport)
+            if (fillmount5 != 1 && playerST.isCoolTeleport)
                 CoolTimeImage.fillAmount = fillmount5;
 
             yield return new WaitForSeconds(0.02f);
@@ -379,7 +379,7 @@ public class QuikSlot : MonoBehaviour
         while (fillmount6 >= 0f)
         {
             fillmount6 = 1 - attckDamage.SkillDodge_passedTime / attckDamage.SkillDodge_time;
-            if (fillmount6 != 1&& PlayerST.isCooldodge)
+            if (fillmount6 != 1&& playerST.isCooldodge)
                 CoolTimeImage.fillAmount = fillmount6;
 
             yield return new WaitForSeconds(0.02f);

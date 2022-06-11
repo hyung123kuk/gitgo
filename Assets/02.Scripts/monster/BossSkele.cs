@@ -18,7 +18,7 @@ public class BossSkele : MonoBehaviour
     Material mat; //피격시 색깔변하게
     NavMeshAgent nav; //추적
     Animator anim;
-
+    PlayerST playerST;
     void Awake()
     {
         rigid = GetComponent<Rigidbody>();
@@ -26,7 +26,8 @@ public class BossSkele : MonoBehaviour
         mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-       
+        playerST = FindObjectOfType<PlayerST>();
+
     }
     void Update()
     {
@@ -56,7 +57,7 @@ public class BossSkele : MonoBehaviour
         }
 
         if (isChase || isAttack) //추적이나 공격중일때만
-            if (!isDie && !PlayerST.isJump)
+            if (!isDie && !playerST.isJump)
                 transform.LookAt(target); //플레이어 바라보기
     }
 

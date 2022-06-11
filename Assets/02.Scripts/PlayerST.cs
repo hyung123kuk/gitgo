@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Photon.Pun;
-public class PlayerST : MonoBehaviourPunCallbacks
+public class PlayerST : MonoBehaviourPun
 {
 
     
@@ -48,9 +48,9 @@ public class PlayerST : MonoBehaviourPunCallbacks
     private bool Key3; //키보드 3번입력
     public bool ImWar; //나는 워리어다
 
-    public static bool isJump; //현재 점프중?
+    public bool isJump; //현재 점프중?
     public bool archerattack = false; //현재 궁수공격중
-    public static bool isStun; //현재 스턴상태
+    public bool isStun; //현재 스턴상태
     public bool isRun; //현재 달리는상태?
 
     Vector3 moveVec;
@@ -62,7 +62,7 @@ public class PlayerST : MonoBehaviourPunCallbacks
     public GameObject Skillarea2; //켜지면 데미지만
     public GameObject CCarea;  //켜지면 CC기 
 
-    public static PlayerST playerST;
+    public PlayerST playerST;
     public bool HorseMode; //말타고있는지
     public GameObject Horsee; //말 안장
     public GameObject HorseSpawn; //말 부모객체
@@ -76,12 +76,12 @@ public class PlayerST : MonoBehaviourPunCallbacks
     public DieUI dieui;
 
 
-    public static bool isFall; //공중에 떠있는상태? 몬스터들의 룩엣을 조정하기위함.
+    public bool isFall; //공중에 떠있는상태? 몬스터들의 룩엣을 조정하기위함.
     //======================전사 스킬========================//
 
     public bool isDodge; //현재 회피중?
     private bool isBlock; //현재 방패치기중? ㅣ마우스 우클릭
-    public static bool isBuff; //현재 폭주상태? ㅣ키보드 1번
+    public bool isBuff; //현재 폭주상태? ㅣ키보드 1번
     private bool isRush; //현재 돌진상태? ㅣ키보드 2번
     private bool isAura; //현재 검기날리는 상태? ㅣ 키보드 3번
     private bool isYes; //돌진 벽에서 쓰는행위 막는용도
@@ -100,7 +100,7 @@ public class PlayerST : MonoBehaviourPunCallbacks
     public Transform BackStepPos;
 
     public bool isBackStep; //현재 백스텝상태?
-    public static bool isPoison; //현재 독화살버프상태?  나중에 몬스터 충돌판정에서 if걸고 추가데미지를 줄예정
+    public bool isPoison; //현재 독화살버프상태?  나중에 몬스터 충돌판정에서 if걸고 추가데미지를 줄예정
 
     //======================마법사 스킬========================// 
     [Header("마법사 관련")]
@@ -112,14 +112,15 @@ public class PlayerST : MonoBehaviourPunCallbacks
     QuestStore questStore;
 
     //쿨타임 돌아가게 하기
-    public static bool isCool1;
-    public static bool isCool2;
-    public static bool isCool3;
-    public static bool isCool4;
-    public static bool isCooldodge;
-    public static bool isCoolTeleport;
+    public bool isCool1;
+    public bool isCool2;
+    public bool isCool3;
+    public bool isCool4;
+    public bool isCooldodge;
+    public bool isCoolTeleport;
 
-    
+
+    public Weapons weapons;
 
     void Start()
     {
@@ -134,10 +135,15 @@ public class PlayerST : MonoBehaviourPunCallbacks
         questStore = FindObjectOfType<QuestStore>();
         playerST = this;
         dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
+        weapons = FindObjectOfType<Weapons>();
     }
 
     void Anima() //애니메이션 
     {
+
+        if (!photonView.IsMine)
+            return;
+
         #region 전사 이동 애니메이션
         if (CharacterType == Type.Warrior)
         {
@@ -327,8 +333,11 @@ public class PlayerST : MonoBehaviourPunCallbacks
 
     void Attack()   //공격
     {
-        if (CharacterType == Type.Warrior && !isDodge && !isFlash && !Weapons.weapons.isLightning &&
-           !Weapons.weapons.isIceage && !Weapons.isMeteo && !isJump && !isRun && !isBlock && !isRush && !isAura && !isStun)
+        if (!photonView.IsMine)
+            return;
+
+        if (CharacterType == Type.Warrior && !isDodge && !isFlash && !weapons.isLightning &&
+           !weapons.isIceage && !weapons.isMeteo && !isJump && !isRun && !isBlock && !isRush && !isAura && !isStun)
         {
             fireDelay += Time.deltaTime;     //공격속도 계산
             isFireReady = equipWeapon[NowWeapon].rate < fireDelay;  //공격 가능 타임
@@ -338,14 +347,14 @@ public class PlayerST : MonoBehaviourPunCallbacks
                 if (isFireReady)  //공격할수있을때
                 {
 
-                    Weapons.weapons.damage = attackdamage.Attack_Dam(); //기본공격 데미지
+                    weapons.damage = attackdamage.Attack_Dam(); //기본공격 데미지
                     //equipWeapon[NowWeapon].Use();
                     fireDelay = 0;
                 }
             }
         }
-        else if (CharacterType == Type.Mage && !isDodge && !isFlash && !Weapons.weapons.isLightning &&
-          !Weapons.weapons.isIceage && !Weapons.isMeteo && !isJump && !isRun && !isBlock && !isRush && !isAura && !isStun)
+        else if (CharacterType == Type.Mage && !isDodge && !isFlash && !weapons.isLightning &&
+          !weapons.isIceage && !weapons.isMeteo && !isJump && !isRun && !isBlock && !isRush && !isAura && !isStun)
         {
             fireDelay += Time.deltaTime;     //공격속도 계산
             isFireReady = equipWeapon[NowWeapon].rate < fireDelay;  //공격 가능 타임
@@ -361,8 +370,8 @@ public class PlayerST : MonoBehaviourPunCallbacks
             }
         }
 
-        else if (CharacterType == Type.Archer && !isDodge && !isJump && !isRun && !isStun && !isBackStep && !Weapons.weapons.isEnergyReady
-            && !Weapons.weapons.isBombArrow)
+        else if (CharacterType == Type.Archer && !isDodge && !isJump && !isRun && !isStun && !isBackStep && !weapons.isEnergyReady
+            && !weapons.isBombArrow)
         {
 
             fireDelay += Time.deltaTime;
@@ -405,8 +414,12 @@ public class PlayerST : MonoBehaviourPunCallbacks
     }
     void Jump()
     {
-        if (sDown && !isJump && !isDodge && !isBlock && !isRush && !isAura && !isBackStep && !Weapons.weapons.isEnergyReady &&
-           !Weapons.weapons.isLightning && !Weapons.weapons.isIceage && !Weapons.isMeteo && !isFlash && !isStun
+
+        if (!photonView.IsMine)
+            return;
+
+        if (sDown && !isJump && !isDodge && !isBlock && !isRush && !isAura && !isBackStep && !weapons.isEnergyReady &&
+           !weapons.isLightning && !weapons.isIceage && !weapons.isMeteo && !isFlash && !isStun
             )
         {
             FootSound.footSound.audioSource.Stop();
@@ -429,8 +442,12 @@ public class PlayerST : MonoBehaviourPunCallbacks
 
     public void Dodge()
     {
-        if (!isStun && !isJump && !isBlock && !isBackStep && !Weapons.weapons.isEnergyReady && !isRush && !isAura && !isFlash &&
-           !Weapons.weapons.isLightning && !Weapons.weapons.isIceage && !Weapons.isMeteo && attackdamage.Usable_Dodge)
+
+        if (!photonView.IsMine)
+            return;
+
+        if (!isStun && !isJump && !isBlock && !isBackStep && !weapons.isEnergyReady && !isRush && !isAura && !isFlash &&
+           !weapons.isLightning && !weapons.isIceage && !weapons.isMeteo && attackdamage.Usable_Dodge)
         {
             FootSound.footSound.audioSource.Stop();
             if (CharacterType == Type.Archer)
@@ -473,6 +490,8 @@ public class PlayerST : MonoBehaviourPunCallbacks
     //==================================여기서부터 전사스킬=======================================
     public void Block() //방패 치기
     {
+       
+
         if (!isRush && !isAura && !isJump && !isDodge && !isStun && !isRun &&
              attackdamage.Usable_Skill1)
         {
@@ -641,7 +660,7 @@ public class PlayerST : MonoBehaviourPunCallbacks
     //==================================여기서부터 마법사스킬=======================================
     public void Flash()
     {
-        if (!isDodge && !isJump && !isRun && !isStun && !Weapons.weapons.isLightning && !Weapons.weapons.isIceage && !Weapons.isMeteo &&
+        if (!isDodge && !isJump && !isRun && !isStun && !weapons.isLightning && !weapons.isIceage && !weapons.isMeteo &&
             attackdamage.Usable_Teleport)
         {
             StartCoroutine(FlashStart());
@@ -676,7 +695,8 @@ public class PlayerST : MonoBehaviourPunCallbacks
     }
     void InputManager()
     {
-
+        if (!photonView.IsMine)
+            return;
 
         h = Input.GetAxisRaw("Horizontal");    //X좌표 입력받기
         v = Input.GetAxisRaw("Vertical"); //Z좌표 입력받기
@@ -694,6 +714,10 @@ public class PlayerST : MonoBehaviourPunCallbacks
     }
     private void Update()
     {
+
+        if (!photonView.IsMine)
+            return;
+
         //HorseRide();
 
         if(!photonView.IsMine) //로컬상태가 아니면 리턴
@@ -766,6 +790,10 @@ public class PlayerST : MonoBehaviourPunCallbacks
 
     public void HorseRide()
     {
+
+        if (!photonView.IsMine)
+            return;
+
         if (!HorseMode) // 말 소환&소환해제
         {
             if (!HorseSpawn.transform.GetChild(0).gameObject.activeSelf)
@@ -804,8 +832,10 @@ public class PlayerST : MonoBehaviourPunCallbacks
     //}
     void MageMove()
     {
-        if (!isStun && !Weapons.weapons.isLightning && !Weapons.weapons.isIceage && !Weapons.isMeteo
-            && !Weapons.weapons.isEnergyReady && CharacterType == Type.Mage && !NoMove)
+
+
+        if (!isStun && !weapons.isLightning && !weapons.isIceage && !weapons.isMeteo
+            && !weapons.isEnergyReady && CharacterType == Type.Mage && !NoMove)
         {
             if (isDodge)
                 moveVec = dodgeVec;
@@ -825,7 +855,7 @@ public class PlayerST : MonoBehaviourPunCallbacks
     }
     void ArcherMove()
     {
-        if (!isStun && !isBackStep && !Weapons.weapons.isEnergyReady && CharacterType == Type.Archer && !NoMove)
+        if (!isStun && !isBackStep && !weapons.isEnergyReady && CharacterType == Type.Archer && !NoMove)
         {
             if (isDodge)
                 moveVec = dodgeVec;
@@ -880,12 +910,17 @@ public class PlayerST : MonoBehaviourPunCallbacks
 
     void FixedUpdate()
     {
+        if (!photonView.IsMine)
+            return;
+
         //attackdamage.SkillPassedTimeFucn(); (weapons스크립트의 117줄, attackDamage의125줄 , playerST의 553줄에 총 3개가 있어 쿨타임이 3배로 돌아갑니다. 그래서 2개 주석처리 해놨습니다. 문제시에 알려주세요)
         FreezeVelocity();
         StopMove();
     }
     void PlayerDie() //사망
     {
+
+
         SelectPlayer.enabled = false;
         rigid.useGravity = false;
         isDie = true;
@@ -912,9 +947,9 @@ public class PlayerST : MonoBehaviourPunCallbacks
             if (other.gameObject.GetComponent<Attacking>().isAttacking && !isDamage)
             {
                 EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
-                PlayerStat.playerstat.DamagedHp(enemyRange.damage);
+                playerstat.DamagedHp(enemyRange.damage);
                 other.gameObject.GetComponent<Attacking>().isAttacking = false;
-                if(PlayerStat.playerstat._Hp <= 0)
+                if(playerstat._Hp <= 0)
                 {
                     PlayerDie();
                 }
@@ -929,10 +964,10 @@ public class PlayerST : MonoBehaviourPunCallbacks
             {
 
                 EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
-                PlayerStat.playerstat.DamagedHp(enemyRange.damage);
+                playerstat.DamagedHp(enemyRange.damage);
 
                 StartCoroutine(OnDamageNuck());
-                if (PlayerStat.playerstat._Hp <= 0)
+                if (playerstat._Hp <= 0)
                 {
                     PlayerDie();
                 }
@@ -944,10 +979,10 @@ public class PlayerST : MonoBehaviourPunCallbacks
             {
 
                 EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
-                PlayerStat.playerstat.DamagedHp(enemyRange.damage);
+                playerstat.DamagedHp(enemyRange.damage);
 
                 StartCoroutine(OnDamageNuck2());
-                if (PlayerStat.playerstat._Hp <= 0)
+                if (playerstat._Hp <= 0)
                 {
                     PlayerDie();
                 }
@@ -960,10 +995,10 @@ public class PlayerST : MonoBehaviourPunCallbacks
             {
 
                 EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
-                PlayerStat.playerstat.DamagedHp(enemyRange.damage);
+                playerstat.DamagedHp(enemyRange.damage);
 
                 StartCoroutine(OnDamageNuck3());
-                if (PlayerStat.playerstat._Hp <= 0)
+                if (playerstat._Hp <= 0)
                 {
                     PlayerDie();
                 }

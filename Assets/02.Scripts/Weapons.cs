@@ -15,7 +15,7 @@ public class Weapons : MonoBehaviour
     public bool Key3; //키보드 3번입력
     public bool Key3Up;
 
-    public static Weapons weapons;
+    public  Weapons weapons;
     public Animator anim;
     private Rigidbody rigid;
     public BoxCollider meleeArea; //근딜범위
@@ -58,7 +58,7 @@ public class Weapons : MonoBehaviour
 
     public bool isLightning;  //현재 스킬사용중?
     public bool isIceage;
-    public static bool isMeteo;
+    public  bool isMeteo;
     public bool isMeteoShot;
 
     public int mage_skill4_Order = 0; //마법사 메테오 스킬 차례
@@ -81,7 +81,7 @@ public class Weapons : MonoBehaviour
     public GameObject Skillarea2; //켜지면 데미지만
     public GameObject CCarea;  //켜지면 CC기 
 
-
+    
     private void Start()
     {
         weapons = this;
@@ -124,8 +124,8 @@ public class Weapons : MonoBehaviour
     //============================궁수스킬========================================
     public void BombArrow() //폭탄화살 궁수용
     {
-        if (!playerST.isDodge && !isEnergyReady && !PlayerST.isJump
-            && !PlayerST.isStun && !playerST.isRun && attackdamage.Usable_Skill2)
+        if (!playerST.isDodge && !isEnergyReady && !playerST.isJump
+            && !playerST.isStun && !playerST.isRun && attackdamage.Usable_Skill2)
         {
             StartCoroutine(BombArrowPlay());
         }
@@ -133,7 +133,7 @@ public class Weapons : MonoBehaviour
     IEnumerator BombArrowPlay()
     {
         isBombArrow = true;
-        PlayerST.isCool2 = true;
+        playerST.isCool2 = true;
         attackdamage.Skill_2_Cool();
         SoundManager.soundManager.ArcherSkill2_1Sound();
         anim.SetBool("isBomb", true);
@@ -154,12 +154,12 @@ public class Weapons : MonoBehaviour
     public bool energyfullCharging = false;
     public void EnergyArrow()
     {
-        if (archer_skill4_Order == 0 &&  !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun &&
+        if (archer_skill4_Order == 0 &&  !playerST.isDodge && !playerST.isStun && !playerST.isJump && !playerST.isRun &&
             attackdamage.Usable_Skill3)
         {
             if (!StopSoundManager.stopSoundManager.audioSource.isPlaying)
                 StopSoundManager.stopSoundManager.ArcherSkill3ChargeSound();
-            PlayerST.isCool3 = true;
+            playerST.isCool3 = true;
             isEnergyReady = true;
             anim.SetBool("isReady", true);
             Arc3SkillBuff1.SetActive(true);
@@ -241,7 +241,7 @@ public class Weapons : MonoBehaviour
     //============================================마법사 스킬=====================================================
     public void LightningBall()
     {
-        if ( !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun && !playerST.isFlash && !isIceage &&
+        if ( !playerST.isDodge && !playerST.isStun && !playerST.isJump && !playerST.isRun && !playerST.isFlash && !isIceage &&
            !isMeteo && attackdamage.Usable_Skill1)
         {
             StartCoroutine(LightningBallStart());
@@ -250,7 +250,7 @@ public class Weapons : MonoBehaviour
 
     IEnumerator LightningBallStart()
     {
-        PlayerST.isCool1 = false;
+        playerST.isCool1 = false;
         attackdamage.Usable_Skill1 = false;
 
         isLightning = true;
@@ -274,7 +274,7 @@ public class Weapons : MonoBehaviour
         Destroy(darkball2, 1.1f);
         Destroy(darkball3, 1.1f);
 
-        PlayerST.isCool1 = true;
+        playerST.isCool1 = true;
         attackdamage.Skill_1_Cool();
 
 
@@ -285,7 +285,7 @@ public class Weapons : MonoBehaviour
     }
     public void IceAge()
     {
-        if ( !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun && !isLightning && !playerST.isFlash &&
+        if ( !playerST.isDodge && !playerST.isStun && !playerST.isJump && !playerST.isRun && !isLightning && !playerST.isFlash &&
            !isMeteo && attackdamage.Usable_Skill2)
         {
             StartCoroutine(IceAgeStart());
@@ -296,7 +296,7 @@ public class Weapons : MonoBehaviour
         ArrowSkill.arrowSkill.NoDestroy = true;
         attackdamage.Skill_2_Cool();
         SoundManager.soundManager.MageSkill2Voice();
-        PlayerST.isCool2 = false;
+        playerST.isCool2 = false;
         attackdamage.Usable_Skill2 = false;
         
         Mage2SkillReadyEff.SetActive(true);
@@ -314,7 +314,7 @@ public class Weapons : MonoBehaviour
         Mage2SkillReadyEff.SetActive(false);
         Mage2SkillEff.SetActive(true);
 
-        PlayerST.isCool2 = true;
+        playerST.isCool2 = true;
         attackdamage.Skill_2_Cool();
 
         yield return new WaitForSeconds(0.2f);
@@ -331,10 +331,10 @@ public class Weapons : MonoBehaviour
     }
     public void Meteo()
     {
-        if ((mage_skill4_Order ==0|| mage_skill4_Order==1) && !playerST.isDodge && !PlayerST.isStun && !PlayerST.isJump && !playerST.isRun && !playerST.isFlash
+        if ((mage_skill4_Order ==0|| mage_skill4_Order==1) && !playerST.isDodge && !playerST.isStun && !playerST.isJump && !playerST.isRun && !playerST.isFlash
             && !isLightning && !isIceage && attackdamage.Usable_Skill3)
         {
-            PlayerST.isCool3 = true;
+            playerST.isCool3 = true;
             if (mage_skill4_Order==0 && MeteoCasting < MeteoMaxCasting)
             {
                 if(!StopSoundManager.stopSoundManager.audioSource.isPlaying)
@@ -432,13 +432,13 @@ public class Weapons : MonoBehaviour
             Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
             arrowRigid.velocity = arrowPos.forward * playerST.bowPower * 150;
             Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
-            if (PlayerST.playerST.FullChargeing)
+            if (playerST.FullChargeing)
             {
                 arrow.damage = 1.3f * attackdamage.Attack_Dam();
-                PlayerST.playerST.FullChargeing = false;
+                playerST.FullChargeing = false;
                 ShotFull = true;
             }
-            else if (!PlayerST.playerST.FullChargeing){
+            else if (!playerST.FullChargeing){
                 arrow.damage = attackdamage.Attack_Dam();
                 ShotFull = false;
             }

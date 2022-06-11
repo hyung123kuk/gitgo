@@ -1,22 +1,28 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class ComboHit : MonoBehaviour
+public class ComboHit : MonoBehaviourPun
 {
     public Animator anim;
     public int noOfClicks = 0; //Ŭ����
     float lastClickdTime = 0; //������ Ŭ���ð�
     public float maxComboDelay; //�޺����� �ð�
+    Weapons weapons;
 
     void Start()
     {
+        weapons = FindObjectOfType<Weapons>();
         anim = gameObject.GetComponent<Animator>();
     }
 
 
     void Update()
     {
+        if (!photonView.IsMine)
+            return;
+
         if (AllUI.isUI || NPC.isNPCRange)
             return;
         if (Time.time - lastClickdTime > maxComboDelay)
@@ -31,7 +37,7 @@ public class ComboHit : MonoBehaviour
             if (noOfClicks == 1)
             {
                 anim.SetBool("isAttack", true);
-                Weapons.weapons.StartCoroutine("Swing");
+                weapons.StartCoroutine("Swing");
                 SoundManager.soundManager.WarriorAttackSound();
                 SoundManager.soundManager.WarriorAttackVoice();
             }
@@ -44,7 +50,7 @@ public class ComboHit : MonoBehaviour
         if (noOfClicks >= 2)
         {
             anim.SetBool("isAttack2", true);
-            Weapons.weapons.StartCoroutine("Swing");
+            weapons.StartCoroutine("Swing");
             SoundManager.soundManager.WarriorAttackSound();
             SoundManager.soundManager.WarriorAttackVoice();
         }
@@ -79,6 +85,6 @@ public class ComboHit : MonoBehaviour
     {
         SoundManager.soundManager.WarriorAttackSound();
         
-        Weapons.weapons.StartCoroutine("Swing");
+        weapons.StartCoroutine("Swing");
     }
 }

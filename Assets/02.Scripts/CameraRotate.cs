@@ -2,7 +2,7 @@
 using System.Collections;
 using Photon.Pun;
 
-public class CameraRotate : MonoBehaviourPunCallbacks
+public class CameraRotate : MonoBehaviourPun
 {
 
     //추적할 대상
@@ -23,6 +23,7 @@ public class CameraRotate : MonoBehaviourPunCallbacks
     public float yMaxLimit = 80f;
 
     public PlayerST playerst;
+    public Weapons weapons;
 
 
     //앵글의 최소,최대 제한
@@ -39,6 +40,7 @@ public class CameraRotate : MonoBehaviourPunCallbacks
     void Start()
     {
         playerst = FindObjectOfType<PlayerST>();
+        weapons = FindObjectOfType<Weapons>();
         Vector3 angles = transform.eulerAngles;
         x = angles.y;
         y = angles.x;
@@ -52,11 +54,10 @@ public class CameraRotate : MonoBehaviourPunCallbacks
 
     void Update()
     {
-        if (!photonView.IsMine) //로컬상태가 아니면 리턴
-        {
-            return;
-        }
-        if (Weapons.isMeteo || AllUI.isUI)
+        if (!photonView.IsMine)
+            gameObject.SetActive(false);
+
+        if (weapons.isMeteo || AllUI.isUI)
             return;
 
 
