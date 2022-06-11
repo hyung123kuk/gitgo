@@ -21,7 +21,7 @@ public class CameraClear : MonoBehaviour
     }
     private void Update()
     {
-       /* Debug.DrawRay(transform.position, MainCamera.transform.position - transform.position, Color.red);
+        Debug.DrawRay(transform.position, MainCamera.transform.position - transform.position, Color.red);
         Debug.DrawRay(transform.position, (MainCamera.transform.position - transform.position).normalized * CameraMaxDistance, Color.blue);
 
         if (Physics.Raycast(transform.position, (MainCamera.transform.position - transform.position).normalized, out hit, CameraMaxDistance)) //자신과 메인카메라의 사이에 레이캐스팅하기
@@ -36,6 +36,6 @@ public class CameraClear : MonoBehaviour
                 MainCamera.transform.localPosition = Vector3.Lerp(MainCamera.transform.localPosition, new Vector3(0, 0, -CameraMaxDistance), Time.deltaTime * 5f);
                 //Debug.DrawRay(transform.position, MainCamera.transform.position, Color.red);
             }
-        }*/
+        }
     }
 }
