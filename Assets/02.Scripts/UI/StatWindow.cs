@@ -48,6 +48,7 @@ public class StatWindow : MonoBehaviour ,IPointerClickHandler
     private void Awake()
     {
         statWindow = this;
+        StatWindowDesign = transform.GetChild(0).gameObject;
         CharacterImage = transform.GetChild(0).GetChild(0).GetChild(1).GetChild(0).GetComponent<Image>();
         Character = transform.GetChild(0).GetChild(0).GetChild(2).GetComponent<Text>();
         level = transform.GetChild(0).GetChild(0).GetChild(3).GetComponent<Text>();
@@ -61,15 +62,26 @@ public class StatWindow : MonoBehaviour ,IPointerClickHandler
         SkillAddDamage = transform.GetChild(0).GetChild(0).GetChild(11).GetComponent<Text>();
         Critical_Probable = transform.GetChild(0).GetChild(0).GetChild(12).GetComponent<Text>();
         Critical_Damage = transform.GetChild(0).GetChild(0).GetChild(13).GetComponent<Text>();
-        playerStat = FindObjectOfType<PlayerStat>();
+       
         
         allUI = FindObjectOfType<AllUI>();
         tDown = false;
+
+        StartCoroutine(StartStatWindow());
        
+    }
+    IEnumerator StartStatWindow()
+    {
+        StatWindowDesign.SetActive(true);
+        yield return new WaitForSeconds(0.2f);
+
+        StatWindowDesign.SetActive(false);
+
     }
 
     private void Start()
     {
+        playerStat = FindObjectOfType<PlayerStat>();
         playerST = FindObjectOfType<PlayerST>();
         if (playerST.CharacterType == PlayerST.Type.Warrior)
         {

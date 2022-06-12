@@ -26,12 +26,12 @@ public class Bar : MonoBehaviour
 
     private void OnEnable()
     {
-        playerStat = FindObjectOfType<PlayerStat>();
+      
     }
 
     void Start()
     {
-       
+        playerStat = FindObjectOfType<PlayerStat>();
         backColor = back.color;
         durationBar = duration + duration2;
     }

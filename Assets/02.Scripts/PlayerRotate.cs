@@ -15,6 +15,9 @@ public class PlayerRotate : MonoBehaviourPun
 
     void Start()
     {
+        if (!photonView.IsMine)
+            return;
+
         _camera = Camera.main;
         _controller = this.GetComponent<CapsuleCollider>();
         playerST = GetComponent<PlayerST>();

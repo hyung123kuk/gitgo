@@ -21,8 +21,9 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             if (CharSel.character1 == CharacterSel.Type.Warrior)
             {
-                GameObject character = PhotonNetwork.Instantiate("PlayerWorrior", startPoint.position, Quaternion.identity);
+                GameObject character = PhotonNetwork.Instantiate("PlayerWarrior2", startPoint.position, Quaternion.identity);
                 character.transform.GetChild(0).position = StartPosition;
+               
                 //GameObject character=Instantiate(Wor, startPoint.position, Quaternion.identity);
                 //character.transform.GetChild(0).position = StartPosition;
             }
