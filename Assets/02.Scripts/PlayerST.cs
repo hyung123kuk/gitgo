@@ -6,7 +6,7 @@ using Photon.Pun;
 public class PlayerST : MonoBehaviourPun
 {
 
-    
+
 
     public enum Type { Warrior, Archer, Mage };
     public Type CharacterType; //원래 앞에 static이 붙어있었는데 테스트할때 인스펙터창에 타입이 안떠서 임시로 뻈어요
@@ -74,6 +74,8 @@ public class PlayerST : MonoBehaviourPun
 
     public bool isDie; //플레이어 사망
     public DieUI dieui;
+    public BGM bgm;
+
 
 
     public bool isFall; //공중에 떠있는상태? 몬스터들의 룩엣을 조정하기위함.
@@ -124,10 +126,16 @@ public class PlayerST : MonoBehaviourPun
 
     void Start()
     {
+        if (!photonView.IsMine)
+            return;
+        //HorseSpawn = GetComponentInChildren<Horse>().gameObject;
+        HorseSpawn = transform.GetChild(17).gameObject;
+        Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
+        bgm = GameObject.Find("Sounds").transform.GetChild(3).GetComponent<BGM>();
         playerstat = GetComponent<PlayerStat>();
-        Horsee = GameObject.Find("HorseSpawn").transform.GetChild(0).transform
-            .GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
-        HorseSpawn = GameObject.Find("HorseSpawn");
+       // Horsee = GameObject.Find("HorseSpawn").transform.GetChild(0).transform
+          //.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
+        //HorseSpawn = GameObject.Find("HorseSpawn");
         bowPower = bowMinPower;
         _transform = GetComponent<Transform>();
         anim = GetComponentInChildren<Animator>();
@@ -329,7 +337,7 @@ public class PlayerST : MonoBehaviourPun
         }
         #endregion
     }
-    
+
 
     void Attack()   //공격
     {
@@ -383,7 +391,7 @@ public class PlayerST : MonoBehaviourPun
                 {
                     StopSoundManager.stopSoundManager.ArcherChargeSound();
                 }
-                if(bowPower>=bowChargingTime) //풀차징되면
+                if (bowPower >= bowChargingTime) //풀차징되면
                 {
                     FullChargeing = true;
                 }
@@ -469,7 +477,7 @@ public class PlayerST : MonoBehaviourPun
 
             Invoke("DodgeOut", 0.4f); //구르기를 하면 0.4초후에 이동속도가 정상으로돌아옴
 
-            
+
 
         }
     }
@@ -490,7 +498,7 @@ public class PlayerST : MonoBehaviourPun
     //==================================여기서부터 전사스킬=======================================
     public void Block() //방패 치기
     {
-       
+
 
         if (!isRush && !isAura && !isJump && !isDodge && !isStun && !isRun &&
              attackdamage.Usable_Skill1)
@@ -519,7 +527,7 @@ public class PlayerST : MonoBehaviourPun
         anim.SetBool("isBlock", false);
         isBlock = false;
         isDamage = false;
-        
+
         attackdamage.Skill_1_Cool();  //방패치기쿨타임
     }
     public void Buff()
@@ -718,12 +726,13 @@ public class PlayerST : MonoBehaviourPun
         if (!photonView.IsMine)
             return;
 
+        if(Input.GetKeyDown(KeyCode.H)) //말 아이템이 없어서 이걸로 테스트했어요
+        {
+            HorseRide();
+        }
+
         //HorseRide();
 
-        if(!photonView.IsMine) //로컬상태가 아니면 리턴
-        {
-            return;
-        }
         if (AllUI.isUI)
         {
             if (FootSound.footSound)
@@ -761,10 +770,10 @@ public class PlayerST : MonoBehaviourPun
             speed = 6f;
 
         //말 관련//
-        if (!HorseMode)
-        {
-            transform.parent = null;
-        }
+        //if (!HorseMode)
+        //{
+        //    transform.parent = null;
+        //}
         if (HorseMode) //말탔을때 플레이어의 프리즈포지션 체크
         {
             rigid.constraints = RigidbodyConstraints.FreezePositionX;
@@ -796,17 +805,19 @@ public class PlayerST : MonoBehaviourPun
 
         if (!HorseMode) // 말 소환&소환해제
         {
-            if (!HorseSpawn.transform.GetChild(0).gameObject.activeSelf)
+            if (!HorseSpawn.gameObject.activeSelf)
             {
+                HorseSpawn.transform.parent = null;
                 SoundManager.soundManager.Horse();
-                HorseSpawn.transform.GetChild(0).gameObject.SetActive(true);
-                HorseSpawn.transform.GetChild(0).gameObject.transform.position = horsepos1.position;
-                HorseSpawn.transform.GetChild(0).gameObject.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
+                HorseSpawn.gameObject.SetActive(true);
+                HorseSpawn.gameObject.transform.position = horsepos1.position;
+                HorseSpawn.gameObject.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
             }
-            else if (HorseSpawn.transform.GetChild(0).gameObject.activeSelf)
+            else if (HorseSpawn.gameObject.activeSelf)
             {
                 SoundManager.soundManager.Horse2();
-                HorseSpawn.transform.GetChild(0).gameObject.SetActive(false);
+                HorseSpawn.gameObject.SetActive(false);
+                HorseSpawn.transform.parent = transform;
             }
         }
     }
@@ -924,10 +935,10 @@ public class PlayerST : MonoBehaviourPun
         SelectPlayer.enabled = false;
         rigid.useGravity = false;
         isDie = true;
-        anim.SetBool("isDie",true);
-        if(CharacterType == Type.Warrior || CharacterType == Type.Mage)
+        anim.SetBool("isDie", true);
+        if (CharacterType == Type.Warrior || CharacterType == Type.Mage)
             SoundManager.soundManager.MaleDieSound();
-        else if(CharacterType == Type.Archer)
+        else if (CharacterType == Type.Archer)
             SoundManager.soundManager.FeMaleDieSound();
         dieui.DieOn();
     }
@@ -939,160 +950,182 @@ public class PlayerST : MonoBehaviourPun
 
     void OnTriggerEnter(Collider other) //충돌감지
     {
-        if (other.gameObject.tag == "EnemyRange")  //적에게 맞았다면
+        if (photonView.IsMine)
         {
-            //if (!isDamage) //무적타이밍이 아닐때만 실행
-            //{
-
-            if (other.gameObject.GetComponent<Attacking>().isAttacking && !isDamage)
+            if (other.gameObject.tag == "EnemyRange")  //적에게 맞았다면
             {
-                EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
-                playerstat.DamagedHp(enemyRange.damage);
-                other.gameObject.GetComponent<Attacking>().isAttacking = false;
-                if(playerstat._Hp <= 0)
+                //if (!isDamage) //무적타이밍이 아닐때만 실행
+                //{
+
+                if (other.gameObject.GetComponent<Attacking>().isAttacking && !isDamage)
                 {
-                    PlayerDie();
+                    EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
+                    playerstat.DamagedHp(enemyRange.damage);
+                    other.gameObject.GetComponent<Attacking>().isAttacking = false;
+                    if (playerstat._Hp <= 0)
+                    {
+                        PlayerDie();
+                    }
                 }
-            }
                 //StartCoroutine(OnDamage());
 
-            //}
-        }
-        else if (other.gameObject.tag == "Boss1Skill")  //1보스 스턴스킬
-        {
-            if (!isDamage) //무적타이밍이 아닐때만 실행
+                //}
+            }
+            else if (other.gameObject.tag == "Boss1Skill")  //1보스 스턴스킬
             {
-
-                EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
-                playerstat.DamagedHp(enemyRange.damage);
-
-                StartCoroutine(OnDamageNuck());
-                if (playerstat._Hp <= 0)
+                if (!isDamage) //무적타이밍이 아닐때만 실행
                 {
-                    PlayerDie();
+
+                    EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
+                    playerstat.DamagedHp(enemyRange.damage);
+
+                    StartCoroutine(OnDamageNuck());
+                    if (playerstat._Hp <= 0)
+                    {
+                        PlayerDie();
+                    }
                 }
             }
-        }
-        else if (other.gameObject.tag == "Boss2Skill")  //최종보스 1.5초스턴스킬
-        {
-            if (!isDamage) //무적타이밍이 아닐때만 실행
+            else if (other.gameObject.tag == "Boss2Skill")  //최종보스 1.5초스턴스킬
             {
-
-                EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
-                playerstat.DamagedHp(enemyRange.damage);
-
-                StartCoroutine(OnDamageNuck2());
-                if (playerstat._Hp <= 0)
+                if (!isDamage) //무적타이밍이 아닐때만 실행
                 {
-                    PlayerDie();
+
+                    EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
+                    playerstat.DamagedHp(enemyRange.damage);
+
+                    StartCoroutine(OnDamageNuck2());
+                    if (playerstat._Hp <= 0)
+                    {
+                        PlayerDie();
+                    }
+                }
+
+            }
+            else if (other.gameObject.tag == "Boss3Skill")  //최종보스 5초스턴스킬
+            {
+                if (!isDamage) //무적타이밍이 아닐때만 실행
+                {
+
+                    EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
+                    playerstat.DamagedHp(enemyRange.damage);
+
+                    StartCoroutine(OnDamageNuck3());
+                    if (playerstat._Hp <= 0)
+                    {
+                        PlayerDie();
+                    }
                 }
             }
 
-        }
-        else if (other.gameObject.tag == "Boss3Skill")  //최종보스 5초스턴스킬
-        {
-            if (!isDamage) //무적타이밍이 아닐때만 실행
+
+
+            if (other.tag == "BGM1")   //마을입장
             {
-
-                EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
-                playerstat.DamagedHp(enemyRange.damage);
-
-                StartCoroutine(OnDamageNuck3());
-                if (playerstat._Hp <= 0)
-                {
-                    PlayerDie();
-                }
+                // BGM.bgm.audioSource.Stop();
+                bgm.audioSource.clip = Sounds.sounds.TownBGM;
+                //  BGM.bgm.audioSource.Play();
             }
-        }
+            if (other.tag == "BGM2")  //슬라임사냥터 입장
+            {
+                //  BGM.bgm.audioSource.Stop();
+                bgm.audioSource.clip = Sounds.sounds.BeginnerGroundBGM;
+                // BGM.bgm.audioSource.Play();
+            }
+            if (other.tag == "BGM3") //고블린마을 입장
+            {
+                //  BGM.bgm.audioSource.Stop();
+                bgm.audioSource.clip = Sounds.sounds.MiddleGroundBGM;
+                // BGM.bgm.audioSource.Play();
+            }
+            if (other.tag == "BGM4") //던전입장
+            {
+                // BGM.bgm.audioSource.Stop();
+                bgm.audioSource.clip = Sounds.sounds.DunjeonBGM;
+                // BGM.bgm.audioSource.Play();
+            }
+            if (other.tag == "BGM5") //골렘존입장
+            {
+                bgm.audioSource.clip = Sounds.sounds.BossBGM;
+            }
 
-        if (other.tag == "BGM1")   //마을입장
-        {
-           // BGM.bgm.audioSource.Stop();
-            BGM.bgm.audioSource.clip = Sounds.sounds.TownBGM;
-          //  BGM.bgm.audioSource.Play();
-        }
-        if (other.tag == "BGM2")  //슬라임사냥터 입장
-        {
-          //  BGM.bgm.audioSource.Stop();
-            BGM.bgm.audioSource.clip = Sounds.sounds.BeginnerGroundBGM;
-           // BGM.bgm.audioSource.Play();
-        }
-        if (other.tag == "BGM3") //고블린마을 입장
-        {
-          //  BGM.bgm.audioSource.Stop();
-            BGM.bgm.audioSource.clip = Sounds.sounds.MiddleGroundBGM;
-           // BGM.bgm.audioSource.Play();
-        }
-        if (other.tag == "BGM4") //던전입장
-        {
-           // BGM.bgm.audioSource.Stop();
-            BGM.bgm.audioSource.clip = Sounds.sounds.DunjeonBGM;
-           // BGM.bgm.audioSource.Play();
-        }
-        if (other.tag == "BGM5") //골렘존입장
-        {
-            BGM.bgm.audioSource.clip = Sounds.sounds.BossBGM;
         }
 
     }
+
+
+   
     private void OnTriggerStay(Collider other)
     {
-        if (other.tag == "Horse")
+        if (photonView.IsMine)
         {
-            if (Input.GetKeyDown(KeyCode.C)) //말탑승
+            if (other.tag == "Horse")
             {
-                rigid.constraints = RigidbodyConstraints.FreezeAll;
-                HorseMode = true;
-                anim.SetBool("isHorse", true);
-                rigid.useGravity = false;
-                transform.parent = Horsee.transform;
-                transform.position = Horsee.transform.position + Vector3.up * -0.5f;
-                transform.rotation = HorseSpawn.transform.GetChild(0).gameObject.transform.rotation;
-                //Quaternion.LookRotation(new Vector3(h, 0f, v));
+                if (Input.GetKeyDown(KeyCode.C)) //말탑승
+                {
+                    HorseMode = true;
+                    rigid.constraints = RigidbodyConstraints.FreezeAll;
+
+                    anim.SetBool("isHorse", true);
+                    rigid.useGravity = false;
+                    transform.parent = Horsee.transform;
+                    transform.position = Horsee.transform.position + Vector3.up * -0.5f;
+                    transform.rotation = HorseSpawn.transform.rotation;
+                    //Quaternion.LookRotation(new Vector3(h, 0f, v));
+                }
+            }
+
+            if (other.name == "In-Portal" && Input.GetKeyDown(KeyCode.F))
+            {
+                Portal.portal.InDunJeonPortal(gameObject);
+            }
+
+            if (other.name == "Out-Portal" && Input.GetKeyDown(KeyCode.F))
+            {
+                Portal.portal.OutDunJeonPortal(gameObject);
+            }
+
+            if (other.name == "Boss2Arena")
+            {
+                DunjeonBossArena = true;
             }
         }
 
-        if (other.name == "In-Portal" && Input.GetKeyDown(KeyCode.F))
-        {
-            Portal.portal.InDunJeonPortal(gameObject);
-        }
 
-        if (other.name == "Out-Portal" && Input.GetKeyDown(KeyCode.F))
-        {
-            Portal.portal.OutDunJeonPortal(gameObject);
-        }
-
-        if (other.name == "Boss2Arena")
-        {
-            DunjeonBossArena = true;
-        }
-
-        
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.name == "Boss2Arena")
+        if (photonView.IsMine)
         {
-            DunjeonBossArena = false;
+            if (other.name == "Boss2Arena")
+            {
+                DunjeonBossArena = false;
+            }
         }
     }
     void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "ground" || collision.gameObject.tag == "GROUND") //이 태그가 붙은곳에서만 점프착지가능
+        if (photonView.IsMine)
         {
-            anim.SetBool("isJump", false);
-            isJump = false;
-        }
-        if (collision.gameObject.tag == "WALL")
-        {
-            isYes = true; //벽쪽에서 돌진스킬못쓰게
+            if (collision.gameObject.tag == "ground" || collision.gameObject.tag == "GROUND") //이 태그가 붙은곳에서만 점프착지가능
+            {
+                anim.SetBool("isJump", false);
+                isJump = false;
+            }
+            if (collision.gameObject.tag == "WALL")
+            {
+                isYes = true; //벽쪽에서 돌진스킬못쓰게
+            }
         }
     }
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "WALL")
+        if (photonView.IsMine)
         {
-            isYes = false;
+            if (collision.gameObject.tag == "WALL")
+            {
+                isYes = false;
+            }
         }
     }
 
@@ -1131,7 +1164,7 @@ public class PlayerST : MonoBehaviourPun
 
     public void WeaponChange(SwordNames WeaponNum) //무기를 바꿨을때 캐릭터에 적용시키기 위해 사용하는 함수
     {
-        if(WeaponNum != basicSword)
+        if (WeaponNum != basicSword)
         {
             if (!questStore.MainSuccess)
             {
