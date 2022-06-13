@@ -13,6 +13,8 @@ public class ComboHit : MonoBehaviourPun
 
     void Start()
     {
+        if (!photonView.IsMine)
+            return;
         weapons = FindObjectOfType<Weapons>();
         anim = gameObject.GetComponent<Animator>();
     }

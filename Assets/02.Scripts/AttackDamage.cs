@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class AttackDamage : MonoBehaviour
+public class AttackDamage : MonoBehaviourPun
 {
     [SerializeField]
     private PlayerStat playerStat;
@@ -123,6 +124,8 @@ public class AttackDamage : MonoBehaviour
 
     void Start()
     {
+        if (!photonView.IsMine)
+            return;
         playerStat = FindObjectOfType<PlayerStat>();
         Skill1_time = Skill_1_cooltime;
         Skill2_time = Skill_2_cooltime;

@@ -20,9 +20,12 @@ public class GameUI : MonoBehaviour
     private PlayerStat playerStat;
 
 
-    private void Awake()
+
+
+    private void Start()
     {
         playerStat = FindObjectOfType<PlayerStat>();
+
     }
 
     public void LevelSet()

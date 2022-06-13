@@ -68,7 +68,9 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
         inven = this;
         iDown = false;
         StartCoroutine(invenSet());
+
         eqslots = GameObject.FindGameObjectWithTag("EqueSlot").GetComponentsInChildren<Slot>();
+
 
     }
 

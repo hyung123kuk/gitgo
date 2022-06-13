@@ -6,7 +6,7 @@ using Photon.Pun;
 
 public class PlayerStat : MonoBehaviourPun //포톤으로 만들려고함.
 {
-    public int Level=1;
+    public int Level;
     public float TotalExp;
 
     public float NowExp;
@@ -30,7 +30,6 @@ public class PlayerStat : MonoBehaviourPun //포톤으로 만들려고함.
     public float LEV_ADD_STR;
     public float LEV_ADD_DEX;
     public float LEV_ADD_INT;
-    public bool expup =false;
 
     [SerializeField]
     private PlayerST playerST; 
@@ -40,6 +39,8 @@ public class PlayerStat : MonoBehaviourPun //포톤으로 만들려고함.
     private GameUI gameUI;
     [SerializeField]
     SkillWindow skillWindow;
+    [SerializeField]
+    StatWindow statWindow;
     public Slot[] equSlots;
 
 
@@ -50,48 +51,41 @@ public class PlayerStat : MonoBehaviourPun //포톤으로 만들려고함.
  
     void Start()
     {
+        if (!photonView.IsMine)
+            return;
 
         playerstat = this;
         playerST = GetComponent<PlayerST>();
         inven = FindObjectOfType<inventory>();
         gameUI = FindObjectOfType<GameUI>();
         skillWindow = FindObjectOfType<SkillWindow>();
+        statWindow = FindObjectOfType<StatWindow>();
         equSlots = GameObject.FindGameObjectWithTag("EqueSlot").GetComponentsInChildren<Slot>(); //여기서 오류가 뜬다면 인벤토리디자인을 킨 상태로 시작해주세요.
-        StatAllUpdate();
-        
-        _Hp = _MAXHP;
-        _Mp = _MAXMP;
-        StartSet();
+
+        Invoke("StartSet", 0.1f);
+
+
+
     }
+    
 
     public void StartSet()
     {
-        if (!photonView.IsMine)
-            return;
-        
-            gameUI.LevelSet();
+
+             StatAllUpdate();
+
+            _Hp = _MAXHP;
+            _Mp = _MAXMP;
+             gameUI.LevelSet();
             TotalExp = LevelExp();
             StatAllUpdate();
             gameUI.ExpSet();
-            StatWindow.statWindow.SetLevel();
-            StatWindow.statWindow.SetStat();
+            statWindow.SetLevel();
+            statWindow.SetStat();
             gameUI.bar_set();
         
     }
 
-    private void Update()
-    {
-
-        if (!photonView.IsMine)
-            return;
-
-        if (expup)
-         {
-            AddExp(10);
-            expup = false;
-         }
-        
-    }
 
 
     public void StatAllUpdate()

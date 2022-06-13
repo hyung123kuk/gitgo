@@ -39,6 +39,7 @@ public class CameraRotate : MonoBehaviourPun
 
     void Start()
     {
+
         playerst = FindObjectOfType<PlayerST>();
         weapons = FindObjectOfType<Weapons>();
         Vector3 angles = transform.eulerAngles;
