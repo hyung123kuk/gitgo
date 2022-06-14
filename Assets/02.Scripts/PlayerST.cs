@@ -922,7 +922,8 @@ public class PlayerST : MonoBehaviourPun
     void PlayerDie() //사망
     {
 
-
+        if (!photonView.IsMine)
+            return;
         SelectPlayer.enabled = false;
         rigid.useGravity = false;
         isDie = true;
