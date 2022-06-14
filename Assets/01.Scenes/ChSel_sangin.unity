@@ -293,6 +293,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   connectionInfoText: {fileID: 550455548}
   joinButton: {fileID: 1626373444}
+  CharSel: {fileID: 0}
 --- !u!1001 &872319153
 PrefabInstance:
   m_ObjectHideFlags: 0

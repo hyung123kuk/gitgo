@@ -6,13 +6,10 @@ public class BGM : MonoBehaviour
 {
     public AudioSource audioSource;
     SoundBar soundbar;
-    public static BGM bgm;
     void Start()
     {
         soundbar = FindObjectOfType<SoundBar>();
-        audioSource = GetComponent<AudioSource>();
-        bgm = this;
-       
+        audioSource = GetComponent<AudioSource>();  
     }
 
     private void Update()

@@ -1,13 +1,13 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class Horse : MonoBehaviour
+public class Horse : MonoBehaviourPun
 {
     public float speed = 30f;
     Vector3 moveVec;
 
-    public Transform playertr;
     private float h = 0f, v = 0f;
     private Rigidbody rigid;
     public Animator anim;
@@ -16,33 +16,39 @@ public class Horse : MonoBehaviour
 
     Camera _camera;
     CapsuleCollider _controller;
-    PlayerST playerST;
+    public PlayerST playerST;
     Weapons weapons;
     public float smoothness = 10f;
 
-    private void OnEnable()
-    {
-        HorseSpawnAnim();
-    }
     void Awake()
     {
-        playertr = GameObject.FindWithTag("Player").transform;
-        rigid = GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>();
-        _camera = Camera.main;
-        _controller = this.GetComponent<CapsuleCollider>();
-        
+        if (photonView.IsMine)
+        {
+            gameObject.SetActive(false);
+            rigid = GetComponent<Rigidbody>();
+            anim = GetComponent<Animator>();
+            _camera = Camera.main;
+            _controller = this.GetComponent<CapsuleCollider>();
+            playerST = FindObjectOfType<PlayerST>();
+            weapons = FindObjectOfType<Weapons>();
+        }
+
+        //HorseSpawnAnim();
     }
+    private void OnEnable()
+    {
+        //HorseSpawnAnim();
+
+    }
+    
     private void Start()
     {
-        playerST = FindObjectOfType<PlayerST>();
-        weapons = FindObjectOfType<Weapons>();
     }
 
     void HorseSpawnAnim()
     {
         opning = true;
-        transform.LookAt(playerST.horsepos2.position);
+        //transform.LookAt(playerST.horsepos2.position);
         anim.SetBool("isRun", true);
         Invoke("HorseSpawnAnimOut", 1.5f);
     }
@@ -54,6 +60,10 @@ public class Horse : MonoBehaviour
 
     void Update()
     {
+        if(!photonView.IsMine)
+        {
+            return;
+        }
         if (!opning && playerST.HorseMode)
         {
             #region 무브
@@ -84,7 +94,7 @@ public class Horse : MonoBehaviour
             {
                 FootSound.footSound.audioSource.Stop();
                 anim.SetBool("isRun", false);
-                rigid.velocity = Vector3.zero;
+                
             }
 
             if (Input.GetKeyDown(KeyCode.V) && playerST.HorseMode) //탑승해제
@@ -93,21 +103,32 @@ public class Horse : MonoBehaviour
                 playerST.rigid.useGravity = true;
                 playerST.HorseMode = false;
                 playerST.anim.SetBool("isHorse", false);
+                playerST.transform.parent = null;
                 playerST.rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY
                     | RigidbodyConstraints.FreezeRotationZ;
             }
 
-            transform.gameObject.layer = LayerMask.NameToLayer(name);
             rigid.angularVelocity = Vector3.zero;
 
         }
 
-
+        if(playerST == null)
+        {
+            playerST = FindObjectOfType<PlayerST>();
+        }
+        if(anim == null)
+        {
+            anim = GetComponent<Animator>();
+        }
 
     }
 
     void LateUpdate()  //플레이어가 카메라를 바라봄
     {
+        if (!photonView.IsMine)
+        {
+            return;
+        }
         if (inventory.iDown || weapons.isMeteo || SkillWindow.kDown || StatWindow.tDown)
             return;
 
@@ -121,17 +142,25 @@ public class Horse : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.tag == "WALL") //충돌되면 이동불가
+        if (photonView.IsMine)
         {
-            NoMove = true;
+            if (collision.gameObject.tag == "WALL") //충돌되면 이동불가
+            {
+                NoMove = true;
+            }
         }
     }
 
     private void OnCollisionExit(Collision collision)
     {
-        if (collision.gameObject.tag == "WALL")
+        if (photonView.IsMine)
         {
-            NoMove = false;
+            if (collision.gameObject.tag == "WALL")
+            {
+                NoMove = false;
+            }
         }
     }
+
+
 }
