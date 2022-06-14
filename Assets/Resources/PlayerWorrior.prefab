@@ -358,6 +358,7 @@ MonoBehaviour:
   rate: 0.6
   Key3: 0
   Key3Up: 0
+  weapons: {fileID: 0}
   anim: {fileID: 0}
   meleeArea: {fileID: 1085214334613087910}
   isSootReady: 1
@@ -384,6 +385,7 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteo: 0
   isMeteoShot: 0
   mage_skill4_Order: 0
   MagicPos: {fileID: 0}
@@ -6054,6 +6056,7 @@ MonoBehaviour:
   rate: 0.6
   Key3: 0
   Key3Up: 0
+  weapons: {fileID: 0}
   anim: {fileID: 0}
   meleeArea: {fileID: 6930675453186964657}
   isSootReady: 1
@@ -6080,6 +6083,7 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteo: 0
   isMeteoShot: 0
   mage_skill4_Order: 0
   MagicPos: {fileID: 0}
@@ -7410,13 +7414,16 @@ MonoBehaviour:
   isDamage: 0
   Rdown: 0
   ImWar: 0
+  isJump: 0
   archerattack: 0
+  isStun: 0
   isRun: 0
   attackdamage: {fileID: 6930675453831201902}
   playerstat: {fileID: 6930675453831201901}
   Skillarea: {fileID: 6930675452380214854}
   Skillarea2: {fileID: 883072634402545246}
   CCarea: {fileID: 2467151042864967779}
+  playerST: {fileID: 0}
   HorseMode: 0
   Horsee: {fileID: 0}
   HorseSpawn: {fileID: 0}
@@ -7426,7 +7433,9 @@ MonoBehaviour:
   NoMove: 0
   isDie: 0
   dieui: {fileID: 0}
+  isFall: 0
   isDodge: 0
+  isBuff: 0
   BuffEff: {fileID: 1085214335275886122}
   RushEff: {fileID: 6929713617637317354}
   Aurapos: {fileID: 6930675453083976868}
@@ -7434,11 +7443,19 @@ MonoBehaviour:
   BackStepEff: {fileID: 0}
   BackStepPos: {fileID: 0}
   isBackStep: 0
+  isPoison: 0
   mesh: {fileID: 0}
   smesh: {fileID: 0}
   FlashEff: {fileID: 0}
   isFlash: 0
   questStore: {fileID: 0}
+  isCool1: 0
+  isCool2: 0
+  isCool3: 0
+  isCool4: 0
+  isCooldodge: 0
+  isCoolTeleport: 0
+  weapons: {fileID: 0}
 --- !u!114 &9113404295894872380
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7543,11 +7560,11 @@ MonoBehaviour:
   LEV_ADD_STR: 0
   LEV_ADD_DEX: 0
   LEV_ADD_INT: 0
-  expup: 0
   playerST: {fileID: 9113404295894872383}
   inven: {fileID: 0}
   gameUI: {fileID: 0}
   skillWindow: {fileID: 0}
+  statWindow: {fileID: 0}
   equSlots:
   - {fileID: 0}
   - {fileID: 0}
@@ -7557,6 +7574,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  playerstat: {fileID: 0}
 --- !u!114 &6930675453831201902
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7616,6 +7634,9 @@ MonoBehaviour:
   Skill3_passedTime: 0
   Skill4_time: 0
   Skill4_passedTime: 0
+  attackDamage: 0
+  critical: 0
+  DamageNum: 0
 --- !u!114 &8155566100713877809
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -8275,6 +8296,7 @@ MonoBehaviour:
   rate: 0.6
   Key3: 0
   Key3Up: 0
+  weapons: {fileID: 0}
   anim: {fileID: 0}
   meleeArea: {fileID: 1085214335707388311}
   isSootReady: 1
@@ -8301,6 +8323,7 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteo: 0
   isMeteoShot: 0
   mage_skill4_Order: 0
   MagicPos: {fileID: 0}
@@ -9079,6 +9102,7 @@ MonoBehaviour:
   rate: 0.6
   Key3: 0
   Key3Up: 0
+  weapons: {fileID: 0}
   anim: {fileID: 0}
   meleeArea: {fileID: 1085214335990158479}
   isSootReady: 1
@@ -9105,6 +9129,7 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteo: 0
   isMeteoShot: 0
   mage_skill4_Order: 0
   MagicPos: {fileID: 0}
@@ -9859,6 +9884,7 @@ MonoBehaviour:
   rate: 0.6
   Key3: 0
   Key3Up: 0
+  weapons: {fileID: 0}
   anim: {fileID: 0}
   meleeArea: {fileID: 1085214336413246942}
   isSootReady: 1
@@ -9885,6 +9911,7 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteo: 0
   isMeteoShot: 0
   mage_skill4_Order: 0
   MagicPos: {fileID: 0}
@@ -10061,6 +10088,7 @@ MonoBehaviour:
   rate: 0.5
   Key3: 0
   Key3Up: 0
+  weapons: {fileID: 0}
   anim: {fileID: 0}
   meleeArea: {fileID: 6930675453058199934}
   isSootReady: 1
@@ -10087,6 +10115,7 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteo: 0
   isMeteoShot: 0
   mage_skill4_Order: 0
   MagicPos: {fileID: 0}
@@ -24159,6 +24188,7 @@ MonoBehaviour:
   rate: 0.65
   Key3: 0
   Key3Up: 0
+  weapons: {fileID: 0}
   anim: {fileID: 0}
   meleeArea: {fileID: 6930675452707813003}
   isSootReady: 1
@@ -24185,6 +24215,7 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteo: 0
   isMeteoShot: 0
   mage_skill4_Order: 0
   MagicPos: {fileID: 0}
@@ -24267,6 +24298,7 @@ MonoBehaviour:
   rate: 0.65
   Key3: 0
   Key3Up: 0
+  weapons: {fileID: 0}
   anim: {fileID: 0}
   meleeArea: {fileID: 6930675452837751339}
   isSootReady: 1
@@ -24293,6 +24325,7 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteo: 0
   isMeteoShot: 0
   mage_skill4_Order: 0
   MagicPos: {fileID: 0}
@@ -24405,6 +24438,7 @@ MonoBehaviour:
   rate: 0.65
   Key3: 0
   Key3Up: 0
+  weapons: {fileID: 0}
   anim: {fileID: 0}
   meleeArea: {fileID: 6930675453001853007}
   isSootReady: 1
@@ -24431,6 +24465,7 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteo: 0
   isMeteoShot: 0
   mage_skill4_Order: 0
   MagicPos: {fileID: 0}
@@ -24543,6 +24578,7 @@ MonoBehaviour:
   rate: 0.6
   Key3: 0
   Key3Up: 0
+  weapons: {fileID: 0}
   anim: {fileID: 0}
   meleeArea: {fileID: 6930675453186964657}
   isSootReady: 1
@@ -24569,6 +24605,7 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteo: 0
   isMeteoShot: 0
   mage_skill4_Order: 0
   MagicPos: {fileID: 0}
@@ -24681,6 +24718,7 @@ MonoBehaviour:
   rate: 0.65
   Key3: 0
   Key3Up: 0
+  weapons: {fileID: 0}
   anim: {fileID: 0}
   meleeArea: {fileID: 6930675454017754936}
   isSootReady: 1
@@ -24707,6 +24745,7 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteo: 0
   isMeteoShot: 0
   mage_skill4_Order: 0
   MagicPos: {fileID: 0}
@@ -25253,6 +25292,7 @@ MonoBehaviour:
   yMinLimit: -20
   yMaxLimit: 80
   playerst: {fileID: 0}
+  weapons: {fileID: 0}
 --- !u!1 &9113404296586555177
 GameObject:
   m_ObjectHideFlags: 0
