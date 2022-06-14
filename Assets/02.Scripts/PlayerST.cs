@@ -129,7 +129,7 @@ public class PlayerST : MonoBehaviourPun
         if (!photonView.IsMine)
             return;
         //HorseSpawn = GetComponentInChildren<Horse>().gameObject;
-        HorseSpawn = transform.GetChild(17).gameObject;
+        HorseSpawn = transform.GetChild(16).gameObject;
         Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
         bgm = GameObject.Find("Sounds").transform.GetChild(3).GetComponent<BGM>();
         playerstat = GetComponent<PlayerStat>();

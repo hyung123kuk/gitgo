@@ -42,7 +42,7 @@ public class AllUI : MonoBehaviour
     {
         MouseCursor=GetComponent<MouseCursor>();
         ExitWindow.isExitMenu = false;
-        CheckCursorLock();
+       
 
     }
 
