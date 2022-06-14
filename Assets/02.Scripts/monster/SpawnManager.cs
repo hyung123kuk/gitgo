@@ -62,7 +62,7 @@ public class SpawnManager : MonoBehaviour
         spawnManager = this;
         monsters = new string[] { "Slime", "BlueSlime", "Goblin", "GoblinArcher", "Skeleton", "TurtleSlime", "Golem" };
     }
-    private void Start() //소환해놓기
+    public void start() //소환해놓기
     {
         for (int i = 0; i < MonsterManager.monsterManager.Slime.Length; i++)
         {

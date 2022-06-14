@@ -37,12 +37,15 @@ public class MonsterManager : MonoBehaviourPun
         GoblinArcher = new GameObject[10];
         Skeleton = new GameObject[20];
 
-        Generate();
+        Invoke("Generate",0.2f);
     }
 
     void Generate()  //풀을 생성
     {
-
+       if(!PhotonNetwork.IsMasterClient)
+        {
+            return;
+        }
         GameObject SlimePools = new GameObject("Slime Pool");
         GameObject BlueSlimePools = new GameObject("BlueSlime Pool");
         GameObject GoblinPools = new GameObject("Goblin Pool");
@@ -91,7 +94,7 @@ public class MonsterManager : MonoBehaviourPun
             Golem.SetActive(false);
             Golem.transform.position = SpawnManager.spawnManager.GolemPoint.transform.position;
 
-
+        SpawnManager.spawnManager.start();
     }
 
     public GameObject MakeObj(string type) //풀을 반환

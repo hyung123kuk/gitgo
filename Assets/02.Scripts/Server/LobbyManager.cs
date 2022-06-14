@@ -75,10 +75,11 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // (빈 방이 없어)랜덤 룸 참가에 실패한 경우 자동 실행
     public override void OnJoinRandomFailed(short returnCode, string message)
     {
+        
         this.connectionInfoText.text = "빈 방 없음, 새로운방 생성...";
         //최대 인원을 4명으로 설정 + 방을 만듦
         //방이름 , 4명 설정
-        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 4 });
+        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 4 , CleanupCacheOnLeave=false });
 
     }
 
