@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
+using Photon.Pun;
 
 public class Weapons : MonoBehaviour
 {
@@ -15,7 +16,7 @@ public class Weapons : MonoBehaviour
     public bool Key3; //키보드 3번입력
     public bool Key3Up;
 
-    public  Weapons weapons;
+
     public Animator anim;
     private Rigidbody rigid;
     public BoxCollider meleeArea; //근딜범위
@@ -84,11 +85,13 @@ public class Weapons : MonoBehaviour
     
     private void Start()
     {
-        weapons = this;
+
         anim = GetComponentInParent<Animator>();
     }
     private void Update()
     {
+
+
         Key1 = Input.GetButtonDown("Key1"); //1번키
         Key2 = Input.GetButtonDown("Key2"); //2번키
         Key3 = Input.GetButton("Key3"); //3번키 꾹

@@ -10893,6 +10893,7 @@ GameObject:
   - component: {fileID: 2730395410406333679}
   - component: {fileID: 2730395410406327257}
   - component: {fileID: 2730395410406328562}
+  - component: {fileID: 4521036469901216004}
   m_Layer: 8
   m_Name: Sword5(rare)
   m_TagString: Untagged
@@ -11043,6 +11044,28 @@ MonoBehaviour:
   CCarea: {fileID: 0}
   energyfullCharging: 0
   ShotFull: 0
+--- !u!114 &4521036469901216004
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730395410406331671}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2730395410406331672
 GameObject:
   m_ObjectHideFlags: 0
@@ -11823,6 +11846,7 @@ GameObject:
   - component: {fileID: 2730395410406333681}
   - component: {fileID: 2730395410406327256}
   - component: {fileID: 2730395410406328565}
+  - component: {fileID: 9059579917411858901}
   m_Layer: 8
   m_Name: Sword5(normal)
   m_TagString: Untagged
@@ -11973,6 +11997,28 @@ MonoBehaviour:
   CCarea: {fileID: 0}
   energyfullCharging: 0
   ShotFull: 0
+--- !u!114 &9059579917411858901
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730395410406331687}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2730395410406331688
 GameObject:
   m_ObjectHideFlags: 0
@@ -12323,6 +12369,7 @@ GameObject:
   - component: {fileID: 2730395410406333680}
   - component: {fileID: 2730395410406327259}
   - component: {fileID: 2730395410406328567}
+  - component: {fileID: 7540199115285623285}
   m_Layer: 8
   m_Name: Sword10(normal)
   m_TagString: Untagged
@@ -12473,6 +12520,28 @@ MonoBehaviour:
   CCarea: {fileID: 0}
   energyfullCharging: 0
   ShotFull: 0
+--- !u!114 &7540199115285623285
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730395410406331699}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2730395410406331700
 GameObject:
   m_ObjectHideFlags: 0
@@ -13119,6 +13188,7 @@ GameObject:
   - component: {fileID: 2730395410406333683}
   - component: {fileID: 2730395410406327258}
   - component: {fileID: 2730395410406328566}
+  - component: {fileID: 1993153184025683034}
   m_Layer: 8
   m_Name: Sword10(rare)
   m_TagString: Untagged
@@ -13269,6 +13339,28 @@ MonoBehaviour:
   CCarea: {fileID: 0}
   energyfullCharging: 0
   ShotFull: 0
+--- !u!114 &1993153184025683034
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730395410406331846}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2730395410406331847
 GameObject:
   m_ObjectHideFlags: 0
@@ -18751,6 +18843,7 @@ GameObject:
   - component: {fileID: 2730395410406333685}
   - component: {fileID: 2730395410406327260}
   - component: {fileID: 2730395410406330248}
+  - component: {fileID: 5918129766132278802}
   m_Layer: 8
   m_Name: Sword1
   m_TagString: Untagged
@@ -18901,6 +18994,28 @@ MonoBehaviour:
   CCarea: {fileID: 0}
   energyfullCharging: 0
   ShotFull: 0
+--- !u!114 &5918129766132278802
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730395410406331864}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2730395410406331865
 GameObject:
   m_ObjectHideFlags: 0

@@ -62,7 +62,7 @@ public class Monster : MonoBehaviourPun
         playerStat = FindObjectOfType<PlayerStat>();
         weapons = FindObjectOfType<Weapons>();
         attackdamage = FindObjectOfType<AttackDamage>();
-        Invoke("Attackdamage", 0.1f);
+
     }
 
 
