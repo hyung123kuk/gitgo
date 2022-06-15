@@ -25,10 +25,14 @@ public class GameManager : MonoBehaviourPun
             if (CharSel.character1 == CharacterSel.Type.Warrior)
             {
                 GameObject character = PhotonNetwork.Instantiate("gameWarrior", startPoint.position, Quaternion.identity);
-                
-                GameObject Horsee = PhotonNetwork.Instantiate("Horse", HorsePoint.position, Quaternion.identity);
-                Horsee.transform.SetParent(character.transform, false);
-                
+                GameObject Horseee = PhotonNetwork.Instantiate("Horse", GameManager.gameManager.HorsePoint.position, Quaternion.identity);
+                Horseee.transform.SetParent(character.transform, false);
+                character.GetComponent<PlayerST>().photonView.RPC("synchronization", RpcTarget.AllBuffered);
+                //변수할당 동기화
+
+                //GameObject Horsee = PhotonNetwork.Instantiate("Horse", HorsePoint.position, Quaternion.identity);
+                //Horsee.transform.SetParent(character.transform, false);
+
                 //GameObject character=Instantiate(Wor, startPoint.position, Quaternion.identity);
                 //character.transform.GetChild(0).position = StartPosition;
             }

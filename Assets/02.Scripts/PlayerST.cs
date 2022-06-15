@@ -124,18 +124,13 @@ public class PlayerST : MonoBehaviourPun
 
     public Weapons weapons;
 
+
     void Start()
     {
-        if (!photonView.IsMine)
-            return;
-        //HorseSpawn = GetComponentInChildren<Horse>().gameObject;
-        HorseSpawn = transform.GetChild(17).gameObject;
-        Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
+
+        //photonView.RPC("synchronization", RpcTarget.AllBuffered);
         bgm = GameObject.Find("Sounds").transform.GetChild(3).GetComponent<BGM>();
         playerstat = GetComponent<PlayerStat>();
-       // Horsee = GameObject.Find("HorseSpawn").transform.GetChild(0).transform
-          //.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
-        //HorseSpawn = GameObject.Find("HorseSpawn");
         bowPower = bowMinPower;
         _transform = GetComponent<Transform>();
         anim = GetComponentInChildren<Animator>();
@@ -144,6 +139,7 @@ public class PlayerST : MonoBehaviourPun
         playerST = this;
         dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
         weapons = FindObjectOfType<Weapons>();
+        
     }
 
     void Anima() //애니메이션 
@@ -338,7 +334,13 @@ public class PlayerST : MonoBehaviourPun
         #endregion
     }
 
-
+    [PunRPC]
+    void synchronization() //변수할당 동기화
+    {
+        HorseSpawn = FindObjectOfType<Horse>().gameObject;
+        Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
+        ImWar = CharacterType == Type.Warrior;
+    }
     void Attack()   //공격
     {
         if (!photonView.IsMine)
@@ -728,9 +730,11 @@ public class PlayerST : MonoBehaviourPun
 
         if(Input.GetKeyDown(KeyCode.H)) //말 아이템이 없어서 이걸로 테스트했어요
         {
-            HorseRide();
+            photonView.RPC("HorseRide", RpcTarget.AllBuffered);
+            //HorseRide();
         }
 
+        
         //HorseRide();
 
         if (AllUI.isUI)
@@ -745,7 +749,7 @@ public class PlayerST : MonoBehaviourPun
             anim.SetFloat("SpeedY", 0f);
 
         }
-        ImWar = CharacterType == Type.Warrior;
+        
         if (AllUI.isUI || HorseMode || isDie)
             return;
         if (!NPC.isNPCRange)
@@ -796,13 +800,9 @@ public class PlayerST : MonoBehaviourPun
 
         //SkillClass(); //스킬직업제한
     }
-
+    [PunRPC]
     public void HorseRide()
     {
-
-        if (!photonView.IsMine)
-            return;
-
         if (!HorseMode) // 말 소환&소환해제
         {
             if (!HorseSpawn.gameObject.activeSelf)

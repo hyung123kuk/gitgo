@@ -20446,7 +20446,6 @@ MonoBehaviour:
   HorseSpawn: {fileID: 0}
   horsepos1: {fileID: 2730395410406334057}
   horsepos2: {fileID: 2730395410406334001}
-  HorseSwitch: 0
   DunjeonBossArena: 0
   NoMove: 0
   isDie: 0
@@ -20579,11 +20578,11 @@ MonoBehaviour:
   LEV_ADD_STR: 0
   LEV_ADD_DEX: 0
   LEV_ADD_INT: 0
-  expup: 0
   playerST: {fileID: 2730395410406330246}
   inven: {fileID: 0}
   gameUI: {fileID: 0}
   skillWindow: {fileID: 0}
+  statWindow: {fileID: 0}
   equSlots:
   - {fileID: 0}
   - {fileID: 0}

@@ -588,6 +588,7 @@ MonoBehaviour:
   NoMove: 0
   isDie: 0
   dieui: {fileID: 0}
+  bgm: {fileID: 0}
   isFall: 0
   isDodge: 0
   isBuff: 0

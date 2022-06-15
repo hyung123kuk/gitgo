@@ -1070,7 +1070,7 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 0
   ObservedComponents:
   - {fileID: 1340306398}
@@ -1097,7 +1097,7 @@ MonoBehaviour:
     SynchronizeType: 1
     Name: isRun
   m_SynchronizeLayers:
-  - SynchronizeType: 0
+  - SynchronizeType: 2
     LayerIndex: 0
 --- !u!114 &1340306397
 MonoBehaviour:
@@ -1114,7 +1114,7 @@ MonoBehaviour:
   m_SynchronizePosition: 1
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
-  m_UseLocal: 1
+  m_UseLocal: 0
 --- !u!1 &8086272371245278302
 GameObject:
   m_ObjectHideFlags: 0
