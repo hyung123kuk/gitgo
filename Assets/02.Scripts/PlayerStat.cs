@@ -47,12 +47,15 @@ public class PlayerStat : MonoBehaviourPun //포톤으로 만들려고함.
 
     public PlayerStat playerstat;
 
-
- 
-    void Start()
+    private void Awake()
     {
         if (!photonView.IsMine)
-            return;
+            this.enabled = false;
+    }
+
+    void Start()
+    {
+        
 
         playerstat = this;
         playerST = GetComponent<PlayerST>();

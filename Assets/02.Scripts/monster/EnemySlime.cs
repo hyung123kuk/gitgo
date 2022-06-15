@@ -232,7 +232,7 @@ public class EnemySlime  : Monster
             Hiteff2.Play();
             yield return new WaitForSeconds(0.1f);
             isDamage = false;
-            SetHpBar();
+           // SetHpBar();
             if (curHealth > 0)
             {
                 
@@ -240,20 +240,24 @@ public class EnemySlime  : Monster
             }
             else
             {
-                
-
-                MonsterDie();
-                nav.isStopped = true;
-                boxCollider.enabled = false;
-                mat.color = Color.black;
-                isChase = false; //�׾����� ��������
-                isDie = true;
-                anim.SetBool("isDie", true);
-                Invoke("Diegg", 1.5f);
-                questNormal.SlimeKillCount();
+                //Die();
             }
         }
     }
+
+    private void Die()
+    {
+        MonsterDie();
+        nav.isStopped = true;
+        boxCollider.enabled = false;
+        mat.color = Color.black;
+        isChase = false; //�׾����� ��������
+        isDie = true;
+        anim.SetBool("isDie", true);
+        Invoke("Diegg", 1.5f);
+        questNormal.SlimeKillCount();
+    }
+
     void Diegg()
     {
 

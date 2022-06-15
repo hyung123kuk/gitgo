@@ -1,9 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 using UnityEngine.UI;
 
-public class Monster : MonoBehaviour
+public class Monster : MonoBehaviourPun
 {
 
     public PlayerStat playerStat;
@@ -48,26 +49,33 @@ public class Monster : MonoBehaviour
     public float Exp;
 
 
-    
-
+   
     public void Start()
     {
         MonsterDropSet();
         tr = GetComponent<Transform>();
-        attackdamage = FindObjectOfType<AttackDamage>();
+        
 
         Geteff = Resources.Load<GameObject>("GetEff");
         Damage = Resources.Load<GameObject>("Damage");
         playerST = FindObjectOfType<PlayerST>();
         playerStat = FindObjectOfType<PlayerStat>();
         weapons = FindObjectOfType<Weapons>();
+        attackdamage = FindObjectOfType<AttackDamage>();
+        Invoke("Attackdamage", 0.1f);
     }
 
 
 
-    public void HitMonster()
+    [PunRPC]
+    public virtual void OnDamage(float _attackdamage,float hp,bool Local) 
     {
+        if (Local) // 로컬일때 다른곳에서 보냄 로컬아니면 중복 막기위해 막음
+        {
+            photonView.RPC("OnDamage", RpcTarget.Others, _attackdamage, hp, false);
+        }
 
+        curHealth = hp;
         GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
         var _damage = damage.GetComponent<DamageUI>();
         _damage.targetTr = this.gameObject.transform;
@@ -78,11 +86,24 @@ public class Monster : MonoBehaviour
             damage.GetComponent<Outline>().enabled = false;
             damagevalue.color = Color.red;
         }
-        damagevalue.text = ((int)attackdamage.attackDamage).ToString();
-        DamageSet();
+        damagevalue.text = ((int)_attackdamage).ToString();
+        SetHpBar();
 
         shakeTime = Time.time;
         StartCoroutine(HitShake());
+        if (curHealth <= 0)
+        {
+            gameObject.SendMessage("Die");
+        }
+    }
+
+    public void HitMonster()
+    {       
+        OnDamage(attackdamage.attackDamage,curHealth,true); //맞았을때 로컬을 트루로해서 다른데에서도 OnDamage가 적용되게
+
+        DamageSet();
+
+        
     }
 
     public void DamageSet()

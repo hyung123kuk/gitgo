@@ -12,12 +12,16 @@ public class PlayerRotate : MonoBehaviourPun
     PlayerST playerST;
     Weapons weapons;
     public float smoothness = 10f;
+    private void Awake()
+    {
+        if (!photonView.IsMine)
+            this.enabled = false;
+
+    }
 
     void Start()
     {
-        if (!photonView.IsMine)
-            return;
-
+       
         _camera = Camera.main;
         _controller = this.GetComponent<CapsuleCollider>();
         playerST = GetComponent<PlayerST>();

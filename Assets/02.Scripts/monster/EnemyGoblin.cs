@@ -210,7 +210,7 @@ public class EnemyGoblin : Monster
         Hiteff2.Play();
         yield return new WaitForSeconds(0.1f);
         isDamage = false;
-        SetHpBar();
+       // SetHpBar();
         if (curHealth > 0)
         {
             
@@ -218,17 +218,23 @@ public class EnemyGoblin : Monster
         }
         else
         {
-            MonsterDie();
-            questNormal.GoblinKillCount();
-            boxCollider.enabled = false;
-            mat.color = Color.black;
-            nav.isStopped = true;
-            isDie = true;
-            isChase = false; //�׾����� ��������
-            anim.SetBool("isDie",true);
-            Invoke("Diegg", 1.5f);
+           // Die();
         }
     }
+
+    private void Die()
+    {
+        MonsterDie();
+        questNormal.GoblinKillCount();
+        boxCollider.enabled = false;
+        mat.color = Color.black;
+        nav.isStopped = true;
+        isDie = true;
+        isChase = false; //�׾����� ��������
+        anim.SetBool("isDie", true);
+        Invoke("Diegg", 1.5f);
+    }
+
     void Diegg()
     {
         respawn.GetChild(0).gameObject.SetActive(true);

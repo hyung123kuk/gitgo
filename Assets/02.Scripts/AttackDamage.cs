@@ -125,7 +125,7 @@ public class AttackDamage : MonoBehaviourPun
     void Start()
     {
         if (!photonView.IsMine)
-            return;
+            this.enabled = false;
         playerStat = FindObjectOfType<PlayerStat>();
         Skill1_time = Skill_1_cooltime;
         Skill2_time = Skill_2_cooltime;
@@ -145,7 +145,7 @@ public class AttackDamage : MonoBehaviourPun
 
 
 
-    public  float attackDamage=0;
+    public  float attackDamage;
     public  bool critical=false;
     public  int DamageNum;
 

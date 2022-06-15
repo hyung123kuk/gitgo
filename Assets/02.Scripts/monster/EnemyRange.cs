@@ -210,18 +210,24 @@ public class EnemyRange : Monster
         }
         else
         {
-            questNormal.GoblinKillCount();
-            MonsterDie();
-            nav.isStopped = true;
-            boxCollider.enabled = false;
-            mat.material.color = Color.black;
-            isDie = true;
-            isChase = false; //�׾����� ��������
-            anim.SetBool("isDie", true);
-            Invoke("Diegg", 1.5f);
-            
+            //Die();
+
         }
     }
+
+    private void Die()
+    {
+        questNormal.GoblinKillCount();
+        MonsterDie();
+        nav.isStopped = true;
+        boxCollider.enabled = false;
+        mat.material.color = Color.black;
+        isDie = true;
+        isChase = false; //�׾����� ��������
+        anim.SetBool("isDie", true);
+        Invoke("Diegg", 1.5f);
+    }
+
     void Diegg()
     {
         respawn.GetChild(0).gameObject.SetActive(true);

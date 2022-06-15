@@ -212,7 +212,7 @@ public class EnemyBlueSlime : Monster
         if (!isDie)
         {
             HitMonster();
-            SetHpBar();
+           // SetHpBar();
 
             HitSoundManager.hitsoundManager.SlimeHitSound();
             isDamage = true;
@@ -227,18 +227,24 @@ public class EnemyBlueSlime : Monster
             }
             else
             {
-                MonsterDie();
-                nav.isStopped = true;
-                boxCollider.enabled = false;
-                mat.color = Color.black;
-                isChase = false;
-                isDie = true;
-                anim.SetBool("isDie", true);
-                Invoke("Diegg", 1.5f);
-                questNormal.SlimeKillCount();
+                //Die();
             }
         }
     }
+
+    private void Die()
+    {
+        MonsterDie();
+        nav.isStopped = true;
+        boxCollider.enabled = false;
+        mat.color = Color.black;
+        isChase = false;
+        isDie = true;
+        anim.SetBool("isDie", true);
+        Invoke("Diegg", 1.5f);
+        questNormal.SlimeKillCount();
+    }
+
     void Diegg()
     {
         respawn.GetChild(0).gameObject.SetActive(true);

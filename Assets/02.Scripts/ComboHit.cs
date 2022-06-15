@@ -11,10 +11,15 @@ public class ComboHit : MonoBehaviourPun
     public float maxComboDelay; //�޺����� �ð�
     Weapons weapons;
 
-    void Start()
+    private void Awake()
     {
         if (!photonView.IsMine)
-            return;
+            this.enabled = false;
+    }
+
+    void Start()
+    {
+       
         weapons = FindObjectOfType<Weapons>();
         anim = gameObject.GetComponent<Animator>();
     }
@@ -22,8 +27,7 @@ public class ComboHit : MonoBehaviourPun
 
     void Update()
     {
-        if (!photonView.IsMine)
-            return;
+      
 
         if (AllUI.isUI || NPC.isNPCRange)
             return;

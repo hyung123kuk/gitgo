@@ -357,29 +357,35 @@ public class EnemyBoss1 : MonsterBoss
             foreach (SkinnedMeshRenderer mesh in mat)
                 mesh.material.color = Color.white;
         HitMonster();
-        SetHpBar();
+       // SetHpBar();
         if (curHealth < 0)
         {
-            BossDrop();
-            MonsterDie();
-            nav.isStopped = true;
-            isDie = true;
-            boxCollider.enabled = false;
-            foreach (SkinnedMeshRenderer mesh in mat)
-                mesh.material.color = Color.white;
-            isChase = false; //�׾����� ��������
-            anim.SetBool("isDie", true);
-            gameObject.SetActive(false);
-            Invoke("Diegg", 1.5f);
-
-            if (!questStore.MainSuccess)
-            {
-                questStore.MainQuestSuccess(3);
-            }
+            //Die();
         }
 
-        
+
     }
+
+    private void Die()
+    {
+        BossDrop();
+        MonsterDie();
+        nav.isStopped = true;
+        isDie = true;
+        boxCollider.enabled = false;
+        foreach (SkinnedMeshRenderer mesh in mat)
+            mesh.material.color = Color.white;
+        isChase = false; //�׾����� ��������
+        anim.SetBool("isDie", true);
+        gameObject.SetActive(false);
+        Invoke("Diegg", 1.5f);
+
+        if (!questStore.MainSuccess)
+        {
+            questStore.MainQuestSuccess(3);
+        }
+    }
+
     void Diegg()
     {
 
