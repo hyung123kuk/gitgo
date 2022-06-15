@@ -129,7 +129,7 @@ public class EnemyBoss2 : MonsterBoss
     }
     void EnemyReset()
     {
-        nav.SetDestination(respawn.position);
+        nav.SetDestination(respawn.transform.position);
         isChase = false;
         nav.speed = 20f;
         nav.isStopped = false;

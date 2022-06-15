@@ -27,6 +27,7 @@ public class EnemyBlueSlime : Monster
     Rigidbody rigid;
     BoxCollider boxCollider;
     Material mat;
+    [SerializeField]
     NavMeshAgent nav;
     Animator anim;
     QuestNormal questNormal;
@@ -99,6 +100,7 @@ public class EnemyBlueSlime : Monster
     }
     void EnemyReset()
     {
+        
         nav.SetDestination(respawn.transform.position);
         nav.speed = 20f;
         curHealth = maxHealth;
