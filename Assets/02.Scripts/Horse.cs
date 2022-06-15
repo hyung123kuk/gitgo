@@ -22,29 +22,35 @@ public class Horse : MonoBehaviourPun
 
     void Awake()
     {
-        if (photonView.IsMine)
-        {
-            gameObject.SetActive(false);
-            rigid = GetComponent<Rigidbody>();
-            anim = GetComponent<Animator>();
-            _camera = Camera.main;
-            _controller = this.GetComponent<CapsuleCollider>();
-            playerST = FindObjectOfType<PlayerST>();
-            weapons = FindObjectOfType<Weapons>();
-        }
+
 
         //HorseSpawnAnim();
     }
+
     private void OnEnable()
     {
         //HorseSpawnAnim();
 
     }
-    
+
     private void Start()
     {
-    }
+        photonView.RPC("synchronization", RpcTarget.AllBuffered);
+        gameObject.SetActive(true);
+        StartCoroutine(HorseActive());
+        rigid = GetComponent<Rigidbody>();
+        anim = GetComponent<Animator>();
+        _camera = Camera.main;
+        _controller = this.GetComponent<CapsuleCollider>();
+        playerST = FindObjectOfType<PlayerST>();
+        weapons = FindObjectOfType<Weapons>();
 
+    }
+    IEnumerator HorseActive()
+    {
+        yield return new WaitForSeconds(2f);
+        gameObject.SetActive(false);
+    }
     void HorseSpawnAnim()
     {
         opning = true;
@@ -60,7 +66,7 @@ public class Horse : MonoBehaviourPun
 
     void Update()
     {
-        if(!photonView.IsMine)
+        if (!photonView.IsMine)
         {
             return;
         }
@@ -94,7 +100,7 @@ public class Horse : MonoBehaviourPun
             {
                 FootSound.footSound.audioSource.Stop();
                 anim.SetBool("isRun", false);
-                
+
             }
 
             if (Input.GetKeyDown(KeyCode.V) && playerST.HorseMode) //탑승해제
@@ -112,17 +118,21 @@ public class Horse : MonoBehaviourPun
 
         }
 
-        if(playerST == null)
+        
+
+    }
+    [PunRPC]
+    void synchronization() //변수할당 동기화
+    {
+        if (playerST == null)
         {
             playerST = FindObjectOfType<PlayerST>();
         }
-        if(anim == null)
+        if (anim == null)
         {
             anim = GetComponent<Animator>();
         }
-
     }
-
     void LateUpdate()  //플레이어가 카메라를 바라봄
     {
         if (!photonView.IsMine)
