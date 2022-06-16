@@ -312,6 +312,36 @@ Transform:
   m_Father: {fileID: 3598715192803718477}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1479842556197547122
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5747239681669143478}
+  m_Layer: 6
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &5747239681669143478
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1479842556197547122}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4390300603167018869}
+  m_RootOrder: 11
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1560871955608231692
 GameObject:
   m_ObjectHideFlags: 0
@@ -29637,6 +29667,7 @@ Transform:
   - {fileID: 5680251187309224918}
   - {fileID: 3345587083920715948}
   - {fileID: 7200614393199941754}
+  - {fileID: 5747239681669143478}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -29754,7 +29785,7 @@ MonoBehaviour:
   isAttack: 0
   isDie: 0
   isBuff: 0
-  respawn: {fileID: 0}
+  respawn: {fileID: 5747239681669143478}
   nuckarea: {fileID: 7918515274529228968}
   sohwane: {fileID: 7200614393199510618}
   pokju: {fileID: 7918515275540849912}

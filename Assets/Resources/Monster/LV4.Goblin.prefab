@@ -1967,6 +1967,7 @@ Transform:
   - {fileID: 3205248914570017633}
   - {fileID: 3205248914570017635}
   - {fileID: 3205248914418387778}
+  - {fileID: 7244438912619263483}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 181.049, z: 0}
@@ -2059,7 +2060,7 @@ MonoBehaviour:
   meleeArea: {fileID: 3205248914418387777}
   isChase: 0
   isAttack: 0
-  respawn: {fileID: 0}
+  respawn: {fileID: 7244438912619263483}
   isStun: 0
   isDamage: 0
   Hiteff: {fileID: 3049679394087516538}
@@ -3545,6 +3546,36 @@ Transform:
   - {fileID: 3205248914570017627}
   m_Father: {fileID: 3205248914570017483}
   m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &6622231991180583108
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7244438912619263483}
+  m_Layer: 6
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7244438912619263483
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6622231991180583108}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 3205248914570017645}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &8399717417706300138
 PrefabInstance:

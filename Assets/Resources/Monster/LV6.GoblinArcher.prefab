@@ -1,5 +1,35 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &8047645868670665514
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6343883509741267673}
+  m_Layer: 6
+  m_Name: GameObject
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6343883509741267673
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8047645868670665514}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 8240939019406583785}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &8068988018286432461
 GameObject:
   m_ObjectHideFlags: 0
@@ -1964,6 +1994,7 @@ Transform:
   - {fileID: 8240939019406583789}
   - {fileID: 8240939019406583761}
   - {fileID: 1977935698712310399}
+  - {fileID: 6343883509741267673}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
@@ -2077,7 +2108,7 @@ MonoBehaviour:
   hitDamage: 0
   isChase: 0
   isAttack: 0
-  respawn: {fileID: 0}
+  respawn: {fileID: 6343883509741267673}
   bullet: {fileID: 0}
   firepos: {fileID: 1977935698712310399}
   isStun: 0
@@ -3335,6 +3366,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a108cba191745c243b6aea1729705684, type: 3}
+--- !u!198 &2285829207717953917 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 6826858595839832192, guid: a108cba191745c243b6aea1729705684, type: 3}
+  m_PrefabInstance: {fileID: 4685214985446961661}
+  m_PrefabAsset: {fileID: 0}
 --- !u!198 &2289608754733689453 stripped
 ParticleSystem:
   m_CorrespondingSourceObject: {fileID: 6828417169183841168, guid: a108cba191745c243b6aea1729705684, type: 3}
@@ -3343,10 +3379,5 @@ ParticleSystem:
 --- !u!4 &2123113870810884879 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6661926545772518130, guid: a108cba191745c243b6aea1729705684, type: 3}
-  m_PrefabInstance: {fileID: 4685214985446961661}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &2285829207717953917 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 6826858595839832192, guid: a108cba191745c243b6aea1729705684, type: 3}
   m_PrefabInstance: {fileID: 4685214985446961661}
   m_PrefabAsset: {fileID: 0}
