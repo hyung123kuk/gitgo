@@ -735,7 +735,7 @@ public class PlayerST : MonoBehaviourPun
 
         if(Input.GetKeyDown(KeyCode.H)) //말 아이템이 없어서 이걸로 테스트했어요
         {
-            photonView.RPC("HorseRide", RpcTarget.All);
+            photonView.RPC("HorseRide", RpcTarget.AllBuffered);
             //HorseRide();
         }
 
