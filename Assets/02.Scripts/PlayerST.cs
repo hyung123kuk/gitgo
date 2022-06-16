@@ -730,7 +730,7 @@ public class PlayerST : MonoBehaviourPun
 
         if(Input.GetKeyDown(KeyCode.H)) //말 아이템이 없어서 이걸로 테스트했어요
         {
-            photonView.RPC("HorseRide", RpcTarget.AllBuffered);
+            photonView.RPC("HorseRide", RpcTarget.All);
             //HorseRide();
         }
 
@@ -803,23 +803,25 @@ public class PlayerST : MonoBehaviourPun
     [PunRPC]
     public void HorseRide()
     {
-        if (!HorseMode) // 말 소환&소환해제
-        {
-            if (!HorseSpawn.gameObject.activeSelf)
+        
+            if (!HorseMode) // 말 소환&소환해제
             {
-                HorseSpawn.transform.parent = null;
-                SoundManager.soundManager.Horse();
-                HorseSpawn.gameObject.SetActive(true);
-                HorseSpawn.gameObject.transform.position = horsepos1.position;
-                HorseSpawn.gameObject.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
+                if (!HorseSpawn.gameObject.activeSelf)
+                {
+                    HorseSpawn.transform.parent = null;
+                    SoundManager.soundManager.Horse();
+                    HorseSpawn.gameObject.SetActive(true);
+                    HorseSpawn.gameObject.transform.position = horsepos1.position;
+                    HorseSpawn.gameObject.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
+                }
+                else if (HorseSpawn.gameObject.activeSelf)
+                {
+                    SoundManager.soundManager.Horse2();
+                    HorseSpawn.gameObject.SetActive(false);
+                    HorseSpawn.transform.parent = transform;
+                }
             }
-            else if (HorseSpawn.gameObject.activeSelf)
-            {
-                SoundManager.soundManager.Horse2();
-                HorseSpawn.gameObject.SetActive(false);
-                HorseSpawn.transform.parent = transform;
-            }
-        }
+        
     }
 
     //void SkillClass()
