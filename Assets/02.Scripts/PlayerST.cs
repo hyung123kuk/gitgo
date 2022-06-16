@@ -76,6 +76,8 @@ public class PlayerST : MonoBehaviourPun
     public DieUI dieui;
     public BGM bgm;
 
+    public int horsecount = 0;
+
 
 
     public bool isFall; //공중에 떠있는상태? 몬스터들의 룩엣을 조정하기위함.
@@ -144,7 +146,7 @@ public class PlayerST : MonoBehaviourPun
         playerST = this;
         dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
         weapons = FindObjectOfType<Weapons>();
-        
+
     }
 
     void Anima() //애니메이션 
@@ -733,13 +735,13 @@ public class PlayerST : MonoBehaviourPun
         if (!photonView.IsMine)
             return;
 
-        if(Input.GetKeyDown(KeyCode.H)) //말 아이템이 없어서 이걸로 테스트했어요
+        if (Input.GetKeyDown(KeyCode.H)) //말 아이템이 없어서 이걸로 테스트했어요
         {
             photonView.RPC("HorseRide", RpcTarget.AllBuffered);
             //HorseRide();
         }
 
-        
+
         //HorseRide();
 
         if (AllUI.isUI)
@@ -754,7 +756,7 @@ public class PlayerST : MonoBehaviourPun
             anim.SetFloat("SpeedY", 0f);
 
         }
-        
+
         if (AllUI.isUI || HorseMode || isDie)
             return;
         if (!NPC.isNPCRange)
@@ -808,25 +810,35 @@ public class PlayerST : MonoBehaviourPun
     [PunRPC]
     public void HorseRide()
     {
-        
-            if (!HorseMode) // 말 소환&소환해제
+
+        if (!HorseMode) // 말 소환&소환해제
+        {
+            if(horsecount ==0)
             {
-                if (!HorseSpawn.gameObject.activeSelf)
-                {
-                    HorseSpawn.transform.parent = null;
-                    SoundManager.soundManager.Horse();
-                    HorseSpawn.gameObject.SetActive(true);
-                    HorseSpawn.gameObject.transform.position = horsepos1.position;
-                    HorseSpawn.gameObject.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
-                }
-                else if (HorseSpawn.gameObject.activeSelf)
-                {
-                    SoundManager.soundManager.Horse2();
-                    HorseSpawn.gameObject.SetActive(false);
-                    HorseSpawn.transform.parent = transform;
-                }
+                SoundManager.soundManager.Horse();
+                HorseSpawn.gameObject.SetActive(false);
+                HorseSpawn.gameObject.SetActive(true);
+                HorseSpawn.gameObject.transform.position = horsepos1.position;
+                HorseSpawn.gameObject.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
+                HorseSpawn.transform.parent = null;
+                horsecount = 1;
             }
-        
+            else if (!HorseSpawn.gameObject.activeSelf && horsecount==1)
+            {
+                HorseSpawn.transform.parent = null;
+                SoundManager.soundManager.Horse();
+                HorseSpawn.gameObject.SetActive(true);
+                HorseSpawn.gameObject.transform.position = horsepos1.position;
+                HorseSpawn.gameObject.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
+            }
+            else if (HorseSpawn.gameObject.activeSelf && horsecount == 1)
+            {
+                SoundManager.soundManager.Horse2();
+                HorseSpawn.gameObject.SetActive(false);
+                HorseSpawn.transform.parent = transform;
+            }
+        }
+
     }
 
     //void SkillClass()
@@ -1062,7 +1074,7 @@ public class PlayerST : MonoBehaviourPun
     }
 
 
-   
+
     private void OnTriggerStay(Collider other)
     {
         if (photonView.IsMine)
