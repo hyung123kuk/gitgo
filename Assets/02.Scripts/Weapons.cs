@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using Photon.Pun;
 
-public class Weapons : MonoBehaviour
+public class Weapons : MonoBehaviourPun
 {
     public enum Type { Melee, Range, Mage }; //근접무기와 원거리무기 구분
     public Type type;
@@ -85,7 +85,8 @@ public class Weapons : MonoBehaviour
     
     private void Start()
     {
-
+        if (!photonView.IsMine)
+            gameObject.SetActive(false);
         anim = GetComponentInParent<Animator>();
     }
     private void Update()

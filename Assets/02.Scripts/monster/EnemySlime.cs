@@ -28,6 +28,7 @@ public class EnemySlime  : Monster
     Rigidbody rigid;
     BoxCollider boxCollider;
     Material mat;
+    [SerializeField]
     NavMeshAgent nav;
     Animator anim;
     public static EnemySlime enemySlime;

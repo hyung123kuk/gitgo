@@ -93,7 +93,7 @@ public class EnemyBoss1 : MonsterBoss
             }
             else if (Vector3.Distance(target.position, transform.position) > 27f && nav.enabled)
             {
-                EnemyReset();
+               EnemyReset();
             }
         }
 

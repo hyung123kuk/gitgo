@@ -68,19 +68,21 @@ public class Monster : MonoBehaviourPun
 
 
     [PunRPC]
-    public virtual void OnDamage(float _attackdamage,float hp,bool critical,  bool Local) 
+    public virtual void OnDamage(float _attackdamage,bool critical,  bool Local) 
     {
+        GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
         if (Local) // 로컬일때 다른곳에서 보냄 로컬아니면 중복 막기위해 막음
         {
-            photonView.RPC("OnDamage", RpcTarget.Others, _attackdamage, hp, false);
+            photonView.RPC("OnDamage", RpcTarget.Others, _attackdamage, false);
         }
 
-        curHealth = hp;
-        GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
-        while (damage == null)
-        {
-
+        float a = 0f;
+        while (a<0.1f) {
+            a += Time.deltaTime;
         }
+
+
+        curHealth -= _attackdamage;
         var _damage = damage.GetComponent<DamageUI>();
         _damage.targetTr = this.gameObject.transform;
         Text damagevalue = damage.GetComponent<Text>();
@@ -103,9 +105,10 @@ public class Monster : MonoBehaviourPun
         }
     }
 
+
     public void HitMonster()
     {
-        OnDamage(attackdamage.attackDamage, curHealth, attackdamage.critical, true) ; //맞았을때 로컬을 트루로해서 다른데에서도 OnDamage가 적용되게
+        OnDamage(attackdamage.attackDamage, attackdamage.critical, true) ; //맞았을때 로컬을 트루로해서 다른데에서도 OnDamage가 적용되게
 
         DamageSet();
 
