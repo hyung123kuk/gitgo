@@ -412,6 +412,9 @@ MonoBehaviour:
   isDie: 0
   isStun: 0
   isDamage: 0
+  whatIsTarget:
+    serializedVersion: 2
+    m_Bits: 256
   Hiteff: {fileID: 1186473295132669881}
   Hiteff2: {fileID: 1155601741776280745}
   movepoint: {fileID: 0}
