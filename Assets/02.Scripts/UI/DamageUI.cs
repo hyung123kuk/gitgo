@@ -18,7 +18,7 @@ public class DamageUI : MonoBehaviour
     public Transform targetTr;
     public float damp = 0.02f;
 
-    public void Start()
+    public void Awake()
     {
         canvas = GameObject.Find("EnemyHp_Bar_UI").GetComponent<Canvas>();
         uiCamera = canvas.worldCamera;

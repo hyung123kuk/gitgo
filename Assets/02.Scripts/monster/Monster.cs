@@ -48,7 +48,7 @@ public class Monster : MonoBehaviourPun
 
     public float Exp;
 
-
+   public float hitDamage;
    
     public void Start()
     {
@@ -62,13 +62,13 @@ public class Monster : MonoBehaviourPun
         playerStat = FindObjectOfType<PlayerStat>();
         weapons = FindObjectOfType<Weapons>();
         attackdamage = FindObjectOfType<AttackDamage>();
-
+        
     }
 
 
 
     [PunRPC]
-    public virtual void OnDamage(float _attackdamage,float hp,bool Local) 
+    public virtual void OnDamage(float _attackdamage,float hp,bool critical,  bool Local) 
     {
         if (Local) // 로컬일때 다른곳에서 보냄 로컬아니면 중복 막기위해 막음
         {
@@ -77,15 +77,21 @@ public class Monster : MonoBehaviourPun
 
         curHealth = hp;
         GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
+        while (damage == null)
+        {
+
+        }
         var _damage = damage.GetComponent<DamageUI>();
         _damage.targetTr = this.gameObject.transform;
         Text damagevalue = damage.GetComponent<Text>();
-        if (!attackdamage.critical)
+        if (!critical)
         {
             damage.transform.GetChild(0).gameObject.SetActive(false);
             damage.GetComponent<Outline>().enabled = false;
             damagevalue.color = Color.red;
         }
+        Debug.Log(_attackdamage);
+
         damagevalue.text = ((int)_attackdamage).ToString();
         SetHpBar();
 
@@ -98,8 +104,8 @@ public class Monster : MonoBehaviourPun
     }
 
     public void HitMonster()
-    {       
-        OnDamage(attackdamage.attackDamage,curHealth,true); //맞았을때 로컬을 트루로해서 다른데에서도 OnDamage가 적용되게
+    {
+        OnDamage(attackdamage.attackDamage, curHealth, attackdamage.critical, true) ; //맞았을때 로컬을 트루로해서 다른데에서도 OnDamage가 적용되게
 
         DamageSet();
 

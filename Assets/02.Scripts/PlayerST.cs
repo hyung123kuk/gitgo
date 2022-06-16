@@ -124,6 +124,11 @@ public class PlayerST : MonoBehaviourPun
 
     public Weapons weapons;
 
+    private void Awake()
+    {
+        if (!photonView.IsMine)
+            this.enabled = false;
+    }
 
     void Start()
     {
