@@ -29614,7 +29614,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4390300603167018869
 Transform:
   m_ObjectHideFlags: 0
@@ -29747,6 +29747,7 @@ MonoBehaviour:
   isSpread: 0
   shakeTime: 0
   Exp: 0
+  hitDamage: 0
   item: []
   meleeArea: {fileID: 7585803257021724624}
   isChase: 0

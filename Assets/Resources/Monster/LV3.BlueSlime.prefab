@@ -333,7 +333,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &2756848870794796506
 Transform:
   m_ObjectHideFlags: 0
@@ -458,6 +458,7 @@ MonoBehaviour:
   isSpread: 0
   shakeTime: 0
   Exp: 0
+  hitDamage: 0
   meleeArea: {fileID: 2759581113342214811}
   isChase: 0
   isAttack: 0

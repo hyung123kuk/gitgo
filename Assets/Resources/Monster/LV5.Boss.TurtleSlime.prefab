@@ -10273,7 +10273,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &7807668806426607821
 Transform:
   m_ObjectHideFlags: 0
@@ -10400,6 +10400,7 @@ MonoBehaviour:
   isSpread: 0
   shakeTime: 0
   Exp: 0
+  hitDamage: 0
   item: []
   meleeArea: {fileID: 7803339394590714052}
   nuckArea: {fileID: 8973077057416430793}
