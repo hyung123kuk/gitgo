@@ -25,8 +25,11 @@ public class Monster : MonoBehaviourPun
     public Text Monstername;
     private Transform tr;
     public GameObject Geteff;
+
+    [SerializeField]
     public Weapons weapons;
 
+   [SerializeField]
     AttackDamage attackdamage;
     public float maxHealth; //최대hp
     public float curHealth; //현재hp
@@ -61,7 +64,17 @@ public class Monster : MonoBehaviourPun
         playerST = FindObjectOfType<PlayerST>();
         playerStat = FindObjectOfType<PlayerStat>();
         weapons = FindObjectOfType<Weapons>();
-        attackdamage = FindObjectOfType<AttackDamage>();
+
+        AttackDamage[] attackDamages = FindObjectsOfType<AttackDamage>();
+
+        foreach(AttackDamage attDam in attackDamages)
+        {
+            if (attDam.GetComponent<PhotonView>().IsMine)
+            {
+                attackdamage = attDam;
+            }
+        }
+
         
     }
 
@@ -70,16 +83,13 @@ public class Monster : MonoBehaviourPun
     [PunRPC]
     public virtual void OnDamage(float _attackdamage,bool critical,  bool Local) 
     {
-        GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
+  
         if (Local) // 로컬일때 다른곳에서 보냄 로컬아니면 중복 막기위해 막음
         {
             photonView.RPC("OnDamage", RpcTarget.Others, _attackdamage, false);
         }
 
-        float a = 0f;
-        while (a<0.1f) {
-            a += Time.deltaTime;
-        }
+        GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
 
 
         curHealth -= _attackdamage;
@@ -93,8 +103,9 @@ public class Monster : MonoBehaviourPun
             damagevalue.color = Color.red;
         }
         Debug.Log(_attackdamage);
+        string dam = ((int)_attackdamage).ToString();
 
-        damagevalue.text = ((int)_attackdamage).ToString();
+        damagevalue.text = dam;
         SetHpBar();
 
         shakeTime = Time.time;
@@ -108,12 +119,14 @@ public class Monster : MonoBehaviourPun
 
     public void HitMonster()
     {
+        Debug.Log(weapons);
         OnDamage(attackdamage.attackDamage, attackdamage.critical, true) ; //맞았을때 로컬을 트루로해서 다른데에서도 OnDamage가 적용되게
 
         DamageSet();
 
         
     }
+
 
     public void DamageSet()
     {
@@ -124,10 +137,12 @@ public class Monster : MonoBehaviourPun
             {
                 weapons.damage = attackdamage.Attack_Dam();
 
+
             }
             else if (attackdamage.DamageNum == 1)
             {
                 weapons.damage = attackdamage.Skill_1_Damamge();
+
             }
             else if (attackdamage.DamageNum == 2)
             {

@@ -86,7 +86,7 @@ public class Weapons : MonoBehaviourPun
     private void Start()
     {
         if (!photonView.IsMine)
-            gameObject.SetActive(false);
+            this.enabled = false;
         anim = GetComponentInParent<Animator>();
     }
     private void Update()
