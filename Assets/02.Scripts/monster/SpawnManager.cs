@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class SpawnManager : MonoBehaviour
+public class SpawnManager : MonoBehaviourPun
 {
     public Transform[] SlimePoints;   //스폰포인트 
     public int SlimeObjs;             //현재 살아있는 몬스터수
@@ -49,6 +50,7 @@ public class SpawnManager : MonoBehaviour
     private float turtleslimetime;
     private float skeletontime;
     private float golemtime;
+
 
     private void Awake()
     { 
@@ -105,7 +107,6 @@ public class SpawnManager : MonoBehaviour
             enemy.GetComponent<EnemySkeleton>().respawn = SkeletonPoints[i];
             SkeletonPoints[i].GetChild(0).gameObject.SetActive(false);
         }
-
         GameObject boss1 = MonsterManager.monsterManager.MakeObj(monsters[5]); // 터틀슬라임
 
         boss1.transform.position = TurtleSlimePoint.position; //위치지정
@@ -118,7 +119,12 @@ public class SpawnManager : MonoBehaviour
         boss2.transform.position = GolemPoint.position; //위치지정
         boss2.GetComponent<EnemyBoss2>().respawn = GolemPoint; //리스폰위치지정
         GolemPoint.GetChild(0).gameObject.SetActive(false);  //몬스터가 살아있는지 스위치용도
+
+
+
+
     }
+    
     private void Update()
     {
         if (SlimeObjs < 20)
@@ -375,4 +381,6 @@ public class SpawnManager : MonoBehaviour
             InfiniteLoopDetector.Run(); //무한루프로 유니티 뻗는거 방지
         }
     }
+
+   
 }

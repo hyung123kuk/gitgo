@@ -54,45 +54,44 @@ public class MonsterManager : MonoBehaviourPun
 
 
            
-            for (int i = 0; i < Slime.Length; i++)
-            {
-                Slime[i] = PhotonNetwork.Instantiate("Monster/LV1.Slime",transform.position,Quaternion.identity);
-                Slime[i].SetActive(false);
-                Slime[i].transform.position = SpawnManager.spawnManager.SlimePoints[i].transform.position;
+        for (int i = 0; i < Slime.Length; i++)
+        {
+           Slime[i] = PhotonNetwork.Instantiate("Monster/LV1.Slime",transform.position,Quaternion.identity);
+           Slime[i].SetActive(false);
+           Slime[i].transform.position = SpawnManager.spawnManager.SlimePoints[i].transform.position;
+        }
+        for (int i = 0; i < BlueSlime.Length; i++)
+        {
+            BlueSlime[i] = PhotonNetwork.Instantiate("Monster/LV3.BlueSlime", transform.position, Quaternion.identity);
+            BlueSlime[i].SetActive(false);
+            BlueSlime[i].transform.position = SpawnManager.spawnManager.BlueSlimePoints[i].transform.position;
+        }
+        for (int i = 0; i < Goblin.Length; i++)
+        {
+            Goblin[i] = PhotonNetwork.Instantiate("Monster/LV4.Goblin", transform.position, Quaternion.identity);
+            Goblin[i].SetActive(false);
+            Goblin[i].transform.position = SpawnManager.spawnManager.GoblinPoints[i].transform.position;
+        }
+        for (int i = 0; i < GoblinArcher.Length; i++)
+        {
+            GoblinArcher[i] = PhotonNetwork.Instantiate("Monster/LV6.GoblinArcher", transform.position, Quaternion.identity);
+            GoblinArcher[i].SetActive(false);
+            GoblinArcher[i].transform.position = SpawnManager.spawnManager.GoblinArcherPoints[i].transform.position;
+        }
+        for (int i = 0; i < Skeleton.Length; i++)
+        {
+            Skeleton[i] = PhotonNetwork.Instantiate("Monster/LV8.Skeleton", transform.position, Quaternion.identity);
+            Skeleton[i].SetActive(false);
+            Skeleton[i].transform.position = SpawnManager.spawnManager.SkeletonPoints[i].transform.position;
+        }
 
-            }
-            for (int i = 0; i < BlueSlime.Length; i++)
-            {
-                BlueSlime[i] = PhotonNetwork.Instantiate("Monster/LV3.BlueSlime", transform.position, Quaternion.identity);
-                BlueSlime[i].SetActive(false);
-                BlueSlime[i].transform.position = SpawnManager.spawnManager.BlueSlimePoints[i].transform.position;
-            }
-            for (int i = 0; i < Goblin.Length; i++)
-            {
-                Goblin[i] = PhotonNetwork.Instantiate("Monster/LV4.Goblin", transform.position, Quaternion.identity);
-                Goblin[i].SetActive(false);
-                Goblin[i].transform.position = SpawnManager.spawnManager.GoblinPoints[i].transform.position;
-            }
-            for (int i = 0; i < GoblinArcher.Length; i++)
-            {
-                GoblinArcher[i] = PhotonNetwork.Instantiate("Monster/LV6.GoblinArcher", transform.position, Quaternion.identity);
-                GoblinArcher[i].SetActive(false);
-                GoblinArcher[i].transform.position = SpawnManager.spawnManager.GoblinArcherPoints[i].transform.position;
-            }
-            for (int i = 0; i < Skeleton.Length; i++)
-            {
-                Skeleton[i] = PhotonNetwork.Instantiate("Monster/LV8.Skeleton", transform.position, Quaternion.identity);
-                Skeleton[i].SetActive(false);
-                Skeleton[i].transform.position = SpawnManager.spawnManager.SkeletonPoints[i].transform.position;
-            }
+        TurtleSlime = PhotonNetwork.Instantiate("Monster/LV5.Boss.TurtleSlime", transform.position, Quaternion.identity);
+        TurtleSlime.SetActive(false);
+        TurtleSlime.transform.position = SpawnManager.spawnManager.TurtleSlimePoint.transform.position;
 
-            TurtleSlime = PhotonNetwork.Instantiate("Monster/LV5.Boss.TurtleSlime", transform.position, Quaternion.identity);
-            TurtleSlime.SetActive(false);
-            TurtleSlime.transform.position = SpawnManager.spawnManager.TurtleSlimePoint.transform.position;
-
-            Golem = PhotonNetwork.Instantiate("Monster/LV10.Boss.Golem", transform.position, Quaternion.identity);
-            Golem.SetActive(false);
-            Golem.transform.position = SpawnManager.spawnManager.GolemPoint.transform.position;
+        Golem = PhotonNetwork.Instantiate("Monster/LV10.Boss.Golem", transform.position, Quaternion.identity);
+        Golem.SetActive(false);
+        Golem.transform.position = SpawnManager.spawnManager.GolemPoint.transform.position;
 
         SpawnManager.spawnManager.start();
     }
@@ -142,4 +141,6 @@ public class MonsterManager : MonoBehaviourPun
         }
         return null;
     }
+
+    
 }
