@@ -85,7 +85,7 @@ public class EnemyRange : Monster
     {
         nav.SetDestination(respawn.transform.position);
         nav.speed = 20f;
-        curHealth = maxHealth;
+        //curHealth = maxHealth;
         isChase = false;
         if (Vector3.Distance(respawn.position, transform.position) < 1f)
         {
@@ -215,7 +215,7 @@ public class EnemyRange : Monster
         }
     }
 
-    private void Die()
+    public override void Die()
     {
         questNormal.GoblinKillCount();
         MonsterDie();

@@ -103,7 +103,7 @@ public class EnemyBlueSlime : Monster
         
         nav.SetDestination(respawn.transform.position);
         nav.speed = 20f;
-        curHealth = maxHealth;
+        //curHealth = maxHealth;
         isChase = false;
         if (Vector3.Distance(respawn.position, transform.position) < 1f)
         {
@@ -232,7 +232,7 @@ public class EnemyBlueSlime : Monster
         }
     }
 
-    private void Die()
+    public override void Die()
     {
         MonsterDie();
         nav.isStopped = true;

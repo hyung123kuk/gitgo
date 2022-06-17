@@ -133,7 +133,7 @@ public class EnemyBoss2 : MonsterBoss
         isChase = false;
         nav.speed = 20f;
         nav.isStopped = false;
-        curHealth = maxHealth;
+        //curHealth = maxHealth;
         if (Vector3.Distance(respawn.position, transform.position) < 1f)
         {
             nav.isStopped = true;
@@ -425,7 +425,7 @@ public class EnemyBoss2 : MonsterBoss
 
     }
 
-    private void Die()
+    public override void Die()
     {
         BossDrop();
         MonsterDie();

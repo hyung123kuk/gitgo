@@ -52,7 +52,7 @@ public class Monster : MonoBehaviourPun
     public float Exp;
 
    public float hitDamage;
-   
+    public virtual void Die() { }
     public void Start()
     {
         MonsterDropSet();
@@ -99,6 +99,8 @@ public class Monster : MonoBehaviourPun
     }
 
 
+
+
     [PunRPC]
     public virtual void OnDamage(float _attackdamage,bool critical,  bool Local) 
     {
@@ -110,8 +112,13 @@ public class Monster : MonoBehaviourPun
 
         GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
 
+        if (!Local)
+        {
+            curHealth -= _attackdamage;
+        }
 
-        curHealth -= _attackdamage;
+
+
         var _damage = damage.GetComponent<DamageUI>();
         _damage.targetTr = this.gameObject.transform;
         Text damagevalue = damage.GetComponent<Text>();
@@ -129,11 +136,14 @@ public class Monster : MonoBehaviourPun
 
         shakeTime = Time.time;
         StartCoroutine(HitShake());
+
         if (curHealth <= 0)
         {
-            gameObject.SendMessage("Die");
+            Die();
         }
+
     }
+
 
 
     public void HitMonster()
