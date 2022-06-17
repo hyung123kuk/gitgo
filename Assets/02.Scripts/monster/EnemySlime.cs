@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
+using Photon.Pun;
 
 public class EnemySlime  : Monster
 {
@@ -333,12 +334,15 @@ public class EnemySlime  : Monster
         Invoke("Diegg", 1.5f);
         questNormal.SlimeKillCount();
     }
+    
 
     void Diegg()
     {
-
-        respawn.GetChild(0).gameObject.SetActive(true);
-        --SpawnManager.spawnManager.SlimeObjs;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            respawn.GetChild(0).gameObject.SetActive(true);
+            --SpawnManager.spawnManager.SlimeObjs;
+        }
         gameObject.SetActive(false);
     }
 }

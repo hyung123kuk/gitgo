@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class SpawnManager : MonoBehaviour
+public class SpawnManager : MonoBehaviourPun
 {
     public Transform[] SlimePoints;   //스폰포인트 
     public int SlimeObjs;             //현재 살아있는 몬스터수
@@ -121,6 +122,10 @@ public class SpawnManager : MonoBehaviour
     }
     private void Update()
     {
+
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         if (SlimeObjs < 20)
         {
             SlimeObjs++;
@@ -157,6 +162,9 @@ public class SpawnManager : MonoBehaviour
             StartCoroutine(GolemSpawn());
         }
     }
+
+
+
     IEnumerator SlimeSpawn()
     {
         while (true)
@@ -178,8 +186,11 @@ public class SpawnManager : MonoBehaviour
             {
                 
                 GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[0]);
-
+                
                 enemy.transform.position = SlimePoints[slimeidx].position;
+
+                enemy.GetComponent<Monster>().MonsterPosition(SlimePoints[slimeidx].position);
+
                 enemy.GetComponent<EnemySlime>().respawn = SlimePoints[slimeidx];
                 SlimePoints[slimeidx].GetChild(0).gameObject.SetActive(false);
                 slimeidx = 0;

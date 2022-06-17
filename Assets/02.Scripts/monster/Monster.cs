@@ -78,6 +78,25 @@ public class Monster : MonoBehaviourPun
         
     }
 
+    [PunRPC]
+    public virtual void MonsterRespawn()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("MonsterRespawn", RpcTarget.Others);
+        }
+        gameObject.SetActive(true);
+    }
+
+    [PunRPC]
+    public virtual void MonsterPosition(Vector3 pos)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("MonsterPosition", RpcTarget.Others, pos);
+        }
+        tr.position = pos;
+    }
 
 
     [PunRPC]
@@ -86,7 +105,7 @@ public class Monster : MonoBehaviourPun
   
         if (Local) // 로컬일때 다른곳에서 보냄 로컬아니면 중복 막기위해 막음
         {
-            photonView.RPC("OnDamage", RpcTarget.Others, _attackdamage, false);
+            photonView.RPC("OnDamage", RpcTarget.Others, _attackdamage,critical, false);
         }
 
         GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);

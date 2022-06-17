@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+using Photon.Pun;
 public class EnemyGoblin : Monster
 {
    
@@ -237,8 +237,11 @@ public class EnemyGoblin : Monster
 
     void Diegg()
     {
-        respawn.GetChild(0).gameObject.SetActive(true);
-        --SpawnManager.spawnManager.GoblinObjs;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            respawn.GetChild(0).gameObject.SetActive(true);
+            --SpawnManager.spawnManager.GoblinObjs;
+        }
         gameObject.SetActive(false);
     }
 }

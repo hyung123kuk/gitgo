@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
-
+using Photon.Pun;
 public class EnemyBlueSlime : Monster
 {
 
@@ -247,8 +247,11 @@ public class EnemyBlueSlime : Monster
 
     void Diegg()
     {
-        respawn.GetChild(0).gameObject.SetActive(true);
-        --SpawnManager.spawnManager.BlueSlimeObjs;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            respawn.GetChild(0).gameObject.SetActive(true);
+            --SpawnManager.spawnManager.BlueSlimeObjs;
+        }
         gameObject.SetActive(false);
     }
 }

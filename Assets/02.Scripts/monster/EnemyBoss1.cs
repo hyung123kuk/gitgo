@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+using Photon.Pun;
 public class EnemyBoss1 : MonsterBoss
 {
 
@@ -388,9 +388,11 @@ public class EnemyBoss1 : MonsterBoss
 
     void Diegg()
     {
-
-        respawn.GetChild(0).gameObject.SetActive(true);
-        --SpawnManager.spawnManager.TurtleSlimeObjs;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            respawn.GetChild(0).gameObject.SetActive(true);
+            --SpawnManager.spawnManager.TurtleSlimeObjs;
+        }
         gameObject.SetActive(false);
     }
 }

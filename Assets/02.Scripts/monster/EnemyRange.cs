@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+using Photon.Pun;
 public class EnemyRange : Monster
 {
     
@@ -230,8 +230,11 @@ public class EnemyRange : Monster
 
     void Diegg()
     {
-        respawn.GetChild(0).gameObject.SetActive(true);
-        --SpawnManager.spawnManager.GoblinArObjs;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            respawn.GetChild(0).gameObject.SetActive(true);
+            --SpawnManager.spawnManager.GoblinArObjs;
+        }
         gameObject.SetActive(false);
     }
 }
