@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+using Photon.Pun;
 public class EnemyGoblin : Monster
 {
    
@@ -96,7 +96,7 @@ public class EnemyGoblin : Monster
         anim.SetBool("isRun", false);
         nav.SetDestination(respawn.transform.position);
         nav.speed = 20f;
-        curHealth = maxHealth;
+        //curHealth = maxHealth;
         isChase = false;
         if (Vector3.Distance(respawn.position, transform.position) < 1f)
         {
@@ -222,7 +222,7 @@ public class EnemyGoblin : Monster
         }
     }
 
-    private void Die()
+    public override void Die()
     {
         MonsterDie();
         questNormal.GoblinKillCount();
@@ -237,8 +237,11 @@ public class EnemyGoblin : Monster
 
     void Diegg()
     {
-        respawn.GetChild(0).gameObject.SetActive(true);
-        --SpawnManager.spawnManager.GoblinObjs;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            respawn.GetChild(0).gameObject.SetActive(true);
+            --SpawnManager.spawnManager.GoblinObjs;
+        }
         gameObject.SetActive(false);
     }
 }

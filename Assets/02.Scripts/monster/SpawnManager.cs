@@ -127,6 +127,10 @@ public class SpawnManager : MonoBehaviourPun
     
     private void Update()
     {
+
+        if (!PhotonNetwork.IsMasterClient)
+            return;
+
         if (SlimeObjs < 20)
         {
             SlimeObjs++;
@@ -163,6 +167,9 @@ public class SpawnManager : MonoBehaviourPun
             StartCoroutine(GolemSpawn());
         }
     }
+
+
+
     IEnumerator SlimeSpawn()
     {
         while (true)
@@ -184,8 +191,11 @@ public class SpawnManager : MonoBehaviourPun
             {
                 
                 GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[0]);
-
+                
                 enemy.transform.position = SlimePoints[slimeidx].position;
+
+                enemy.GetComponent<Monster>().MonsterPosition(SlimePoints[slimeidx].position);
+
                 enemy.GetComponent<EnemySlime>().respawn = SlimePoints[slimeidx];
                 SlimePoints[slimeidx].GetChild(0).gameObject.SetActive(false);
                 slimeidx = 0;

@@ -52,7 +52,7 @@ public class Monster : MonoBehaviourPun
     public float Exp;
 
    public float hitDamage;
-   
+    public virtual void Die() { }
     public void Start()
     {
         MonsterDropSet();
@@ -78,6 +78,27 @@ public class Monster : MonoBehaviourPun
         
     }
 
+    [PunRPC]
+    public virtual void MonsterRespawn()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("MonsterRespawn", RpcTarget.Others);
+        }
+        gameObject.SetActive(true);
+    }
+
+    [PunRPC]
+    public virtual void MonsterPosition(Vector3 pos)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("MonsterPosition", RpcTarget.Others, pos);
+        }
+        tr.position = pos;
+    }
+
+
 
 
     [PunRPC]
@@ -86,13 +107,18 @@ public class Monster : MonoBehaviourPun
   
         if (Local) // 로컬일때 다른곳에서 보냄 로컬아니면 중복 막기위해 막음
         {
-            photonView.RPC("OnDamage", RpcTarget.Others, _attackdamage, false);
+            photonView.RPC("OnDamage", RpcTarget.Others, _attackdamage,critical, false);
         }
 
         GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
 
+        if (!Local)
+        {
+            curHealth -= _attackdamage;
+        }
 
-        curHealth -= _attackdamage;
+
+
         var _damage = damage.GetComponent<DamageUI>();
         _damage.targetTr = this.gameObject.transform;
         Text damagevalue = damage.GetComponent<Text>();
@@ -110,11 +136,14 @@ public class Monster : MonoBehaviourPun
 
         shakeTime = Time.time;
         StartCoroutine(HitShake());
+
         if (curHealth <= 0)
         {
-            gameObject.SendMessage("Die");
+            Die();
         }
+
     }
+
 
 
     public void HitMonster()

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+using Photon.Pun;
 public class EnemyBoss2 : MonsterBoss
 {
 
@@ -133,7 +133,7 @@ public class EnemyBoss2 : MonsterBoss
         isChase = false;
         nav.speed = 20f;
         nav.isStopped = false;
-        curHealth = maxHealth;
+        //curHealth = maxHealth;
         if (Vector3.Distance(respawn.position, transform.position) < 1f)
         {
             nav.isStopped = true;
@@ -425,7 +425,7 @@ public class EnemyBoss2 : MonsterBoss
 
     }
 
-    private void Die()
+    public override void Die()
     {
         BossDrop();
         MonsterDie();
@@ -448,9 +448,11 @@ public class EnemyBoss2 : MonsterBoss
 
     void Diegg()
     {
-
-        respawn.GetChild(0).gameObject.SetActive(true);
-        --SpawnManager.spawnManager.GolemObjs;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            respawn.GetChild(0).gameObject.SetActive(true);
+            --SpawnManager.spawnManager.GolemObjs;
+        }
         gameObject.SetActive(false);
     }
 }

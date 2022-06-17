@@ -40,107 +40,120 @@ public class MonsterManager : MonoBehaviourPun
         Invoke("Generate",0.2f);
     }
 
-    void Generate()  //Ç®À» »ý¼º
+    void Generate()  //Ç®ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
-       if(!PhotonNetwork.IsMasterClient)
-        {
-            return;
-        }
         GameObject SlimePools = new GameObject("Slime Pool");
         GameObject BlueSlimePools = new GameObject("BlueSlime Pool");
         GameObject GoblinPools = new GameObject("Goblin Pool");
         GameObject GoblinArcherPools = new GameObject("GoblinArcher Pool");
         GameObject SkeletonPools = new GameObject("Skeleton Pool");
 
+        if (PhotonNetwork.IsMasterClient)
+        {
+
 
            
-        for (int i = 0; i < Slime.Length; i++)
-        {
-           Slime[i] = PhotonNetwork.Instantiate("Monster/LV1.Slime",transform.position,Quaternion.identity);
-           Slime[i].SetActive(false);
-           Slime[i].transform.position = SpawnManager.spawnManager.SlimePoints[i].transform.position;
-        }
-        for (int i = 0; i < BlueSlime.Length; i++)
-        {
-            BlueSlime[i] = PhotonNetwork.Instantiate("Monster/LV3.BlueSlime", transform.position, Quaternion.identity);
-            BlueSlime[i].SetActive(false);
-            BlueSlime[i].transform.position = SpawnManager.spawnManager.BlueSlimePoints[i].transform.position;
-        }
-        for (int i = 0; i < Goblin.Length; i++)
-        {
-            Goblin[i] = PhotonNetwork.Instantiate("Monster/LV4.Goblin", transform.position, Quaternion.identity);
-            Goblin[i].SetActive(false);
-            Goblin[i].transform.position = SpawnManager.spawnManager.GoblinPoints[i].transform.position;
-        }
-        for (int i = 0; i < GoblinArcher.Length; i++)
-        {
-            GoblinArcher[i] = PhotonNetwork.Instantiate("Monster/LV6.GoblinArcher", transform.position, Quaternion.identity);
-            GoblinArcher[i].SetActive(false);
-            GoblinArcher[i].transform.position = SpawnManager.spawnManager.GoblinArcherPoints[i].transform.position;
-        }
-        for (int i = 0; i < Skeleton.Length; i++)
-        {
-            Skeleton[i] = PhotonNetwork.Instantiate("Monster/LV8.Skeleton", transform.position, Quaternion.identity);
-            Skeleton[i].SetActive(false);
-            Skeleton[i].transform.position = SpawnManager.spawnManager.SkeletonPoints[i].transform.position;
-        }
 
-        TurtleSlime = PhotonNetwork.Instantiate("Monster/LV5.Boss.TurtleSlime", transform.position, Quaternion.identity);
-        TurtleSlime.SetActive(false);
-        TurtleSlime.transform.position = SpawnManager.spawnManager.TurtleSlimePoint.transform.position;
+
+            for (int i = 0; i < Slime.Length; i++)
+            {
+                Slime[i] = PhotonNetwork.Instantiate("Monster/LV1.Slime", transform.position, Quaternion.identity);
+                Slime[i].transform.parent = SlimePools.transform;
+                Slime[i].SetActive(false);
+                Slime[i].transform.position = SpawnManager.spawnManager.SlimePoints[i].transform.position;
+
+            }
+            for (int i = 0; i < BlueSlime.Length; i++)
+            {
+                BlueSlime[i] = PhotonNetwork.Instantiate("Monster/LV3.BlueSlime", transform.position, Quaternion.identity);
+                BlueSlime[i].transform.parent = BlueSlimePools.transform;
+                BlueSlime[i].SetActive(false);
+                BlueSlime[i].transform.position = SpawnManager.spawnManager.BlueSlimePoints[i].transform.position;
+            }
+            for (int i = 0; i < Goblin.Length; i++)
+            {
+                Goblin[i] = PhotonNetwork.Instantiate("Monster/LV4.Goblin", transform.position, Quaternion.identity);
+                Goblin[i].transform.parent = GoblinPools.transform;
+                Goblin[i].SetActive(false);
+                Goblin[i].transform.position = SpawnManager.spawnManager.GoblinPoints[i].transform.position;
+            }
+            for (int i = 0; i < GoblinArcher.Length; i++)
+            {
+                GoblinArcher[i] = PhotonNetwork.Instantiate("Monster/LV6.GoblinArcher", transform.position, Quaternion.identity);
+                GoblinArcher[i].transform.parent = GoblinArcherPools.transform;
+                GoblinArcher[i].SetActive(false);
+                GoblinArcher[i].transform.position = SpawnManager.spawnManager.GoblinArcherPoints[i].transform.position;
+            }
+            for (int i = 0; i < Skeleton.Length; i++)
+            {
+                Skeleton[i] = PhotonNetwork.Instantiate("Monster/LV8.Skeleton", transform.position, Quaternion.identity);
+                Skeleton[i].transform.parent = SkeletonPools.transform;
+                Skeleton[i].SetActive(false);
+                Skeleton[i].transform.position = SpawnManager.spawnManager.SkeletonPoints[i].transform.position;
+            }
 
         Golem = PhotonNetwork.Instantiate("Monster/LV10.Boss.Golem", transform.position, Quaternion.identity);
         Golem.SetActive(false);
         Golem.transform.position = SpawnManager.spawnManager.GolemPoint.transform.position;
 
-        SpawnManager.spawnManager.start();
-    }
 
-    public GameObject MakeObj(string type) //Ç®À» ¹ÝÈ¯
-    {
-        switch (type)
-        {
-            case "Slime":
-                targetPool = Slime;
-                break;
-            case "BlueSlime":
-                targetPool = BlueSlime;
-                break;
-            case "Goblin":
-                targetPool = Goblin;
-                break;
-            case "GoblinArcher":
-                targetPool = GoblinArcher;
-                break;
-            case "Skeleton":
-                targetPool = Skeleton;
-                break;
-            case "TurtleSlime":
-                if (!TurtleSlime.activeSelf)
-                {
-                    TurtleSlime.SetActive(true);
-                    return TurtleSlime;
-                }
-                break;
-            case "Golem":
-                if (!Golem.activeSelf)
-                {
-                    Golem.SetActive(true);
-                    return Golem;
-                }
-                break;
+            SpawnManager.spawnManager.start();
         }
 
-        for (int i = 0; i < targetPool.Length; i++)
+       
+    }
+
+
+    public GameObject MakeObj(string type) //Ç®ï¿½ï¿½ ï¿½ï¿½È¯
+    {
+        if (PhotonNetwork.IsMasterClient)
         {
-            if (!targetPool[i].activeSelf)
+
+            switch (type)
             {
-                targetPool[i].SetActive(true);
-                return targetPool[i];
+                case "Slime":
+                    targetPool = Slime;
+                    break;
+                case "BlueSlime":
+                    targetPool = BlueSlime;
+                    break;
+                case "Goblin":
+                    targetPool = Goblin;
+                    break;
+                case "GoblinArcher":
+                    targetPool = GoblinArcher;
+                    break;
+                case "Skeleton":
+                    targetPool = Skeleton;
+                    break;
+                case "TurtleSlime":
+                    if (!TurtleSlime.activeSelf)
+                    {
+                        TurtleSlime.SetActive(true);
+                        return TurtleSlime;
+                    }
+                    break;
+                case "Golem":
+                    if (!Golem.activeSelf)
+                    {
+                        Golem.SetActive(true);
+                        return Golem;
+                    }
+                    break;
             }
+
+            for (int i = 0; i < targetPool.Length; i++)
+            {
+                if (!targetPool[i].activeSelf)
+                {
+                    //targetPool[i].SetActive(true);
+                    targetPool[i].GetComponent<Monster>().MonsterRespawn();
+                    return targetPool[i];
+                }
+            }
+            return null;
         }
         return null;
     }
 
-    
 }

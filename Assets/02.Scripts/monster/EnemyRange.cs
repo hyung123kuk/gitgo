@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
+using Photon.Pun;
 public class EnemyRange : Monster
 {
     
@@ -85,7 +85,7 @@ public class EnemyRange : Monster
     {
         nav.SetDestination(respawn.transform.position);
         nav.speed = 20f;
-        curHealth = maxHealth;
+        //curHealth = maxHealth;
         isChase = false;
         if (Vector3.Distance(respawn.position, transform.position) < 1f)
         {
@@ -215,7 +215,7 @@ public class EnemyRange : Monster
         }
     }
 
-    private void Die()
+    public override void Die()
     {
         questNormal.GoblinKillCount();
         MonsterDie();
@@ -230,8 +230,11 @@ public class EnemyRange : Monster
 
     void Diegg()
     {
-        respawn.GetChild(0).gameObject.SetActive(true);
-        --SpawnManager.spawnManager.GoblinArObjs;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            respawn.GetChild(0).gameObject.SetActive(true);
+            --SpawnManager.spawnManager.GoblinArObjs;
+        }
         gameObject.SetActive(false);
     }
 }

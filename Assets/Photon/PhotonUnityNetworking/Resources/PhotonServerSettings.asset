@@ -48,14 +48,12 @@ MonoBehaviour:
   - HorseRide
   - HorseTest
   - synchronization
-  - SlimeSync
-  - BlueSlimeSync
-  - GoblinArcherSync
-  - GoblinSync
-  - GolemSync
-  - SkeletonSync
-  - TurtleSync
-  - test
+  - MakeObj
+  - ActiveSetRPC
+  - ActiveSetRpc
+  - MonsterRespawn
+  - MonsterPosition
+  - MonsterHp
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

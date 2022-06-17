@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
-
+using Photon.Pun;
 public class EnemyBlueSlime : Monster
 {
 
@@ -103,7 +103,7 @@ public class EnemyBlueSlime : Monster
         
         nav.SetDestination(respawn.transform.position);
         nav.speed = 20f;
-        curHealth = maxHealth;
+        //curHealth = maxHealth;
         isChase = false;
         if (Vector3.Distance(respawn.position, transform.position) < 1f)
         {
@@ -232,7 +232,7 @@ public class EnemyBlueSlime : Monster
         }
     }
 
-    private void Die()
+    public override void Die()
     {
         MonsterDie();
         nav.isStopped = true;
@@ -247,8 +247,11 @@ public class EnemyBlueSlime : Monster
 
     void Diegg()
     {
-        respawn.GetChild(0).gameObject.SetActive(true);
-        --SpawnManager.spawnManager.BlueSlimeObjs;
+        if (PhotonNetwork.IsMasterClient)
+        {
+            respawn.GetChild(0).gameObject.SetActive(true);
+            --SpawnManager.spawnManager.BlueSlimeObjs;
+        }
         gameObject.SetActive(false);
     }
 }
