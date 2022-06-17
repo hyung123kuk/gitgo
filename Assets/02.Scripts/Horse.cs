@@ -36,8 +36,7 @@ public class Horse : MonoBehaviourPun
     private void Start()
     {
         photonView.RPC("synchronization", RpcTarget.AllBuffered);
-        gameObject.SetActive(true);
-        StartCoroutine(HorseActive());
+        //StartCoroutine(HorseActive());
         rigid = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
         _camera = Camera.main;
