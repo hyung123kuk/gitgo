@@ -109,6 +109,7 @@ public class Monster : MonoBehaviourPun
         if (Local) // 로컬일때 다른곳에서 보냄 로컬아니면 중복 막기위해 막음
         {
             photonView.RPC("OnDamage", RpcTarget.Others, _attackdamage,critical, false);
+            SetTarget(attackdamage.gameObject);
         }
 
         GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
@@ -116,6 +117,7 @@ public class Monster : MonoBehaviourPun
         if (!Local)
         {
             curHealth -= _attackdamage;
+            SetTarget(null);
         }
 
 
@@ -359,11 +361,28 @@ public class Monster : MonoBehaviourPun
         
     }
 
+    GameObject effTarget;
+    public void SetTarget(GameObject target)
+    {
+        effTarget = target;
+    }
+
+    public void EffInsatangiate()
+    {
+        GameObject eff = PhotonNetwork.Instantiate(Geteff.name, transform.position, Quaternion.identity);
+        eff.GetComponent<GetEff>().SetExp(Exp);
+        eff.GetComponent<GetEff>().Target(effTarget);
+    }
+
     public void MonsterDie()
     {
-        GameObject eff = Instantiate(Geteff, transform.position, Quaternion.identity);
-        eff.GetComponent<GetEff>().SetExp(Exp);
-        SetColor(0);
+        if (effTarget != null)
+        {
+            EffInsatangiate();
+        }
+
+
+            SetColor(0);
         if (PhotonNetwork.IsMasterClient)
         {
             if (!isSpread)

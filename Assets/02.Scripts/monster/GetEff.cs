@@ -2,37 +2,67 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
-
-public class GetEff : MonoBehaviour
+using Photon.Pun;
+public class GetEff : MonoBehaviourPun
 {
+    [SerializeField]
     Transform target;
     NavMeshAgent navi;
+    [SerializeField]
     PlayerStat playerStat;
     public float exp;
     void Start()
     {
         navi = GetComponent<NavMeshAgent>();
-        playerStat = FindObjectOfType<PlayerStat>();
+ 
 
     }
 
+    [PunRPC]
     public void SetExp(float _exp)
     {
+        photonView.RPC("SetExp", RpcTarget.Others, _exp);
         exp = _exp;
     }
 
-    
+    public void Target(GameObject tr)
+    {
+        target = tr.transform;
+        playerStat = tr.GetComponent<PlayerStat>();
+    }
+
     void Update()
     {
-        target = GameObject.FindGameObjectWithTag("Player").transform;
-        navi.SetDestination(target.position);
+        if (target == null)
+            return;
+
+         navi.SetDestination(target.position);
+
     }
     private void OnTriggerEnter(Collider other)
     {
-        if (other.gameObject.tag == "Player")
+        if (playerStat != null)
         {
-            playerStat.AddExp(exp);
-            Destroy(gameObject,0.3f);
+            if (other.gameObject.tag == "Player" && other.gameObject == target.gameObject)
+            {
+                playerStat.AddExp(exp);
+                StartCoroutine(DestroyEff());
+
+            }
         }
+    }
+
+    IEnumerator DestroyEff()
+    {
+        yield return new WaitForSeconds(0.3f);
+        Destroy();
+    }
+
+    [PunRPC]
+    public void Destroy()
+    {
+        photonView.RPC("Destroy", RpcTarget.Others);
+
+        Destroy(gameObject);
     }
 }

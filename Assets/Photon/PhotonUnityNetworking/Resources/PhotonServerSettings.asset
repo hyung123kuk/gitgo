@@ -55,6 +55,9 @@ MonoBehaviour:
   - MonsterPosition
   - MonsterHp
   - DestroyItem
+  - Destroy
+  - SetExp
+  - MonsterDie
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

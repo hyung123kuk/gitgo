@@ -190,8 +190,7 @@ public class PlayerStat : MonoBehaviourPun //포톤으로 만들려고함.
     public void AddExp(float _Exp)
     {
 
-        if (!photonView.IsMine)
-            return;
+
 
         if (Level < 10)
         {

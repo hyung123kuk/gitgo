@@ -265,6 +265,7 @@ public class EnemySlime  : Monster
 
                 StartCoroutine(OnDamage());
             }
+            
         }
         if (other.tag == "CCAREA")
         {
