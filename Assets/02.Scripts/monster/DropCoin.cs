@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
-public class DropCoin : MonoBehaviour
+public class DropCoin : MonoBehaviourPun
 {
     [SerializeField]
     public Transform tr;
@@ -45,10 +46,10 @@ public class DropCoin : MonoBehaviour
     {
         if (other.gameObject.tag == "Player" && item.itemName == "코인")
         {
+            Debug.Log(playerStat);
             playerStat.AddGold(Coin);
             UiSound.uiSound.GetCoinSound();
-
-            Destroy(gameObject);
+            DestroyItem();
         }
         else if (other.gameObject.tag == "Player" && item.itemType == Item.ItemType.Used)
         {           
@@ -62,8 +63,8 @@ public class DropCoin : MonoBehaviour
                 else
                 {
                     inventory.inven.addItem(item,1);
-                    Destroy(gameObject);
-                }           
+                     DestroyItem();
+            }           
         }
         
     }
@@ -76,9 +77,25 @@ public class DropCoin : MonoBehaviour
             {
                 col.enabled = false;
                 rbody.isKinematic = true;
-                Destroy(gameObject, 10f);
+                StartCoroutine(DestroyTIme());
             }
         }
+    }
+
+    IEnumerator DestroyTIme()
+    {
+        yield return new WaitForSeconds(10.0f);
+        DestroyItem();
+    }
+
+    [PunRPC]
+    public void DestroyItem(bool local = true) //처음받으면 true로 다른곳에 false 로넘겨줌
+    {
+        if (local)
+        {
+            photonView.RPC("DestroyItem", RpcTarget.Others, false);
+        }
+        Destroy(gameObject);
     }
 
 

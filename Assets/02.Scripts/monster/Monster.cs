@@ -57,8 +57,9 @@ public class Monster : MonoBehaviourPun
     {
         MonsterDropSet();
         tr = GetComponent<Transform>();
-        
 
+        Coin = Resources.Load<GameObject>("DROP/Coin");
+        Portion = Resources.LoadAll<GameObject>("DROP/Portion");
         Geteff = Resources.Load<GameObject>("GetEff");
         Damage = Resources.Load<GameObject>("Damage");
         playerST = FindObjectOfType<PlayerST>();
@@ -339,7 +340,7 @@ public class Monster : MonoBehaviourPun
                     if (Random.Range(0, 10) < 1)
                     {
                     int point = Random.Range(-1, 2);
-                    Instantiate(Portion[i], transform.position + new Vector3(point * 0.5f, itemUpPoint, point * 0.5f), Quaternion.identity);
+                    PhotonNetwork.Instantiate("DROP/Portion/" + Portion[i].name, transform.position + new Vector3(point * 0.5f, itemUpPoint, point * 0.5f), Quaternion.identity);
                     }
                 }
             }
@@ -349,7 +350,7 @@ public class Monster : MonoBehaviourPun
         {
                     
              int point = Random.Range(-1, 2);
-              GameObject coinInstan = Instantiate(Coin, transform.position + new Vector3(point * 0.5f, itemUpPoint, point * 0.5f), Quaternion.identity);
+              GameObject coinInstan = PhotonNetwork.Instantiate("DROP/"+Coin.name, transform.position + new Vector3(point * 0.5f, itemUpPoint, point * 0.5f), Quaternion.identity);
             coinInstan.GetComponent<DropCoin>().SetCoin(coin);
         }
 
@@ -362,21 +363,26 @@ public class Monster : MonoBehaviourPun
         GameObject eff = Instantiate(Geteff, transform.position, Quaternion.identity);
         eff.GetComponent<GetEff>().SetExp(Exp);
         SetColor(0);
-        if (!isSpread)
+        if (PhotonNetwork.IsMasterClient)
         {
-            MonsterDrop();
-            Collider[] cols = Physics.OverlapSphere(transform.position, 1.5f);
-            foreach (Collider col in cols)
+            if (!isSpread)
             {
-                Rigidbody _rb = col.GetComponent<Rigidbody>();
-                if (_rb != null)
+
+                MonsterDrop();
+                Collider[] cols = Physics.OverlapSphere(transform.position, 1.5f);
+                foreach (Collider col in cols)
                 {
-                    _rb.mass = 1.0f;
-                    _rb.AddExplosionForce(explPower, transform.position + (Vector3.up * itemUpPoint), 1.5f, upPower);
+                    Rigidbody _rb = col.GetComponent<Rigidbody>();
+                    if (_rb != null)
+                    {
+                        _rb.mass = 1.0f;
+                        _rb.AddExplosionForce(explPower, transform.position + (Vector3.up * itemUpPoint), 1.5f, upPower);
+                    }
                 }
+
+                isSpread = true;
             }
         }
-        isSpread = true;
     }
 
     public void MonsterAttack()
