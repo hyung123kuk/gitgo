@@ -21,7 +21,7 @@ public class DropCoin : MonoBehaviourPun
 
     private void Start()
     {
-        playerStat = FindObjectOfType<PlayerStat>();
+
         col = GetComponent<CapsuleCollider>();
         rbody = GetComponent<Rigidbody>();
         
@@ -46,8 +46,8 @@ public class DropCoin : MonoBehaviourPun
     {
         if (other.gameObject.tag == "Player" && item.itemName == "ÄÚÀÎ")
         {
-            Debug.Log(playerStat);
-            playerStat.AddGold(Coin);
+
+            other.GetComponent<PlayerStat>().AddGold(Coin);
             UiSound.uiSound.GetCoinSound();
             DestroyItem();
         }

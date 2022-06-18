@@ -333,6 +333,7 @@ public class Monster : MonoBehaviourPun
     {
         
 
+
             for (int i = 0; i < Portion.Length; i++)
             {
                 for (int j = 0; j < 2; j++)

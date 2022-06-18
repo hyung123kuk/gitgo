@@ -182,8 +182,6 @@ public class PlayerStat : MonoBehaviourPun //포톤으로 만들려고함.
     public void AddGold(float _Gold)
     {
 
-        if (!photonView.IsMine)
-            return;
 
         MONEY += _Gold;
         inven.GoldUpdate();
