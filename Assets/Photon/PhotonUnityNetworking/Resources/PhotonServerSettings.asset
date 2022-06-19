@@ -58,6 +58,8 @@ MonoBehaviour:
   - Destroy
   - SetExp
   - MonsterDie
+  - DiePRC
+  - setMosterNumber
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1
