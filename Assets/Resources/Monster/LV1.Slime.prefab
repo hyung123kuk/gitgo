@@ -395,6 +395,7 @@ MonoBehaviour:
   Monstername: {fileID: 0}
   Geteff: {fileID: 6560602718253161995, guid: 6a36d3a8b6ccff34595d8c45089ae68d, type: 3}
   weapons: {fileID: 0}
+  attackdamage: {fileID: 0}
   maxHealth: 100
   curHealth: 100
   explPower: 0

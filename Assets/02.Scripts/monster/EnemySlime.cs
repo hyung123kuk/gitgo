@@ -156,10 +156,10 @@ public class EnemySlime  : Monster
                 // 모든 콜라이더들을 순회하면서, 살아있는 플레이어를 찾기
                 for (int i = 0; i < colliders.Length; i++)
                 {
-                    // 콜라이더로부터 LivingEntity 컴포넌트 가져오기
+                    // 콜라이더로부터 PlayerST 컴포넌트 가져오기
                     PlayerST livingEntity = colliders[i].GetComponent<PlayerST>();
 
-                    // LivingEntity 컴포넌트가 존재하며, 해당 LivingEntity가 살아있다면,
+                    // PlayerST 컴포넌트가 존재하며, 해당 LivingEntity가 살아있다면,
                     if (livingEntity != null && !livingEntity.isDie)
                     {
                         // 추적 대상을 해당 LivingEntity로 설정

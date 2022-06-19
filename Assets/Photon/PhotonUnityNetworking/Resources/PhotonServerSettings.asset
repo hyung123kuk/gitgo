@@ -54,6 +54,11 @@ MonoBehaviour:
   - MonsterRespawn
   - MonsterPosition
   - MonsterHp
+  - WaitPlayer
+  - DestroryPlayer
+  - Endplayer
+  - PlayerEnd
+  - endswitchon
   DisableAutoOpenWizard: 1
   ShowSettings: 0
   DevRegionSetOnce: 1

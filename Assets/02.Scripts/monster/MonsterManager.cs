@@ -13,7 +13,7 @@ public class MonsterManager : MonoBehaviourPun
     public GameObject TurtleSlimePrefabs;
     public GameObject GolemPrefabs;
 
-    GameObject[] targetPool; 
+    GameObject[] targetPool;
 
     public GameObject[] Slime;
     public GameObject[] BlueSlime;
@@ -27,8 +27,8 @@ public class MonsterManager : MonoBehaviourPun
 
     private void Awake()
     {
-        
-       
+
+
 
         monsterManager = this;
         Slime = new GameObject[20];
@@ -37,7 +37,7 @@ public class MonsterManager : MonoBehaviourPun
         GoblinArcher = new GameObject[10];
         Skeleton = new GameObject[20];
 
-        Invoke("Generate",0.2f);
+        Invoke("Generate", 0.2f);
     }
 
     void Generate()  //Ǯ�� ����
@@ -52,7 +52,7 @@ public class MonsterManager : MonoBehaviourPun
         {
 
 
-           
+
 
 
             for (int i = 0; i < Slime.Length; i++)
@@ -92,15 +92,19 @@ public class MonsterManager : MonoBehaviourPun
                 Skeleton[i].transform.position = SpawnManager.spawnManager.SkeletonPoints[i].transform.position;
             }
 
-        Golem = PhotonNetwork.Instantiate("Monster/LV10.Boss.Golem", transform.position, Quaternion.identity);
-        Golem.SetActive(false);
-        Golem.transform.position = SpawnManager.spawnManager.GolemPoint.transform.position;
+            TurtleSlime = PhotonNetwork.Instantiate("Monster/LV5.Boss.TurtleSlime", transform.position, Quaternion.identity);
+            TurtleSlime.SetActive(false);
+            TurtleSlime.transform.position = SpawnManager.spawnManager.GolemPoint.transform.position;
+
+            Golem = PhotonNetwork.Instantiate("Monster/LV10.Boss.Golem", transform.position, Quaternion.identity);
+            Golem.SetActive(false);
+            Golem.transform.position = SpawnManager.spawnManager.GolemPoint.transform.position;
 
 
             SpawnManager.spawnManager.start();
         }
 
-       
+
     }
 
 
