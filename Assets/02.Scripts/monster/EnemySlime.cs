@@ -81,7 +81,9 @@ public class EnemySlime  : Monster
         Exp = 10;
         coin = 3;
         // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
-        StartCoroutine(UpdatePath());
+
+        
+         StartCoroutine(UpdatePath());
     }
     void Update()
     {
@@ -177,15 +179,19 @@ public class EnemySlime  : Monster
     }
     void EnemyReset()
     {
-        nav.SetDestination(respawn.transform.position);
-        nav.speed = 20f;
-        //curHealth = maxHealth;
-        isChase = false;
-        if (Vector3.Distance(respawn.position, transform.position) < 1f)
+        if (PhotonNetwork.IsMasterClient)
         {
-            nav.isStopped = true;
-            anim.SetBool("isWalk", false);
 
+            nav.SetDestination(respawn.transform.position);
+            nav.speed = 20f;
+            //curHealth = maxHealth;  서버에서 체력동기화가 잘 안일어나서 우선 주석 했습니다.
+            isChase = false;
+            if (Vector3.Distance(respawn.position, transform.position) < 1f)
+            {
+                nav.isStopped = true;
+                anim.SetBool("isWalk", false);
+
+            }
         }
     }
 
@@ -199,17 +205,20 @@ public class EnemySlime  : Monster
     }
     void Targerting()//Ÿ����
     {
-        float targetRadius = 1f;
-        float targetRange = 0.7f;
-
-        RaycastHit[] rayHits =
-            Physics.SphereCastAll(transform.position,
-            targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));  //����ĳ��Ʈ
-
-        if (rayHits.Length > 0 && !isAttack && !isDie) //����ĳ��Ʈ�� �÷��̾ �����ٸ� && ���� �������� �ƴ϶��
+        if (PhotonNetwork.IsMasterClient)
         {
-            StartCoroutine(Attack());
-            MonsterAttack();
+            float targetRadius = 1f;
+            float targetRange = 0.7f;
+
+            RaycastHit[] rayHits =
+                Physics.SphereCastAll(transform.position,
+                targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));  //����ĳ��Ʈ
+
+            if (rayHits.Length > 0 && !isAttack && !isDie) //����ĳ��Ʈ�� �÷��̾ �����ٸ� && ���� �������� �ƴ϶��
+            {
+                StartCoroutine(Attack());
+                MonsterAttack();
+            }
         }
     }
 
@@ -339,11 +348,9 @@ public class EnemySlime  : Monster
 
     void Diegg()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            respawn.GetChild(0).gameObject.SetActive(true);
-            --SpawnManager.spawnManager.SlimeObjs;
-        }
+        
+        respawn.gameObject.SetActive(true);
+        --SpawnManager.spawnManager.SlimeObjs;
         gameObject.SetActive(false);
     }
 }

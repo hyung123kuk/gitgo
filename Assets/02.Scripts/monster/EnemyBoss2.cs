@@ -448,11 +448,10 @@ public class EnemyBoss2 : MonsterBoss
 
     void Diegg()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
+
             respawn.GetChild(0).gameObject.SetActive(true);
             --SpawnManager.spawnManager.GolemObjs;
-        }
+
         gameObject.SetActive(false);
     }
 }

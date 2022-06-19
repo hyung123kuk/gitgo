@@ -237,11 +237,10 @@ public class EnemyGoblin : Monster
 
     void Diegg()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            respawn.GetChild(0).gameObject.SetActive(true);
+
+            respawn.gameObject.SetActive(true);
             --SpawnManager.spawnManager.GoblinObjs;
-        }
+
         gameObject.SetActive(false);
     }
 }

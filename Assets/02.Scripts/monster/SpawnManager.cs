@@ -72,7 +72,7 @@ public class SpawnManager : MonoBehaviourPun
 
             enemy.transform.position = SlimePoints[i].position;
             enemy.GetComponent<EnemySlime>().respawn = SlimePoints[i];
-            SlimePoints[i].GetChild(0).gameObject.SetActive(false);
+            SlimePoints[i].gameObject.SetActive(false);
         }
 
         for (int i = 0; i < MonsterManager.monsterManager.BlueSlime.Length; i++)
@@ -81,7 +81,7 @@ public class SpawnManager : MonoBehaviourPun
 
             enemy.transform.position = BlueSlimePoints[i].position;
             enemy.GetComponent<EnemyBlueSlime>().respawn = BlueSlimePoints[i];
-            BlueSlimePoints[i].GetChild(0).gameObject.SetActive(false);
+            BlueSlimePoints[i].gameObject.SetActive(false);
         }
         for (int i = 0; i < MonsterManager.monsterManager.Goblin.Length; i++)
         {
@@ -89,7 +89,7 @@ public class SpawnManager : MonoBehaviourPun
 
             enemy.transform.position = GoblinPoints[i].position;
             enemy.GetComponent<EnemyGoblin>().respawn = GoblinPoints[i];
-            GoblinPoints[i].GetChild(0).gameObject.SetActive(false);
+            GoblinPoints[i].gameObject.SetActive(false);
         }
         for (int i = 0; i < MonsterManager.monsterManager.GoblinArcher.Length; i++)
         {
@@ -97,7 +97,7 @@ public class SpawnManager : MonoBehaviourPun
 
             enemy.transform.position = GoblinArcherPoints[i].position;
             enemy.GetComponent<EnemyRange>().respawn = GoblinArcherPoints[i];
-            GoblinArcherPoints[i].GetChild(0).gameObject.SetActive(false);
+            GoblinArcherPoints[i].gameObject.SetActive(false);
         }
         for (int i = 0; i < MonsterManager.monsterManager.Skeleton.Length; i++)
         {
@@ -105,23 +105,20 @@ public class SpawnManager : MonoBehaviourPun
 
             enemy.transform.position = SkeletonPoints[i].position;
             enemy.GetComponent<EnemySkeleton>().respawn = SkeletonPoints[i];
-            SkeletonPoints[i].GetChild(0).gameObject.SetActive(false);
+            SkeletonPoints[i].gameObject.SetActive(false);
         }
         GameObject boss1 = MonsterManager.monsterManager.MakeObj(monsters[5]); // 터틀슬라임
 
         boss1.transform.position = TurtleSlimePoint.position; //위치지정
         boss1.GetComponent<EnemyBoss1>().respawn = TurtleSlimePoint; //리스폰위치지정
-        TurtleSlimePoint.GetChild(0).gameObject.SetActive(false);  //몬스터가 살아있는지 스위치용도
+        TurtleSlimePoint.gameObject.SetActive(false);  //몬스터가 살아있는지 스위치용도
 
 
         GameObject boss2 = MonsterManager.monsterManager.MakeObj(monsters[6]); // 골렘
 
         boss2.transform.position = GolemPoint.position; //위치지정
         boss2.GetComponent<EnemyBoss2>().respawn = GolemPoint; //리스폰위치지정
-        GolemPoint.GetChild(0).gameObject.SetActive(false);  //몬스터가 살아있는지 스위치용도
-
-
-
+        GolemPoint.gameObject.SetActive(false);  //몬스터가 살아있는지 스위치용도
 
     }
     
@@ -166,8 +163,28 @@ public class SpawnManager : MonoBehaviourPun
             GolemObjs++;
             StartCoroutine(GolemSpawn());
         }
+
+        setMosterNumber(SlimeObjs, BlueSlimeObjs, GoblinObjs, GoblinArObjs, SkeletonObjs, TurtleSlimeObjs, GolemObjs);
     }
 
+    [PunRPC]
+    public void setMosterNumber(int slime, int blueslime , int gobline , int archer , int skeleton , int tutle, int golem)
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            photonView.RPC("setMosterNumber", RpcTarget.Others, slime, blueslime, gobline, archer, skeleton, tutle, golem);
+        }
+        else
+        {
+            SlimeObjs = slime;
+            BlueSlimeObjs = blueslime;
+            GoblinObjs = gobline;
+            GoblinArObjs = archer;
+            SkeletonObjs = skeleton;
+            TurtleSlimeObjs = tutle;
+            GolemObjs = golem;
+        }
+    }
 
 
     IEnumerator SlimeSpawn()
@@ -180,7 +197,7 @@ public class SpawnManager : MonoBehaviourPun
             for (int i = 0; i < MonsterManager.monsterManager.Slime.Length; i++)
             {
                 slimeidx=i;
-                if (SlimePoints[i].GetChild(0).gameObject.activeSelf)
+                if (SlimePoints[i].gameObject.activeSelf)
                 {
                     Slimeready = true;
                     break;
@@ -197,7 +214,7 @@ public class SpawnManager : MonoBehaviourPun
                 enemy.GetComponent<Monster>().MonsterPosition(SlimePoints[slimeidx].position);
 
                 enemy.GetComponent<EnemySlime>().respawn = SlimePoints[slimeidx];
-                SlimePoints[slimeidx].GetChild(0).gameObject.SetActive(false);
+                SlimePoints[slimeidx].gameObject.SetActive(false);
                 slimeidx = 0;
                 break;
             }
@@ -214,7 +231,7 @@ public class SpawnManager : MonoBehaviourPun
             for (int i = 0; i < MonsterManager.monsterManager.BlueSlime.Length; i++)
             {
                 blueslimeidx = i;
-                if (BlueSlimePoints[i].GetChild(0).gameObject.activeSelf)
+                if (BlueSlimePoints[i].gameObject.activeSelf)
                 {
                     BlueSlimeready = true;
                     break;
@@ -228,7 +245,7 @@ public class SpawnManager : MonoBehaviourPun
 
                 enemy.transform.position = BlueSlimePoints[blueslimeidx].position;
                 enemy.GetComponent<EnemyBlueSlime>().respawn = BlueSlimePoints[blueslimeidx];
-                BlueSlimePoints[blueslimeidx].GetChild(0).gameObject.SetActive(false);
+                BlueSlimePoints[blueslimeidx].gameObject.SetActive(false);
                 blueslimeidx = 0;
                 break;
             }
@@ -245,7 +262,7 @@ public class SpawnManager : MonoBehaviourPun
             for (int i = 0; i < MonsterManager.monsterManager.Goblin.Length; i++)
             {
                 goblinidx = i;
-                if (GoblinPoints[i].GetChild(0).gameObject.activeSelf)
+                if (GoblinPoints[i].gameObject.activeSelf)
                 {
                     Goblinready = true;
                     break;
@@ -259,7 +276,7 @@ public class SpawnManager : MonoBehaviourPun
 
                 enemy.transform.position = GoblinPoints[goblinidx].position;
                 enemy.GetComponent<EnemyGoblin>().respawn = GoblinPoints[goblinidx];
-                GoblinPoints[goblinidx].GetChild(0).gameObject.SetActive(false);
+                GoblinPoints[goblinidx].gameObject.SetActive(false);
                 goblinidx = 0;
                 break;
             }
@@ -276,7 +293,7 @@ public class SpawnManager : MonoBehaviourPun
             for (int i = 0; i < MonsterManager.monsterManager.GoblinArcher.Length; i++)
             {
                 goblinarcheridx = i;
-                if (GoblinArcherPoints[i].GetChild(0).gameObject.activeSelf)
+                if (GoblinArcherPoints[i].gameObject.activeSelf)
                 {
                     GoblinArcherready = true;
                     break;
@@ -290,7 +307,7 @@ public class SpawnManager : MonoBehaviourPun
 
                 enemy.transform.position = GoblinArcherPoints[goblinarcheridx].position;
                 enemy.GetComponent<EnemyRange>().respawn = GoblinArcherPoints[goblinarcheridx];
-                GoblinArcherPoints[goblinarcheridx].GetChild(0).gameObject.SetActive(false);
+                GoblinArcherPoints[goblinarcheridx].gameObject.SetActive(false);
                 goblinarcheridx = 0;
                 break;
             }
@@ -307,7 +324,7 @@ public class SpawnManager : MonoBehaviourPun
             for (int i = 0; i < 1; i++)
             {
                 TurtleSlimeidx = i;
-                if (TurtleSlimePoint.GetChild(0).gameObject.activeSelf)
+                if (TurtleSlimePoint.gameObject.activeSelf)
                 {
                     TurtleSlimeready = true;
                     break;
@@ -321,7 +338,7 @@ public class SpawnManager : MonoBehaviourPun
 
                 enemy.transform.position = TurtleSlimePoint.position;
                 enemy.GetComponent<EnemyRange>().respawn = TurtleSlimePoint;
-                TurtleSlimePoint.GetChild(0).gameObject.SetActive(false);
+                TurtleSlimePoint.gameObject.SetActive(false);
                 TurtleSlimeidx = 0;
                 break;
             }
@@ -338,7 +355,7 @@ public class SpawnManager : MonoBehaviourPun
             for (int i = 0; i < MonsterManager.monsterManager.Skeleton.Length; i++)
             {
                 Skeletonidx = i;
-                if (SkeletonPoints[i].GetChild(0).gameObject.activeSelf)
+                if (SkeletonPoints[i].gameObject.activeSelf)
                 {
                     Skeletonready = true;
                     break;
@@ -352,7 +369,7 @@ public class SpawnManager : MonoBehaviourPun
 
                 enemy.transform.position = SkeletonPoints[goblinarcheridx].position;
                 enemy.GetComponent<EnemyRange>().respawn = SkeletonPoints[goblinarcheridx];
-                SkeletonPoints[goblinarcheridx].GetChild(0).gameObject.SetActive(false);
+                SkeletonPoints[goblinarcheridx].gameObject.SetActive(false);
                 Skeletonidx = 0;
                 break;
             }
@@ -370,7 +387,7 @@ public class SpawnManager : MonoBehaviourPun
             for (int i = 0; i < 1; i++)
             {
                 Golemidx = i;
-                if (GolemPoint.GetChild(0).gameObject.activeSelf)
+                if (GolemPoint.gameObject.activeSelf)
                 {
                     Golemready = true;
                     break;
@@ -384,7 +401,7 @@ public class SpawnManager : MonoBehaviourPun
 
                 enemy.transform.position = GolemPoint.position;
                 enemy.GetComponent<EnemyRange>().respawn = GolemPoint;
-                GolemPoint.GetChild(0).gameObject.SetActive(false);
+                GolemPoint.gameObject.SetActive(false);
                 Golemidx = 0;
                 break;
             }

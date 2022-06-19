@@ -388,11 +388,10 @@ public class EnemyBoss1 : MonsterBoss
 
     void Diegg()
     {
-        if (PhotonNetwork.IsMasterClient)
-        {
-            respawn.GetChild(0).gameObject.SetActive(true);
+
+            respawn.gameObject.SetActive(true);
             --SpawnManager.spawnManager.TurtleSlimeObjs;
-        }
+        
         gameObject.SetActive(false);
     }
 }

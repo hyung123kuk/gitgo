@@ -954,7 +954,7 @@ public class PlayerST : MonoBehaviourPun
             return;
         SelectPlayer.enabled = false;
         rigid.useGravity = false;
-        isDie = true;
+        DiePRC(true,true); //죽음을 알림.
         anim.SetBool("isDie", true);
         if (CharacterType == Type.Warrior || CharacterType == Type.Mage)
             SoundManager.soundManager.MaleDieSound();
@@ -962,6 +962,17 @@ public class PlayerST : MonoBehaviourPun
             SoundManager.soundManager.FeMaleDieSound();
         dieui.DieOn();
     }
+
+    [PunRPC]
+    public void DiePRC(bool _isDie, bool local)
+    {
+        if (local)
+        {
+            photonView.RPC("DiePRC", RpcTarget.Others, _isDie, false);
+        }
+        isDie = _isDie;
+    }
+
     public void PlayerResurrection() //죽고살아날때 갱신
     {
         playerstat._Hp = playerstat._MAXHP;

@@ -234,7 +234,7 @@ public class EnemySkeleton : Monster
 
     void Diegg()
     {
-        respawn.GetChild(0).gameObject.SetActive(true);
+        respawn.gameObject.SetActive(true);
         --SpawnManager.spawnManager.SkeletonObjs;
         gameObject.SetActive(false);
     }

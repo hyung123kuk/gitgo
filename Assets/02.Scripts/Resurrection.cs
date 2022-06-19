@@ -51,7 +51,7 @@ public class Resurrection : MonoBehaviour
         transform.position = Town.position;
         yield return new WaitForSeconds(0.1f);
         playerst.PlayerResurrection();
-        playerst.isDie = false;
+        playerst.DiePRC(false,true);
         playerst.SelectPlayer.enabled = true;
         playerst.rigid.useGravity = true;
         playerst.anim.SetBool("isDie", false);
@@ -64,7 +64,7 @@ public class Resurrection : MonoBehaviour
         transform.position = Dunjeon.position;
         yield return new WaitForSeconds(0.1f);
         playerst.PlayerResurrection();
-        playerst.isDie = false;
+        playerst.DiePRC(false, true);
         playerst.SelectPlayer.enabled = true;
         playerst.rigid.useGravity = true;
         playerst.anim.SetBool("isDie", false);
