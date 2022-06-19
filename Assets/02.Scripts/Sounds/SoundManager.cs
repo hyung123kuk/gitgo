@@ -30,7 +30,7 @@ public class SoundManager : MonoBehaviour
     {
         soundbar = FindObjectOfType<SoundBar>();
 
-        
+        if(soundbar != null)
         audioSource.volume = soundbar.CharacterVolume;
     }
     //==============================공용 사운드=========================================//

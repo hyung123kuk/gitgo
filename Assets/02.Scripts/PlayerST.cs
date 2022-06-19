@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Photon.Pun;
-public class PlayerST : MonoBehaviourPun
+
+public class PlayerST : MonoBehaviourPunCallbacks
 {
 
 
+    
+    public bool endswitch; //종료를 체크하는 스위치
 
     public enum Type { Warrior, Archer, Mage };
     public Type CharacterType; //원래 앞에 static이 붙어있었는데 테스트할때 인스펙터창에 타입이 안떠서 임시로 뻈어요
@@ -80,6 +83,8 @@ public class PlayerST : MonoBehaviourPun
 
 
 
+
+
     public bool isFall; //공중에 떠있는상태? 몬스터들의 룩엣을 조정하기위함.
     //======================전사 스킬========================//
 
@@ -126,6 +131,8 @@ public class PlayerST : MonoBehaviourPun
 
     public Weapons weapons;
 
+    
+
     private void Awake()
     {
         if (!photonView.IsMine)
@@ -146,9 +153,9 @@ public class PlayerST : MonoBehaviourPun
         playerST = this;
         dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
         weapons = FindObjectOfType<Weapons>();
-
     }
 
+  
     void Anima() //애니메이션 
     {
 
@@ -729,20 +736,43 @@ public class PlayerST : MonoBehaviourPun
         Key2 = Input.GetButtonDown("Key2"); //2번키
         Key3 = Input.GetButtonDown("Key3"); //3번키
     }
+
+    [PunRPC]
+    void endswitchon() //플레이어 삭제 스위치 온
+    {
+        endswitch = true;
+    }
+
+    //룸을 나갈때 자동 실행되는 메서드
+    public override void OnLeftRoom()
+    {
+       
+        Debug.Log("종료끝");
+
+        // 룸을 나가면 로비 씬으로 돌아감
+        //SceneManager.LoadScene("ChSel_sangin");
+    }
+    void EndStart()
+    {
+        Debug.Log("종료시작");
+        photonView.RPC("endswitchon", RpcTarget.AllBuffered);
+        PhotonNetwork.LeaveRoom();
+    }
     private void Update()
     {
 
         if (!photonView.IsMine)
             return;
 
-        if (Input.GetKeyDown(KeyCode.H)) //말 아이템이 없어서 이걸로 테스트했어요
+        if (Input.GetKeyDown(KeyCode.H) && !HorseMode) //말 아이템이 없어서 이걸로 테스트했어요
         {
             photonView.RPC("HorseRide", RpcTarget.AllBuffered);
-            //HorseRide();
         }
-
-
-        //HorseRide();
+        if (Input.GetKeyDown(KeyCode.P))   //P누르면 캐릭터사라짐
+        {
+            Debug.Log("P 누름");
+            Invoke("EndStart", 1f);
+        }
 
         if (AllUI.isUI)
         {
@@ -813,7 +843,7 @@ public class PlayerST : MonoBehaviourPun
 
         if (!HorseMode) // 말 소환&소환해제
         {
-            if(horsecount ==0)
+            if (horsecount == 0)
             {
                 SoundManager.soundManager.Horse();
                 HorseSpawn.gameObject.SetActive(false);
@@ -823,7 +853,7 @@ public class PlayerST : MonoBehaviourPun
                 HorseSpawn.transform.parent = null;
                 horsecount = 1;
             }
-            else if (!HorseSpawn.gameObject.activeSelf && horsecount==1)
+            else if (!HorseSpawn.gameObject.activeSelf && horsecount == 1)
             {
                 HorseSpawn.transform.parent = null;
                 SoundManager.soundManager.Horse();
@@ -1208,4 +1238,5 @@ public class PlayerST : MonoBehaviourPun
         //QuikSlot.quikSlot.weapons = FindObjectOfType<Weapons>();
     }
 
+    
 }

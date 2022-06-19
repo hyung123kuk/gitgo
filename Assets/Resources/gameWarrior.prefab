@@ -11172,7 +11172,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 0
+  sceneViewId: 3
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &2730395410406331672
@@ -12124,7 +12124,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 0
+  sceneViewId: 4
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &2730395410406331688
@@ -12646,7 +12646,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 0
+  sceneViewId: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &2730395410406331700
@@ -13463,7 +13463,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 0
+  sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &2730395410406331847
@@ -19117,7 +19117,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 0
+  sceneViewId: 5
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &2730395410406331865
@@ -20624,6 +20624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6d43ad297823c745862c0efde9f110c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  endswitch: 0
   CharacterType: 0
   rigid: {fileID: 0}
   jump: 30
@@ -20914,7 +20915,7 @@ MonoBehaviour:
   ObservedComponents:
   - {fileID: 2730395410406328862}
   - {fileID: 2730395410406328863}
-  sceneViewId: 0
+  sceneViewId: 6
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!114 &2730395410406328862

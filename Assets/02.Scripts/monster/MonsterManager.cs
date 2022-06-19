@@ -13,7 +13,7 @@ public class MonsterManager : MonoBehaviourPun
     public GameObject TurtleSlimePrefabs;
     public GameObject GolemPrefabs;
 
-    GameObject[] targetPool; 
+    GameObject[] targetPool;
 
     public GameObject[] Slime;
     public GameObject[] BlueSlime;
@@ -27,8 +27,8 @@ public class MonsterManager : MonoBehaviourPun
 
     private void Awake()
     {
-        
-       
+
+
 
         monsterManager = this;
         Slime = new GameObject[20];
@@ -37,7 +37,7 @@ public class MonsterManager : MonoBehaviourPun
         GoblinArcher = new GameObject[10];
         Skeleton = new GameObject[20];
 
-        Invoke("Generate",0.2f);
+        Invoke("Generate", 0.2f);
     }
 
     void Generate()  //Ǯ�� ����
@@ -52,7 +52,7 @@ public class MonsterManager : MonoBehaviourPun
         {
 
 
-           
+
 
 
             for (int i = 0; i < Slime.Length; i++)
@@ -104,7 +104,7 @@ public class MonsterManager : MonoBehaviourPun
             SpawnManager.spawnManager.start();
         }
 
-       
+
     }
 
 

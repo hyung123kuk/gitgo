@@ -13,8 +13,11 @@ public class NPCNameRo : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
-        gameObject.transform.LookAt(player.transform);
-        gameObject.transform.Rotate(Vector3.up * 180);
+
+        if (player != null)
+        {
+            gameObject.transform.LookAt(player.transform);
+            gameObject.transform.Rotate(Vector3.up * 180);
+        }
     }
 }

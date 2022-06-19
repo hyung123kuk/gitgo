@@ -54,6 +54,11 @@ MonoBehaviour:
   - MonsterRespawn
   - MonsterPosition
   - MonsterHp
+  - WaitPlayer
+  - DestroryPlayer
+  - Endplayer
+  - PlayerEnd
+  - endswitchon
   - DestroyItem
   - Destroy
   - SetExp
