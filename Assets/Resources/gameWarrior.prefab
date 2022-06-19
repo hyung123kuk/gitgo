@@ -9782,6 +9782,7 @@ GameObject:
   - component: {fileID: 2730395410406334185}
   - component: {fileID: 2730395410406327263}
   - component: {fileID: 2730395410406330260}
+  - component: {fileID: 2119263510983673115}
   m_Layer: 8
   m_Name: Sword5(rare)_Area
   m_TagString: Melee
@@ -9880,6 +9881,28 @@ MonoBehaviour:
   CCarea: {fileID: 0}
   energyfullCharging: 0
   ShotFull: 0
+--- !u!114 &2119263510983673115
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730395410406331615}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2730395410406331616
 GameObject:
   m_ObjectHideFlags: 0
@@ -9891,6 +9914,7 @@ GameObject:
   - component: {fileID: 2730395410406334186}
   - component: {fileID: 2730395410406327265}
   - component: {fileID: 2730395410406330265}
+  - component: {fileID: 6367905089676820022}
   m_Layer: 8
   m_Name: Sword5(normal)_Area
   m_TagString: Melee
@@ -9989,6 +10013,28 @@ MonoBehaviour:
   CCarea: {fileID: 0}
   energyfullCharging: 0
   ShotFull: 0
+--- !u!114 &6367905089676820022
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730395410406331616}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2730395410406331617
 GameObject:
   m_ObjectHideFlags: 0
@@ -10089,6 +10135,7 @@ GameObject:
   - component: {fileID: 2730395410406334189}
   - component: {fileID: 2730395410406327264}
   - component: {fileID: 2730395410406330264}
+  - component: {fileID: 8602781870032183132}
   m_Layer: 8
   m_Name: Sword10(normal)_Area
   m_TagString: Melee
@@ -10187,6 +10234,28 @@ MonoBehaviour:
   CCarea: {fileID: 0}
   energyfullCharging: 0
   ShotFull: 0
+--- !u!114 &8602781870032183132
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730395410406331619}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2730395410406331620
 GameObject:
   m_ObjectHideFlags: 0
@@ -10228,6 +10297,7 @@ GameObject:
   - component: {fileID: 2730395410406334191}
   - component: {fileID: 2730395410406327267}
   - component: {fileID: 2730395410406330267}
+  - component: {fileID: 6294479249131578794}
   m_Layer: 8
   m_Name: Sword10(rare)_Area
   m_TagString: Melee
@@ -10326,6 +10396,28 @@ MonoBehaviour:
   CCarea: {fileID: 0}
   energyfullCharging: 0
   ShotFull: 0
+--- !u!114 &6294479249131578794
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730395410406331621}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2730395410406331622
 GameObject:
   m_ObjectHideFlags: 0
@@ -10337,6 +10429,7 @@ GameObject:
   - component: {fileID: 2730395410406334192}
   - component: {fileID: 2730395410406327269}
   - component: {fileID: 2730395410406330269}
+  - component: {fileID: 305982197}
   m_Layer: 8
   m_Name: Sword1_Area
   m_TagString: Melee
@@ -10435,6 +10528,28 @@ MonoBehaviour:
   CCarea: {fileID: 0}
   energyfullCharging: 0
   ShotFull: 0
+--- !u!114 &305982197
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730395410406331622}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &2730395410406331623
 GameObject:
   m_ObjectHideFlags: 0

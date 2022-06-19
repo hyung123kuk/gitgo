@@ -114,6 +114,7 @@ GameObject:
   - component: {fileID: 1000012529396271}
   - component: {fileID: 4460914918692426801}
   - component: {fileID: 1254267741}
+  - component: {fileID: 7403138830648818075}
   m_Layer: 0
   m_Name: All_portion
   m_TagString: Untagged
@@ -150,10 +151,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tr: {fileID: 0}
-  col: {fileID: 0}
   item: {fileID: 11400000, guid: a8916cc97203b8a4ca9e5acf5bbd8e78, type: 2}
   playerStat: {fileID: 0}
   Coin: 0
+  col: {fileID: 0}
+  rbody: {fileID: 0}
 --- !u!135 &1000012529396271
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -197,6 +199,28 @@ CapsuleCollider:
   m_Height: 0.7
   m_Direction: 1
   m_Center: {x: 0, y: 1, z: 0}
+--- !u!114 &7403138830648818075
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7351632926798169293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &7351632927640981367
 GameObject:
   m_ObjectHideFlags: 0

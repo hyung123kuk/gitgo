@@ -57,8 +57,9 @@ public class Monster : MonoBehaviourPun
     {
         MonsterDropSet();
         tr = GetComponent<Transform>();
-        
 
+        Coin = Resources.Load<GameObject>("DROP/Coin");
+        Portion = Resources.LoadAll<GameObject>("DROP/Portion");
         Geteff = Resources.Load<GameObject>("GetEff");
         Damage = Resources.Load<GameObject>("Damage");
         playerST = FindObjectOfType<PlayerST>();
@@ -108,6 +109,7 @@ public class Monster : MonoBehaviourPun
         if (Local) // 로컬일때 다른곳에서 보냄 로컬아니면 중복 막기위해 막음
         {
             photonView.RPC("OnDamage", RpcTarget.Others, _attackdamage,critical, false);
+            SetTarget(attackdamage.gameObject);
         }
 
         GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
@@ -115,6 +117,7 @@ public class Monster : MonoBehaviourPun
         if (!Local)
         {
             curHealth -= _attackdamage;
+            SetTarget(null);
         }
 
 
@@ -332,6 +335,7 @@ public class Monster : MonoBehaviourPun
     {
         
 
+
             for (int i = 0; i < Portion.Length; i++)
             {
                 for (int j = 0; j < 2; j++)
@@ -339,7 +343,7 @@ public class Monster : MonoBehaviourPun
                     if (Random.Range(0, 10) < 1)
                     {
                     int point = Random.Range(-1, 2);
-                    Instantiate(Portion[i], transform.position + new Vector3(point * 0.5f, itemUpPoint, point * 0.5f), Quaternion.identity);
+                    PhotonNetwork.Instantiate("DROP/Portion/" + Portion[i].name, transform.position + new Vector3(point * 0.5f, itemUpPoint, point * 0.5f), Quaternion.identity);
                     }
                 }
             }
@@ -349,7 +353,7 @@ public class Monster : MonoBehaviourPun
         {
                     
              int point = Random.Range(-1, 2);
-              GameObject coinInstan = Instantiate(Coin, transform.position + new Vector3(point * 0.5f, itemUpPoint, point * 0.5f), Quaternion.identity);
+              GameObject coinInstan = PhotonNetwork.Instantiate("DROP/"+Coin.name, transform.position + new Vector3(point * 0.5f, itemUpPoint, point * 0.5f), Quaternion.identity);
             coinInstan.GetComponent<DropCoin>().SetCoin(coin);
         }
 
@@ -357,26 +361,48 @@ public class Monster : MonoBehaviourPun
         
     }
 
+    GameObject effTarget;
+    public void SetTarget(GameObject target)
+    {
+        effTarget = target;
+    }
+
+    public void EffInsatangiate()
+    {
+        GameObject eff = PhotonNetwork.Instantiate(Geteff.name, transform.position, Quaternion.identity);
+        eff.GetComponent<GetEff>().SetExp(Exp);
+        eff.GetComponent<GetEff>().Target(effTarget);
+    }
+
     public void MonsterDie()
     {
-        GameObject eff = Instantiate(Geteff, transform.position, Quaternion.identity);
-        eff.GetComponent<GetEff>().SetExp(Exp);
-        SetColor(0);
-        if (!isSpread)
+        if (effTarget != null)
         {
-            MonsterDrop();
-            Collider[] cols = Physics.OverlapSphere(transform.position, 1.5f);
-            foreach (Collider col in cols)
+            EffInsatangiate();
+        }
+
+
+            SetColor(0);
+        if (PhotonNetwork.IsMasterClient)
+        {
+            if (!isSpread)
             {
-                Rigidbody _rb = col.GetComponent<Rigidbody>();
-                if (_rb != null)
+
+                MonsterDrop();
+                Collider[] cols = Physics.OverlapSphere(transform.position, 1.5f);
+                foreach (Collider col in cols)
                 {
-                    _rb.mass = 1.0f;
-                    _rb.AddExplosionForce(explPower, transform.position + (Vector3.up * itemUpPoint), 1.5f, upPower);
+                    Rigidbody _rb = col.GetComponent<Rigidbody>();
+                    if (_rb != null)
+                    {
+                        _rb.mass = 1.0f;
+                        _rb.AddExplosionForce(explPower, transform.position + (Vector3.up * itemUpPoint), 1.5f, upPower);
+                    }
                 }
+
+                isSpread = true;
             }
         }
-        isSpread = true;
     }
 
     public void MonsterAttack()

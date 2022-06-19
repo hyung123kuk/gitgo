@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1000011284012962}
   - component: {fileID: 2700804903477593208}
   - component: {fileID: 6806292529751620183}
+  - component: {fileID: -1215895472583235890}
   m_Layer: 0
   m_Name: Coin
   m_TagString: Untagged
@@ -65,6 +66,7 @@ MonoBehaviour:
   playerStat: {fileID: 0}
   Coin: 20
   col: {fileID: 0}
+  rbody: {fileID: 0}
 --- !u!54 &2700804903477593208
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -95,6 +97,28 @@ CapsuleCollider:
   m_Height: 0.2
   m_Direction: 1
   m_Center: {x: 0, y: 0.94, z: 0}
+--- !u!114 &-1215895472583235890
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5137509321368036168}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5137509323217483508
 GameObject:
   m_ObjectHideFlags: 0
