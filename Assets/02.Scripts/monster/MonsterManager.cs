@@ -54,7 +54,7 @@ public class MonsterManager : MonoBehaviourPun
 
         TurtleSlime = transform.GetChild(0).GetChild(3).GetChild(0).gameObject;
         Golem = transform.GetChild(0).GetChild(4).GetChild(0).gameObject;
-        Invoke("Generate", 0.2f);
+        Invoke("Generate", 0.2f); //마스터 플레이어가 나갔을때 몬스터가 생성이 안된다면 이 0.2초사이에 마스터플레이어가 나갔을 것입니다.. 수정 필요하긴합니다 이부분.
     }
 
     void Generate()  //Ǯ�� ����
