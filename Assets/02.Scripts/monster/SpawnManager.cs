@@ -53,7 +53,9 @@ public class SpawnManager : MonoBehaviourPun
 
 
     private void Awake()
-    { 
+    {
+
+
         SlimeObjs = 20;
         BlueSlimeObjs = 20;
         GoblinObjs = 20;
@@ -208,7 +210,7 @@ public class SpawnManager : MonoBehaviourPun
             {
                 
                 GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[0]);
-                
+                Debug.Log(enemy);
                 enemy.transform.position = SlimePoints[slimeidx].position;
 
                 enemy.GetComponent<Monster>().MonsterPosition(SlimePoints[slimeidx].position);

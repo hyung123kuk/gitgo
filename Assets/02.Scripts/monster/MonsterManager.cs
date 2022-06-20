@@ -27,7 +27,7 @@ public class MonsterManager : MonoBehaviourPun
 
     private void Awake()
     {
-
+       
 
 
         monsterManager = this;
@@ -37,6 +37,23 @@ public class MonsterManager : MonoBehaviourPun
         GoblinArcher = new GameObject[10];
         Skeleton = new GameObject[20];
 
+        for (int i = 0; i < 20; i++)
+        {
+            Slime[i] = transform.GetChild(0).GetChild(6).GetChild(i).gameObject;
+            BlueSlime[i] = transform.GetChild(0).GetChild(0).GetChild(i).gameObject;
+            Goblin[i] = transform.GetChild(0).GetChild(1).GetChild(i).gameObject;
+            
+            Skeleton[i] = transform.GetChild(0).GetChild(5).GetChild(i).gameObject;
+        }
+
+        for(int i = 0; i < 10; i++)
+        {
+            GoblinArcher[i] = transform.GetChild(0).GetChild(2).GetChild(i).gameObject;
+
+        }
+
+        TurtleSlime = transform.GetChild(0).GetChild(3).GetChild(0).gameObject;
+        Golem = transform.GetChild(0).GetChild(4).GetChild(0).gameObject;
         Invoke("Generate", 0.2f);
     }
 
@@ -47,6 +64,50 @@ public class MonsterManager : MonoBehaviourPun
         GameObject GoblinPools = new GameObject("Goblin Pool");
         GameObject GoblinArcherPools = new GameObject("GoblinArcher Pool");
         GameObject SkeletonPools = new GameObject("Skeleton Pool");
+
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            EnemySlime[] slimes = GameObject.FindObjectsOfType<EnemySlime>();
+            EnemyBlueSlime[]blueslimes = GameObject.FindObjectsOfType<EnemyBlueSlime>();
+            EnemyGoblin[] goblins = GameObject.FindObjectsOfType<EnemyGoblin>();
+            EnemyRange[] Ranges = GameObject.FindObjectsOfType<EnemyRange>();
+            EnemySkeleton[] skelletons = GameObject.FindObjectsOfType<EnemySkeleton>();
+
+            
+            for(int i = 0; i < slimes.Length; i++)
+            {
+                slimes[i].transform.parent = SlimePools.transform;
+                Slime[i] = slimes[i].gameObject;
+            }
+
+            for (int i = 0; i < blueslimes.Length; i++)
+            {
+                blueslimes[i].transform.parent = BlueSlimePools.transform;
+                BlueSlime[i] = blueslimes[i].gameObject;
+            }
+
+
+            for (int i = 0; i < goblins.Length; i++)
+            {
+                goblins[i].transform.parent = GoblinPools.transform;
+                Goblin[i] = goblins[i].gameObject;
+            }
+
+
+            for (int i = 0; i < Ranges.Length; i++)
+            {
+                Ranges[i].transform.parent = GoblinArcherPools.transform;
+                GoblinArcher[i] = Ranges[i].gameObject;
+            }
+
+
+            for (int i = 0; i < skelletons.Length; i++)
+            {
+                skelletons[i].transform.parent = SkeletonPools.transform;
+                Skeleton[i] = skelletons[i].gameObject;
+            }
+
+        }
 
         if (PhotonNetwork.IsMasterClient)
         {
@@ -97,8 +158,8 @@ public class MonsterManager : MonoBehaviourPun
             TurtleSlime.transform.position = SpawnManager.spawnManager.TurtleSlimePoint.transform.position;
 
             Golem = PhotonNetwork.Instantiate("Monster/LV10.Boss.Golem", transform.position, Quaternion.identity);
-        Golem.SetActive(false);
-        Golem.transform.position = SpawnManager.spawnManager.GolemPoint.transform.position;
+            Golem.SetActive(false);
+            Golem.transform.position = SpawnManager.spawnManager.GolemPoint.transform.position;
 
 
             SpawnManager.spawnManager.start();
