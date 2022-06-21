@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using DG.Tweening;
 using Photon.Pun;
+using UnityEngine.SceneManagement;
 
 public class PlayerST : MonoBehaviourPunCallbacks
 {
 
-
-    
-    public bool endswitch; //종료를 체크하는 스위치
 
     public enum Type { Warrior, Archer, Mage };
     public Type CharacterType; //원래 앞에 static이 붙어있었는데 테스트할때 인스펙터창에 타입이 안떠서 임시로 뻈어요
@@ -131,7 +129,7 @@ public class PlayerST : MonoBehaviourPunCallbacks
 
     public Weapons weapons;
 
-    
+
 
     private void Awake()
     {
@@ -155,7 +153,7 @@ public class PlayerST : MonoBehaviourPunCallbacks
         weapons = FindObjectOfType<Weapons>();
     }
 
-  
+
     void Anima() //애니메이션 
     {
 
@@ -737,41 +735,35 @@ public class PlayerST : MonoBehaviourPunCallbacks
         Key3 = Input.GetButtonDown("Key3"); //3번키
     }
 
-    [PunRPC]
-    void endswitchon() //플레이어 삭제 스위치 온
-    {
-        endswitch = true;
-    }
-
     //룸을 나갈때 자동 실행되는 메서드
     public override void OnLeftRoom()
     {
-       
-        Debug.Log("종료끝");
+
+        Debug.Log("서버나감");
 
         // 룸을 나가면 로비 씬으로 돌아감
-        //SceneManager.LoadScene("ChSel_sangin");
+        SceneManager.LoadScene("ChSel_sangin");
     }
-    void EndStart()
+    public void EndStart()
     {
         Debug.Log("종료시작");
-        photonView.RPC("endswitchon", RpcTarget.AllBuffered);
+        Invoke("Leave", 1f);
+        
+    }
+    public void Leave()
+    {
+        Debug.Log("종료끝");
         PhotonNetwork.LeaveRoom();
     }
     private void Update()
     {
-
         if (!photonView.IsMine)
             return;
+
 
         if (Input.GetKeyDown(KeyCode.H) && !HorseMode) //말 아이템이 없어서 이걸로 테스트했어요
         {
             photonView.RPC("HorseRide", RpcTarget.AllBuffered);
-        }
-        if (Input.GetKeyDown(KeyCode.P))   //P누르면 캐릭터사라짐
-        {
-            Debug.Log("P 누름");
-            Invoke("EndStart", 1f);
         }
 
         if (AllUI.isUI)
@@ -984,7 +976,7 @@ public class PlayerST : MonoBehaviourPunCallbacks
             return;
         SelectPlayer.enabled = false;
         rigid.useGravity = false;
-        DiePRC(true,true); //죽음을 알림.
+        DiePRC(true, true); //죽음을 알림.
         anim.SetBool("isDie", true);
         if (CharacterType == Type.Warrior || CharacterType == Type.Mage)
             SoundManager.soundManager.MaleDieSound();
@@ -1238,5 +1230,5 @@ public class PlayerST : MonoBehaviourPunCallbacks
         //QuikSlot.quikSlot.weapons = FindObjectOfType<Weapons>();
     }
 
-    
+
 }

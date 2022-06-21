@@ -22,6 +22,8 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
     private itemStore itemStore;
     [SerializeField]
     private ToolTip toolTip;
+    [SerializeField]
+    private GameObject LoadingUI; //로딩창 인벤껐다킬때 가려주는용도 
 
 
     public Slot[] GetSlots() { return slots; }
@@ -59,7 +61,7 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
     private void Awake()
     {
 
-        
+        LoadingUI = GameObject.Find("UI").transform.GetChild(6).gameObject;
         slots = SlotsParent.GetComponentsInChildren<Slot>();
         
         allUI = FindObjectOfType<AllUI>();
@@ -68,7 +70,7 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
         inven = this;
         iDown = false;
         StartCoroutine(invenSet());
-
+        StartCoroutine(LoadingSet());
         eqslots = GameObject.FindGameObjectWithTag("EqueSlot").GetComponentsInChildren<Slot>();
 
 
@@ -92,7 +94,12 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
         invencheck = 1;
 
     }
+    IEnumerator LoadingSet() 
+    {
+        yield return new WaitForSeconds(2f);
+        LoadingUI.SetActive(false);
 
+    }
 
 
 
