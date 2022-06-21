@@ -94,7 +94,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         
 
         //모든 룸 참가자가 Main 씬을 로드하게 함
-        PhotonNetwork.LoadLevel("Play_SANGIN2 1");
+        PhotonNetwork.LoadLevel("Play_SANGIN2");
         CharacterSel.characterSel.LobbyUi.SetActive(false);
         Character.SetActive(false);
        
