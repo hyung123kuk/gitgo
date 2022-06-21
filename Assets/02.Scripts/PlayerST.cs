@@ -129,29 +129,20 @@ public class PlayerST : MonoBehaviourPunCallbacks
 
     public Weapons weapons;
 
-
-
     private void Awake()
     {
         if (!photonView.IsMine)
             this.enabled = false;
+
     }
 
     void Start()
     {
-
-        //photonView.RPC("synchronization", RpcTarget.AllBuffered);
-        bgm = GameObject.Find("Sounds").transform.GetChild(3).GetComponent<BGM>();
-        playerstat = GetComponent<PlayerStat>();
-        bowPower = bowMinPower;
-        _transform = GetComponent<Transform>();
-        anim = GetComponentInChildren<Animator>();
-        rigid = GetComponent<Rigidbody>();
-        questStore = FindObjectOfType<QuestStore>();
-        playerST = this;
-        dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
-        weapons = FindObjectOfType<Weapons>();
+        synchronization();
+        photonView.RPC("synchronization", RpcTarget.Others);
     }
+
+    
 
 
     void Anima() //애니메이션 
@@ -347,8 +338,19 @@ public class PlayerST : MonoBehaviourPunCallbacks
     }
 
     [PunRPC]
-    void synchronization() //변수할당 동기화
+    public void synchronization() //변수할당 동기화
     {
+        bgm = GameObject.Find("Sounds").transform.GetChild(3).GetComponent<BGM>();
+        playerstat = GetComponent<PlayerStat>();
+        bowPower = bowMinPower;
+        _transform = GetComponent<Transform>();
+        anim = GetComponentInChildren<Animator>();
+        rigid = GetComponent<Rigidbody>();
+        questStore = FindObjectOfType<QuestStore>();
+        playerST = this;
+        dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
+        weapons = FindObjectOfType<Weapons>();
+        rigid = GetComponent<Rigidbody>();
         HorseSpawn = FindObjectOfType<Horse>().gameObject;
         Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
         ImWar = CharacterType == Type.Warrior;
@@ -471,29 +473,32 @@ public class PlayerST : MonoBehaviourPunCallbacks
         if (!isStun && !isJump && !isBlock && !isBackStep && !weapons.isEnergyReady && !isRush && !isAura && !isFlash &&
            !weapons.isLightning && !weapons.isIceage && !weapons.isMeteo && attackdamage.Usable_Dodge)
         {
-            FootSound.footSound.audioSource.Stop();
-            if (CharacterType == Type.Archer)
-                SoundManager.soundManager.ArcherJump();
-
-            if (CharacterType == Type.Warrior)
-                SoundManager.soundManager.WarriorAttackVoice();
-
-            if (CharacterType == Type.Mage)
-                SoundManager.soundManager.MageJump();
-
-            isCooldodge = false;
-            attackdamage.Usable_Dodge = false;
-            dodgeVec = moveVec;
-            speed *= 2;
-            anim.SetTrigger("doDodge");
-            isDodge = true;
-            isDamage = true;
-
-            Invoke("DodgeOut", 0.4f); //구르기를 하면 0.4초후에 이동속도가 정상으로돌아옴
-
-
-
+            DodgePlay();
+            photonView.RPC("DodgePlay", RpcTarget.Others);
         }
+    }
+    [PunRPC]
+    void DodgePlay()
+    {
+        FootSound.footSound.audioSource.Stop();
+        if (CharacterType == Type.Archer)
+            SoundManager.soundManager.ArcherJump();
+
+        if (CharacterType == Type.Warrior)
+            SoundManager.soundManager.WarriorAttackVoice();
+
+        if (CharacterType == Type.Mage)
+            SoundManager.soundManager.MageJump();
+
+        isCooldodge = false;
+        attackdamage.Usable_Dodge = false;
+        dodgeVec = moveVec;
+        speed *= 2;
+        anim.SetTrigger("doDodge");
+        isDodge = true;
+        isDamage = true;
+
+        Invoke("DodgeOut", 0.4f); //구르기를 하면 0.4초후에 이동속도가 정상으로돌아옴
     }
 
     void DodgeOut()
@@ -512,14 +517,17 @@ public class PlayerST : MonoBehaviourPunCallbacks
     //==================================여기서부터 전사스킬=======================================
     public void Block() //방패 치기
     {
-
+        if (!photonView.IsMine)
+            return;
 
         if (!isRush && !isAura && !isJump && !isDodge && !isStun && !isRun &&
              attackdamage.Usable_Skill1)
         {
             StartCoroutine(BlockPlay());
+            photonView.RPC("BlockPlay",RpcTarget.Others);
         }
     }
+    [PunRPC]
     IEnumerator BlockPlay()
     {
         isCool1 = false;
@@ -546,23 +554,43 @@ public class PlayerST : MonoBehaviourPunCallbacks
     }
     public void Buff()
     {
+        if (!photonView.IsMine)
+            return;
         if (!isRush && !isAura && !isJump && !isDodge && !isBlock && !isStun && !isRun &&
             attackdamage.Usable_Buff)
         {
-            SoundManager.soundManager.WarriorBuffSound();
-            attackdamage.Skill_Buff_Cool();
-            BuffEff.SetActive(true);
+            BuffPlay();
+            photonView.RPC("BuffPlay", RpcTarget.Others);
+        }
+    }
+    [PunRPC]
+    void BuffPlay()
+    {
+        SoundManager.soundManager.WarriorBuffSound();
+        attackdamage.Skill_Buff_Cool();
+        BuffEff.SetActive(true);
+        if (attackdamage.Duration_Buff)
+        {
+            weapons.rate = 0.45f;
+        }
+        else if (!attackdamage.Duration_Buff)
+        {
+            BuffEff.SetActive(false);
+            weapons.rate = 0.6f;
         }
     }
     public void Rush()
     {
+        if (!photonView.IsMine)
+            return;
         if (!isYes && !isJump && !isDodge && !isBlock && !isAura && !isStun && !isRun &&
             attackdamage.Usable_Skill2)
         {
-
             StartCoroutine(RushPlay());
+            photonView.RPC("RushPlay", RpcTarget.Others);
         }
     }
+    [PunRPC]
     IEnumerator RushPlay()
     {
         ArrowSkill.arrowSkill.NoDestroy = true;
@@ -600,13 +628,16 @@ public class PlayerST : MonoBehaviourPunCallbacks
     }
     public void Aura()
     {
+        if (!photonView.IsMine)
+            return;
         if (!isRun && !isJump && !isDodge && !isBlock && !isRush && !isStun &&
             attackdamage.Usable_Skill3)
         {
-
             StartCoroutine(AuraPlay());
+            photonView.RPC("AuraPlay", RpcTarget.Others);
         }
     }
+    [PunRPC]
     IEnumerator AuraPlay()
     {
         isCool3 = false;
@@ -734,8 +765,6 @@ public class PlayerST : MonoBehaviourPunCallbacks
         Key2 = Input.GetButtonDown("Key2"); //2번키
         Key3 = Input.GetButtonDown("Key3"); //3번키
     }
-
-    //룸을 나갈때 자동 실행되는 메서드
     public override void OnLeftRoom()
     {
 
@@ -759,6 +788,8 @@ public class PlayerST : MonoBehaviourPunCallbacks
     {
         if (!photonView.IsMine)
             return;
+
+      
 
 
         if (Input.GetKeyDown(KeyCode.H) && !HorseMode) //말 아이템이 없어서 이걸로 테스트했어요

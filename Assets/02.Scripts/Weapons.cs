@@ -111,15 +111,7 @@ public class Weapons : MonoBehaviourPun
 
         }*/
 
-        if (attackdamage.Duration_Buff && playerST.ImWar)
-        {
-            rate = 0.45f;
-        }
-        else if (!attackdamage.Duration_Buff && playerST.ImWar)
-        {
-            playerST.BuffEff.SetActive(false);
-            rate = 0.6f;
-        }
+        
     }
     private void FixedUpdate()
     {

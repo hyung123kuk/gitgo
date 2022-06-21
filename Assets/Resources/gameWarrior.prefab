@@ -20625,7 +20625,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c6d43ad297823c745862c0efde9f110c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  endswitch: 0
   CharacterType: 0
   rigid: {fileID: 0}
   jump: 30
@@ -20672,8 +20671,6 @@ MonoBehaviour:
   dieui: {fileID: 0}
   bgm: {fileID: 0}
   horsecount: 0
-  Players: []
-  idx: 0
   isFall: 0
   isDodge: 0
   isBuff: 0
@@ -20794,7 +20791,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248ef865d6187004c99e5f554f02f553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Level: 1
+  Level: 10
   TotalExp: 0
   NowExp: 0
   MONEY: 0
@@ -20951,19 +20948,19 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: forword
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: back
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: left
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: right
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isRun
   - Type: 9
     SynchronizeType: 0
@@ -20972,49 +20969,49 @@ MonoBehaviour:
     SynchronizeType: 0
     Name: doDodge
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isJump
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isAttack
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isAttack2
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isAttack3
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isStun
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isBlock
   - Type: 1
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Attack1Speed
   - Type: 1
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Attack2Speed
   - Type: 1
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: Attack3Speed
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isRush
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isAura
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isHorse
   - Type: 1
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: SpeedX
   - Type: 1
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: SpeedY
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isDie
   m_SynchronizeLayers:
   - SynchronizeType: 2
