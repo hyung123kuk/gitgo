@@ -42,7 +42,7 @@ public class PlayerStat : MonoBehaviourPun //포톤으로 만들려고함.
     [SerializeField]
     StatWindow statWindow;
     public Slot[] equSlots;
-
+    public SaveManager saveManager;
 
 
     public PlayerStat playerstat;
@@ -65,28 +65,51 @@ public class PlayerStat : MonoBehaviourPun //포톤으로 만들려고함.
         statWindow = FindObjectOfType<StatWindow>();
         equSlots = GameObject.FindGameObjectWithTag("EqueSlot").GetComponentsInChildren<Slot>(); //여기서 오류가 뜬다면 인벤토리디자인을 킨 상태로 시작해주세요.
 
+        
         Invoke("StartSet", 0.1f);
 
 
 
     }
-    
+
 
     public void StartSet()
     {
 
-             StatAllUpdate();
+        StatAllUpdate();
 
-            _Hp = _MAXHP;
-            _Mp = _MAXMP;
-             gameUI.LevelSet();
-            TotalExp = LevelExp();
-            StatAllUpdate();
-            gameUI.ExpSet();
-            statWindow.SetLevel();
-            statWindow.SetStat();
-            gameUI.bar_set();
-        
+        _Hp = _MAXHP;
+        _Mp = _MAXMP;
+        gameUI.LevelSet();
+        TotalExp = LevelExp();
+        StatAllUpdate();
+        gameUI.ExpSet();
+        statWindow.SetLevel();
+        statWindow.SetStat();
+        gameUI.bar_set();
+
+        Load(); //로드 데이터가 있다면 다시 로드합니다.
+    }
+
+
+    void Load()
+    {
+        saveManager = FindObjectOfType<SaveManager>();
+
+        saveManager.SaveOn = true;
+        saveManager.LoadCharacter();
+    }
+
+    public void startLoad()
+    {
+        gameUI.LevelSet();
+        TotalExp = LevelExp();
+        StatAllUpdate();
+        gameUI.ExpSet();
+        statWindow.SetLevel();
+        statWindow.SetStat();
+        gameUI.bar_set();
+
     }
 
 

@@ -4,6 +4,7 @@ using UnityEngine;
 using Newtonsoft.Json;
 using System.IO;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
 [System.Serializable]
 public class CharacterSelData
@@ -89,12 +90,17 @@ public class SaveManager : MonoBehaviour
     private string ch2_SAVE_FILENAME = "/Character2SaveFile.txt";
     #endregion
 
-
+    [SerializeField]
     inventory inven;
+    [SerializeField]
     QuickSlots QuikSlots;
+    [SerializeField]
     QuestWindow questWindow;
+    [SerializeField]
     QuestExplain questExplain;
+    [SerializeField]
     QuestStore questStore;
+    [SerializeField]
     QuestNormal questNormal;
 
     private void Awake()
@@ -114,20 +120,24 @@ public class SaveManager : MonoBehaviour
         if (!Directory.Exists(SAVE_DATA_DIRECTORY))
         {
             Directory.CreateDirectory(SAVE_DATA_DIRECTORY);
+ 
         }
-
-        CharacterSelLoad();
-
-        if (SaveOn)
+        if (!SaveOn)// 캐릭터 선택창이라면
         {
-            StartCoroutine(SaveStart());
+            CharacterSelLoad();
         }
+        
+        
+            StartCoroutine(SaveStart());
+        
     }
 
 
     IEnumerator SaveStart()
     {
+       
         yield return new WaitForSeconds(1.0f);
+        if (!SaveOn) { yield break; }
         while (true)
         {
             PositionSave();
@@ -135,6 +145,7 @@ public class SaveManager : MonoBehaviour
 
             if (CharacterNum == 0)
             {
+                
                 File.WriteAllText(SAVE_DATA_DIRECTORY + ch1_SAVE_FILENAME, json);
             }
             else if (CharacterNum == 1)
@@ -148,7 +159,12 @@ public class SaveManager : MonoBehaviour
 
     public void PositionSave()
     {
-        playerStat = FindObjectOfType<PlayerStat>();
+        PlayerStat[] playerstats = FindObjectsOfType<PlayerStat>();
+        foreach (PlayerStat playerstat in playerstats)
+        {
+            if (playerstat.GetComponent<PhotonView>().IsMine)
+                playerStat = playerstat;
+        }
         data[CharacterNum].Hp = playerStat._Hp;
         data[CharacterNum].Mp = playerStat._Mp;
         data[CharacterNum].Position = playerStat.gameObject.transform.position;
@@ -295,6 +311,7 @@ public class SaveManager : MonoBehaviour
             if(File.Exists(SAVE_DATA_DIRECTORY+ ch1_SAVE_FILENAME))
             {
                 string loadJson = File.ReadAllText(SAVE_DATA_DIRECTORY + ch1_SAVE_FILENAME);
+                
                 LoadCh(loadJson);
                 
             }
@@ -304,6 +321,7 @@ public class SaveManager : MonoBehaviour
             if(File.Exists(SAVE_DATA_DIRECTORY + ch2_SAVE_FILENAME))
             {
                 string loadJson = File.ReadAllText(SAVE_DATA_DIRECTORY + ch2_SAVE_FILENAME);
+               
                 LoadCh(loadJson);
             }
         }
@@ -315,7 +333,14 @@ public class SaveManager : MonoBehaviour
     private void LoadCh(string _loadJson)
     {
         data[CharacterNum] = JsonUtility.FromJson<Data>(_loadJson);
-        playerStat = FindObjectOfType<PlayerStat>();
+
+        PlayerStat[] playerstats = FindObjectsOfType<PlayerStat>();
+        foreach (PlayerStat playerstat in playerstats)
+        {
+            if (playerstat.GetComponent<PhotonView>().IsMine)
+                playerStat = playerstat;
+        }
+
         inven = FindObjectOfType<inventory>();
         QuikSlots = FindObjectOfType<QuickSlots>();
         questWindow = FindObjectOfType<QuestWindow>();
@@ -325,11 +350,12 @@ public class SaveManager : MonoBehaviour
 
         playerStat.gameObject.transform.position = data[CharacterNum].Position;
         playerStat._Hp= data[CharacterNum].Hp;
+  
         playerStat._Mp = data[CharacterNum].Mp;
         playerStat.Level = data[CharacterNum].Level;
         playerStat.NowExp = data[CharacterNum].Exp;
         playerStat.MONEY = data[CharacterNum].Gold;
-        playerStat.StartSet();
+        playerStat.startLoad();
 
         for(int i=0;i<data[CharacterNum].invenItemName.Count; i++)
         {
