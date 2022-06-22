@@ -39,6 +39,8 @@ public class CharacterSel : MonoBehaviourPunCallbacks
 
     private SaveManager saveManager;
 
+    public AudioListener audioListener;
+
 
     int widx = 0; //전사 대사소리
     int aidx = 0; //궁수 대사소리
@@ -56,6 +58,7 @@ public class CharacterSel : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        audioListener = GetComponent<AudioListener>();
         saveManager = FindObjectOfType<SaveManager>();
         LobbyUi = GameObject.Find("Canvas_Lobby").transform.GetChild(0).gameObject;
         if (CharacterSel.characterSel == null)
@@ -96,6 +99,7 @@ public class CharacterSel : MonoBehaviourPunCallbacks
         {
             DontDestroyOnLoad(gameObject);
             transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+            audioListener.enabled = true;
             LobbyUi.SetActive(true);
             // StartCoroutine(LoadCoroutine());
             //SceneManager.LoadScene(1);
@@ -155,6 +159,7 @@ public class CharacterSel : MonoBehaviourPunCallbacks
         {
             DontDestroyOnLoad(gameObject);
             transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+            audioListener.enabled = true;
             LobbyUi.SetActive(true);
             //StartCoroutine(LoadCoroutine2());
             //SceneManager.LoadScene(1);

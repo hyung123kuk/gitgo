@@ -788,8 +788,11 @@ public class PlayerST : MonoBehaviourPunCallbacks
             anim.SetBool("back", false);
             anim.SetBool("left", false);
             anim.SetBool("right", false);
-            anim.SetFloat("SpeedX", 0f);
-            anim.SetFloat("SpeedY", 0f);
+            if (CharacterType == Type.Warrior)
+            {
+                anim.SetFloat("SpeedX", 0f);
+                anim.SetFloat("SpeedY", 0f);
+            }
 
         }
 
