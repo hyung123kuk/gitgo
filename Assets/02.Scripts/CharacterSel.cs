@@ -367,7 +367,7 @@ public class CharacterSel : MonoBehaviour
                 char1[1].SetActive(false);
                 char1[2].SetActive(true);
             }
-            //saveManager.CharacterSelSave1();
+            saveManager.CharacterSelSave1();
 
         }
         if (charSel == 2)
@@ -392,7 +392,7 @@ public class CharacterSel : MonoBehaviour
                 char2[1].SetActive(false);
                 char2[2].SetActive(true);
             }
-            //saveManager.CharacterSelSave2();
+            saveManager.CharacterSelSave2();
         }
        
     }
