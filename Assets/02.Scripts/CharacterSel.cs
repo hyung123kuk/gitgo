@@ -3,11 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
-public class CharacterSel : MonoBehaviour
+public class CharacterSel : MonoBehaviourPunCallbacks
 {
     public static CharacterSel characterSel;
-    [SerializeField]
+
     public GameObject LobbyUi; 
 
 
@@ -56,7 +57,7 @@ public class CharacterSel : MonoBehaviour
     private void Awake()
     {
         saveManager = FindObjectOfType<SaveManager>();
-        LobbyUi = transform.GetChild(1).gameObject;
+        LobbyUi = GameObject.Find("Canvas_Lobby").transform.GetChild(0).gameObject;
         if (CharacterSel.characterSel == null)
         {
             characterSel = this;
@@ -397,6 +398,16 @@ public class CharacterSel : MonoBehaviour
        
     }
 
+    public override void OnLeftRoom()
+    {
 
-   
+        Debug.Log("서버나감");
+        transform.GetChild(0).gameObject.SetActive(true);
+        transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
+        // 룸을 나가면 로비 씬으로 돌아감
+        SceneManager.LoadScene("ChSel_sangin");
+    }
+
+
+
 }

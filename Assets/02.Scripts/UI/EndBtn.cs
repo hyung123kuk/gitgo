@@ -17,10 +17,4 @@ public class EndBtn : MonoBehaviourPun
         playerst = FindObjectOfType<PlayerST>();
     }
 
-
-
-    public void Yesbtn()
-    {
-        playerst.EndStart();
-    }
 }

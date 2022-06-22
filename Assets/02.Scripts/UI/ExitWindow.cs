@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using Photon.Pun;
 
-public class ExitWindow : MonoBehaviour
+public class ExitWindow : MonoBehaviourPun
 {
     [SerializeField]
     public static ExitWindow ExWindow;
@@ -61,9 +62,16 @@ public class ExitWindow : MonoBehaviour
     public void SelCharacterMenu()
     {
         AllUI.allUI.AllWindowEnd();
-        characterSel.GameEnd();
+        Leave();
 
         SceneManager.LoadScene(0);
+
+    }
+
+    public void Leave()
+    {
+        Debug.Log("Á¾·á³¡");
+        PhotonNetwork.LeaveRoom();
     }
 
     public void ExitGame()

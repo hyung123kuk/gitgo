@@ -34,7 +34,6 @@ public class GameManager : MonoBehaviourPunCallbacks
                 //GameObject MonsterManager = PhotonNetwork.Instantiate("MonsterManager", new Vector3(55.5f,-4.0f,-21f), Quaternion.identity);
                 GameObject Horseee = PhotonNetwork.Instantiate("Horse", GameManager.gameManager.HorsePoint.position, Quaternion.identity);
                 Horseee.transform.SetParent(character.transform, false);
-                character.GetComponent<PlayerST>().photonView.RPC("synchronization", RpcTarget.AllBuffered);
 
 
 
@@ -80,11 +79,8 @@ public class GameManager : MonoBehaviourPunCallbacks
 
     }
 
-    void Update()
-    {
-
-    }
-
     
+
+
 
 }

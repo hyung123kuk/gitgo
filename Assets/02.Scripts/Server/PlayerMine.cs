@@ -24,6 +24,7 @@ public class PlayerMine : MonoBehaviourPun
     {
         if (!photonView.IsMine)
             return;
+
         GameObject[] HorseCheck = GameObject.FindGameObjectsWithTag("Horse"); //플레이어의 말 찾기.
         GameObject[] PlayerCheck = GameObject.FindGameObjectsWithTag("Player"); //플레이어 찾기.
         Horse = HorseCheck[0];
@@ -57,7 +58,7 @@ public class PlayerMine : MonoBehaviourPun
 
     private void Update()
     {
-       photonView.RPC("Playerfind", RpcTarget.AllBuffered);
+        Playerfind();
     }
 
     

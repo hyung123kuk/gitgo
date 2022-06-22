@@ -765,25 +765,8 @@ public class PlayerST : MonoBehaviourPunCallbacks
         Key2 = Input.GetButtonDown("Key2"); //2번키
         Key3 = Input.GetButtonDown("Key3"); //3번키
     }
-    public override void OnLeftRoom()
-    {
-
-        Debug.Log("서버나감");
-
-        // 룸을 나가면 로비 씬으로 돌아감
-        SceneManager.LoadScene("ChSel_sangin");
-    }
-    public void EndStart()
-    {
-        Debug.Log("종료시작");
-        Invoke("Leave", 1f);
-        
-    }
-    public void Leave()
-    {
-        Debug.Log("종료끝");
-        PhotonNetwork.LeaveRoom();
-    }
+    
+    
     private void Update()
     {
         if (!photonView.IsMine)
