@@ -7,7 +7,7 @@ using Photon.Pun;
 public class NET_Trade : MonoBehaviourPun
 {
     [SerializeField]
-    GameObject NetTrade_Design;
+    public GameObject NetTrade_Design;
     [SerializeField]
     AllUI allUI;
     [SerializeField]
@@ -67,6 +67,10 @@ public class NET_Trade : MonoBehaviourPun
     {
         isNET_Trade_Window = true;
         NetTrade_Design.SetActive(true);
+        if (FindObjectOfType<inventory>().Inven.activeSelf == false)
+        {
+            FindObjectOfType<inventory>().invenOn();
+        }
         tradeRecieve.Cancle();
         
         
@@ -231,6 +235,7 @@ public class NET_Trade : MonoBehaviourPun
 
     public void FailTrade() //내 아이템이 내 인벤토리에 들어오게만 하면된다.
     {
+        Debug.Log(0);
         for (int i = 0; i < Net_My_Slot.Length; i++)
         {
             if (Net_My_Slot[i].item != null)
@@ -245,6 +250,7 @@ public class NET_Trade : MonoBehaviourPun
 
     public void TradeReset()
     {
+        Debug.Log(1);
         for (int i = 0; i < Net_My_Slot.Length; i++) {
             Net_My_Slot[i].ClearSlot();
         }
@@ -253,18 +259,20 @@ public class NET_Trade : MonoBehaviourPun
             Net_Your_Slot[i].ClearSlot();
         }
 
-        isNET_Trade_Window = false;
+
         NET_UIPlayer.TradeOn = false;
         net_UIPlayer.photonView.RPC("TradeOffSet", RpcTarget.Others);
         net_UIPlayer.TradeComplete = false;
         net_UIPlayer.YourTradeComlete = false;
+        net_UIPlayer.TradeResetCheck();
         Your_button.sprite = Image_NonComplete;
         Your_TradeItemsWindow.color = Color.white;
         net_UIPlayer.TradeComplete = false;
         My_button.sprite = Image_NonComplete;
         My_TradeItemsWindow.color = Color.white;
-        allUI.CheckCursorLock();
-       
+        
+        Cancle();
+        
     }
 
 }
