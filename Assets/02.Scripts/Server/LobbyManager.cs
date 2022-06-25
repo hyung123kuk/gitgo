@@ -13,9 +13,6 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     public Button joinButton; // 룸 접속 버튼
     private SaveManager saveManager;
     private GameObject Character; //셀매니저 첫번째 자식 끄기
-
-    public CharacterSel CharSel;
-
     // 게임 실행과 동시에 마스터 서버 접속 시도
     private void Awake()
     {
