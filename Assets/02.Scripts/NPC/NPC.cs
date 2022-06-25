@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class NPC : MonoBehaviour
 {
@@ -37,9 +38,12 @@ public class NPC : MonoBehaviour
         
         if (other.tag == "Player")
         {
-            isNPCRange = true;
-            
-            NPCtext();
+            if (other.GetComponent<PhotonView>().IsMine)
+            {
+                isNPCRange = true;
+
+                NPCtext();
+            }
                 
         }
         if(other.tag == "Arrow")
@@ -53,10 +57,14 @@ public class NPC : MonoBehaviour
         
         if (other.tag == "Player")
         {
-            isNPCRange = false;
-            NPCRangeText.enabled = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            allUI.MouseCursor.transform_cursor.gameObject.SetActive(false);
+            if (other.GetComponent<PhotonView>().IsMine)
+            {
+
+                isNPCRange = false;
+               NPCRangeText.enabled = false;
+                Cursor.lockState = CursorLockMode.Locked;
+              allUI.MouseCursor.transform_cursor.gameObject.SetActive(false);
+            }
         }
     }
 

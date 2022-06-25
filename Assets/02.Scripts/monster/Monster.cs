@@ -310,6 +310,7 @@ public class Monster : MonoBehaviourPun
         hpBarPrefab = Resources.Load<GameObject>("Enemy_HpBar");
         uiCanvas = GameObject.Find("EnemyHp_Bar_UI").GetComponent<Canvas>();
         GameObject hpBar = Instantiate<GameObject>(hpBarPrefab, uiCanvas.transform);
+
         hpBarFlame = hpBar.GetComponentsInChildren<Image>()[0];
         backHpBarImage = hpBar.GetComponentsInChildren<Image>()[1];
         hpBarImage = hpBar.GetComponentsInChildren<Image>()[2];
