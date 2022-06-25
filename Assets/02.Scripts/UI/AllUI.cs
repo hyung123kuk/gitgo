@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
 public class AllUI : MonoBehaviour
 {
@@ -25,6 +26,8 @@ public class AllUI : MonoBehaviour
     private Canvas QusetExplainWindow;
     [SerializeField]
     private Canvas questWindow;
+    [SerializeField]
+    private NET_UIPlayer net_UiPlayer;
 
 
     [SerializeField]
@@ -32,6 +35,8 @@ public class AllUI : MonoBehaviour
     [SerializeField]
     public static bool isUI = false;
     public static AllUI allUI;
+
+    public static bool ctrlDown=false; // 버튼 클릭시 상대캐릭터 누를수 있다.
 
     private void Awake()
     {
@@ -49,6 +54,8 @@ public class AllUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
+
 
 
         if (Input.GetKeyDown(KeyCode.Escape))
@@ -60,6 +67,23 @@ public class AllUI : MonoBehaviour
 
                 if (UIWIndow.Length - 1 == i)
                 {
+                    if (NET_UIPlayer.isMenu)
+                    {
+                        NET_UIPlayer[] instans = GameObject.FindObjectsOfType<NET_UIPlayer>();
+                        foreach (NET_UIPlayer uiplayer in instans) {
+                            if (uiplayer.GetComponent<PhotonView>().IsMine)
+                            {
+                                net_UiPlayer = uiplayer;
+                                break;
+                            }
+                        }
+                        net_UiPlayer.DestroyMenu();
+                        NET_UIPlayer.isMenu = false;
+                        break;
+                    }
+
+
+
                     ExitWindow.ExWindow.ExitWindowOn();
                     CheckCursorLock();
                     return;
@@ -163,7 +187,16 @@ public class AllUI : MonoBehaviour
 
             }
         }
-
+        if (Input.GetKey(KeyCode.LeftControl)) //Ctrl 누르면 마우스 커서 나온다. 상대방 클릭가능
+        {
+            ctrlDown = true;
+            CheckCursorLock();
+        }
+        else if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            ctrlDown = false;
+            CheckCursorLock();
+        }
 
     }
 
@@ -180,13 +213,19 @@ public class AllUI : MonoBehaviour
         QuestExplain.isQuestExplain = false;
         QuestWindow.isQuestWindow = false;
         ExitWindow.isExitMenu = false;
+        NET_UIPlayer.isMenu = false;
         
+        NET_TradeRecieve.isNET_Trade_ReicieveWindow = false;
+        NET_Trade.isNET_Trade_Window = false;
+
+        FindObjectOfType<NET_Trade>().FailTrade();
+
     }
 
     public void CheckCursorLock()
     {
 
-        if (!inventory.iDown&& !SkillWindow.kDown && !StatWindow.tDown && !QuestExplain.isQuestExplain &&!QuestWindow.isQuestWindow&& !ExitWindow.isExitMenu)
+        if (!inventory.iDown&& !SkillWindow.kDown && !StatWindow.tDown && !QuestExplain.isQuestExplain &&!QuestWindow.isQuestWindow&& !ExitWindow.isExitMenu && !ctrlDown &&!NET_UIPlayer.isMenu && !NET_TradeRecieve.isNET_Trade_ReicieveWindow && !NET_Trade.isNET_Trade_Window)
         {
             isUI = false;
             Cursor.lockState = CursorLockMode.Locked;

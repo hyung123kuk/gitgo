@@ -28,11 +28,14 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     private PlayerStat playerStat;
     public itemSellQuestion item_sell_question;
     public GameObject itemSellScope;
+    [SerializeField]
+    public NET_Trade net_trade;
+    public int TradeSlotNum;
 
     private void Awake()
     {
         gameUI = FindObjectOfType<GameUI>();
-        
+        net_trade = FindObjectOfType<NET_Trade>();
         allUI = FindObjectOfType<AllUI>();
         inven = FindObjectOfType<inventory>();
        
@@ -192,9 +195,14 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     public void OnPointerClick(PointerEventData eventData) //우클릭 장착
     {
 
-        if (item != null && eventData.button == PointerEventData.InputButton.Left && itemStore.sellButton)
+        if (item != null && eventData.button == PointerEventData.InputButton.Left && itemStore.sellButton) //아이템 판매 버튼을 클릭했을경우 빠르게 판매 하도록
         {
             item_sell_question.SellQuestionOn(GetComponent<Slot>());
+            return;
+        }
+
+        if(item!= null && gameObject.layer == LayerMask.NameToLayer("TRADESLOT")) //트레이드 슬롯에서 아이템을 사용하는것을 막는다.
+        {
             return;
         }
 
@@ -521,7 +529,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
     public void OnDrop(PointerEventData eventData)
     {
         
-        if (DragSlot.instance.dragSlot == null)
+        if (DragSlot.instance.dragSlot == null) 
             return;
         if (DragSlot.instance.dragSlot.gameObject == gameObject) //물약 마구드래그시 사라지는거 막기
             return;
@@ -535,6 +543,9 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
         else if (gameObject.layer == LayerMask.NameToLayer("quikSlot") && DragSlot.instance.dragSlot.item.itemType == Item.ItemType.Equipment) { }
         //퀵슬릇에서 인벤창으로 옮길때 장비  넣기 막기
         else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot") && item != null && item.itemType == Item.ItemType.Equipment) { }
+
+ 
+
 
         //장비 착용
         else if (DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("equip") && gameObject.layer == LayerMask.NameToLayer("equip")) { Debug.Log("장비창->장비창"); } // 장비창-> 장비창으로 옮기는거 막기
@@ -561,11 +572,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
                 playerSt.WeaponChange(playerSt.basicSword);
                 ChangeSlot();
             }
-            else
-            {
-                
-                ChangeSlot();
-            }
+
         }
         else if (gameObject.tag == "weaponslot" && DragSlot.instance.dragSlot.item.itemEquLevel <= playerStat.Level) // 일반슬롯 무기 -> 무기창으로 옮길때
         {
@@ -758,16 +765,19 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
                 ChangeSlot();
             }
         }
-        else if (DragSlot.instance.dragSlot != null && DragSlot.instance.dragSlot.gameObject.layer != LayerMask.NameToLayer("equip") && gameObject.layer != LayerMask.NameToLayer("equip")) //서로 장비가 아니면 교체
+        else if (DragSlot.instance.dragSlot != null && DragSlot.instance.dragSlot.gameObject.layer != LayerMask.NameToLayer("equip") && gameObject.layer != LayerMask.NameToLayer("equip")) //서로 장비슬롯이 아니면 교체
         {
-            
-            if (DragSlot.instance.dragSlot.item != null && item != null && DragSlot.instance.dragSlot.item.itemType == Item.ItemType.Used && DragSlot.instance.dragSlot.item.itemName == item.itemName)
+           
+
+            if (DragSlot.instance.dragSlot.item != null && item != null && DragSlot.instance.dragSlot.item.itemType == Item.ItemType.Used && DragSlot.instance.dragSlot.item.itemName == item.itemName) // 드래그한 두개의 사용 아이템이 같을때 합쳐진다.
             {
 
                     SetSlotCount(DragSlot.instance.dragSlot.itemCount);
                     DragSlot.instance.dragSlot.SetSlotCount(DragSlot.instance.dragSlot.itemCount * -1);
 
             }
+            
+            
 
             else if (gameObject.GetComponent<QuikSlot>() != null && gameObject.GetComponent<QuikSlot>().skill.skill != null) //퀵 슬롯으로 옮길때 안에 스킬이 있으면
             {
@@ -808,6 +818,13 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
 
         if (gameObject.layer == LayerMask.NameToLayer("quikSlot"))
             gameObject.GetComponent<QuikSlot>().skill.skillToolTip.ToolTipOff();
+
+        if (gameObject.layer == LayerMask.NameToLayer("TRADESLOT") || DragSlot.instance.dragSlot.gameObject.layer == LayerMask.NameToLayer("TRADESLOT")) //거래창 슬롯이었을때 상대 거래창 초기화
+        {
+            
+            net_trade.RaiseIteam();
+        }
+
         tooltip.ToolTipOff();
         playerStat.StatAllUpdate();
         gameUI.bar_set();
@@ -822,6 +839,7 @@ public class Slot : MonoBehaviour,IPointerEnterHandler,IPointerExitHandler, IPoi
 
 
         item_sell_question.itemSellScope.SetActive(false);
+        
 
     }
 

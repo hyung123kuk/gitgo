@@ -91,6 +91,16 @@ MonoBehaviour:
   - JumpPlay
   - MAttack
   - WAttack
+  - TradeTarget
+  - TradeNumberSet
+  - TradeRecieveSet
+  - TradeOnSet
+  - TradeOffSet
+  - TradeItem
+  - TradeItemTarget
+  - CompleteSet
+  - CheckSlot
+  - TradeReset
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

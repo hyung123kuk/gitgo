@@ -18,6 +18,7 @@ public class ExitWindow : MonoBehaviourPun
     GameObject soundMenu;
     [SerializeField]
     CharacterSel characterSel;
+
     public static bool isExitMenu = false;
 
     private void Awake()
