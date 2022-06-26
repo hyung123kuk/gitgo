@@ -66,8 +66,11 @@ public class ExitWindow : MonoBehaviourPun
         Leave();
 
         SceneManager.LoadScene(0);
+        
 
     }
+
+
 
     public void Leave()
     {

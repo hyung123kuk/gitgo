@@ -45,7 +45,7 @@ public class SkillWindow : MonoBehaviour , IPointerClickHandler
     private void Start()
     {
         
-        PlayerST[] playerSts = GameObject.FindObjectsOfType<PlayerST>();
+        PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
 
 
         foreach (PlayerST myplayerSt in playerSts)

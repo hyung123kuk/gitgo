@@ -13,6 +13,12 @@ public class MouseCursor : MonoBehaviour
 
     public float CursorX = 0.3f; 
     public float CursorY;
+
+    private void OnEnable()
+    {
+        Cursor.lockState = CursorLockMode.Confined;
+    }
+
     private void Start()
     {
         
@@ -23,8 +29,8 @@ public class MouseCursor : MonoBehaviour
        
         Update_MousePosition();
         Init_Cursor();
+        
 
-      
     }
 
     
@@ -73,5 +79,7 @@ public class MouseCursor : MonoBehaviour
     {
         transform_cursor.gameObject.GetComponent<Image>().sprite = CursorNormal;
     }
+
+
 
 }

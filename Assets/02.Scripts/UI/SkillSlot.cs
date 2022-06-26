@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Photon.Pun;
 
 public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler , IPointerEnterHandler , IPointerExitHandler
 {
@@ -41,8 +42,33 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     void Start()
     {
-        playerStat = FindObjectOfType<PlayerStat>();
-        playerST = FindObjectOfType<PlayerST>();
+
+        PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
+
+
+        foreach (PlayerST myplayerSt in playerSts)
+        {
+            if (myplayerSt.GetComponent<PhotonView>().IsMine)
+            {
+                playerST = myplayerSt;
+                break;
+            }
+        }
+
+
+        PlayerStat[] playerStats = GameObject.FindObjectsOfType<PlayerStat>();
+
+
+        foreach (PlayerStat myplayerStat in playerStats)
+        {
+            if (myplayerStat.GetComponent<PhotonView>().IsMine)
+            {
+                playerStat = myplayerStat;
+                break;
+            }
+        }
+        
+        
         SkillSet();
         SetSkillColor();
 
