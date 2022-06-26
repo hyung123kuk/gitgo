@@ -218,8 +218,10 @@ public class AllUI : MonoBehaviour
         NET_TradeRecieve.isNET_Trade_ReicieveWindow = false;
         NET_Trade.isNET_Trade_Window = false;
 
-        FindObjectOfType<NET_Trade>().FailTrade();
-
+        if (NET_UIPlayer.TradeOn)
+        {
+            FindObjectOfType<NET_Trade>().FailTrade();
+        }
     }
 
     public void CheckCursorLock()
