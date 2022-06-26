@@ -20526,6 +20526,7 @@ GameObject:
   - component: {fileID: 2730395410406329858}
   - component: {fileID: 2730395410406328865}
   - component: {fileID: 2730395410406328862}
+  - component: {fileID: 3967801595329062906}
   - component: {fileID: 2730395410406328863}
   m_Layer: 8
   m_Name: gameWarrior
@@ -21017,6 +21018,26 @@ MonoBehaviour:
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
+--- !u!114 &3967801595329062906
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730395410406331899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c522d01b6ecfcda4eb57ddbed60c8c22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allUI: {fileID: 0}
+  Camera: {fileID: 0}
+  menuPrefabs: {fileID: 0}
+  TradeComplete: 0
+  YourTradeComlete: 0
+  menu: {fileID: 0}
+  Target: {fileID: 0}
+  TradeNum: 0
 --- !u!114 &2730395410406328863
 MonoBehaviour:
   m_ObjectHideFlags: 0

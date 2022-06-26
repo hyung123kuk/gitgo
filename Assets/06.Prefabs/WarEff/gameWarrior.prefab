@@ -1331,7 +1331,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &983857749832199475
 Transform:
   m_ObjectHideFlags: 0
@@ -1423,12 +1423,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterType: 0
+  rigid: {fileID: 0}
   jump: 30
   speed: 6
   cam: {fileID: 8994103200399450896}
   SelectPlayer: {fileID: 8994103199504108908}
   anim: {fileID: 983857749832199468}
-  maxhealth: 100
   equipWeapon:
   - {fileID: 8994103200245093296}
   - {fileID: 584078973527760975}
@@ -1441,18 +1441,36 @@ MonoBehaviour:
   bowPower: 0.2
   bowChargingTime: 1
   isSootReady: 1
+  FullChargeing: 0
+  fUp: 0
   isFireReady: 1
   isDamage: 0
+  Rdown: 0
   ImWar: 0
+  isJump: 0
   archerattack: 0
+  isStun: 0
   isRun: 0
-  weapons: {fileID: 7099534776508006654}
   attackdamage: {fileID: 7099534777171081251}
   playerstat: {fileID: 7099534777171081248}
   Skillarea: {fileID: 7099534776240228875}
   Skillarea2: {fileID: 1074500181218435603}
   CCarea: {fileID: 2347849938425334830}
+  playerST: {fileID: 0}
+  HorseMode: 0
+  Horsee: {fileID: 0}
+  HorseSpawn: {fileID: 0}
+  horsepos1: {fileID: 0}
+  horsepos2: {fileID: 0}
+  DunjeonBossArena: 0
+  NoMove: 0
+  isDie: 0
+  dieui: {fileID: 0}
+  bgm: {fileID: 0}
+  horsecount: 0
+  isFall: 0
   isDodge: 0
+  isBuff: 0
   BuffEff: {fileID: 4726454952893486454}
   RushEff: {fileID: 7098623029412177575}
   Aurapos: {fileID: 7099534776409241833}
@@ -1460,10 +1478,19 @@ MonoBehaviour:
   BackStepEff: {fileID: 0}
   BackStepPos: {fileID: 0}
   isBackStep: 0
+  isPoison: 0
   mesh: {fileID: 0}
   smesh: {fileID: 0}
   FlashEff: {fileID: 0}
   isFlash: 0
+  questStore: {fileID: 0}
+  isCool1: 0
+  isCool2: 0
+  isCool3: 0
+  isCool4: 0
+  isCooldodge: 0
+  isCoolTeleport: 0
+  weapons: {fileID: 7099534776508006654}
 --- !u!114 &8994103199504108913
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1568,9 +1595,11 @@ MonoBehaviour:
   LEV_ADD_STR: 0
   LEV_ADD_DEX: 0
   LEV_ADD_INT: 0
-  expup: 0
   playerST: {fileID: 8994103199504108914}
   inven: {fileID: 0}
+  gameUI: {fileID: 0}
+  skillWindow: {fileID: 0}
+  statWindow: {fileID: 0}
   equSlots:
   - {fileID: 0}
   - {fileID: 0}
@@ -1580,6 +1609,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  saveManager: {fileID: 0}
+  playerstat: {fileID: 0}
 --- !u!114 &7099534777171081251
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1597,26 +1628,51 @@ MonoBehaviour:
   Usable_Buff: 1
   Skill_Buff_duration: 12
   Duration_Buff: 0
+  Skill_Buff_use_Mp: 50
   Skill_Teleport_cooltime: 5
   Usable_Teleport: 1
+  Skill_TelePort_Mp: 50
   Skill_Dodge_cooltime: 10
   Usable_Dodge: 1
+  Skill_Dodge_Mp: 50
   Skill_1_per_dam: 1
   Skill_1_fixed_dam: 0
   Skill_1_cooltime: 5
   Usable_Skill1: 1
+  Skill_1_use_Mp: 50
   Skill_2_per_dam: 1
   Skill_2_fixed_dam: 0
   Skill_2_cooltime: 5
   Usable_Skill2: 1
+  Skill_2_use_Mp: 50
   Skill_3_per_dam: 2
   Skill_3_fixed_dam: 0
   Skill_3_cooltime: 5
   Usable_Skill3: 1
+  Skill_3_use_Mp: 50
   Skill_4_per_dam: 1.08
   Skill_4_fixed_dam: 2
   Skill_4_cooltime: 5
   Usable_Skill4: 1
+  Skill_4_use_Mp: 50
+  SkillBuff_time: 0
+  SkillBuff_passedTime: 0
+  SkillTeleport_time: 0
+  SkillTeleport_passedTime: 0
+  SkillDodge_time: 0
+  SkillDodge_passedTime: 0
+  SkillBuff_passedDurationgTime: 0
+  Skill1_time: 0
+  Skill1_passedTime: 0
+  Skill2_time: 0
+  Skill2_passedTime: 0
+  Skill3_time: 0
+  Skill3_passedTime: 0
+  Skill4_time: 0
+  Skill4_passedTime: 0
+  attackDamage: 0
+  critical: 0
+  DamageNum: 0
 --- !u!1 &983857749870927984
 GameObject:
   m_ObjectHideFlags: 0
@@ -3987,6 +4043,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  NoDestroy: 0
 --- !u!1 &2347849938425334830
 GameObject:
   m_ObjectHideFlags: 0
@@ -13641,12 +13698,14 @@ MonoBehaviour:
   playerST: {fileID: 0}
   attackdamage: {fileID: 0}
   playerstat: {fileID: 0}
+  isBombArrow: 0
   isEnergyReady: 0
   isEnergy1: 0
   isEnergy2: 0
   EnergyReady: 0
   EnergyReady2: 0
   EnergyChargingTime: 5
+  archer_skill4_Order: 0
   arrowPos: {fileID: 0}
   Arc3SkillPos: {fileID: 0}
   ArcDefaultAttack: {fileID: 0}
@@ -13659,7 +13718,9 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteo: 0
   isMeteoShot: 0
+  mage_skill4_Order: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -13676,6 +13737,8 @@ MonoBehaviour:
   Skillarea: {fileID: 0}
   Skillarea2: {fileID: 0}
   CCarea: {fileID: 0}
+  energyfullCharging: 0
+  ShotFull: 0
 --- !u!1 &7099534776240228875
 GameObject:
   m_ObjectHideFlags: 0
@@ -13734,6 +13797,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  NoDestroy: 0
 --- !u!1 &7099534776409241838
 GameObject:
   m_ObjectHideFlags: 0
@@ -13775,6 +13839,7 @@ GameObject:
   - component: {fileID: 7099534776508006655}
   - component: {fileID: 7099534776508006652}
   - component: {fileID: 7099534776508006654}
+  - component: {fileID: 4323578590000126092}
   m_Layer: 8
   m_Name: Sword1_Area
   m_TagString: Melee
@@ -13832,12 +13897,14 @@ MonoBehaviour:
   playerST: {fileID: 8994103199504108914}
   attackdamage: {fileID: 7099534777171081251}
   playerstat: {fileID: 7099534777171081248}
+  isBombArrow: 0
   isEnergyReady: 0
   isEnergy1: 0
   isEnergy2: 0
   EnergyReady: 0
   EnergyReady2: 0
   EnergyChargingTime: 5
+  archer_skill4_Order: 0
   arrowPos: {fileID: 0}
   Arc3SkillPos: {fileID: 0}
   ArcDefaultAttack: {fileID: 0}
@@ -13850,7 +13917,9 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteo: 0
   isMeteoShot: 0
+  mage_skill4_Order: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -13867,6 +13936,30 @@ MonoBehaviour:
   Skillarea: {fileID: 0}
   Skillarea2: {fileID: 0}
   CCarea: {fileID: 0}
+  energyfullCharging: 0
+  ShotFull: 0
+--- !u!114 &4323578590000126092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7099534776508006653}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &7099534776545636469
 GameObject:
   m_ObjectHideFlags: 0
@@ -13965,12 +14058,14 @@ MonoBehaviour:
   playerST: {fileID: 0}
   attackdamage: {fileID: 0}
   playerstat: {fileID: 0}
+  isBombArrow: 0
   isEnergyReady: 0
   isEnergy1: 0
   isEnergy2: 0
   EnergyReady: 0
   EnergyReady2: 0
   EnergyChargingTime: 5
+  archer_skill4_Order: 0
   arrowPos: {fileID: 0}
   Arc3SkillPos: {fileID: 0}
   ArcDefaultAttack: {fileID: 0}
@@ -13983,7 +14078,9 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteo: 0
   isMeteoShot: 0
+  mage_skill4_Order: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -14000,6 +14097,8 @@ MonoBehaviour:
   Skillarea: {fileID: 0}
   Skillarea2: {fileID: 0}
   CCarea: {fileID: 0}
+  energyfullCharging: 0
+  ShotFull: 0
 --- !u!1 &7099534776822998679
 GameObject:
   m_ObjectHideFlags: 0
@@ -14098,12 +14197,14 @@ MonoBehaviour:
   playerST: {fileID: 0}
   attackdamage: {fileID: 0}
   playerstat: {fileID: 0}
+  isBombArrow: 0
   isEnergyReady: 0
   isEnergy1: 0
   isEnergy2: 0
   EnergyReady: 0
   EnergyReady2: 0
   EnergyChargingTime: 5
+  archer_skill4_Order: 0
   arrowPos: {fileID: 0}
   Arc3SkillPos: {fileID: 0}
   ArcDefaultAttack: {fileID: 0}
@@ -14116,7 +14217,9 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteo: 0
   isMeteoShot: 0
+  mage_skill4_Order: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -14133,6 +14236,8 @@ MonoBehaviour:
   Skillarea: {fileID: 0}
   Skillarea2: {fileID: 0}
   CCarea: {fileID: 0}
+  energyfullCharging: 0
+  ShotFull: 0
 --- !u!1 &7099534777555683558
 GameObject:
   m_ObjectHideFlags: 0
@@ -14236,12 +14341,14 @@ MonoBehaviour:
   playerST: {fileID: 0}
   attackdamage: {fileID: 0}
   playerstat: {fileID: 0}
+  isBombArrow: 0
   isEnergyReady: 0
   isEnergy1: 0
   isEnergy2: 0
   EnergyReady: 0
   EnergyReady2: 0
   EnergyChargingTime: 5
+  archer_skill4_Order: 0
   arrowPos: {fileID: 0}
   Arc3SkillPos: {fileID: 0}
   ArcDefaultAttack: {fileID: 0}
@@ -14254,7 +14361,9 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteo: 0
   isMeteoShot: 0
+  mage_skill4_Order: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -14271,6 +14380,8 @@ MonoBehaviour:
   Skillarea: {fileID: 0}
   Skillarea2: {fileID: 0}
   CCarea: {fileID: 0}
+  energyfullCharging: 0
+  ShotFull: 0
 --- !u!1 &8994103199592938074
 GameObject:
   m_ObjectHideFlags: 0
@@ -14404,6 +14515,8 @@ MonoBehaviour:
   ySpeed: 80
   yMinLimit: -20
   yMaxLimit: 80
+  playerst: {fileID: 0}
+  weapons: {fileID: 0}
 --- !u!1 &8994103200726373220
 GameObject:
   m_ObjectHideFlags: 0
@@ -14669,12 +14782,14 @@ MonoBehaviour:
   playerST: {fileID: 0}
   attackdamage: {fileID: 0}
   playerstat: {fileID: 0}
+  isBombArrow: 0
   isEnergyReady: 0
   isEnergy1: 0
   isEnergy2: 0
   EnergyReady: 0
   EnergyReady2: 0
   EnergyChargingTime: 5
+  archer_skill4_Order: 0
   arrowPos: {fileID: 0}
   Arc3SkillPos: {fileID: 0}
   ArcDefaultAttack: {fileID: 0}
@@ -14687,7 +14802,9 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteo: 0
   isMeteoShot: 0
+  mage_skill4_Order: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -14704,6 +14821,8 @@ MonoBehaviour:
   Skillarea: {fileID: 0}
   Skillarea2: {fileID: 0}
   CCarea: {fileID: 0}
+  energyfullCharging: 0
+  ShotFull: 0
 --- !u!1001 &983857751181738517
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14831,12 +14950,14 @@ MonoBehaviour:
   playerST: {fileID: 0}
   attackdamage: {fileID: 0}
   playerstat: {fileID: 0}
+  isBombArrow: 0
   isEnergyReady: 0
   isEnergy1: 0
   isEnergy2: 0
   EnergyReady: 0
   EnergyReady2: 0
   EnergyChargingTime: 5
+  archer_skill4_Order: 0
   arrowPos: {fileID: 0}
   Arc3SkillPos: {fileID: 0}
   ArcDefaultAttack: {fileID: 0}
@@ -14849,7 +14970,9 @@ MonoBehaviour:
   Arc3SkillArrow2: {fileID: 0}
   isLightning: 0
   isIceage: 0
+  isMeteo: 0
   isMeteoShot: 0
+  mage_skill4_Order: 0
   MagicPos: {fileID: 0}
   MageDefaultAttack: {fileID: 0}
   Mage1SkillEff: {fileID: 0}
@@ -14866,6 +14989,8 @@ MonoBehaviour:
   Skillarea: {fileID: 0}
   Skillarea2: {fileID: 0}
   CCarea: {fileID: 0}
+  energyfullCharging: 0
+  ShotFull: 0
 --- !u!1001 &983857751198227450
 PrefabInstance:
   m_ObjectHideFlags: 0
