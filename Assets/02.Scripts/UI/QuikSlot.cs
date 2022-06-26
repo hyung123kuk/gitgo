@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Photon.Pun;
 
 public class QuikSlot : MonoBehaviour
 {
@@ -31,14 +31,48 @@ public class QuikSlot : MonoBehaviour
     {
         slot=gameObject.GetComponent<Slot>();
         skill = gameObject.GetComponent<SkillSlot>();
-        playerST = FindObjectOfType<PlayerST>();
-        playerStat = FindObjectOfType<PlayerStat>();
+
+
         weapons = FindObjectOfType<Weapons>();
         quikSlot = this;
-        attckDamage = FindObjectOfType<AttackDamage>();
+ 
         buffSkillUI = FindObjectsOfType<BuffSkillUI>();
 
-        
+        AttackDamage[] attackDamages = FindObjectsOfType<AttackDamage>();
+        foreach(AttackDamage myattackDamage in attackDamages)
+        {
+            if (myattackDamage.GetComponent<PhotonView>().IsMine)
+            {
+                attckDamage = myattackDamage;
+                break;
+            }
+        }
+
+        PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
+
+
+        foreach (PlayerST myplayerSt in playerSts)
+        {
+            if (myplayerSt.GetComponent<PhotonView>().IsMine)
+            {
+                playerST = myplayerSt;
+                break;
+            }
+        }
+
+
+        PlayerStat[] playerStats = GameObject.FindObjectsOfType<PlayerStat>();
+
+
+        foreach (PlayerStat myplayerStat in playerStats)
+        {
+            if (myplayerStat.GetComponent<PhotonView>().IsMine)
+            {
+                playerStat = myplayerStat;
+                break;
+            }
+        }
+
     }
 
 

@@ -16,7 +16,7 @@ public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEnd
     [SerializeField]
     public SkillUI skill;
 
-    public bool Check; //Äü½½·Ô°ú ½ºÅ³Ã¢½½·Ô ±¸ºÐ¿ëµµ
+    public bool Check; //ï¿½ï¿½ï¿½ï¿½ï¿½Ô°ï¿½ ï¿½ï¿½Å³Ã¢ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ð¿ëµµ
 
 
 
@@ -49,12 +49,37 @@ public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEnd
 
     void Start()
     {
+
+        PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
+
+
+        foreach (PlayerST myplayerSt in playerSts)
+        {
+            if (myplayerSt.GetComponent<PhotonView>().IsMine)
+            {
+                playerST = myplayerSt;
+                break;
+            }
+        }
+
+
+        PlayerStat[] playerStats = GameObject.FindObjectsOfType<PlayerStat>();
+
+
+        foreach (PlayerStat myplayerStat in playerStats)
+        {
+            if (myplayerStat.GetComponent<PhotonView>().IsMine)
+            {
+                playerStat = myplayerStat;
+                break;
+            }
+        }
         
-            playerST = FindObjectOfType<PlayerST>();
-            playerStat = FindObjectOfType<PlayerStat>();
-            SkillSet();
-            SetSkillColor();
         
+        SkillSet();
+        SetSkillColor();
+
+
     }
 
 
@@ -172,19 +197,19 @@ public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEnd
     {
         if (gameObject.layer == LayerMask.NameToLayer("quikSlot"))
             gameObject.GetComponent<QuikSlot>().slot.tooltip.ToolTipOff();
-        if (DragSkillSlot.instance.dragSkillSlot == null)//½ºÅ³½½·Ô µå·¡±× ¾Æ´Ò¶§ µå¶ø ¸·±â
+        if (DragSkillSlot.instance.dragSkillSlot == null)//ï¿½ï¿½Å³ï¿½ï¿½ï¿½ï¿½ ï¿½å·¡ï¿½ï¿½ ï¿½Æ´Ò¶ï¿½ ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
             return;
 
-        if (gameObject.layer == LayerMask.NameToLayer("quikSlot") && DragSkillSlot.instance.dragSkillSlot.gameObject.layer == LayerMask.NameToLayer("SkillSlot")) // ½ºÅ³½½·Ô -> Äü½½·Ô
+        if (gameObject.layer == LayerMask.NameToLayer("quikSlot") && DragSkillSlot.instance.dragSkillSlot.gameObject.layer == LayerMask.NameToLayer("SkillSlot")) // ï¿½ï¿½Å³ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
-            if (gameObject.GetComponent<QuikSlot>().slot.item != null) // ¼Òºñ¾ÆÀÌÅÛÀÌ ÀÖ´Ù¸é
+            if (gameObject.GetComponent<QuikSlot>().slot.item != null) // ï¿½Òºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
             {
 
                 Slot instanceSlot = gameObject.GetComponent<QuikSlot>().slot;
-                if (!instanceSlot.inven.HasEmptySlot() && !instanceSlot.inven.HasSameSlot(instanceSlot.item)) //ÀÎº¥¿¡ ºóÃ¢ ¾øÀ¸¸é ¾ÆÀÌÅÛ µé¾î°¥°÷ ¾ø¾î¼­ ½ºÅ³ ¸ø ³ÖÀ½
+                if (!instanceSlot.inven.HasEmptySlot() && !instanceSlot.inven.HasSameSlot(instanceSlot.item)) //ï¿½Îºï¿½ï¿½ï¿½ ï¿½ï¿½Ã¢ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½î°¥ï¿½ï¿½ ï¿½ï¿½ï¿½î¼­ ï¿½ï¿½Å³ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
                 {
-                    Debug.Log("ºóÃ¢ÀÌ ¾ø½À´Ï´Ù.");
-                    LogManager.logManager.Log("ºóÃ¢ÀÌ ¾ø½À´Ï´Ù", true);
+                    Debug.Log("ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+                    LogManager.logManager.Log("ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½", true);
                     return;
                 }
 
@@ -201,9 +226,9 @@ public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEnd
         }
 
 
-        else if (gameObject.layer == LayerMask.NameToLayer("quikSlot") && DragSkillSlot.instance.dragSkillSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot")) // Äü½½·Ô -> Äü½½·Ô
+        else if (gameObject.layer == LayerMask.NameToLayer("quikSlot") && DragSkillSlot.instance.dragSkillSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot")) // ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ -> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
         {
-            if (gameObject.GetComponent<QuikSlot>().slot.item != null) // ¼Òºñ¾ÆÀÌÅÛÀÌ ÀÖ´Ù¸é
+            if (gameObject.GetComponent<QuikSlot>().slot.item != null) // ï¿½Òºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ö´Ù¸ï¿½
             {
 
 
@@ -290,7 +315,7 @@ public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEnd
                 SkillPosition.x = 1920f - 400f;
             if (eventData.position.y - 500f < 0f)
                 SkillPosition.y = 500f;
-            skillToolTip.ToolTipOn(skill, SkillPosition); // ÀÎº¥Åä¸®´Â  0 , ¾ÆÀÌÅÛÆÇ¸ÅÃ¢Àº 1  // ÆÇ¸Å°ñµå°¡ ´Ù¸£°Ô ³ª¿À±â ¶§¹®ÀÌ´Ù.
+            skillToolTip.ToolTipOn(skill, SkillPosition); // ï¿½Îºï¿½ï¿½ä¸®ï¿½ï¿½  0 , ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ç¸ï¿½Ã¢ï¿½ï¿½ 1  // ï¿½Ç¸Å°ï¿½å°¡ ï¿½Ù¸ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ì´ï¿½.
         }
     }
 

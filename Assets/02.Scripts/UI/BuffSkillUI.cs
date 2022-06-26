@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Photon.Pun;
 public class BuffSkillUI : MonoBehaviour
 {
     [SerializeField]
@@ -20,7 +20,15 @@ public class BuffSkillUI : MonoBehaviour
     {
         BuffSkillImage = transform.GetChild(0).GetChild(0).GetComponent<Image>();
         BuffSkillCoolImage = transform.GetChild(0).GetChild(1).GetComponent<Image>();
-        attckDamage = FindObjectOfType<AttackDamage>();
+        AttackDamage[] attackDamages = FindObjectsOfType<AttackDamage>();
+        foreach (AttackDamage myattackDamage in attackDamages)
+        {
+            if (myattackDamage.GetComponent<PhotonView>().IsMine)
+            {
+                attckDamage = myattackDamage;
+                break;
+            }
+        }
         buffSkillUI = transform.GetChild(0).gameObject;
     }
     public void OnSkillBuffImage()

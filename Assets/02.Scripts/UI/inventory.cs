@@ -133,7 +133,10 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
         toolTip.ToolTipOff();
         iDown = false;
 
-        FindObjectOfType<NET_Trade>().FailTrade();
+        if (NET_UIPlayer.TradeOn)
+        {
+            FindObjectOfType<NET_Trade>().FailTrade();
+        }
 
         AllUI.allUI.CheckCursorLock();
         

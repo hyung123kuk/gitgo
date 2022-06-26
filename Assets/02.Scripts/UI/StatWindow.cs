@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Photon.Pun;
 
 public class StatWindow : MonoBehaviour ,IPointerClickHandler
 {
@@ -81,8 +82,31 @@ public class StatWindow : MonoBehaviour ,IPointerClickHandler
 
     private void Start()
     {
-        playerStat = FindObjectOfType<PlayerStat>();
-        playerST = FindObjectOfType<PlayerST>();
+        PlayerStat[] playerStats = GameObject.FindObjectsOfType<PlayerStat>();
+
+
+        foreach (PlayerStat myplayerStat in playerStats)
+        {
+            if (myplayerStat.GetComponent<PhotonView>().IsMine)
+            {
+                playerStat = myplayerStat;
+                break;
+            }
+        }
+
+        PlayerST[] playerSts = GameObject.FindObjectsOfType<PlayerST>();
+
+
+        foreach (PlayerST myplayerSt in playerSts)
+        {
+            if (myplayerSt.GetComponent<PhotonView>().IsMine)
+            {
+                playerST = myplayerSt;
+                break;
+            }
+        }
+
+
         if (playerST.CharacterType == PlayerST.Type.Warrior)
         {
             Character.text = "직업 : 전사";

@@ -45,9 +45,19 @@ public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
     }
     private void Start()
     {
+        
+        PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
 
-        playerST = FindObjectOfType<PlayerST>();
-        playerStat = FindObjectOfType<PlayerStat>();
+
+        foreach (PlayerST myplayerSt in playerSts)
+        {
+            if (myplayerSt.GetComponent<PhotonView>().IsMine)
+            {
+                playerST = myplayerSt;
+                break;
+            }
+        }
+
         if (playerST.CharacterType == PlayerST.Type.Warrior)
         {
             warriorSkillWIndow.SetActive(true);
