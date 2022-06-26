@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using Photon.Pun;
 
-public class AllUI : MonoBehaviour
+public class AllUI : MonoBehaviourPun
 {
     [SerializeField]
     private GameObject[] UIWIndow;
@@ -54,9 +54,6 @@ public class AllUI : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-       
-
-
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {

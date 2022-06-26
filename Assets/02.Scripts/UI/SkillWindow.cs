@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Photon.Pun;
 
-public class SkillWindow : MonoBehaviour , IPointerClickHandler
+public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
 {
     [SerializeField]
     public static SkillWindow skillwindow;
@@ -19,14 +20,15 @@ public class SkillWindow : MonoBehaviour , IPointerClickHandler
     [SerializeField]
     private GameObject mageSkillWIndow;
     [SerializeField]
-    private PlayerST playerST;
+    public PlayerST playerST;
+    public PlayerStat playerStat;
     [SerializeField]
     private SkillSlot[] skillslots;
     [SerializeField]
     private SkillToolTip skillToolTip;
 
 
-    public static bool kDown =false;
+    public static bool kDown = false;
 
     private void Awake()
     {
@@ -35,15 +37,17 @@ public class SkillWindow : MonoBehaviour , IPointerClickHandler
         warriorSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(2).gameObject;
         acherSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(3).gameObject;
         mageSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(4).gameObject;
-       
+
         skillslots = GetComponentsInChildren<SkillSlot>();
         skillToolTip = FindObjectOfType<SkillToolTip>();
 
-        
+
     }
     private void Start()
     {
+
         playerST = FindObjectOfType<PlayerST>();
+        playerStat = FindObjectOfType<PlayerStat>();
         if (playerST.CharacterType == PlayerST.Type.Warrior)
         {
             warriorSkillWIndow.SetActive(true);
@@ -62,6 +66,19 @@ public class SkillWindow : MonoBehaviour , IPointerClickHandler
             acherSkillWIndow.SetActive(false);
             mageSkillWIndow.SetActive(true);
         }
+
+        StartCoroutine(Setting());
+
+
+    }
+
+    IEnumerator Setting()
+    {
+        SkillWindowOn();
+        yield return new WaitForSeconds(0.1f);
+        SkillWindowOff();
+        SkillToolTipOff();
+
     }
 
     public void SkillToolTipOff()
@@ -77,7 +94,7 @@ public class SkillWindow : MonoBehaviour , IPointerClickHandler
         Cursor.lockState = CursorLockMode.Confined;
         allUI.MouseCursor.transform_cursor.gameObject.SetActive(true);
         kDown = true;
-        
+
     }
 
     public void SkillWindowOff()

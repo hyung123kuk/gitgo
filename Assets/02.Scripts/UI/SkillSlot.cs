@@ -3,9 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Photon.Pun;
 
-public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler , IPointerEnterHandler , IPointerExitHandler
+public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    public static SkillSlot skillSlot;
+
     [SerializeField]
     public Image imageSkill;
     [SerializeField]
@@ -13,7 +16,9 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     [SerializeField]
     public SkillUI skill;
 
-    
+    public bool Check; //퀵슬롯과 스킬창슬롯 구분용도
+
+
 
     [SerializeField]
     private SkillUI[] Warrior_skills;
@@ -27,29 +32,30 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public SkillToolTip skillToolTip;
     [SerializeField]
     private PlayerStat playerStat;
+    [SerializeField]
+    private SkillWindow skillWindow;
+
 
     private void Awake()
     {
-        
+        skillWindow = FindObjectOfType<SkillWindow>();
         skillToolTip = FindObjectOfType<SkillToolTip>();
-       
-       
+        skillSlot = this;
         
+
     }
 
 
 
     void Start()
     {
-        playerStat = FindObjectOfType<PlayerStat>();
-        playerST = FindObjectOfType<PlayerST>();
-        SkillSet();
-        SetSkillColor();
-
-
+        
+            playerST = FindObjectOfType<PlayerST>();
+            playerStat = FindObjectOfType<PlayerStat>();
+            SkillSet();
+            SetSkillColor();
+        
     }
-
-
 
 
     public void SetSkillColor()
@@ -59,7 +65,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             if (skill.Level > playerStat.Level)
             {
                 imageSkill.color = new Color(1, 0, 0);
-                
+
             }
             else
             {
@@ -127,19 +133,19 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 skill = Mage_skills[3];
             }
         }
-        
-        if(gameObject.tag == "DodgeSlot")
+
+        if (gameObject.tag == "DodgeSlot")
         {
             skill = Common_skills[0];
         }
 
-        if (skill!=null)
-        imageSkill.sprite = skill.SkillImage;
+        if (skill != null)
+            imageSkill.sprite = skill.SkillImage;
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (skill != null && skill.Level<=playerStat.Level)
+        if (skill != null && skill.Level <= playerStat.Level)
         {
             DragSkillSlot.instance.dragSkillSlot = this;
             DragSkillSlot.instance.DragSetImage(imageSkill);
@@ -164,16 +170,16 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnDrop(PointerEventData eventData)
     {
-        if(gameObject.layer == LayerMask.NameToLayer("quikSlot"))
+        if (gameObject.layer == LayerMask.NameToLayer("quikSlot"))
             gameObject.GetComponent<QuikSlot>().slot.tooltip.ToolTipOff();
         if (DragSkillSlot.instance.dragSkillSlot == null)//스킬슬롯 드래그 아닐때 드랍 막기
             return;
 
-        if (gameObject.layer == LayerMask.NameToLayer("quikSlot") && DragSkillSlot.instance.dragSkillSlot.gameObject.layer == LayerMask.NameToLayer("SkillSlot") ) // 스킬슬롯 -> 퀵슬롯
+        if (gameObject.layer == LayerMask.NameToLayer("quikSlot") && DragSkillSlot.instance.dragSkillSlot.gameObject.layer == LayerMask.NameToLayer("SkillSlot")) // 스킬슬롯 -> 퀵슬롯
         {
-            if(gameObject.GetComponent<QuikSlot>().slot.item != null) // 소비아이템이 있다면
+            if (gameObject.GetComponent<QuikSlot>().slot.item != null) // 소비아이템이 있다면
             {
-                
+
                 Slot instanceSlot = gameObject.GetComponent<QuikSlot>().slot;
                 if (!instanceSlot.inven.HasEmptySlot() && !instanceSlot.inven.HasSameSlot(instanceSlot.item)) //인벤에 빈창 없으면 아이템 들어갈곳 없어서 스킬 못 넣음
                 {
@@ -181,7 +187,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                     LogManager.logManager.Log("빈창이 없습니다", true);
                     return;
                 }
-                
+
                 instanceSlot.inven.addItem(instanceSlot.item, instanceSlot.itemCount);
                 instanceSlot.ClearSlot();
             }
@@ -189,24 +195,24 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             skill = DragSkillSlot.instance.dragSkillSlot.skill;
             imageSkill.sprite = skill.SkillImage;
             SetColor(1);
-           
+
 
 
         }
 
 
-        else if(gameObject.layer == LayerMask.NameToLayer("quikSlot")&& DragSkillSlot.instance.dragSkillSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot")) // 퀵슬롯 -> 퀵슬롯
+        else if (gameObject.layer == LayerMask.NameToLayer("quikSlot") && DragSkillSlot.instance.dragSkillSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot")) // 퀵슬롯 -> 퀵슬롯
         {
             if (gameObject.GetComponent<QuikSlot>().slot.item != null) // 소비아이템이 있다면
             {
 
-                
+
                 Slot instanceSlot = DragSkillSlot.instance.dragSkillSlot.gameObject.GetComponent<QuikSlot>().slot;
                 instanceSlot.AddItem(gameObject.GetComponent<QuikSlot>().slot.item, gameObject.GetComponent<QuikSlot>().slot.itemCount);
-                
-                gameObject.GetComponent<QuikSlot>().slot.item=null;
+
+                gameObject.GetComponent<QuikSlot>().slot.item = null;
                 gameObject.GetComponent<QuikSlot>().slot.itemCount = 0;
-                gameObject.GetComponent<QuikSlot>().slot.text_Count.text= "";
+                gameObject.GetComponent<QuikSlot>().slot.text_Count.text = "";
 
                 skill = DragSkillSlot.instance.dragSkillSlot.skill;
                 DragSkillSlot.instance.dragSkillSlot.ClearSlot();
@@ -216,8 +222,8 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 UiSound.uiSound.EquipSound();
                 instanceSlot.itemImage.sprite = instanceSlot.item.itemImage;
 
-             
-                
+
+
             }
 
             else if (skill != null)
@@ -231,7 +237,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 imageSkill.sprite = skill.SkillImage;
                 SetColor(1);
 
-          
+
             }
             else if (skill == null)
             {
@@ -241,7 +247,7 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
                 skill = instanceSkill;
                 imageSkill.sprite = skill.SkillImage;
                 SetColor(1);
-                
+
             }
 
 
@@ -250,9 +256,9 @@ public class SkillSlot : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         }
         if (gameObject.layer == LayerMask.NameToLayer("quikSlot"))
             gameObject.GetComponent<QuikSlot>().setCoolImage();
-        if(DragSkillSlot.instance.dragSkillSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot") )
+        if (DragSkillSlot.instance.dragSkillSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot"))
             DragSkillSlot.instance.dragSkillSlot.gameObject.GetComponent<QuikSlot>().setCoolImage();
-        
+
     }
 
     public void SetColor(float _alpha)
