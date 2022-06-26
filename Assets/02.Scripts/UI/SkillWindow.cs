@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using Photon.Pun;
 
 public class SkillWindow : MonoBehaviour , IPointerClickHandler
 {
@@ -43,7 +44,19 @@ public class SkillWindow : MonoBehaviour , IPointerClickHandler
     }
     private void Start()
     {
-        playerST = FindObjectOfType<PlayerST>();
+        
+        PlayerST[] playerSts = GameObject.FindObjectsOfType<PlayerST>();
+
+
+        foreach (PlayerST myplayerSt in playerSts)
+        {
+            if (myplayerSt.GetComponent<PhotonView>().IsMine)
+            {
+                playerST = myplayerSt;
+                break;
+            }
+        }
+
         if (playerST.CharacterType == PlayerST.Type.Warrior)
         {
             warriorSkillWIndow.SetActive(true);
