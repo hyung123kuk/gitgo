@@ -21,6 +21,7 @@ public class NET_UIPlayer : MonoBehaviourPun
     public bool TradeComplete;
     public bool YourTradeComlete;
 
+    
 
     private void Start()
     {
@@ -194,7 +195,7 @@ public class NET_UIPlayer : MonoBehaviourPun
         NET_UIPlayer[] net_uis = FindObjectsOfType<NET_UIPlayer>();
         foreach (NET_UIPlayer target in net_uis)
         {
-            if (target.TradeNum == TradeNum) //타겟의 트레이드 번호가 있는지 찾는다. 있으면 컴플리트!
+            if (target.TradeNum == TradeNum && !target.photonView.IsMine) //타겟의 트레이드 번호가 있는지 찾는다. 있으면 컴플리트!
             {
 
                 target.photonView.RPC("CompleteSet", RpcTarget.Others, TradeComplete);
@@ -223,7 +224,7 @@ public class NET_UIPlayer : MonoBehaviourPun
         NET_UIPlayer[] net_uis = FindObjectsOfType<NET_UIPlayer>();
         foreach (NET_UIPlayer target in net_uis)
         {
-            if (target.TradeNum == TradeNum) //타겟의 트레이드 번호가 있는지 찾는다. 있으면 체크보내기!
+            if (target.TradeNum == TradeNum && !target.photonView.IsMine) //타겟의 트레이드 번호가 있는지 찾는다. 있으면 체크보내기!
             {
                 target.photonView.RPC("CheckSlot", RpcTarget.Others, Check);
 
@@ -258,7 +259,7 @@ public class NET_UIPlayer : MonoBehaviourPun
         NET_UIPlayer[] net_uis = FindObjectsOfType<NET_UIPlayer>();
         foreach (NET_UIPlayer target in net_uis)
         {
-            if (target.TradeNum == TradeNum) //타겟의 트레이드 번호가 있는지 찾는다. 있으면 체크보내기!
+            if (target.TradeNum == TradeNum && !target.photonView.IsMine) //타겟의 트레이드 번호가 있는지 찾는다. 있으면 체크보내기!
             {
                 target.photonView.RPC("TradeReset", RpcTarget.Others);
                 TradeNum = 0;
@@ -279,4 +280,33 @@ public class NET_UIPlayer : MonoBehaviourPun
         }
     }
 
+    public void GoldSetting(int gold)
+    {
+       
+        NET_UIPlayer[] net_uis = FindObjectsOfType<NET_UIPlayer>();
+        foreach (NET_UIPlayer target in net_uis)
+        {
+            if (target.TradeNum == TradeNum && !target.photonView.IsMine) //타겟의 트레이드 번호가 있는지 찾는다. 있으면 골드보내기!
+            {
+
+                target.photonView.RPC("GoldSet", RpcTarget.Others, gold);
+
+            }
+        }
+
+
+    }
+
+    [PunRPC]
+    public void GoldSet(int _gold)
+    {
+
+
+        if (photonView.IsMine)
+        {
+
+            FindObjectOfType<NET_Trade>().YourGoldSet(_gold);
+
+        }
+    }
 }

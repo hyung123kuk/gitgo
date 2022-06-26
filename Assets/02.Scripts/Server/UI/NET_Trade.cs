@@ -43,6 +43,21 @@ public class NET_Trade : MonoBehaviourPun
     public Color Color_Compete = new Color(1f, 0.4f, 0f, 1f);
 
 
+    [SerializeField]
+    public GameObject Gold_Window;
+    [SerializeField]
+    public InputField GoldInput;
+    [SerializeField]
+    public Text My_goldText;
+    [SerializeField]
+    public Text Your_goldText;
+
+
+    [SerializeField]
+    GameObject BlockBox; //확인을 누른 상태에서는 못누르게 켠다.
+
+
+
     public static bool isNET_Trade_Window;
 
     private void Start()
@@ -139,6 +154,7 @@ public class NET_Trade : MonoBehaviourPun
             net_UIPlayer.TradeComplete = true;
             My_button.sprite = Image_Complete;
             My_TradeItemsWindow.color = Color_Compete;
+            BlockBox.SetActive(true);
             if(net_UIPlayer.YourTradeComlete == true)
             {
                 SlotNumCheck();
@@ -150,6 +166,7 @@ public class NET_Trade : MonoBehaviourPun
             net_UIPlayer.TradeComplete = false;
             My_button.sprite = Image_NonComplete;
             My_TradeItemsWindow.color = Color.white;
+            BlockBox.SetActive(false);
 
         }
 
@@ -222,20 +239,20 @@ public class NET_Trade : MonoBehaviourPun
 
     public void SuccessTrade() // 상대방의 아이템은 내 인벤토리에 들어오게한다.
     {
-        Debug.Log("Success");
+        
         for (int i = 0; i < Net_Your_Slot.Length; i++) {
             if (Net_Your_Slot[i].item != null)
             {
                 inventory.inven.addItem(Net_Your_Slot[i].item, Net_Your_Slot[i].itemCount);
             }
         }
-
+        net_UIPlayer.GetComponent<PlayerStat>().AddGold(int.Parse(Your_goldText.text));
         TradeReset();
     }
 
     public void FailTrade() //내 아이템이 내 인벤토리에 들어오게만 하면된다.
     {
-        Debug.Log(0);
+        
         for (int i = 0; i < Net_My_Slot.Length; i++)
         {
             if (Net_My_Slot[i].item != null)
@@ -244,7 +261,7 @@ public class NET_Trade : MonoBehaviourPun
             }
         }
 
-
+        net_UIPlayer.GetComponent<PlayerStat>().AddGold(int.Parse(My_goldText.text));
         TradeReset();
     }
 
@@ -264,15 +281,72 @@ public class NET_Trade : MonoBehaviourPun
         net_UIPlayer.photonView.RPC("TradeOffSet", RpcTarget.Others);
         net_UIPlayer.TradeComplete = false;
         net_UIPlayer.YourTradeComlete = false;
+        BlockBox.SetActive(false);
         net_UIPlayer.TradeResetCheck();
         Your_button.sprite = Image_NonComplete;
         Your_TradeItemsWindow.color = Color.white;
         net_UIPlayer.TradeComplete = false;
         My_button.sprite = Image_NonComplete;
         My_TradeItemsWindow.color = Color.white;
-        
+
+        GoldButtonExit();
+        My_goldText.text = 0.ToString();
+        Your_goldText.text = 0.ToString();
+
+
         Cancle();
         
+    }
+
+    public void GoldButton()
+    {
+        Gold_Window.SetActive(true);        
+
+    }
+
+    private void Update() //골드 최대값 리셋
+    {
+
+        if (Gold_Window.activeSelf)
+        {
+            if (Input.GetKeyDown(KeyCode.Return))
+            {
+                GoldSetting();
+            }
+        }
+
+        if (GoldInput.text != "" && GoldInput.text != "-")
+        {
+            if (int.Parse(GoldInput.text) > net_UIPlayer.GetComponent<PlayerStat>().MONEY)
+            {
+                GoldInput.text = net_UIPlayer.GetComponent<PlayerStat>().MONEY.ToString();
+            }
+            else if (int.Parse(GoldInput.text) < 0)
+            {
+                GoldInput.text = 0.ToString();
+            }
+        }
+    }
+
+    public void GoldButtonExit()
+    {
+        Gold_Window.SetActive(false);
+        GoldInput.text = 0.ToString();
+    }
+
+    public void GoldSetting()
+    {
+        int Gold = int.Parse(My_goldText.text) + int.Parse(GoldInput.text);
+        My_goldText.text = Gold.ToString();
+        net_UIPlayer.GetComponent<PlayerStat>().AddGold(-int.Parse(GoldInput.text));
+        GoldButtonExit();
+        net_UIPlayer.GoldSetting(int.Parse(My_goldText.text)); //상대방에게 내골드가 보이게 한다.
+    }
+
+    public void YourGoldSet(int _Gold)
+    {
+        Debug.Log(_Gold);
+        Your_goldText.text = _Gold.ToString();
     }
 
 }
