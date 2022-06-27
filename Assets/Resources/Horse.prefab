@@ -1070,8 +1070,8 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 1
-  observableSearch: 0
+  OwnershipTransfer: 0
+  observableSearch: 2
   ObservedComponents:
   - {fileID: 1340306398}
   - {fileID: 1340306397}
@@ -1094,7 +1094,7 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isRun
   m_SynchronizeLayers:
   - SynchronizeType: 2

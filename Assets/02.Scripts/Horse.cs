@@ -8,7 +8,7 @@ public class Horse : MonoBehaviourPun
     public float speed = 30f;
     Vector3 moveVec;
 
-    private float h = 0f, v = 0f;
+    private float v = 0f;
     private Rigidbody rigid;
     public Animator anim;
     public bool opning;
@@ -17,7 +17,6 @@ public class Horse : MonoBehaviourPun
     Camera _camera;
     CapsuleCollider _controller;
     public PlayerST playerST;
-    Weapons weapons;
     public float smoothness = 10f;
 
     void Awake()
@@ -29,20 +28,28 @@ public class Horse : MonoBehaviourPun
 
     private void OnEnable()
     {
-        //HorseSpawnAnim();
+ 
 
     }
 
     private void Start()
     {
-        photonView.RPC("synchronization", RpcTarget.AllBuffered);
-        //StartCoroutine(HorseActive());
+        PlayerST[] playerSt = GameObject.FindObjectsOfType<PlayerST>();
+        foreach (PlayerST myplayerst in playerSt)
+        {
+            if (myplayerst.GetComponent<PhotonView>().IsMine)
+            {
+                playerST = myplayerst;
+                break;
+            }
+        }
+        if (anim == null)
+        {
+            anim = GetComponent<Animator>();
+        }
         rigid = GetComponent<Rigidbody>();
-        anim = GetComponent<Animator>();
         _camera = Camera.main;
         _controller = this.GetComponent<CapsuleCollider>();
-        playerST = FindObjectOfType<PlayerST>();
-        weapons = FindObjectOfType<Weapons>();
 
     }
     IEnumerator HorseActive()
@@ -120,25 +127,13 @@ public class Horse : MonoBehaviourPun
         
 
     }
-    [PunRPC]
-    void synchronization() //변수할당 동기화
-    {
-        if (playerST == null)
-        {
-            playerST = FindObjectOfType<PlayerST>();
-        }
-        if (anim == null)
-        {
-            anim = GetComponent<Animator>();
-        }
-    }
     void LateUpdate()  //플레이어가 카메라를 바라봄
     {
         if (!photonView.IsMine)
         {
             return;
         }
-        if (inventory.iDown || weapons.isMeteo || SkillWindow.kDown || StatWindow.tDown)
+        if (inventory.iDown || SkillWindow.kDown || StatWindow.tDown)
             return;
 
         if (playerST.HorseMode)

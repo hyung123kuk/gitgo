@@ -32,7 +32,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             {
                 GameObject character = PhotonNetwork.Instantiate("gameWarrior", startPoint.position, Quaternion.identity);
                 GameObject Horseee = PhotonNetwork.Instantiate("Horse", GameManager.gameManager.HorsePoint.position, Quaternion.identity);
-                Horseee.transform.SetParent(character.transform, false);
+                //Horseee.transform.SetParent(character.transform, false);
             }
             else if (CharSel.character1 == CharacterSel.Type.Archer)
             {

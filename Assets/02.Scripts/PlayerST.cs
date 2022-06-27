@@ -138,11 +138,32 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
     void Start()
     {
-        if (photonView.IsMine)
+        if (!photonView.IsMine)
+            return;
+
+        bgm = GameObject.Find("Sounds").transform.GetChild(3).GetComponent<BGM>();
+        playerstat = GetComponent<PlayerStat>();
+        bowPower = bowMinPower;
+        _transform = GetComponent<Transform>();
+        anim = GetComponentInChildren<Animator>();
+        rigid = GetComponent<Rigidbody>();
+        questStore = FindObjectOfType<QuestStore>();
+        playerST = this;
+        //dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
+        weapons = FindObjectOfType<Weapons>();
+        rigid = GetComponent<Rigidbody>();
+        // HorseSpawn = FindObjectOfType<Horse>().gameObject;
+        GameObject[] horses = GameObject.FindGameObjectsWithTag("Horse");
+        foreach (GameObject horse1 in horses)
         {
-            synchronization();
-            photonView.RPC("synchronization", RpcTarget.Others);
+            if (horse1.GetComponent<PhotonView>().IsMine)
+            {
+                HorseSpawn = horse1;
+                break;
+            }
         }
+        Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
+        
     }
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
@@ -370,20 +391,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     public void synchronization() //변수할당 동기화
     {
-        bgm = GameObject.Find("Sounds").transform.GetChild(3).GetComponent<BGM>();
-        playerstat = GetComponent<PlayerStat>();
-        bowPower = bowMinPower;
-        _transform = GetComponent<Transform>();
-        anim = GetComponentInChildren<Animator>();
-        rigid = GetComponent<Rigidbody>();
-        questStore = FindObjectOfType<QuestStore>();
-        playerST = this;
-        //dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
-        weapons = FindObjectOfType<Weapons>();
-        rigid = GetComponent<Rigidbody>();
-        HorseSpawn = FindObjectOfType<Horse>().gameObject;
-        Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
-        ImWar = CharacterType == Type.Warrior;
+        
     }
        
     void Attack()   //공격
@@ -853,7 +861,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
         if (Input.GetKeyDown(KeyCode.H) && !HorseMode) //말 아이템이 없어서 이걸로 테스트했어요
         {
-            photonView.RPC("HorseRide", RpcTarget.AllBuffered);
+            HorseRide();
         }
 
         if (AllUI.isUI)
@@ -922,35 +930,35 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
         //SkillClass(); //스킬직업제한
     }
-    [PunRPC]
     public void HorseRide()
     {
 
         if (!HorseMode) // 말 소환&소환해제
         {
-            if (horsecount == 0)
+            //if (horsecount == 0)
+            //{
+            //    SoundManager.soundManager.Horse();
+            //    HorseSpawn.gameObject.SetActive(false);
+            //    HorseSpawn.gameObject.SetActive(true);
+            //    HorseSpawn.gameObject.transform.position = horsepos1.position;
+            //    HorseSpawn.gameObject.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
+            //    HorseSpawn.transform.parent = null;
+            //    horsecount = 1;
+            //}
+            if (horsecount == 0) //소환 
             {
-                SoundManager.soundManager.Horse();
-                HorseSpawn.gameObject.SetActive(false);
-                HorseSpawn.gameObject.SetActive(true);
-                HorseSpawn.gameObject.transform.position = horsepos1.position;
-                HorseSpawn.gameObject.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
                 HorseSpawn.transform.parent = null;
+                SoundManager.soundManager.Horse();
+                HorseSpawn.transform.position = horsepos1.position;
+                HorseSpawn.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
                 horsecount = 1;
             }
-            else if (!HorseSpawn.gameObject.activeSelf && horsecount == 1)
-            {
-                HorseSpawn.transform.parent = null;
-                SoundManager.soundManager.Horse();
-                HorseSpawn.gameObject.SetActive(true);
-                HorseSpawn.gameObject.transform.position = horsepos1.position;
-                HorseSpawn.gameObject.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
-            }
-            else if (HorseSpawn.gameObject.activeSelf && horsecount == 1)
+            else if (horsecount == 1) //소환 해제
             {
                 SoundManager.soundManager.Horse2();
-                HorseSpawn.gameObject.SetActive(false);
-                HorseSpawn.transform.parent = transform;
+                HorseSpawn.transform.position = GameManager.gameManager.HorsePoint.position;
+                //HorseSpawn.transform.parent = transform;
+                horsecount = 0;
             }
         }
 
