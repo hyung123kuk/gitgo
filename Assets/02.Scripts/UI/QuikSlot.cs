@@ -73,6 +73,8 @@ public class QuikSlot : MonoBehaviour
             }
         }
 
+        
+
     }
 
 
@@ -112,8 +114,8 @@ public class QuikSlot : MonoBehaviour
     
     void Update()
     {
-        weapons = FindObjectOfType<Weapons>(); //무기 교체될때마다 갱신되어야해서 여기다 우선 뒀습니다 Playerst에서 찾으면 첫번째Q퀵슬롯은 되는데
-        //그다음 퀵슬롯들은 바뀌지않습니다 ㅠㅠ
+        weapons = playerST.GetComponentInChildren<Weapons>();
+       
         if (AllUI.isUI)
             return;
 

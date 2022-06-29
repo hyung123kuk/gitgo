@@ -835,7 +835,7 @@ AnimatorStateMachine:
     m_Position: {x: -330, y: -120, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -1199895053870706715}
-    m_Position: {x: -330, y: 70, z: 0}
+    m_Position: {x: -350, y: 80, z: 0}
   - serializedVersion: 1
     m_State: {fileID: -8387176805123652184}
     m_Position: {x: -60, y: -10, z: 0}
@@ -2118,6 +2118,12 @@ AnimatorController:
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
   - m_Name: isDie
+    m_Type: 4
+    m_DefaultFloat: 0
+    m_DefaultInt: 0
+    m_DefaultBool: 0
+    m_Controller: {fileID: 0}
+  - m_Name: DefaultShot
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -3507,7 +3513,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: doSwing
+    m_ConditionEvent: DefaultShot
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 2017839355816922340}

@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using Photon.Pun;
 
-public class Weapons : MonoBehaviourPun
+public class Weapons : MonoBehaviourPun, IPunObservable
 {
     public enum Type { Melee, Range, Mage }; //근접무기와 원거리무기 구분
     public Type type;
@@ -82,11 +82,55 @@ public class Weapons : MonoBehaviourPun
     public GameObject Skillarea2; //켜지면 데미지만
     public GameObject CCarea;  //켜지면 CC기 
 
-    
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        
+        if (stream.IsWriting)
+        {
+            if (type == Type.Range)
+            {
+                stream.SendNext(archer_skill4_Order);
+                stream.SendNext(ShotFull);
+                stream.SendNext(EnergyReady);
+                stream.SendNext(EnergyReady2);
+                stream.SendNext(isEnergy1);
+                stream.SendNext(isEnergy2);
+                stream.SendNext(isEnergyReady);
+            }
+            else if (type == Type.Mage)
+            {
+                stream.SendNext(mage_skill4_Order);
+                stream.SendNext(MeteoCasting);
+                stream.SendNext(isMeteo);
+            }
+
+        }
+        else
+        {
+            if (type == Type.Range)
+            {
+                archer_skill4_Order = (int)stream.ReceiveNext();
+                ShotFull = (bool)stream.ReceiveNext();
+                EnergyReady = (float)stream.ReceiveNext();
+                EnergyReady2 = (float)stream.ReceiveNext();
+                isEnergy1 = (bool)stream.ReceiveNext();
+                isEnergy2 = (bool)stream.ReceiveNext();
+                isEnergyReady = (bool)stream.ReceiveNext();
+            }
+            else if (type == Type.Mage)
+            {
+                mage_skill4_Order = (int)stream.ReceiveNext();
+                MeteoCasting = (float)stream.ReceiveNext();
+                isMeteo = (bool)stream.ReceiveNext();
+            }
+
+        }
+    }
     private void Start()
     {
         if (!photonView.IsMine)
             this.enabled = false;
+
         anim = GetComponentInParent<Animator>();
     }
     private void Update()
@@ -120,12 +164,17 @@ public class Weapons : MonoBehaviourPun
     //============================궁수스킬========================================
     public void BombArrow() //폭탄화살 궁수용
     {
+        if (!photonView.IsMine)
+            return;
+
         if (!playerST.isDodge && !isEnergyReady && !playerST.isJump
             && !playerST.isStun && !playerST.isRun && attackdamage.Usable_Skill2)
         {
             StartCoroutine(BombArrowPlay());
+            photonView.RPC("BombArrowPlay", RpcTarget.Others);
         }
     }
+    [PunRPC]
     IEnumerator BombArrowPlay()
     {
         isBombArrow = true;
@@ -147,26 +196,40 @@ public class Weapons : MonoBehaviourPun
         isBombArrow = false;
     }
 
-    public bool energyfullCharging = false;
     public void EnergyArrow()
+    {
+        if (!photonView.IsMine)
+            return;
+
+        if ((archer_skill4_Order == 0 || archer_skill4_Order == 1) && !playerST.isDodge && !playerST.isStun && !playerST.isJump && !playerST.isRun &&
+            attackdamage.Usable_Skill3)
+        {
+            photonView.RPC("EnergyArrowPlay", RpcTarget.All);
+        }
+    }
+    public bool energyfullCharging = false;
+
+    [PunRPC]
+    public void EnergyArrowPlay()
     {
         if (archer_skill4_Order == 0 &&  !playerST.isDodge && !playerST.isStun && !playerST.isJump && !playerST.isRun &&
             attackdamage.Usable_Skill3)
         {
             if (!StopSoundManager.stopSoundManager.audioSource.isPlaying)
                 StopSoundManager.stopSoundManager.ArcherSkill3ChargeSound();
+
             playerST.isCool3 = true;
             isEnergyReady = true;
             anim.SetBool("isReady", true);
             Arc3SkillBuff1.SetActive(true);
 
-            if (EnergyReady < EnergyChargingTime)
+            if (archer_skill4_Order == 0 && EnergyReady < EnergyChargingTime)
             {
                 EnergyReady += Time.deltaTime;
                 EnergyReady2 += Time.deltaTime;
             }
 
-            if (EnergyReady2 >= 5f)
+            if (archer_skill4_Order == 0 && EnergyReady2 >= 5f)
             {
                 Arc3SkillBuff3.SetActive(true);
                 isEnergy1 = false;
@@ -174,7 +237,7 @@ public class Weapons : MonoBehaviourPun
                 Arc3SkillBuff2.SetActive(false);
                 Arc3SkillBuff1.SetActive(false);
             }
-            else if (EnergyReady > 1.5f)
+            else if (archer_skill4_Order == 0 && EnergyReady > 1.5f)
             {
                 isEnergy1 = true;
                 Arc3SkillBuff1.SetActive(false);
@@ -192,58 +255,77 @@ public class Weapons : MonoBehaviourPun
             anim.SetBool("isShot", true);
             if (isEnergy1)
             {
-                attackdamage.Skill_3_Cool();
-                SoundManager.soundManager.ArcherSkill3Sound();
-                GameObject intantArrow = Instantiate(Arc3SkillArrow1, Arc3SkillPos.position, Arc3SkillPos.rotation);
-                Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
-                arrowRigid.velocity = Arc3SkillPos.forward * 20;
-                ArrowSkill arrowskill = intantArrow.GetComponent<ArrowSkill>(); //스킬데미지설정
-                arrowskill.damage = attackdamage.Skill_3_Damamge();
-                energyfullCharging = false;
-                Destroy(intantArrow, 2f);
+                photonView.RPC("EnergyShot1", RpcTarget.All);
             }
             else if (isEnergy2)
             {
-                attackdamage.Skill_3_Cool();
-                SoundManager.soundManager.ArcherSkill3Sound();
-                GameObject intantArrow = Instantiate(Arc3SkillArrow2, Arc3SkillPos.position, Arc3SkillPos.rotation);
-                Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
-                arrowRigid.velocity = Arc3SkillPos.forward * 20;
-                ArrowSkill arrowskill = intantArrow.GetComponent<ArrowSkill>(); //스킬데미지설정
-                arrowskill.damage = 1.5f*attackdamage.Skill_3_Damamge();
-                energyfullCharging = true;
-                Destroy(intantArrow, 2f);
+                photonView.RPC("EnergyShot2", RpcTarget.All);
             }
 
             EnergyReady = 0;
             EnergyReady2 = 0;
             isEnergy1 = false;
             isEnergy2 = false;
-            Invoke("EnergyAnimOut", 0.5f);
-            Invoke("EnergyArrowOut", 1f);
+
+            photonView.RPC("EnergyArrowOut", RpcTarget.All);
+            photonView.RPC("EnergyAnimOut", RpcTarget.All);
         }
 
     }
-    void EnergyArrowOut()
+    [PunRPC]
+    void EnergyShot1()
     {
+        attackdamage.Skill_3_Cool();
+        SoundManager.soundManager.ArcherSkill3Sound();
+        GameObject intantArrow = Instantiate(Arc3SkillArrow1, Arc3SkillPos.position, Arc3SkillPos.rotation);
+        Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
+        arrowRigid.velocity = Arc3SkillPos.forward * 20;
+        ArrowSkill arrowskill = intantArrow.GetComponent<ArrowSkill>(); //스킬데미지설정
+        arrowskill.damage = attackdamage.Skill_3_Damamge();
+        energyfullCharging = false;
+        Destroy(intantArrow, 2f);
+    }
+    [PunRPC]
+    void EnergyShot2()
+    {
+        attackdamage.Skill_3_Cool();
+        SoundManager.soundManager.ArcherSkill3Sound();
+        GameObject intantArrow = Instantiate(Arc3SkillArrow2, Arc3SkillPos.position, Arc3SkillPos.rotation);
+        Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
+        arrowRigid.velocity = Arc3SkillPos.forward * 20;
+        ArrowSkill arrowskill = intantArrow.GetComponent<ArrowSkill>(); //스킬데미지설정
+        arrowskill.damage = 1.5f * attackdamage.Skill_3_Damamge();
+        energyfullCharging = true;
+        Destroy(intantArrow, 2f);
+    }
+    [PunRPC]
+    IEnumerator EnergyArrowOut()
+    {
+        yield return new WaitForSeconds(0.5f);
         Arc3SkillBuff1.SetActive(false);
         Arc3SkillBuff2.SetActive(false);
         Arc3SkillBuff3.SetActive(false);
     }
-    void EnergyAnimOut()
+    [PunRPC]
+    IEnumerator EnergyAnimOut()
     {
+        yield return new WaitForSeconds(1f);
         anim.SetBool("isShot", false);
     }
     //============================================마법사 스킬=====================================================
     public void LightningBall()
     {
+        if (!photonView.IsMine)
+            return;
+
         if ( !playerST.isDodge && !playerST.isStun && !playerST.isJump && !playerST.isRun && !playerST.isFlash && !isIceage &&
            !isMeteo && attackdamage.Usable_Skill1)
         {
             StartCoroutine(LightningBallStart());
+            photonView.RPC("LightningBallStart", RpcTarget.Others);
         }
     }
-
+    [PunRPC]
     IEnumerator LightningBallStart()
     {
         playerST.isCool1 = false;
@@ -281,12 +363,17 @@ public class Weapons : MonoBehaviourPun
     }
     public void IceAge()
     {
+        if (!photonView.IsMine)
+            return;
+
         if ( !playerST.isDodge && !playerST.isStun && !playerST.isJump && !playerST.isRun && !isLightning && !playerST.isFlash &&
            !isMeteo && attackdamage.Usable_Skill2)
         {
             StartCoroutine(IceAgeStart());
+            photonView.RPC("IceAgeStart", RpcTarget.Others);
         }
     }
+    [PunRPC]
     IEnumerator IceAgeStart()
     {
         ArrowSkill.arrowSkill.NoDestroy = true;
@@ -327,6 +414,18 @@ public class Weapons : MonoBehaviourPun
     }
     public void Meteo()
     {
+        if (!photonView.IsMine)
+            return;
+
+        if ((mage_skill4_Order == 0 || mage_skill4_Order == 1) && !playerST.isDodge && !playerST.isStun && !playerST.isJump && !playerST.isRun && !playerST.isFlash
+            && !isLightning && !isIceage && attackdamage.Usable_Skill3)
+        {
+            photonView.RPC("MeteoPlay", RpcTarget.All);
+        }
+    }
+    [PunRPC]
+    public void MeteoPlay()
+    {
         if ((mage_skill4_Order ==0|| mage_skill4_Order==1) && !playerST.isDodge && !playerST.isStun && !playerST.isJump && !playerST.isRun && !playerST.isFlash
             && !isLightning && !isIceage && attackdamage.Usable_Skill3)
         {
@@ -350,10 +449,9 @@ public class Weapons : MonoBehaviourPun
 
                 MeteoCasting = 0f;
                 isMeteo = false;
-                Mage3SkillPlayerEff.SetActive(false);
                 anim.SetBool("Skill3", false);
-                Mage3SkillPosEff.SetActive(false);
                 anim.SetBool("Skill3Cut", true);
+                photonView.RPC("MeteoEffRemove", RpcTarget.All);
             }
             if (MeteoCasting > MeteoMaxCasting)
             {
@@ -369,25 +467,38 @@ public class Weapons : MonoBehaviourPun
                 Destroy(meteo, 1.6f);
                 MeteoCasting = 0f;
                 attackdamage.Skill_3_Cool();
-                Invoke("MeteoEnd", 0.8f);
-                Invoke("MeteoEnd2", 1.5f);
+
+                photonView.RPC("MeteoEnd", RpcTarget.All);
+                photonView.RPC("MeteoEnd2", RpcTarget.All);
             }
         }
     }
-    void MeteoEnd()
+    [PunRPC]
+    void MeteoEffRemove()
     {
+        Mage3SkillPlayerEff.SetActive(false);
+        Mage3SkillPosEff.SetActive(false);
+    }
+
+    [PunRPC]
+    IEnumerator MeteoEnd()
+    {
+        yield return new WaitForSeconds(0.8f);
         Mage3SkillPlayerEff.SetActive(false);
         anim.SetBool("Skill3", false);
         
     }
-    void MeteoEnd2()
+    [PunRPC]
+    IEnumerator MeteoEnd2()
     {
+        yield return new WaitForSeconds(1.5f);
         Mage3SkillPosEff.SetActive(false);
         anim.SetBool("Skill31", false);
         isMeteoShot = false;
         isMeteo = false;
     }
     //====================================================================================
+
     public void Use()//무기 사용
     {
         //if (type == Type.Melee) //근접무기일때 실행
@@ -395,13 +506,16 @@ public class Weapons : MonoBehaviourPun
         //    StopCoroutine("Swing");  //현재 공격중일시 멈춤
         //    StartCoroutine("Swing"); //공격실행
         //}
+        if (!photonView.IsMine)
+            return;
+
         if (type == Type.Range)
         {
-            StartCoroutine("Shot");
+           photonView.RPC("Shot", RpcTarget.All);
         }
         else if (type == Type.Mage)
         {
-            StartCoroutine("MagicShot");
+            photonView.RPC("MagicShot", RpcTarget.All);
         }
     }
 
@@ -418,6 +532,8 @@ public class Weapons : MonoBehaviourPun
 
     }
     public bool ShotFull;
+
+    [PunRPC]
     IEnumerator Shot()
     {
         playerST.isSootReady = true;
@@ -428,6 +544,7 @@ public class Weapons : MonoBehaviourPun
             Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
             arrowRigid.velocity = arrowPos.forward * playerST.bowPower * 150;
             Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
+            Destroy(intantArrow, 1f);
             if (playerST.FullChargeing)
             {
                 arrow.damage = 1.3f * attackdamage.Attack_Dam();
@@ -439,7 +556,7 @@ public class Weapons : MonoBehaviourPun
                 ShotFull = false;
             }
             
-            Destroy(intantArrow, 1f);
+
         }
         else if (attackdamage.Duration_Buff)
         {
@@ -453,16 +570,20 @@ public class Weapons : MonoBehaviourPun
         }
 
         playerST.anim.SetBool("doShot", false);
+        
 
-        playerST.bowPower = 0;
 
         yield return new WaitForSeconds(0.25f);
-
+        playerST.bowPower = 0;
         playerST.isFireReady = true;
         yield return new WaitForSeconds(0.1f);
         playerST.archerattack = false;
 
+        yield return null;
+
     }
+
+    [PunRPC]
     IEnumerator MagicShot()
     {
         anim.SetBool("isAttack", true);
@@ -478,4 +599,6 @@ public class Weapons : MonoBehaviourPun
         anim.SetBool("isAttack", false);
         yield return null;
     }
+
+
 }

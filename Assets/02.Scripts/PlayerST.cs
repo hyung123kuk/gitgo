@@ -5,7 +5,7 @@ using DG.Tweening;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
 
-public class PlayerST : MonoBehaviourPunCallbacks
+public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 {
 
 
@@ -25,7 +25,7 @@ public class PlayerST : MonoBehaviourPunCallbacks
     public SwordNames basicSword = 0;
 
     public float bowMinPower = 0.2f;
-    public float bowPower; // 화살 충전 데미지
+    public float bowPower=0.1f; // 화살 충전 데미지
     public float bowChargingTime = 1.0f; //화살 최대 충전시간
     public bool isSootReady = true;
     public bool FullChargeing; //일반공격 풀차징
@@ -138,11 +138,62 @@ public class PlayerST : MonoBehaviourPunCallbacks
 
     void Start()
     {
-        synchronization();
-        photonView.RPC("synchronization", RpcTarget.Others);
+        if (!photonView.IsMine)
+            return;
+
+        bgm = GameObject.Find("Sounds").transform.GetChild(3).GetComponent<BGM>();
+        playerstat = GetComponent<PlayerStat>();
+        bowPower = bowMinPower;
+        _transform = GetComponent<Transform>();
+        anim = GetComponentInChildren<Animator>();
+        rigid = GetComponent<Rigidbody>();
+        questStore = FindObjectOfType<QuestStore>();
+        playerST = this;
+        //dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
+        weapons = FindObjectOfType<Weapons>();
+        rigid = GetComponent<Rigidbody>();
+        // HorseSpawn = FindObjectOfType<Horse>().gameObject;
+        GameObject[] horses = GameObject.FindGameObjectsWithTag("Horse");
+        foreach (GameObject horse1 in horses)
+        {
+            if (horse1.GetComponent<PhotonView>().IsMine)
+            {
+                HorseSpawn = horse1;
+                break;
+            }
+        }
+        Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
+        
+    }
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        // 로컬 오브젝트라면 쓰기 부분이 실행됨
+        if (stream.IsWriting)
+        {
+            // 보우파워 값 보내기
+            stream.SendNext(bowPower);
+            stream.SendNext(isCool1);
+            stream.SendNext(isCool2);
+            stream.SendNext(isCool3);
+            stream.SendNext(isCool4);
+            stream.SendNext(isCooldodge);
+            stream.SendNext(isCoolTeleport);
+        }
+        else
+        {
+            // 리모트 오브젝트라면 읽기 부분이 실행됨         
+
+            // 네트워크를 통해 보우파워값 받기
+            bowPower = (float)stream.ReceiveNext();
+            isCool1 = (bool)stream.ReceiveNext();
+            isCool2 = (bool)stream.ReceiveNext();
+            isCool3 = (bool)stream.ReceiveNext();
+            isCool4 = (bool)stream.ReceiveNext();
+            isCooldodge = (bool)stream.ReceiveNext();
+            isCoolTeleport = (bool)stream.ReceiveNext();
+        }
     }
 
-    
 
 
     void Anima() //애니메이션 
@@ -340,21 +391,9 @@ public class PlayerST : MonoBehaviourPunCallbacks
     [PunRPC]
     public void synchronization() //변수할당 동기화
     {
-        bgm = GameObject.Find("Sounds").transform.GetChild(3).GetComponent<BGM>();
-        playerstat = GetComponent<PlayerStat>();
-        bowPower = bowMinPower;
-        _transform = GetComponent<Transform>();
-        anim = GetComponentInChildren<Animator>();
-        rigid = GetComponent<Rigidbody>();
-        questStore = FindObjectOfType<QuestStore>();
-        playerST = this;
-        dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
-        weapons = FindObjectOfType<Weapons>();
-        rigid = GetComponent<Rigidbody>();
-        HorseSpawn = FindObjectOfType<Horse>().gameObject;
-        Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
-        ImWar = CharacterType == Type.Warrior;
+        
     }
+       
     void Attack()   //공격
     {
         if (!photonView.IsMine)
@@ -363,76 +402,96 @@ public class PlayerST : MonoBehaviourPunCallbacks
         if (CharacterType == Type.Warrior && !isDodge && !isFlash && !weapons.isLightning &&
            !weapons.isIceage && !weapons.isMeteo && !isJump && !isRun && !isBlock && !isRush && !isAura && !isStun)
         {
-            fireDelay += Time.deltaTime;     //공격속도 계산
-            isFireReady = equipWeapon[NowWeapon].rate < fireDelay;  //공격 가능 타임
-
-            if (fDown)
-            {
-                if (isFireReady)  //공격할수있을때
-                {
-
-                    weapons.damage = attackdamage.Attack_Dam(); //기본공격 데미지
-                    //equipWeapon[NowWeapon].Use();
-                    fireDelay = 0;
-                }
-            }
+            WAttack();
+            photonView.RPC("WAttack", RpcTarget.Others);
         }
         else if (CharacterType == Type.Mage && !isDodge && !isFlash && !weapons.isLightning &&
           !weapons.isIceage && !weapons.isMeteo && !isJump && !isRun && !isBlock && !isRush && !isAura && !isStun)
         {
-            fireDelay += Time.deltaTime;     //공격속도 계산
-            isFireReady = equipWeapon[NowWeapon].rate < fireDelay;  //공격 가능 타임
-
-            if (fDown)
-            {
-                if (isFireReady)  //공격할수있을때
-                {
-
-                    equipWeapon[NowWeapon].Use();
-                    fireDelay = 0;
-                }
-            }
+            MAttack();
+            photonView.RPC("MAttack", RpcTarget.Others);
         }
 
         else if (CharacterType == Type.Archer && !isDodge && !isJump && !isRun && !isStun && !isBackStep && !weapons.isEnergyReady
             && !weapons.isBombArrow)
         {
+            AAttack();
+            photonView.RPC("AAttack", RpcTarget.Others);
 
-            fireDelay += Time.deltaTime;
+        }
+    }
+    [PunRPC]
+    void WAttack()
+    {
+        fireDelay += Time.deltaTime;     //공격속도 계산
+        isFireReady = equipWeapon[NowWeapon].rate < fireDelay;  //공격 가능 타임
 
-            if (fDowning && bowPower < bowChargingTime)
+        if (fDown)
+        {
+            if (isFireReady)  //공격할수있을때
             {
-                bowPower += Time.deltaTime;
-                if (bowPower > 0.31f && StopSoundManager.stopSoundManager && !StopSoundManager.stopSoundManager.audioSource.isPlaying)
-                {
-                    StopSoundManager.stopSoundManager.ArcherChargeSound();
-                }
-                if (bowPower >= bowChargingTime) //풀차징되면
-                {
-                    FullChargeing = true;
-                }
+
+                weapons.damage = attackdamage.Attack_Dam(); //기본공격 데미지
+                                                            //equipWeapon[NowWeapon].Use();
+                fireDelay = 0;
             }
+        }
+    }
+    [PunRPC]
+    void AAttack()
+    {
+        fireDelay += Time.deltaTime;
 
-            if (fDowning && isFireReady && equipWeapon[NowWeapon].rate < fireDelay)
+        if (fDowning && bowPower < bowChargingTime)
+        {
+            bowPower += Time.deltaTime;
+            if (bowPower > 0.31f && StopSoundManager.stopSoundManager && !StopSoundManager.stopSoundManager.audioSource.isPlaying)
             {
-                archerattack = true;
-                bowPower = bowMinPower;
-                anim.SetTrigger("doSwing");
-                isSootReady = false;
-                isFireReady = false;
-                fireDelay = 0f;
+                StopSoundManager.stopSoundManager.ArcherChargeSound();
             }
-            else if (fUp && !isSootReady)
+            if (bowPower >= bowChargingTime) //풀차징되면
             {
-                archerattack = true;
-                anim.SetBool("doShot", true);
-                StopSoundManager.stopSoundManager.audioSource.Stop();
-                if (!attackdamage.Duration_Buff)
-                    SoundManager.soundManager.ArcherAttackSound();
-                else if (attackdamage.Duration_Buff)
-                    SoundManager.soundManager.ArcherSkill1ShotSound();
+                FullChargeing = true;
+            }
+        }
+
+        if (fDowning && isFireReady && equipWeapon[NowWeapon].rate < fireDelay)
+        {
+            archerattack = true;
+            bowPower = bowMinPower;
+            anim.SetBool("DefaultShot", true);
+            isSootReady = false;
+            isFireReady = false;
+            fireDelay = 0f;
+        }
+        else if (fUp && !isSootReady)
+        {
+            archerattack = true;
+            anim.SetBool("DefaultShot", false);
+            anim.SetBool("doShot", true);
+            StopSoundManager.stopSoundManager.audioSource.Stop();
+            if (!attackdamage.Duration_Buff)
+                SoundManager.soundManager.ArcherAttackSound();
+            else if (attackdamage.Duration_Buff)
+                SoundManager.soundManager.ArcherSkill1ShotSound();
+            //equipWeapon[NowWeapon].photonView.RPC("Use", RpcTarget.All);
+            equipWeapon[NowWeapon].Use();
+        }
+    }
+    [PunRPC]
+    void MAttack()
+    {
+        fireDelay += Time.deltaTime;     //공격속도 계산
+        isFireReady = equipWeapon[NowWeapon].rate < fireDelay;  //공격 가능 타임
+
+        if (fDown)
+        {
+            if (isFireReady)  //공격할수있을때
+            {
 
                 equipWeapon[NowWeapon].Use();
+                //equipWeapon[NowWeapon].photonView.RPC("Use", RpcTarget.All);
+                fireDelay = 0;
             }
         }
     }
@@ -446,22 +505,27 @@ public class PlayerST : MonoBehaviourPunCallbacks
            !weapons.isLightning && !weapons.isIceage && !weapons.isMeteo && !isFlash && !isStun
             )
         {
-            FootSound.footSound.audioSource.Stop();
-
-            if (CharacterType == Type.Archer)
-                SoundManager.soundManager.ArcherJump();
-
-            if (CharacterType == Type.Warrior)
-                SoundManager.soundManager.WarriorAttackVoice();
-
-            if (CharacterType == Type.Mage)
-                SoundManager.soundManager.MageJump();
-
-            rigid.AddForce(Vector3.up * jump, ForceMode.Impulse); //애드포스 : 힘을주다/ 포스모드,임펄스 : 즉발적
-            anim.SetBool("isJump", true);
-            anim.SetTrigger("doJump");
-            isJump = true;
+            photonView.RPC("JumpPlay", RpcTarget.All);
         }
+    }
+    [PunRPC]
+    void JumpPlay()
+    {
+        FootSound.footSound.audioSource.Stop();
+
+        if (CharacterType == Type.Archer)
+            SoundManager.soundManager.ArcherJump();
+
+        if (CharacterType == Type.Warrior)
+            SoundManager.soundManager.WarriorAttackVoice();
+
+        if (CharacterType == Type.Mage)
+            SoundManager.soundManager.MageJump();
+
+        rigid.AddForce(Vector3.up * jump, ForceMode.Impulse); //애드포스 : 힘을주다/ 포스모드,임펄스 : 즉발적
+        anim.SetBool("isJump", true);
+        anim.SetTrigger("doJump");
+        isJump = true;
     }
 
     public void Dodge()
@@ -665,11 +729,16 @@ public class PlayerST : MonoBehaviourPunCallbacks
     //==================================여기서부터 궁수스킬=======================================
     public void Smoke() //마우스 우클릭 연막
     {
+        if (!photonView.IsMine)
+            return;
+
         if (!isJump && !isDodge && !isStun && !isRun && attackdamage.Usable_Skill1)
         {
             StartCoroutine(SmokePlay());
+            photonView.RPC("SmokePlay", RpcTarget.Others);
         }
     }
+    [PunRPC]
     IEnumerator SmokePlay()
     {
         ArrowSkill.arrowSkill.NoDestroy = true;
@@ -704,21 +773,36 @@ public class PlayerST : MonoBehaviourPunCallbacks
     }
     public void PoisonArrow()
     {
+        if (!photonView.IsMine)
+            return;
+
         if (!isStun && !isRun && attackdamage.Usable_Buff)
-        {
-            attackdamage.Skill_Buff_Cool();
-            SoundManager.soundManager.ArcherSkill1Sound();
+        {            
+            PoisonPlay();
+            photonView.RPC("PoisonPlay", RpcTarget.Others);
         }
+    }
+
+    [PunRPC]
+    void PoisonPlay()
+    {
+        SoundManager.soundManager.ArcherSkill1Sound();
+        attackdamage.Skill_Buff_Cool();
     }
     //==================================여기서부터 마법사스킬=======================================
     public void Flash()
     {
+        if (!photonView.IsMine)
+            return;
+
         if (!isDodge && !isJump && !isRun && !isStun && !weapons.isLightning && !weapons.isIceage && !weapons.isMeteo &&
             attackdamage.Usable_Teleport)
         {
             StartCoroutine(FlashStart());
+            photonView.RPC("FlashStart", RpcTarget.Others);
         }
     }
+    [PunRPC]
     IEnumerator FlashStart()
     {
         SoundManager.soundManager.MageTeleportSound();
@@ -777,7 +861,7 @@ public class PlayerST : MonoBehaviourPunCallbacks
 
         if (Input.GetKeyDown(KeyCode.H) && !HorseMode) //말 아이템이 없어서 이걸로 테스트했어요
         {
-            photonView.RPC("HorseRide", RpcTarget.AllBuffered);
+            HorseRide();
         }
 
         if (AllUI.isUI)
@@ -846,35 +930,35 @@ public class PlayerST : MonoBehaviourPunCallbacks
 
         //SkillClass(); //스킬직업제한
     }
-    [PunRPC]
     public void HorseRide()
     {
 
         if (!HorseMode) // 말 소환&소환해제
         {
-            if (horsecount == 0)
+            //if (horsecount == 0)
+            //{
+            //    SoundManager.soundManager.Horse();
+            //    HorseSpawn.gameObject.SetActive(false);
+            //    HorseSpawn.gameObject.SetActive(true);
+            //    HorseSpawn.gameObject.transform.position = horsepos1.position;
+            //    HorseSpawn.gameObject.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
+            //    HorseSpawn.transform.parent = null;
+            //    horsecount = 1;
+            //}
+            if (horsecount == 0) //소환 
             {
-                SoundManager.soundManager.Horse();
-                HorseSpawn.gameObject.SetActive(false);
-                HorseSpawn.gameObject.SetActive(true);
-                HorseSpawn.gameObject.transform.position = horsepos1.position;
-                HorseSpawn.gameObject.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
                 HorseSpawn.transform.parent = null;
+                SoundManager.soundManager.Horse();
+                HorseSpawn.transform.position = horsepos1.position;
+                HorseSpawn.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
                 horsecount = 1;
             }
-            else if (!HorseSpawn.gameObject.activeSelf && horsecount == 1)
-            {
-                HorseSpawn.transform.parent = null;
-                SoundManager.soundManager.Horse();
-                HorseSpawn.gameObject.SetActive(true);
-                HorseSpawn.gameObject.transform.position = horsepos1.position;
-                HorseSpawn.gameObject.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
-            }
-            else if (HorseSpawn.gameObject.activeSelf && horsecount == 1)
+            else if (horsecount == 1) //소환 해제
             {
                 SoundManager.soundManager.Horse2();
-                HorseSpawn.gameObject.SetActive(false);
-                HorseSpawn.transform.parent = transform;
+                HorseSpawn.transform.position = GameManager.gameManager.HorsePoint.position;
+                //HorseSpawn.transform.parent = transform;
+                horsecount = 0;
             }
         }
 
@@ -1247,5 +1331,5 @@ public class PlayerST : MonoBehaviourPunCallbacks
         //QuikSlot.quikSlot.weapons = FindObjectOfType<Weapons>();
     }
 
-
+    
 }

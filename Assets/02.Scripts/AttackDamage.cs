@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class AttackDamage : MonoBehaviourPun
+public class AttackDamage : MonoBehaviourPun, IPunObservable
 {
     [SerializeField]
     private PlayerStat playerStat;
@@ -135,6 +135,37 @@ public class AttackDamage : MonoBehaviourPun
         SkillDodge_time = Skill_Dodge_cooltime;
         SkillTeleport_time = Skill_Teleport_cooltime;
 
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        // 로컬 오브젝트라면 쓰기 부분이 실행됨
+        if (stream.IsWriting)
+        {
+          
+            stream.SendNext(Usable_Buff);
+            stream.SendNext(Duration_Buff);
+            stream.SendNext(Usable_Teleport);
+            stream.SendNext(Usable_Dodge);
+            stream.SendNext(Usable_Skill1);
+            stream.SendNext(Usable_Skill2);
+            stream.SendNext(Usable_Skill3);
+            stream.SendNext(Usable_Skill4);
+        }
+        else
+        {
+            // 리모트 오브젝트라면 읽기 부분이 실행됨         
+
+           
+            Usable_Buff = (bool)stream.ReceiveNext();
+            Duration_Buff = (bool)stream.ReceiveNext();
+            Usable_Teleport = (bool)stream.ReceiveNext();
+            Usable_Dodge = (bool)stream.ReceiveNext();
+            Usable_Skill1 = (bool)stream.ReceiveNext();
+            Usable_Skill2 = (bool)stream.ReceiveNext();
+            Usable_Skill3 = (bool)stream.ReceiveNext();
+            Usable_Skill4 = (bool)stream.ReceiveNext();
+        }
     }
     private void FixedUpdate()
     {

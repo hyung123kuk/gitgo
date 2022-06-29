@@ -5,8 +5,9 @@ using Photon.Pun;
 
 public class PlayerMine : MonoBehaviourPun
 {
-    public GameObject Player;
+    public GameObject Player; //자기꺼
     public GameObject Horse;
+
     
 
     private void Start()
@@ -14,51 +15,49 @@ public class PlayerMine : MonoBehaviourPun
        
         Player = this.gameObject;
 
-        if(photonView.IsMine)
-        Horse = GameObject.FindGameObjectWithTag("Horse");
+        Horse[] horses = FindObjectsOfType<Horse>();
+        foreach (Horse horse1 in horses)
+        {
+            if (horse1.GetComponent<PhotonView>().IsMine)
+            {
+                Horse = horse1.gameObject;
+                break;
+            }
+        }
 
     }
 
-    [PunRPC]
     void Playerfind()
     {
         if (!photonView.IsMine)
             return;
 
         GameObject[] HorseCheck = GameObject.FindGameObjectsWithTag("Horse"); //플레이어의 말 찾기.
-        GameObject[] PlayerCheck = GameObject.FindGameObjectsWithTag("Player"); //플레이어 찾기.
-        Horse = HorseCheck[0];
-
-        if (PlayerCheck.Length > 1) //플레이어
+        foreach (GameObject horse1 in HorseCheck)
         {
-            for (int i = 1; i < PlayerCheck.Length; i++)
+            if ((horse1.GetComponent<PhotonView>().ViewID != //자신 거르고 ismine이 true가 된 대상 찾기
+                   Horse.GetComponent<PhotonView>().ViewID) && horse1.GetComponent<PhotonView>().IsMine == true)
             {
-                if ((PlayerCheck[i].GetComponent<PlayerMine>().photonView.ViewID != //자신 거르고 ismine이 true가 된 대상 찾기
-                    Player.GetComponent<PlayerMine>().photonView.ViewID) && PlayerCheck[i].GetComponent<PlayerMine>().photonView.IsMine == true)
-                {
-                    PhotonNetwork.Destroy(PlayerCheck[i]);
-                    PlayerCheck[i] = null;
-                }
+                Debug.Log("말 삭제");
+                PhotonNetwork.Destroy(horse1);
             }
         }
 
-        if (HorseCheck.Length > 1) //플레이어의 말
+        GameObject[] PlayerCheck = GameObject.FindGameObjectsWithTag("Player"); //플레이어의 말 찾기.
+        foreach (GameObject player1 in PlayerCheck)
         {
-            for (int i = 1; i < HorseCheck.Length; i++)
+            if ((player1.GetComponent<PhotonView>().ViewID != //자신 거르고 ismine이 true가 된 대상 찾기
+                   Player.GetComponent<PhotonView>().ViewID) && player1.GetComponent<PhotonView>().IsMine == true)
             {
-                if ((HorseCheck[i].GetComponent<Horse>().photonView.ViewID != //자신 거르고 ismine이 true가 된 대상 찾기
-                   Horse.GetComponent<Horse>().photonView.ViewID) && HorseCheck[i].GetComponent<Horse>().photonView.IsMine == true)
-                {
-                    PhotonNetwork.Destroy(HorseCheck[i]);
-                    HorseCheck[i] = null;
-                }
+                Debug.Log("플레이어 삭제");
+                PhotonNetwork.Destroy(player1);
             }
         }
     }
 
     private void Update()
     {
-        Playerfind();
+         Playerfind();
     }
 
     

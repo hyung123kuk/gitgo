@@ -4928,152 +4928,6 @@ ParticleSystemRenderer:
   m_Mesh2: {fileID: 0}
   m_Mesh3: {fileID: 0}
   m_MaskInteraction: 0
---- !u!1 &5557124000989515263
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5557124000989515262}
-  - component: {fileID: 5557124000989515139}
-  - component: {fileID: 5557124000989515260}
-  - component: {fileID: 5557124000989515261}
-  m_Layer: 8
-  m_Name: Staff10(rare)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5557124000989515262
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5557124000989515263}
-  m_LocalRotation: {x: 0.023121571, y: 0.2066218, z: 0.9720803, w: -0.108778566}
-  m_LocalPosition: {x: 0.143, y: -0.527, z: 0.246}
-  m_LocalScale: {x: 1.2999997, y: 1.3000001, z: 1.3000001}
-  m_Children: []
-  m_Father: {fileID: 5557124001209560049}
-  m_RootOrder: 8
-  m_LocalEulerAnglesHint: {x: 204, y: -180, z: 12.77}
---- !u!33 &5557124000989515139
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5557124000989515263}
-  m_Mesh: {fileID: 1781805468462327908, guid: acd76795deeadd846a39bed2115bcc9b, type: 3}
---- !u!23 &5557124000989515260
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5557124000989515263}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 255bd86ca85d63641ada53a42bec3bbe, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5557124000989515261
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5557124000989515263}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc6d7d0affedf744d9af5e9dfd666b94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 2
-  damage: 0
-  rate: 0.7
-  Key3: 0
-  Key3Up: 0
-  anim: {fileID: 0}
-  meleeArea: {fileID: 0}
-  isSootReady: 1
-  playerST: {fileID: 5557124001941321711}
-  attackdamage: {fileID: 5557124001941321706}
-  playerstat: {fileID: 1525382062, guid: 6217c9f3ffe726242863aad8be4e319e, type: 3}
-  isBombArrow: 0
-  isEnergyReady: 0
-  isEnergy1: 0
-  isEnergy2: 0
-  EnergyReady: 0
-  EnergyReady2: 0
-  EnergyChargingTime: 5
-  archer_skill4_Order: 0
-  arrowPos: {fileID: 0}
-  Arc3SkillPos: {fileID: 0}
-  ArcDefaultAttack: {fileID: 0}
-  Arc1Skilarrow: {fileID: 0}
-  Arc2Skilarrow: {fileID: 0}
-  Arc3SkillBuff1: {fileID: 0}
-  Arc3SkillBuff2: {fileID: 0}
-  Arc3SkillBuff3: {fileID: 0}
-  Arc3SkillArrow1: {fileID: 0}
-  Arc3SkillArrow2: {fileID: 0}
-  isLightning: 0
-  isIceage: 0
-  isMeteo: 0
-  isMeteoShot: 0
-  mage_skill4_Order: 0
-  MagicPos: {fileID: 5557124001355794909}
-  MageDefaultAttack: {fileID: 4240952705438075378, guid: 3e62d42e6075f1b48bf235034be9251b, type: 3}
-  Mage1SkillEff: {fileID: 7838196484209121354, guid: c135b0939939ea5439157ac5155dfbab, type: 3}
-  Mage1SkillPos1: {fileID: 5557124002254385116}
-  Mage1SkillPos2: {fileID: 5557124001240209647}
-  Mage1SkillPos3: {fileID: 5557124002704029523}
-  Mage2SkillEff: {fileID: 5557124002035549219}
-  Mage2SkillReadyEff: {fileID: 5557124002144331825}
-  Mage3SkillPos1: {fileID: 5557124001154808583}
-  Mage3SkillPos2: {fileID: 5557124002271716802}
-  Mage3SkillPosEff: {fileID: 5557124002545004302}
-  Mage3SkillEff: {fileID: 1470204507440351361, guid: 038ecafa1b413a64cb68b508ab6fb4b6, type: 3}
-  Mage3SkillPlayerEff: {fileID: 5557124002009243791}
-  Skillarea: {fileID: 5557124002838245886}
-  Skillarea2: {fileID: 0}
-  CCarea: {fileID: 5557124001603089407}
-  energyfullCharging: 0
-  ShotFull: 0
 --- !u!1 &5557124001029400034
 GameObject:
   m_ObjectHideFlags: 0
@@ -24711,6 +24565,7 @@ GameObject:
   - component: {fileID: 5557124001326020588}
   - component: {fileID: 5557124001326020595}
   - component: {fileID: 5557124001326020594}
+  - component: {fileID: 7112926113558850214}
   m_Layer: 8
   m_Name: Staff
   m_TagString: Untagged
@@ -24803,7 +24658,7 @@ MonoBehaviour:
   isSootReady: 1
   playerST: {fileID: 5557124001941321711}
   attackdamage: {fileID: 5557124001941321706}
-  playerstat: {fileID: 1525382062, guid: 6217c9f3ffe726242863aad8be4e319e, type: 3}
+  playerstat: {fileID: 5557124001941321709}
   isBombArrow: 0
   isEnergyReady: 0
   isEnergy1: 0
@@ -24845,6 +24700,29 @@ MonoBehaviour:
   CCarea: {fileID: 5557124001603089407}
   energyfullCharging: 0
   ShotFull: 0
+--- !u!114 &7112926113558850214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5557124001326020590}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 5557124001326020594}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5557124001339724127
 GameObject:
   m_ObjectHideFlags: 0
@@ -24937,10 +24815,6 @@ Transform:
   - {fileID: 5557124001779070176}
   - {fileID: 5557124001807909025}
   - {fileID: 5557124002315585773}
-  - {fileID: 5557124002837313011}
-  - {fileID: 5557124002194251138}
-  - {fileID: 5557124002197952909}
-  - {fileID: 5557124000989515262}
   m_Father: {fileID: 5557124001698740428}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -30194,6 +30068,7 @@ GameObject:
   - component: {fileID: 5557124001779070182}
   - component: {fileID: 5557124001779070183}
   - component: {fileID: 5557124001249907728}
+  - component: {fileID: 2925021196267265961}
   m_Layer: 8
   m_Name: Staff5(rare)
   m_TagString: Untagged
@@ -30286,7 +30161,7 @@ MonoBehaviour:
   isSootReady: 1
   playerST: {fileID: 5557124001941321711}
   attackdamage: {fileID: 5557124001941321706}
-  playerstat: {fileID: 1525382062, guid: 6217c9f3ffe726242863aad8be4e319e, type: 3}
+  playerstat: {fileID: 5557124001941321709}
   isBombArrow: 0
   isEnergyReady: 0
   isEnergy1: 0
@@ -30328,6 +30203,29 @@ MonoBehaviour:
   CCarea: {fileID: 5557124001603089407}
   energyfullCharging: 0
   ShotFull: 0
+--- !u!114 &2925021196267265961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5557124001779070177}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 5557124001249907728}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5557124001789464575
 GameObject:
   m_ObjectHideFlags: 0
@@ -30370,6 +30268,7 @@ GameObject:
   - component: {fileID: 5557124001807909031}
   - component: {fileID: 5557124001807909024}
   - component: {fileID: 5557124002070199480}
+  - component: {fileID: 3657155252879083041}
   m_Layer: 8
   m_Name: Staff10(normal)
   m_TagString: Untagged
@@ -30462,7 +30361,7 @@ MonoBehaviour:
   isSootReady: 1
   playerST: {fileID: 5557124001941321711}
   attackdamage: {fileID: 5557124001941321706}
-  playerstat: {fileID: 1525382062, guid: 6217c9f3ffe726242863aad8be4e319e, type: 3}
+  playerstat: {fileID: 5557124001941321709}
   isBombArrow: 0
   isEnergyReady: 0
   isEnergy1: 0
@@ -30504,6 +30403,29 @@ MonoBehaviour:
   CCarea: {fileID: 5557124001603089407}
   energyfullCharging: 0
   ShotFull: 0
+--- !u!114 &3657155252879083041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5557124001807909026}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 5557124002070199480}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5557124001816370213
 GameObject:
   m_ObjectHideFlags: 0
@@ -35581,6 +35503,7 @@ GameObject:
   - component: {fileID: 5557124001941321715}
   - component: {fileID: 5557124001941321708}
   - component: {fileID: 5557124001941321710}
+  - component: {fileID: -4280170833654257214}
   - component: {fileID: 5557124001941321711}
   - component: {fileID: 5557124001941321704}
   - component: {fileID: 5557124001941321705}
@@ -35605,7 +35528,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5557124001941321707}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 41.2191, y: 32.039635, z: -28.651138}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -35673,6 +35596,26 @@ CapsuleCollider:
   m_Height: 2.0116022
   m_Direction: 1
   m_Center: {x: 0.011962891, y: 1.020028, z: 0}
+--- !u!114 &-4280170833654257214
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5557124001941321707}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c522d01b6ecfcda4eb57ddbed60c8c22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allUI: {fileID: 0}
+  Camera: {fileID: 0}
+  menuPrefabs: {fileID: 0}
+  TradeComplete: 0
+  YourTradeComlete: 0
+  menu: {fileID: 0}
+  Target: {fileID: 0}
+  TradeNum: 0
 --- !u!114 &5557124001941321711
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -35872,7 +35815,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248ef865d6187004c99e5f554f02f553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Level: 1
+  Level: 10
   TotalExp: 0
   NowExp: 0
   MONEY: 0
@@ -35960,6 +35903,8 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents:
+  - {fileID: 5557124001941321711}
+  - {fileID: 5557124001941321706}
   - {fileID: 1782976182388675617}
   - {fileID: 9099810526744800542}
   sceneViewId: 0
@@ -36067,6 +36012,7 @@ GameObject:
   - component: {fileID: 5557124001945030556}
   - component: {fileID: 5557124001945030557}
   - component: {fileID: 5557124001528355198}
+  - component: {fileID: 3628318610578351724}
   m_Layer: 8
   m_Name: Staff5(normal)
   m_TagString: Untagged
@@ -36159,7 +36105,7 @@ MonoBehaviour:
   isSootReady: 1
   playerST: {fileID: 5557124001941321711}
   attackdamage: {fileID: 5557124001941321706}
-  playerstat: {fileID: 1525382062, guid: 6217c9f3ffe726242863aad8be4e319e, type: 3}
+  playerstat: {fileID: 5557124001941321709}
   isBombArrow: 0
   isEnergyReady: 0
   isEnergy1: 0
@@ -36201,6 +36147,29 @@ MonoBehaviour:
   CCarea: {fileID: 5557124001603089407}
   energyfullCharging: 0
   ShotFull: 0
+--- !u!114 &3628318610578351724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5557124001945030559}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 5557124001528355198}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5557124001959148995
 GameObject:
   m_ObjectHideFlags: 0
@@ -46281,298 +46250,6 @@ Transform:
   m_Father: {fileID: 5557124001530063092}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5557124002194251139
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5557124002194251138}
-  - component: {fileID: 5557124002194251143}
-  - component: {fileID: 5557124002194251136}
-  - component: {fileID: 5557124002194251137}
-  m_Layer: 8
-  m_Name: Staff5(rare)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5557124002194251138
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5557124002194251139}
-  m_LocalRotation: {x: 0.023121571, y: 0.2066218, z: 0.9720803, w: -0.108778566}
-  m_LocalPosition: {x: 0.004, y: 0.035, z: -0.004}
-  m_LocalScale: {x: 1.2999997, y: 1.3000001, z: 1.3000001}
-  m_Children: []
-  m_Father: {fileID: 5557124001209560049}
-  m_RootOrder: 6
-  m_LocalEulerAnglesHint: {x: 204, y: -180, z: 12.77}
---- !u!33 &5557124002194251143
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5557124002194251139}
-  m_Mesh: {fileID: -4006300823370068072, guid: 67be24e8ee52ec04497cfee5403c5fa3, type: 3}
---- !u!23 &5557124002194251136
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5557124002194251139}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: e8d2b990cc44b7e4eaad6deb64ca0108, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5557124002194251137
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5557124002194251139}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc6d7d0affedf744d9af5e9dfd666b94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 2
-  damage: 0
-  rate: 0.7
-  Key3: 0
-  Key3Up: 0
-  anim: {fileID: 0}
-  meleeArea: {fileID: 0}
-  isSootReady: 1
-  playerST: {fileID: 5557124001941321711}
-  attackdamage: {fileID: 5557124001941321706}
-  playerstat: {fileID: 1525382062, guid: 6217c9f3ffe726242863aad8be4e319e, type: 3}
-  isBombArrow: 0
-  isEnergyReady: 0
-  isEnergy1: 0
-  isEnergy2: 0
-  EnergyReady: 0
-  EnergyReady2: 0
-  EnergyChargingTime: 5
-  archer_skill4_Order: 0
-  arrowPos: {fileID: 0}
-  Arc3SkillPos: {fileID: 0}
-  ArcDefaultAttack: {fileID: 0}
-  Arc1Skilarrow: {fileID: 0}
-  Arc2Skilarrow: {fileID: 0}
-  Arc3SkillBuff1: {fileID: 0}
-  Arc3SkillBuff2: {fileID: 0}
-  Arc3SkillBuff3: {fileID: 0}
-  Arc3SkillArrow1: {fileID: 0}
-  Arc3SkillArrow2: {fileID: 0}
-  isLightning: 0
-  isIceage: 0
-  isMeteo: 0
-  isMeteoShot: 0
-  mage_skill4_Order: 0
-  MagicPos: {fileID: 5557124001355794909}
-  MageDefaultAttack: {fileID: 4240952705438075378, guid: 3e62d42e6075f1b48bf235034be9251b, type: 3}
-  Mage1SkillEff: {fileID: 7838196484209121354, guid: c135b0939939ea5439157ac5155dfbab, type: 3}
-  Mage1SkillPos1: {fileID: 5557124002254385116}
-  Mage1SkillPos2: {fileID: 5557124001240209647}
-  Mage1SkillPos3: {fileID: 5557124002704029523}
-  Mage2SkillEff: {fileID: 5557124002035549219}
-  Mage2SkillReadyEff: {fileID: 5557124002144331825}
-  Mage3SkillPos1: {fileID: 5557124001154808583}
-  Mage3SkillPos2: {fileID: 5557124002271716802}
-  Mage3SkillPosEff: {fileID: 5557124002545004302}
-  Mage3SkillEff: {fileID: 1470204507440351361, guid: 038ecafa1b413a64cb68b508ab6fb4b6, type: 3}
-  Mage3SkillPlayerEff: {fileID: 5557124002009243791}
-  Skillarea: {fileID: 5557124002838245886}
-  Skillarea2: {fileID: 0}
-  CCarea: {fileID: 5557124001603089407}
-  energyfullCharging: 0
-  ShotFull: 0
---- !u!1 &5557124002197952910
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5557124002197952909}
-  - component: {fileID: 5557124002197952914}
-  - component: {fileID: 5557124002197952915}
-  - component: {fileID: 5557124002197952908}
-  m_Layer: 8
-  m_Name: Staff10(normal)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5557124002197952909
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5557124002197952910}
-  m_LocalRotation: {x: 0.023121571, y: 0.2066218, z: 0.9720803, w: -0.108778566}
-  m_LocalPosition: {x: 0.143, y: -0.527, z: 0.246}
-  m_LocalScale: {x: 1.2999997, y: 1.3000001, z: 1.3000001}
-  m_Children: []
-  m_Father: {fileID: 5557124001209560049}
-  m_RootOrder: 7
-  m_LocalEulerAnglesHint: {x: 204, y: -180, z: 12.77}
---- !u!33 &5557124002197952914
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5557124002197952910}
-  m_Mesh: {fileID: 1781805468462327908, guid: acd76795deeadd846a39bed2115bcc9b, type: 3}
---- !u!23 &5557124002197952915
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5557124002197952910}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: 52498669ffcea3e4082593ad148154db, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5557124002197952908
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5557124002197952910}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc6d7d0affedf744d9af5e9dfd666b94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 2
-  damage: 0
-  rate: 0.7
-  Key3: 0
-  Key3Up: 0
-  anim: {fileID: 0}
-  meleeArea: {fileID: 0}
-  isSootReady: 1
-  playerST: {fileID: 5557124001941321711}
-  attackdamage: {fileID: 5557124001941321706}
-  playerstat: {fileID: 1525382062, guid: 6217c9f3ffe726242863aad8be4e319e, type: 3}
-  isBombArrow: 0
-  isEnergyReady: 0
-  isEnergy1: 0
-  isEnergy2: 0
-  EnergyReady: 0
-  EnergyReady2: 0
-  EnergyChargingTime: 5
-  archer_skill4_Order: 0
-  arrowPos: {fileID: 0}
-  Arc3SkillPos: {fileID: 0}
-  ArcDefaultAttack: {fileID: 0}
-  Arc1Skilarrow: {fileID: 0}
-  Arc2Skilarrow: {fileID: 0}
-  Arc3SkillBuff1: {fileID: 0}
-  Arc3SkillBuff2: {fileID: 0}
-  Arc3SkillBuff3: {fileID: 0}
-  Arc3SkillArrow1: {fileID: 0}
-  Arc3SkillArrow2: {fileID: 0}
-  isLightning: 0
-  isIceage: 0
-  isMeteo: 0
-  isMeteoShot: 0
-  mage_skill4_Order: 0
-  MagicPos: {fileID: 5557124001355794909}
-  MageDefaultAttack: {fileID: 4240952705438075378, guid: 3e62d42e6075f1b48bf235034be9251b, type: 3}
-  Mage1SkillEff: {fileID: 7838196484209121354, guid: c135b0939939ea5439157ac5155dfbab, type: 3}
-  Mage1SkillPos1: {fileID: 5557124002254385116}
-  Mage1SkillPos2: {fileID: 5557124001240209647}
-  Mage1SkillPos3: {fileID: 5557124002704029523}
-  Mage2SkillEff: {fileID: 5557124002035549219}
-  Mage2SkillReadyEff: {fileID: 5557124002144331825}
-  Mage3SkillPos1: {fileID: 5557124001154808583}
-  Mage3SkillPos2: {fileID: 5557124002271716802}
-  Mage3SkillPosEff: {fileID: 5557124002545004302}
-  Mage3SkillEff: {fileID: 1470204507440351361, guid: 038ecafa1b413a64cb68b508ab6fb4b6, type: 3}
-  Mage3SkillPlayerEff: {fileID: 5557124002009243791}
-  Skillarea: {fileID: 5557124002838245886}
-  Skillarea2: {fileID: 0}
-  CCarea: {fileID: 5557124001603089407}
-  energyfullCharging: 0
-  ShotFull: 0
 --- !u!1 &5557124002227817548
 GameObject:
   m_ObjectHideFlags: 0
@@ -51353,6 +51030,7 @@ GameObject:
   - component: {fileID: 5557124002315585779}
   - component: {fileID: 5557124002315585772}
   - component: {fileID: 5557124002418632005}
+  - component: {fileID: 7986218682717660976}
   m_Layer: 8
   m_Name: Staff10(rare)
   m_TagString: Untagged
@@ -51445,7 +51123,7 @@ MonoBehaviour:
   isSootReady: 1
   playerST: {fileID: 5557124001941321711}
   attackdamage: {fileID: 5557124001941321706}
-  playerstat: {fileID: 1525382062, guid: 6217c9f3ffe726242863aad8be4e319e, type: 3}
+  playerstat: {fileID: 5557124001941321709}
   isBombArrow: 0
   isEnergyReady: 0
   isEnergy1: 0
@@ -51487,6 +51165,29 @@ MonoBehaviour:
   CCarea: {fileID: 5557124001603089407}
   energyfullCharging: 0
   ShotFull: 0
+--- !u!114 &7986218682717660976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5557124002315585774}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 5557124002418632005}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5557124002316472870
 GameObject:
   m_ObjectHideFlags: 0
@@ -57069,152 +56770,6 @@ Transform:
   m_Father: {fileID: 5557124002907916183}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &5557124002837313004
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 5557124002837313011}
-  - component: {fileID: 5557124002837313008}
-  - component: {fileID: 5557124002837313009}
-  - component: {fileID: 5557124002837313010}
-  m_Layer: 8
-  m_Name: Staff5(normal)
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 0
---- !u!4 &5557124002837313011
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5557124002837313004}
-  m_LocalRotation: {x: 0.023121571, y: 0.2066218, z: 0.9720803, w: -0.108778566}
-  m_LocalPosition: {x: 0.004, y: 0.035, z: -0.004}
-  m_LocalScale: {x: 1.2999997, y: 1.3000001, z: 1.3000001}
-  m_Children: []
-  m_Father: {fileID: 5557124001209560049}
-  m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 204, y: -180, z: 12.77}
---- !u!33 &5557124002837313008
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5557124002837313004}
-  m_Mesh: {fileID: -4006300823370068072, guid: 67be24e8ee52ec04497cfee5403c5fa3, type: 3}
---- !u!23 &5557124002837313009
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5557124002837313004}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 2100000, guid: babd69570f094464b9bf7c12d49cf49f, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!114 &5557124002837313010
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5557124002837313004}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cc6d7d0affedf744d9af5e9dfd666b94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  type: 2
-  damage: 0
-  rate: 0.7
-  Key3: 0
-  Key3Up: 0
-  anim: {fileID: 0}
-  meleeArea: {fileID: 0}
-  isSootReady: 1
-  playerST: {fileID: 5557124001941321711}
-  attackdamage: {fileID: 5557124001941321706}
-  playerstat: {fileID: 1525382062, guid: 6217c9f3ffe726242863aad8be4e319e, type: 3}
-  isBombArrow: 0
-  isEnergyReady: 0
-  isEnergy1: 0
-  isEnergy2: 0
-  EnergyReady: 0
-  EnergyReady2: 0
-  EnergyChargingTime: 5
-  archer_skill4_Order: 0
-  arrowPos: {fileID: 0}
-  Arc3SkillPos: {fileID: 0}
-  ArcDefaultAttack: {fileID: 0}
-  Arc1Skilarrow: {fileID: 0}
-  Arc2Skilarrow: {fileID: 0}
-  Arc3SkillBuff1: {fileID: 0}
-  Arc3SkillBuff2: {fileID: 0}
-  Arc3SkillBuff3: {fileID: 0}
-  Arc3SkillArrow1: {fileID: 0}
-  Arc3SkillArrow2: {fileID: 0}
-  isLightning: 0
-  isIceage: 0
-  isMeteo: 0
-  isMeteoShot: 0
-  mage_skill4_Order: 0
-  MagicPos: {fileID: 5557124001355794909}
-  MageDefaultAttack: {fileID: 4240952705438075378, guid: 3e62d42e6075f1b48bf235034be9251b, type: 3}
-  Mage1SkillEff: {fileID: 7838196484209121354, guid: c135b0939939ea5439157ac5155dfbab, type: 3}
-  Mage1SkillPos1: {fileID: 5557124002254385116}
-  Mage1SkillPos2: {fileID: 5557124001240209647}
-  Mage1SkillPos3: {fileID: 5557124002704029523}
-  Mage2SkillEff: {fileID: 5557124002035549219}
-  Mage2SkillReadyEff: {fileID: 5557124002144331825}
-  Mage3SkillPos1: {fileID: 5557124001154808583}
-  Mage3SkillPos2: {fileID: 5557124002271716802}
-  Mage3SkillPosEff: {fileID: 5557124002545004302}
-  Mage3SkillEff: {fileID: 1470204507440351361, guid: 038ecafa1b413a64cb68b508ab6fb4b6, type: 3}
-  Mage3SkillPlayerEff: {fileID: 5557124002009243791}
-  Skillarea: {fileID: 5557124002838245886}
-  Skillarea2: {fileID: 0}
-  CCarea: {fileID: 5557124001603089407}
-  energyfullCharging: 0
-  ShotFull: 0
 --- !u!1 &5557124002838245886
 GameObject:
   m_ObjectHideFlags: 0

@@ -121,6 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
+  NoDestroy: 0
 --- !u!1 &799582882699722512
 GameObject:
   m_ObjectHideFlags: 0
@@ -20134,12 +20135,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   CharacterType: 2
+  rigid: {fileID: 0}
   jump: 30
   speed: 6
   cam: {fileID: 3686157699481388919}
   SelectPlayer: {fileID: 2733890581670816362}
   anim: {fileID: 2641298211803070261}
-  maxhealth: 0
   equipWeapon:
   - {fileID: 3686157698800531967}
   NowWeapon: 0
@@ -20148,18 +20149,36 @@ MonoBehaviour:
   bowPower: 0.2
   bowChargingTime: 1
   isSootReady: 1
+  FullChargeing: 0
+  fUp: 0
   isFireReady: 1
   isDamage: 0
+  Rdown: 0
   ImWar: 0
+  isJump: 0
   archerattack: 0
+  isStun: 0
   isRun: 0
-  weapons: {fileID: 3686157698800531967}
   attackdamage: {fileID: 799582883093164227}
   playerstat: {fileID: 799582883093164228}
   Skillarea: {fileID: 799582882552728047}
   Skillarea2: {fileID: 0}
   CCarea: {fileID: 799582883059611884}
+  playerST: {fileID: 0}
+  HorseMode: 0
+  Horsee: {fileID: 0}
+  HorseSpawn: {fileID: 0}
+  horsepos1: {fileID: 0}
+  horsepos2: {fileID: 0}
+  DunjeonBossArena: 0
+  NoMove: 0
+  isDie: 0
+  dieui: {fileID: 0}
+  bgm: {fileID: 0}
+  horsecount: 0
+  isFall: 0
   isDodge: 0
+  isBuff: 0
   BuffEff: {fileID: 0}
   RushEff: {fileID: 0}
   Aurapos: {fileID: 0}
@@ -20167,10 +20186,19 @@ MonoBehaviour:
   BackStepEff: {fileID: 0}
   BackStepPos: {fileID: 0}
   isBackStep: 0
+  isPoison: 0
   mesh: {fileID: 3707911856343587701}
   smesh: {fileID: 2602562528673211631}
   FlashEff: {fileID: 6898810561198424673}
   isFlash: 0
+  questStore: {fileID: 0}
+  isCool1: 0
+  isCool2: 0
+  isCool3: 0
+  isCool4: 0
+  isCooldodge: 0
+  isCoolTeleport: 0
+  weapons: {fileID: 3686157698800531967}
 --- !u!114 &799582883451217691
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20232,26 +20260,51 @@ MonoBehaviour:
   Usable_Buff: 1
   Skill_Buff_duration: 5
   Duration_Buff: 0
+  Skill_Buff_use_Mp: 50
   Skill_Teleport_cooltime: 10
   Usable_Teleport: 1
+  Skill_TelePort_Mp: 50
   Skill_Dodge_cooltime: 10
   Usable_Dodge: 1
+  Skill_Dodge_Mp: 50
   Skill_1_per_dam: 1.5
   Skill_1_fixed_dam: 30
   Skill_1_cooltime: 5
   Usable_Skill1: 1
+  Skill_1_use_Mp: 50
   Skill_2_per_dam: 1.5
   Skill_2_fixed_dam: 50
   Skill_2_cooltime: 5
   Usable_Skill2: 1
+  Skill_2_use_Mp: 50
   Skill_3_per_dam: 1.5
   Skill_3_fixed_dam: 50
   Skill_3_cooltime: 5
   Usable_Skill3: 1
+  Skill_3_use_Mp: 50
   Skill_4_per_dam: 1
   Skill_4_fixed_dam: 0
   Skill_4_cooltime: 5
   Usable_Skill4: 1
+  Skill_4_use_Mp: 50
+  SkillBuff_time: 0
+  SkillBuff_passedTime: 0
+  SkillTeleport_time: 0
+  SkillTeleport_passedTime: 0
+  SkillDodge_time: 0
+  SkillDodge_passedTime: 0
+  SkillBuff_passedDurationgTime: 0
+  Skill1_time: 0
+  Skill1_passedTime: 0
+  Skill2_time: 0
+  Skill2_passedTime: 0
+  Skill3_time: 0
+  Skill3_passedTime: 0
+  Skill4_time: 0
+  Skill4_passedTime: 0
+  attackDamage: 0
+  critical: 0
+  DamageNum: 0
 --- !u!114 &799582883093164228
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -20285,9 +20338,11 @@ MonoBehaviour:
   LEV_ADD_STR: 5
   LEV_ADD_DEX: 5
   LEV_ADD_INT: 5
-  expup: 0
   playerST: {fileID: 2733890581670816365}
   inven: {fileID: 0}
+  gameUI: {fileID: 0}
+  skillWindow: {fileID: 0}
+  statWindow: {fileID: 0}
   equSlots:
   - {fileID: 0}
   - {fileID: 0}
@@ -20296,6 +20351,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  saveManager: {fileID: 0}
+  playerstat: {fileID: 0}
 --- !u!1 &2733895293736350421
 GameObject:
   m_ObjectHideFlags: 0
@@ -26887,6 +26944,8 @@ MonoBehaviour:
   ySpeed: 80
   yMinLimit: -20
   yMaxLimit: 80
+  playerst: {fileID: 0}
+  weapons: {fileID: 0}
 --- !u!1 &3686157699870274903
 GameObject:
   m_ObjectHideFlags: 0
@@ -65548,6 +65607,16 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 525d3a28b4a0c394d8dcd5f20a00eb13, type: 3}
+--- !u!1 &3684870838706688749 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1291259407528558, guid: 525d3a28b4a0c394d8dcd5f20a00eb13, type: 3}
+  m_PrefabInstance: {fileID: 3686157700057702531}
+  m_PrefabAsset: {fileID: 0}
+--- !u!4 &3690251735784785887 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 4983549492602716, guid: 525d3a28b4a0c394d8dcd5f20a00eb13, type: 3}
+  m_PrefabInstance: {fileID: 3686157700057702531}
+  m_PrefabAsset: {fileID: 0}
 --- !u!23 &3707911856343587701 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: 23356744949513206, guid: 525d3a28b4a0c394d8dcd5f20a00eb13, type: 3}
@@ -65558,14 +65627,31 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1964054908, guid: 525d3a28b4a0c394d8dcd5f20a00eb13, type: 3}
   m_PrefabInstance: {fileID: 3686157700057702531}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 3684870838706688749}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cc6d7d0affedf744d9af5e9dfd666b94, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &3690251735784785887 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 4983549492602716, guid: 525d3a28b4a0c394d8dcd5f20a00eb13, type: 3}
-  m_PrefabInstance: {fileID: 3686157700057702531}
+--- !u!114 &7937272772823864064
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3684870838706688749}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
