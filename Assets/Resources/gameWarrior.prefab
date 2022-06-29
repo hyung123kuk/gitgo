@@ -20527,6 +20527,7 @@ GameObject:
   - component: {fileID: 2730395410406328865}
   - component: {fileID: 2730395410406328862}
   - component: {fileID: 2730395410406328863}
+  - component: {fileID: 337571608}
   m_Layer: 8
   m_Name: gameWarrior
   m_TagString: Player
@@ -20794,7 +20795,7 @@ MonoBehaviour:
   Level: 10
   TotalExp: 0
   NowExp: 0
-  MONEY: 0
+  MONEY: 1000
   _STR: 0
   _DEX: 0
   _INT: 0
@@ -21033,6 +21034,26 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 0
+--- !u!114 &337571608
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730395410406331899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c522d01b6ecfcda4eb57ddbed60c8c22, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allUI: {fileID: 0}
+  Camera: {fileID: 0}
+  menuPrefabs: {fileID: 0}
+  TradeComplete: 0
+  YourTradeComlete: 0
+  menu: {fileID: 0}
+  Target: {fileID: 0}
+  TradeNum: 0
 --- !u!1 &2730395410406331900
 GameObject:
   m_ObjectHideFlags: 0
