@@ -544,9 +544,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 4139057296243478619, guid: 6746dff245e8e3143b640b398927e9b6, type: 3}
-        m_TargetAssemblyTypeName: StatWindow, Assembly-CSharp
-        m_MethodName: StatWindowOff
+      - m_Target: {fileID: 4139057295572266916}
+        m_TargetAssemblyTypeName: NET_STAT, Assembly-CSharp
+        m_MethodName: Net_StatWindowOff
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

@@ -66,4 +66,10 @@ public class NET_ChSelMenu : MonoBehaviour
         net_UIPlayer.Trade();
         net_UIPlayer.DestroyMenu();
     }
+
+    public void InfoButton()
+    {
+        net_UIPlayer.Info();
+        net_UIPlayer.DestroyMenu();
+    }
 }
