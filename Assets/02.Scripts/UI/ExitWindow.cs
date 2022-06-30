@@ -63,20 +63,10 @@ public class ExitWindow : MonoBehaviourPun
     public void SelCharacterMenu()
     {
         AllUI.allUI.AllWindowEnd();
-        Leave();
-
         SceneManager.LoadScene(0);
-        
-
-    }
-
-
-
-    public void Leave()
-    {
-        Debug.Log("Á¾·á³¡");
         PhotonNetwork.LeaveRoom();
     }
+    
 
     public void ExitGame()
     {

@@ -11,6 +11,8 @@ public class CharacterSelData
 {
     public int Charater1;
     public int Charater2;
+    public string Charater1name;
+    public string Charater2name;
 
 }
 
@@ -60,12 +62,41 @@ public class Data
 }
 
 
-public class SaveManager : MonoBehaviour
+public class SaveManager : MonoBehaviourPunCallbacks
 {
     
     private string SAVE_DATA_DIRECTORY;//파일이름 Start에서 선언한다.
     #region 캐릭터 선택창 관련 변수
     private CharacterSelData characterSelData = new CharacterSelData();
+    public string Getname1
+    {
+        get
+        {
+            return characterSelData.Charater1name;
+        }
+    }
+    public string Setname1
+    {
+        set
+        {
+            characterSelData.Charater1name = value;
+        }
+    }
+    public string Getname2
+    {
+        get
+        {
+            return characterSelData.Charater2name;
+        }
+    }
+    public string Setname2
+    {
+        set
+        {
+            characterSelData.Charater2name = value;
+        }
+    }
+    private Nickname nickname;
     private CharacterSel characterSel;
     private string Sel_SAVE_FILENAME = "/CharacterSelSaveFile.txt";
     #endregion
@@ -145,7 +176,6 @@ public class SaveManager : MonoBehaviour
 
             if (CharacterNum == 0)
             {
-                
                 File.WriteAllText(SAVE_DATA_DIRECTORY + ch1_SAVE_FILENAME, json);
             }
             else if (CharacterNum == 1)
@@ -408,7 +438,10 @@ public class SaveManager : MonoBehaviour
     public void CharacterSelSave1()
     {
         characterSel = FindObjectOfType<CharacterSel>();
+        nickname = FindObjectOfType<Nickname>();
         characterSelData.Charater1 = (int)characterSel.character1;
+        characterSelData.Charater1name = characterSel.Char1Name.text;
+
        
         string json = JsonUtility.ToJson(characterSelData);
         File.WriteAllText(SAVE_DATA_DIRECTORY + Sel_SAVE_FILENAME, json);
@@ -417,6 +450,8 @@ public class SaveManager : MonoBehaviour
     {
         characterSel = FindObjectOfType<CharacterSel>();
         characterSelData.Charater2 = (int)characterSel.character2;
+        characterSelData.Charater2name = characterSel.Char2Name.text;
+
         string json = JsonUtility.ToJson(characterSelData);
         File.WriteAllText(SAVE_DATA_DIRECTORY + Sel_SAVE_FILENAME, json);
     }
@@ -429,8 +464,10 @@ public class SaveManager : MonoBehaviour
             string loadJson = File.ReadAllText(SAVE_DATA_DIRECTORY + Sel_SAVE_FILENAME);
             characterSelData = JsonUtility.FromJson<CharacterSelData>(loadJson);           
             characterSel = FindObjectOfType<CharacterSel>();
+            characterSel.Char1Name.text = characterSelData.Charater1name;
+            characterSel.Char2Name.text = characterSelData.Charater2name;
 
-            
+
             if (characterSelData.Charater1 == 0) {
                 characterSel.MakeType = CharacterSel.Type.None;
              }
@@ -447,9 +484,11 @@ public class SaveManager : MonoBehaviour
                 characterSel.MakeType = CharacterSel.Type.Mage;
             }
             characterSel.charSel = 1;
-            
+
             if (characterSelData.Charater1 != 0)
+            {
                 characterSel.MakeBut();
+            }
 
 
             if (characterSelData.Charater2 == 0)
@@ -480,8 +519,31 @@ public class SaveManager : MonoBehaviour
     }
 
     #endregion
+    public override void OnLeftRoom() //방을 나갈때 자동저장 (캐릭터선택창)
+    {
+        Debug.Log("1자동저장....");
+        CharacterSelSave1();
+        CharacterSelSave2();
+        if (CharacterNum == 0)
+            PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater1name;
+        else if (CharacterNum == 1)
+            PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater2name;
+        characterSel.transform.GetChild(0).gameObject.SetActive(true);
+        characterSel.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
 
-    
+    }
+
+    private void OnApplicationQuit() //강제종료될때 자동저장
+    {
+        Debug.Log("2자동저장....");
+        CharacterSelSave1();
+        CharacterSelSave2();
+        if (CharacterNum == 0)
+            PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater1name;
+        else if (CharacterNum == 1)
+            PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater2name;
+    }
+
 
 
 }

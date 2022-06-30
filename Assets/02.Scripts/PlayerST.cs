@@ -4,6 +4,8 @@ using UnityEngine;
 using DG.Tweening;
 using Photon.Pun;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using Photon.Realtime;
 
 public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 {
@@ -25,7 +27,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     public SwordNames basicSword = 0;
 
     public float bowMinPower = 0.2f;
-    public float bowPower=0.1f; // 화살 충전 데미지
+    public float bowPower = 0.1f; // 화살 충전 데미지
     public float bowChargingTime = 1.0f; //화살 최대 충전시간
     public bool isSootReady = true;
     public bool FullChargeing; //일반공격 풀차징
@@ -128,19 +130,48 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
 
     public Weapons weapons;
+    public Image healthbar;
+    public Text nickname;
+    public Image helathbarBack;
+    private SaveManager saveManager;
 
     private void Awake()
     {
         if (!photonView.IsMine)
             this.enabled = false;
 
+        saveManager = FindObjectOfType<SaveManager>();
+        nickname = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<Text>();
+        healthbar = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Image>();
+        helathbarBack = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(2).GetComponent<Image>();
     }
 
+    void NicknameSerching() //닉넴찾기 다른플레이어
+    {
+        PlayerST[] ownerplayers = FindObjectsOfType<PlayerST>();
+        foreach (PlayerST ownerplayer in ownerplayers)
+        {
+            if (!ownerplayer.GetComponent<PhotonView>().IsMine)
+            {
+                ownerplayer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).
+                    GetComponent<Text>().text = ownerplayer.GetComponent<PhotonView>().Owner.NickName;
+                if (ownerplayer == null)
+                    break;
+            }
+        }
+    }
     void Start()
     {
         if (!photonView.IsMine)
+        {
             return;
+        }
+        nickname.text = PhotonNetwork.LocalPlayer.NickName;
+        
 
+        healthbar.CrossFadeAlpha(0, 0, true);  //자기자신 HP바 가리기
+        //nickname.CrossFadeAlpha(0, 0, true);
+        helathbarBack.CrossFadeAlpha(0, 0, true);
         bgm = GameObject.Find("Sounds").transform.GetChild(3).GetComponent<BGM>();
         playerstat = GetComponent<PlayerStat>();
         bowPower = bowMinPower;
@@ -149,7 +180,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         rigid = GetComponent<Rigidbody>();
         questStore = FindObjectOfType<QuestStore>();
         playerST = this;
-        //dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
+        dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
         weapons = FindObjectOfType<Weapons>();
         rigid = GetComponent<Rigidbody>();
         // HorseSpawn = FindObjectOfType<Horse>().gameObject;
@@ -163,8 +194,10 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             }
         }
         Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
-        
+
     }
+
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
         // 로컬 오브젝트라면 쓰기 부분이 실행됨
@@ -178,6 +211,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             stream.SendNext(isCool4);
             stream.SendNext(isCooldodge);
             stream.SendNext(isCoolTeleport);
+            stream.SendNext(healthbar.fillAmount);
         }
         else
         {
@@ -191,6 +225,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             isCool4 = (bool)stream.ReceiveNext();
             isCooldodge = (bool)stream.ReceiveNext();
             isCoolTeleport = (bool)stream.ReceiveNext();
+            healthbar.fillAmount = (float)stream.ReceiveNext();
         }
     }
 
@@ -388,12 +423,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         #endregion
     }
 
-    [PunRPC]
-    public void synchronization() //변수할당 동기화
-    {
-        
-    }
-       
+
     void Attack()   //공격
     {
         if (!photonView.IsMine)
@@ -588,7 +618,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
              attackdamage.Usable_Skill1)
         {
             StartCoroutine(BlockPlay());
-            photonView.RPC("BlockPlay",RpcTarget.Others);
+            photonView.RPC("BlockPlay", RpcTarget.Others);
         }
     }
     [PunRPC]
@@ -777,7 +807,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             return;
 
         if (!isStun && !isRun && attackdamage.Usable_Buff)
-        {            
+        {
             PoisonPlay();
             photonView.RPC("PoisonPlay", RpcTarget.Others);
         }
@@ -849,14 +879,14 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         Key2 = Input.GetButtonDown("Key2"); //2번키
         Key3 = Input.GetButtonDown("Key3"); //3번키
     }
-    
-    
+
+
     private void Update()
     {
         if (!photonView.IsMine)
             return;
 
-      
+        NicknameSerching(); //다른플레이어들 닉네임갱신
 
 
         if (Input.GetKeyDown(KeyCode.H) && !HorseMode) //말 아이템이 없어서 이걸로 테스트했어요
@@ -1102,6 +1132,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         playerstat._Mp = playerstat._MAXMP;
     }
 
+
     void OnTriggerEnter(Collider other) //충돌감지
     {
         if (photonView.IsMine)
@@ -1115,6 +1146,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                 {
                     EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
                     playerstat.DamagedHp(enemyRange.damage);
+                    healthbar.fillAmount = playerstat._Hp / playerstat._MAXHP;
                     other.gameObject.GetComponent<Attacking>().isAttacking = false;
                     if (playerstat._Hp <= 0)
                     {
@@ -1132,7 +1164,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
                     EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
                     playerstat.DamagedHp(enemyRange.damage);
-
+                    healthbar.fillAmount = playerstat._Hp / playerstat._MAXHP;
                     StartCoroutine(OnDamageNuck());
                     if (playerstat._Hp <= 0)
                     {
@@ -1147,7 +1179,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
                     EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
                     playerstat.DamagedHp(enemyRange.damage);
-
+                    healthbar.fillAmount = playerstat._Hp / playerstat._MAXHP;
                     StartCoroutine(OnDamageNuck2());
                     if (playerstat._Hp <= 0)
                     {
@@ -1163,7 +1195,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
                     EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
                     playerstat.DamagedHp(enemyRange.damage);
-
+                    healthbar.fillAmount = playerstat._Hp / playerstat._MAXHP;
                     StartCoroutine(OnDamageNuck3());
                     if (playerstat._Hp <= 0)
                     {
@@ -1331,5 +1363,5 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         //QuikSlot.quikSlot.weapons = FindObjectOfType<Weapons>();
     }
 
-    
+
 }

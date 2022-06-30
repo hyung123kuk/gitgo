@@ -20,13 +20,17 @@ public class NET_UIPlayer : MonoBehaviourPun
 
     public bool TradeComplete;
     public bool YourTradeComlete;
+    PlayerST playerST;
+    PlayerStat playerStat;
 
-    
 
     private void Start()
     {
         allUI = FindObjectOfType<AllUI>();
+        playerST = GetComponent<PlayerST>();
+        playerStat = GetComponent<PlayerStat>();
     }
+
 
 
 
@@ -119,6 +123,7 @@ public class NET_UIPlayer : MonoBehaviourPun
         targetNet.TradeTargetCheck(TradeNum); //타겟된 캐릭터에게 체크하라고 명령한다.
 
     }
+
 
     public void TradeTargetCheck(int _TradeNum)
     {
@@ -367,5 +372,46 @@ public class NET_UIPlayer : MonoBehaviourPun
 
 
 
+    public void Info()// 정보 버튼을 클릭 했을때
+    {
+        NET_UIPlayer tagetNet = Target.GetComponent<NET_UIPlayer>();
+        Debug.Log(GetComponent<PhotonView>().ViewID);
+        tagetNet.photonView.RPC("TargetInfo", RpcTarget.Others, GetComponent<PhotonView>().ViewID);
+    }
+    [PunRPC]
+    public void TargetInfo(int ID)
+    {
+        Debug.Log(ID);
+        if (GetComponent<PhotonView>().IsMine)
+        {
+            
+
+
+            NET_UIPlayer[] players = FindObjectsOfType<NET_UIPlayer>();
+            foreach(NET_UIPlayer player in players)
+            {
+                if (player.GetComponent<PhotonView>().ViewID == ID)
+                {
+                    Debug.Log(ID);
+                    int Ch_type = (int)playerST.CharacterType;
+                    player.photonView.RPC("RecieveInfo", RpcTarget.Others, Ch_type, playerStat.Level, playerStat._STR, playerStat._DEX, playerStat._INT, playerStat._DAMAGE, 
+                                                                playerStat._DEFENCE, playerStat._MOVE_SPEED, playerStat._SKILL_COOLTIME_DEC_PER, playerStat._SKILL_ADD_DAMAGE_PER, playerStat._CRITICAL_PROBABILITY, playerStat._CRITICAL_ADD_DAMAGE_PER);
+                }
+            }
+
+        }
+    }
+
+    [PunRPC]
+    public void RecieveInfo( int  CharacterType, int  Level,float  _STR,float  _DEX,float _INT,float _DAMAGE,
+                            float _DEFENCE, float _MOVE_SPEED, float _SKILL_COOLTIME_DEC_PER, float _SKILL_ADD_DAMAGE_PER, float _CRITICAL_PROBABILITY, float _CRITICAL_ADD_DAMAGE_PER)
+    {
+        if (GetComponent<PhotonView>().IsMine)
+        {
+            Debug.Log(GetComponent<PhotonView>().ViewID);
+            FindObjectOfType<NET_STAT>().Net_StatWindowOn();
+            FindObjectOfType<NET_STAT>().SetStat(CharacterType, Level, _STR, _DEX, _INT, _DAMAGE, _DEFENCE, _MOVE_SPEED, _SKILL_COOLTIME_DEC_PER, _SKILL_ADD_DAMAGE_PER, _CRITICAL_PROBABILITY, _CRITICAL_ADD_DAMAGE_PER);
+        }
+    }
 
 }

@@ -214,6 +214,7 @@ public class AllUI : MonoBehaviourPun
         
         NET_TradeRecieve.isNET_Trade_ReicieveWindow = false;
         NET_Trade.isNET_Trade_Window = false;
+        NET_STAT.isNet_Stat = false;
 
         if (NET_UIPlayer.TradeOn)
         {
@@ -224,7 +225,7 @@ public class AllUI : MonoBehaviourPun
     public void CheckCursorLock()
     {
 
-        if (!inventory.iDown&& !SkillWindow.kDown && !StatWindow.tDown && !QuestExplain.isQuestExplain &&!QuestWindow.isQuestWindow&& !ExitWindow.isExitMenu && !ctrlDown &&!NET_UIPlayer.isMenu && !NET_TradeRecieve.isNET_Trade_ReicieveWindow && !NET_Trade.isNET_Trade_Window)
+        if (!inventory.iDown&& !SkillWindow.kDown && !StatWindow.tDown && !QuestExplain.isQuestExplain &&!QuestWindow.isQuestWindow&& !ExitWindow.isExitMenu && !ctrlDown &&!NET_UIPlayer.isMenu && !NET_TradeRecieve.isNET_Trade_ReicieveWindow && !NET_Trade.isNET_Trade_Window && !NET_STAT.isNet_Stat)
         {
             isUI = false;
             Cursor.lockState = CursorLockMode.Locked;

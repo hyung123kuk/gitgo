@@ -106,6 +106,10 @@ MonoBehaviour:
   - MeteoEffRemove
   - EnergyShot1
   - EnergyShot2
+  - HpbarRPC
+  - ApplyUpdatedHealth
+  - NicknameSetting
+  - NicknameSerching
   - RecieveInfo
   - TargetInfo
   DisableAutoOpenWizard: 1

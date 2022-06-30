@@ -37,6 +37,8 @@ public class NET_STAT : MonoBehaviour
     [SerializeField]
     private Text Critical_Damage;
 
+    public static bool isNet_Stat;
+
     [SerializeField]
     NET_UIPlayer net_UIPlayer;
     void Start()
@@ -73,8 +75,58 @@ public class NET_STAT : MonoBehaviour
     }
 
     
-    void Update()
+    public void Net_StatWindowOn()
     {
-        
+        UiSound.uiSound.UiOptionSound();
+        StatWindowDesign.SetActive(true);
+        isNet_Stat = true;
+        AllUI.allUI.CheckCursorLock();
     }
+
+    public void Net_StatWindowOff()
+    {
+        UiSound.uiSound.UiOptionSound();
+        StatWindowDesign.SetActive(false);
+        isNet_Stat = false;
+        AllUI.allUI.CheckCursorLock();
+
+    }
+
+
+    public void SetStat(int CharacterType, int Level, float _STR, float _DEX, float _INT, float _DAMAGE,
+                            float _DEFENCE, float _MOVE_SPEED, float _SKILL_COOLTIME_DEC_PER, float _SKILL_ADD_DAMAGE_PER, float _CRITICAL_PROBABILITY, float _CRITICAL_ADD_DAMAGE_PER)
+    {
+
+        if (CharacterType == 0)
+        {
+            Character.text = "직업 : 전사";
+        }
+        else if (CharacterType == 1)
+        {
+            Character.text = "직업 : 궁수";
+        }
+        else if (CharacterType == 2)
+        {
+            Character.text = "직업 : 법사";
+        }
+
+        level.text = "레벨 : " + Level;
+
+        STR.text = "힘 : " + (int)_STR;
+        DEX.text = "민첩 : " + (int)_DEX;
+        INT.text = "지능 : " + (int)_INT;
+
+        CoolTIme.text = "쿨타임 감소량 : " + (int)_SKILL_COOLTIME_DEC_PER;
+        SkillAddDamage.text = "스킬 추가 데미지 : " + (int)_SKILL_ADD_DAMAGE_PER;
+        DAMAGE.text = "공격력 : " + (int)_DAMAGE;
+        DEFENCE.text = "방어력 : " + (int)_DEFENCE;
+
+
+        MOVESPEED.text = "이동속도 : " + (int)(5 + (5 * _MOVE_SPEED / 100)) * 10;
+        Critical_Probable.text = "크리티컬 확률 : " + (int)_CRITICAL_PROBABILITY;
+        Critical_Damage.text = "크리티컬 데미지 : " + (int)_CRITICAL_ADD_DAMAGE_PER;
+
+
+    }
+
 }
