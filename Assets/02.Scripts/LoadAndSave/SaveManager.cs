@@ -529,7 +529,6 @@ public class SaveManager : MonoBehaviourPunCallbacks
         else if (CharacterNum == 1)
             PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater2name;
         characterSel.transform.GetChild(0).gameObject.SetActive(true);
-        characterSel.transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
 
     }
 
