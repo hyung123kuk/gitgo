@@ -15,6 +15,8 @@ public class NET_ChSelMenu : MonoBehaviour
     private RectTransform rectInfo;
     [SerializeField]
     NET_UIPlayer net_UIPlayer;
+    [SerializeField]
+    NET_PartyPlayer net_partyPlayer;
 
     public Vector3 offset = Vector3.zero;
     public Transform targetTr;
@@ -37,6 +39,18 @@ public class NET_ChSelMenu : MonoBehaviour
                 break;
             }
         }
+
+        NET_PartyPlayer[] net_partyyplayes = GameObject.FindObjectsOfType<NET_PartyPlayer>();
+
+        foreach (NET_PartyPlayer myPartyPlaye in net_partyyplayes)
+        {
+            if (myPartyPlaye.GetComponent<PhotonView>().IsMine)
+            {
+                net_partyPlayer = myPartyPlaye;
+                break;
+            }
+        }
+
         MenuOn();
     }
 
@@ -70,6 +84,12 @@ public class NET_ChSelMenu : MonoBehaviour
     public void InfoButton()
     {
         net_UIPlayer.Info();
+        net_UIPlayer.DestroyMenu();
+    }
+
+    public void PartyInvite()
+    {
+        net_partyPlayer.PartyInvite();
         net_UIPlayer.DestroyMenu();
     }
 }

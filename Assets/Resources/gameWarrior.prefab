@@ -20528,6 +20528,7 @@ GameObject:
   - component: {fileID: 2730395410406328862}
   - component: {fileID: 3967801595329062906}
   - component: {fileID: 2730395410406328863}
+  - component: {fileID: 218898413}
   m_Layer: 8
   m_Name: gameWarrior
   m_TagString: Player
@@ -21057,6 +21058,24 @@ MonoBehaviour:
   m_SynchronizeRotation: 1
   m_SynchronizeScale: 0
   m_UseLocal: 0
+--- !u!114 &218898413
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2730395410406331899}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7ab065d725019734d904410e857daac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  alreadyPartyNum: 0
+  partyNum: 0
+  partyOrderNum: 1
+  playerOrderNum: 0
+  isParty: 0
+  SendPartyMessage: 0
 --- !u!1 &2730395410406331900
 GameObject:
   m_ObjectHideFlags: 0

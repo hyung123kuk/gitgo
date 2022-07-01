@@ -131,6 +131,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Awake()
     {
+        
         if (!photonView.IsMine)
             this.enabled = false;
 
@@ -138,6 +139,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
     void Start()
     {
+        
         if (!photonView.IsMine)
             return;
 
@@ -146,7 +148,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         bowPower = bowMinPower;
         _transform = GetComponent<Transform>();
         anim = GetComponentInChildren<Animator>();
-        rigid = GetComponent<Rigidbody>();
+        
         questStore = FindObjectOfType<QuestStore>();
         playerST = this;
         //dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
@@ -522,6 +524,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         if (CharacterType == Type.Mage)
             SoundManager.soundManager.MageJump();
 
+        if (!photonView.IsMine)
+            return;
         rigid.AddForce(Vector3.up * jump, ForceMode.Impulse); //애드포스 : 힘을주다/ 포스모드,임펄스 : 즉발적
         anim.SetBool("isJump", true);
         anim.SetTrigger("doJump");
