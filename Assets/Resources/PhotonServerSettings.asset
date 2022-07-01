@@ -112,6 +112,12 @@ MonoBehaviour:
   - NicknameSerching
   - RecieveInfo
   - TargetInfo
+  - AllPartyMember
+  - fail
+  - infoRecieve
+  - PartyMemberRecieve
+  - PartyOrderNum
+  - PartyRecieveWindowOn
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

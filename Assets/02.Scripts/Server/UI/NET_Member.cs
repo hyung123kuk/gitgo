@@ -21,12 +21,12 @@ public class NET_Member : MonoBehaviour
 
     }
 
-    public void NameSet(int ID)
+    public void NameSet(int ID , string NickName)
     {
         Name = transform.GetChild(1).GetComponent<Text>();
     
         id = ID;
-        Name.text = ID.ToString();
+        Name.text = NickName;
     }
     public void BarSet(float hp , float mp) // 소수점으로 줘야한다.
     {

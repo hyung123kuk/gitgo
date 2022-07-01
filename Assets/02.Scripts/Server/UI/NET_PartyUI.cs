@@ -29,11 +29,11 @@ public class NET_PartyUI : MonoBehaviour
         NET_partyUI.SetActive(false);
     }
 
-    public void IstancePartyMem(int memNum)
+    public void IstancePartyMem(int memNum,string NickName)
     {
         GameObject member = Instantiate(Member);
         Debug.Log(member);
-        member.GetComponent<NET_Member>().NameSet(memNum);
+        member.GetComponent<NET_Member>().NameSet(memNum,NickName);
         members.Add(member);
 
     }
