@@ -25,10 +25,15 @@ public class CharacterSel : MonoBehaviourPunCallbacks
     public Type character2=Type.None;
     public GameObject[] char2;
     public int charSel;
+    public string Char1Stringname; //세이브매니저에서 저장용
+    public string Char2Stringname;
+    public Text Char1Name;
+    public Text Char2Name;
+    public Nickname nickname;
 
 
     //캐릭터 생성창
-    
+
     public Type MakeType=Type.None;
     public GameObject[] makeChar;
     public Text characterText;
@@ -58,6 +63,7 @@ public class CharacterSel : MonoBehaviourPunCallbacks
 
     private void Awake()
     {
+        nickname = GetComponent<Nickname>();
         audioListener = GetComponent<AudioListener>();
         saveManager = FindObjectOfType<SaveManager>();
         LobbyUi = GameObject.Find("Canvas_Lobby").transform.GetChild(0).gameObject;
@@ -69,8 +75,11 @@ public class CharacterSel : MonoBehaviourPunCallbacks
         {
             Destroy(gameObject);
         }
+
         
+
     }
+
 
 
     public void CharButton1()
@@ -80,6 +89,8 @@ public class CharacterSel : MonoBehaviourPunCallbacks
         UiSound.uiSound.UiOptionSound();
         if (character1==Type.None)
         {
+            nickname.nickNameInput1.gameObject.SetActive(true);
+            nickname.nickNameInput2.gameObject.SetActive(false);
             StopSoundManager.stopSoundManager.WarriorTalk1();
             widx = 1;
 
@@ -101,6 +112,10 @@ public class CharacterSel : MonoBehaviourPunCallbacks
             transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
             audioListener.enabled = true;
             LobbyUi.SetActive(true);
+            if (PhotonNetwork.LocalPlayer.NickName != null)
+            {
+                PhotonNetwork.LocalPlayer.NickName = saveManager.Getname1;
+            }
             // StartCoroutine(LoadCoroutine());
             //SceneManager.LoadScene(1);
         }
@@ -141,6 +156,8 @@ public class CharacterSel : MonoBehaviourPunCallbacks
         UiSound.uiSound.UiOptionSound();
         if (character2 == Type.None)
         {
+            nickname.nickNameInput2.gameObject.SetActive(true);
+            nickname.nickNameInput1.gameObject.SetActive(false);
             StopSoundManager.stopSoundManager.WarriorTalk1();
             widx = 1;
 
@@ -161,9 +178,11 @@ public class CharacterSel : MonoBehaviourPunCallbacks
             transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
             audioListener.enabled = true;
             LobbyUi.SetActive(true);
+            if(PhotonNetwork.LocalPlayer.NickName != null)
+            PhotonNetwork.LocalPlayer.NickName = saveManager.Getname2;
             //StartCoroutine(LoadCoroutine2());
             //SceneManager.LoadScene(1);
- 
+
         }
     }
 
@@ -401,16 +420,6 @@ public class CharacterSel : MonoBehaviourPunCallbacks
             saveManager.CharacterSelSave2();
         }
        
-    }
-
-    public override void OnLeftRoom()
-    {
-
-        Debug.Log("서버나감");
-        transform.GetChild(0).gameObject.SetActive(true);
-        transform.GetChild(0).GetChild(0).gameObject.SetActive(true);
-        // 룸을 나가면 로비 씬으로 돌아감
-        SceneManager.LoadScene("ChSel_sangin");
     }
 
 

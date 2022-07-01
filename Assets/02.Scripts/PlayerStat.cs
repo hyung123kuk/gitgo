@@ -4,7 +4,7 @@ using UnityEngine;
 using Cinemachine;
 using Photon.Pun;
 
-public class PlayerStat : MonoBehaviourPun //포톤으로 만들려고함.
+public class PlayerStat : MonoBehaviourPun, IPunObservable //포톤으로 만들려고함.
 {
     public int Level;
     public float TotalExp;
@@ -51,6 +51,23 @@ public class PlayerStat : MonoBehaviourPun //포톤으로 만들려고함.
     {
         if (!photonView.IsMine)
             this.enabled = false;
+    }
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
+        // 로컬 오브젝트라면 쓰기 부분이 실행됨
+        if (stream.IsWriting)
+        {
+            stream.SendNext(_Hp);
+            stream.SendNext(_Mp);
+            
+        }
+        else
+        {
+            // 리모트 오브젝트라면 읽기 부분이 실행됨         
+            _Hp = (float)stream.ReceiveNext();
+            _Mp = (float)stream.ReceiveNext();
+        }
     }
 
     void Start()
@@ -387,4 +404,5 @@ public class PlayerStat : MonoBehaviourPun //포톤으로 만들려고함.
         gameUI.bar_set();
     }
 
+   
 }

@@ -82,8 +82,11 @@ public class EnemySlime  : Monster
         coin = 3;
         // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
 
+        if (PhotonNetwork.IsMasterClient) //호스트에서만 추적
+        {
+            StartCoroutine(UpdatePath());
+        }
         
-         StartCoroutine(UpdatePath());
     }
     void Update()
     {
@@ -131,6 +134,12 @@ public class EnemySlime  : Monster
                 Targerting();
                 nav.SetDestination(target.position);
                 nav.speed = 3.5f;
+                if(isAttack)
+                {
+                    isChase = false;
+                    nav.isStopped = true;
+                    anim.SetBool("isWalk", false);
+                }
                 if (!isAttack)
                 {
                     isChase = true;
@@ -181,7 +190,6 @@ public class EnemySlime  : Monster
     {
         if (PhotonNetwork.IsMasterClient)
         {
-
             nav.SetDestination(respawn.transform.position);
             nav.speed = 20f;
             //curHealth = maxHealth;  서버에서 체력동기화가 잘 안일어나서 우선 주석 했습니다.
@@ -209,19 +217,19 @@ public class EnemySlime  : Monster
         {
             float targetRadius = 1f;
             float targetRange = 0.7f;
-
             RaycastHit[] rayHits =
                 Physics.SphereCastAll(transform.position,
                 targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));  //����ĳ��Ʈ
 
             if (rayHits.Length > 0 && !isAttack && !isDie) //����ĳ��Ʈ�� �÷��̾ �����ٸ� && ���� �������� �ƴ϶��
             {
-                StartCoroutine(Attack());
+                photonView.RPC("Attack", RpcTarget.AllBuffered);
                 MonsterAttack();
             }
         }
     }
 
+    [PunRPC]
     IEnumerator Attack() //������ �ϰ� �������ϰ� �ٽ� ������ ����
     {
         attacking.isAttacking = true;
@@ -319,7 +327,7 @@ public class EnemySlime  : Monster
             Hiteff2.Play();
             yield return new WaitForSeconds(0.1f);
             isDamage = false;
-           // SetHpBar();
+            SetHpBar();
             if (curHealth > 0)
             {
                 
