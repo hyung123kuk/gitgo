@@ -8,7 +8,7 @@ public class NET_PartyPlayer : MonoBehaviourPun
 
     public int alreadyPartyNum; //받을지 정할 파티 번호
     public int partyNum;       // 파티 번호
-    public int partyOrderNum=1;  //파티 총 번호
+    
     public int playerOrderNum=0; //플레이어 순서 번호
     public  bool isParty;   //파티 중인가?
     public bool SendPartyMessage;
@@ -65,7 +65,7 @@ public class NET_PartyPlayer : MonoBehaviourPun
             if (mem.photonView.ViewID == alreadyPartyNum) //파티를 보낸 플레이어에게 신호보낸다.
             {
               
-                mem.photonView.RPC("PartyMemberRecieve", RpcTarget.Others);
+                mem.photonView.RPC("fail", RpcTarget.Others);
                 break;
             }
         }
@@ -88,6 +88,7 @@ public class NET_PartyPlayer : MonoBehaviourPun
     {
         partyNum = alreadyPartyNum; // 파티 넘버 바뀜.
         photonView.RPC("AllPartyMember", RpcTarget.Others, photonView.ViewID , partyNum , playerST.nickname.text); //모든 멤버에게 자신이 들어왔음을 알림.(닉네임 여기서 넘긴다)
+        playerOrderNum = 999;
     }
 
     [PunRPC]
@@ -111,10 +112,10 @@ public class NET_PartyPlayer : MonoBehaviourPun
                     NET_PartyPlayer[] player = FindObjectsOfType<NET_PartyPlayer>(); //새로들어온 파티멤버를 찾기위해 사용
                     foreach (NET_PartyPlayer mem in player)
                     {
-                        if (mem.photonView.ViewID == PartyMember) //새로들어온 파티원에게 파티 순서번호 넘겨준다.
+                        if (mem.photonView.ViewID == PartyMember) //새로들어온 파티원에게 파티가 됬음을 알린다.
                         {
                            
-                            mem.photonView.RPC("PartyOrderNum", RpcTarget.Others, partyOrderNum); 
+                            mem.photonView.RPC("PartyOrderNum", RpcTarget.Others); 
                         }
                     }
 
@@ -122,10 +123,13 @@ public class NET_PartyPlayer : MonoBehaviourPun
                 Debug.Log(1);
                 if (partyMem.partyNum == _partyNum) //모든 파티원들의 파티오더 번호는 1씩증가한다.
                 {
+                    partyMem.SendPartyMessage = false;
 
-                    partyOrderNum++;
+
                     net_partyUI.PartyOn();
-                    net_partyUI.IstancePartyMem(PartyMember,NickName);
+                    int newPlayerOrderNum = NewPlayerOrderNum(); //들어온 플레이어의 파티장우선순위 번호 얻기
+                    net_partyUI.IstancePartyMem(PartyMember,NickName, newPlayerOrderNum);
+
                     Debug.Log(2);
                     NET_PartyPlayer[] player2 = FindObjectsOfType<NET_PartyPlayer>(); //새로 들어온 멤버에게 자신의 정보를 보내준다.
                     foreach (NET_PartyPlayer mem2 in player2)
@@ -134,7 +138,7 @@ public class NET_PartyPlayer : MonoBehaviourPun
                         if (mem2.photonView.ViewID == PartyMember) 
                         {
                             Debug.Log(4);
-                            mem2.photonView.RPC("PartyMemberRecieve", RpcTarget.Others, partyMem.photonView.ViewID, partyMem.playerST.nickname.text);
+                            mem2.photonView.RPC("PartyMemberRecieve", RpcTarget.Others, partyMem.photonView.ViewID, partyMem.playerST.nickname.text,partyMem.playerOrderNum);
                         }
                     }
                 }
@@ -143,24 +147,31 @@ public class NET_PartyPlayer : MonoBehaviourPun
 
     }
 
+    public int NewPlayerOrderNum()
+    {        
+        return net_partyUI.newPlayerOrderNum();
+    }
+
     [PunRPC]
-    public void PartyOrderNum(int _partyOrderNum) //파티우선순위를 받은 멤버가 자기꺼면 파티우선순위 번호 세팅한다.
+    public void PartyOrderNum() //파티우선순위를 받은 멤버가 자기꺼면 파티우선순위 번호 세팅한다.
     {
         if (photonView.IsMine)
         {
-            playerOrderNum = _partyOrderNum;
-            partyOrderNum = _partyOrderNum;
-            _partyOrderNum++;
+            
             net_partyUI.PartyOn();
         }
              
     }
     [PunRPC]
-    public void PartyMemberRecieve(int memCode,string NickName)
+    public void PartyMemberRecieve(int memCode,string NickName,int _playerOrderNum)
     {
         if (photonView.IsMine)
         {
-            net_partyUI.IstancePartyMem(memCode,NickName);
+            if (_playerOrderNum <= playerOrderNum)
+            {
+                playerOrderNum = _playerOrderNum + 1;
+            }
+            net_partyUI.IstancePartyMem(memCode,NickName, _playerOrderNum);
         }
     }
 
@@ -206,5 +217,44 @@ public class NET_PartyPlayer : MonoBehaviourPun
 
             }
         }
+    }
+
+    public void PartyExit()
+    {
+        if(partyNum == photonView.ViewID) // 파티장이라면
+        {
+            photonView.RPC("PartyLeaderExit", RpcTarget.Others,photonView.ViewID);
+        }
+        else //파티장이 아니라면
+        {
+            photonView.RPC("PartyMemberExit", RpcTarget.Others, partyNum,photonView.ViewID);
+        }
+        PartyCodeReset();
+    }
+
+    [PunRPC]
+    public void PartyLeaderExit(int Id) //파티장이 나갔을때
+    {
+        FindObjectOfType<NET_PartyUI>().ReaderExit(Id);
+
+    }
+
+
+    [PunRPC]
+    public void PartyMemberExit(int partyNum, int Id) //파티일반 멤버가 나갔을때
+    {
+
+        FindObjectOfType<NET_PartyUI>().MemberExit(Id);
+        
+    }
+
+    public void PartyCodeReset()
+    {
+        partyNum = 0;
+
+        playerOrderNum = 0;
+        isParty = false;
+        SendPartyMessage = false;
+        FindObjectOfType<NET_PartyUI>().PartyOff();
     }
 }

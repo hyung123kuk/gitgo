@@ -118,6 +118,8 @@ MonoBehaviour:
   - PartyMemberRecieve
   - PartyOrderNum
   - PartyRecieveWindowOn
+  - PartyLeaderExit
+  - PartyMemberExit
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
