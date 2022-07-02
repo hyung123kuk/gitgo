@@ -257,4 +257,23 @@ public class NET_PartyPlayer : MonoBehaviourPun
         SendPartyMessage = false;
         FindObjectOfType<NET_PartyUI>().PartyOff();
     }
+
+    public void partyExp(float exp) // 파티원에게도 경험치가 들어가도록
+    {
+        NET_PartyPlayer[] allPartyPlayer = FindObjectsOfType<NET_PartyPlayer>();
+        foreach (NET_PartyPlayer player in allPartyPlayer) //모든 넷 파티에 보낸다.
+        {
+            player.photonView.RPC("ExpUp", RpcTarget.Others, partyNum, exp);
+        }
+    }
+
+    [PunRPC]
+    public void ExpUp(int _partyNum , float exp)
+    {
+        if(photonView.IsMine && partyNum == _partyNum) //자기 캐릭터의 넷 파티이고, 그게 파티넘버가 동일할때
+        {
+            playerStat.AddExp(exp); //경험치 추가
+        }
+    }
+
 }

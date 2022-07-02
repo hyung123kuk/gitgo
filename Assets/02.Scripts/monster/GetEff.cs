@@ -45,7 +45,31 @@ public class GetEff : MonoBehaviourPun
         {
             if (other.gameObject.tag == "Player" && other.gameObject == target.gameObject)
             {
+                NET_PartyUI partyMember = FindObjectOfType<NET_PartyUI>();
+                int memberNum = partyMember.members.Count + 1 ; //파티원수 +1(자기자신)
+
+                switch (memberNum)
+                {
+                    case 1:
+                        break;
+                    case 2:
+                        exp = exp * 0.7f;
+                        break;
+                    case 3:
+                        exp = exp * 0.5f;
+                        break;
+                    case 4:
+                        exp = exp * 0.4f;
+                        break;
+                }
+
+                if (memberNum > 1)
+                {
+                    playerStat.GetComponent<NET_PartyPlayer>().partyExp(exp);
+                }
+
                 playerStat.AddExp(exp);
+                
                 StartCoroutine(DestroyEff());
 
             }

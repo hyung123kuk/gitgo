@@ -9,7 +9,7 @@ public class NET_PartyUI : MonoBehaviourPun
     [SerializeField]
     GameObject Member;
     [SerializeField]
-    List<GameObject> members = new List<GameObject>();
+    public List<GameObject> members = new List<GameObject>();
     [SerializeField]
     NET_PartyPlayer net_PartyPlayer;
 
