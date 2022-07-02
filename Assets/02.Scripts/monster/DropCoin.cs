@@ -44,6 +44,8 @@ public class DropCoin : MonoBehaviourPun
 
     private void OnTriggerStay(Collider other)
     {
+        
+
         if (other.gameObject.tag == "Player" && item.itemName == "ÄÚÀÎ")
         {
 
