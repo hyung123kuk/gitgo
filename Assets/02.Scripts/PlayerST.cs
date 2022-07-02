@@ -588,8 +588,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         if (CharacterType == Type.Mage)
             SoundManager.soundManager.MageJump();
 
-        if (!photonView.IsMine) //에러가 떠서 본인 캐릭터만 작동하게하였습니다. 나머지는 photon에서 맡기도록
-            return;
         isCooldodge = false;
         attackdamage.Usable_Dodge = false;
         dodgeVec = moveVec;
@@ -630,10 +628,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     IEnumerator BlockPlay()
     {
-
-        if (!photonView.IsMine)
-            yield break;
-        
         isCool1 = false;
         attackdamage.Usable_Skill1 = false;
         anim.SetBool("isBlock", true);
@@ -671,11 +665,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     void BuffPlay()
     {
         SoundManager.soundManager.WarriorBuffSound();
-
-        if (photonView.IsMine)
-        {
-            attackdamage.Skill_Buff_Cool();
-        }
+        attackdamage.Skill_Buff_Cool();
         BuffEff.SetActive(true);
         if (attackdamage.Duration_Buff)
         {
@@ -701,9 +691,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     IEnumerator RushPlay()
     {
-        if (!photonView.IsMine)
-            yield break;
-
         ArrowSkill.arrowSkill.NoDestroy = true;
         isCool2 = false;
         attackdamage.Usable_Skill2 = false;
@@ -751,9 +738,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     IEnumerator AuraPlay()
     {
-        if (!photonView.IsMine)
-            yield break;
-
         isCool3 = false;
         attackdamage.Usable_Skill3 = false;
         isAura = true;
