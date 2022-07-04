@@ -108,6 +108,14 @@ MonoBehaviour:
   - EnergyShot2
   - RecieveInfo
   - TargetInfo
+  - PartyRecieve
+  - AllPartyMember
+  - PartyRecieveWindowOn
+  - PartyMemberNum
+  - PartyMemberRecieve
+  - PartyOrderNum
+  - fail
+  - infoRecieve
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

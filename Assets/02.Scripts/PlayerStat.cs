@@ -221,10 +221,12 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable //포톤으로 만들
 
     public void AddGold(float _Gold)
     {
+        if (photonView.IsMine)
+        {
 
-
-        MONEY += _Gold;
-        inven.GoldUpdate();
+            MONEY += _Gold;
+            inven.GoldUpdate();
+        }
     }
 
     public void AddExp(float _Exp)

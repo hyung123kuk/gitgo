@@ -53,6 +53,7 @@ public class NET_UIPlayer : MonoBehaviourPun
         }
     }
 
+
     public GameObject Target;
     public int TradeNum;
 
@@ -375,13 +376,13 @@ public class NET_UIPlayer : MonoBehaviourPun
     public void Info()// 정보 버튼을 클릭 했을때
     {
         NET_UIPlayer tagetNet = Target.GetComponent<NET_UIPlayer>();
-        Debug.Log(GetComponent<PhotonView>().ViewID);
+       
         tagetNet.photonView.RPC("TargetInfo", RpcTarget.Others, GetComponent<PhotonView>().ViewID);
     }
     [PunRPC]
     public void TargetInfo(int ID)
     {
-        Debug.Log(ID);
+      
         if (GetComponent<PhotonView>().IsMine)
         {
             
@@ -408,7 +409,6 @@ public class NET_UIPlayer : MonoBehaviourPun
     {
         if (GetComponent<PhotonView>().IsMine)
         {
-            Debug.Log(GetComponent<PhotonView>().ViewID);
             FindObjectOfType<NET_STAT>().Net_StatWindowOn();
             FindObjectOfType<NET_STAT>().SetStat(CharacterType, Level, _STR, _DEX, _INT, _DAMAGE, _DEFENCE, _MOVE_SPEED, _SKILL_COOLTIME_DEC_PER, _SKILL_ADD_DAMAGE_PER, _CRITICAL_PROBABILITY, _CRITICAL_ADD_DAMAGE_PER);
         }

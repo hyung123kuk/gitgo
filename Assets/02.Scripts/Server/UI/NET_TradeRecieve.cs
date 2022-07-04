@@ -19,8 +19,9 @@ public class NET_TradeRecieve : MonoBehaviourPun
 
     private void Start()
     {
-        NET_UIPlayer[] net_uiplayes = GameObject.FindObjectsOfType<NET_UIPlayer>();
+       
         allUI = FindObjectOfType<AllUI>();
+        NET_UIPlayer[] net_uiplayes = GameObject.FindObjectsOfType<NET_UIPlayer>();
         foreach (NET_UIPlayer myUIPlaye in net_uiplayes)
         {
             if (myUIPlaye.GetComponent<PhotonView>().IsMine)
