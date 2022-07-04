@@ -77,19 +77,19 @@ public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
             mageSkillWIndow.SetActive(true);
         }
 
-        StartCoroutine(Setting());
+        //StartCoroutine(Setting());
 
 
     }
 
-    IEnumerator Setting()
-    {
-        SkillWindowOn();
-        yield return new WaitForSeconds(0.1f);
-        SkillWindowOff();
-        SkillToolTipOff();
+    //IEnumerator Setting()
+    //{
+    //    SkillWindowOn();
+    //    yield return new WaitForSeconds(0.1f);
+    //    SkillWindowOff();
+    //    SkillToolTipOff();
 
-    }
+    //}
 
     public void SkillToolTipOff()
     {
