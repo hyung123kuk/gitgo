@@ -22,9 +22,11 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     public CapsuleCollider SelectPlayer; //제어할 플레이어
     public Animator anim; //애니메이션
     public Weapons[] equipWeapon;    //현재 무기. 나중에 배열로 여러무기를 등록하려고함
-    public int NowWeapon; //현재 무기
     public enum SwordNames { Sword1, Sword5_normal, Sword5_rare, Sword10_normal, Sword10_rare, None }; //무기이름 위의 배열의 순서에 따라.
     public SwordNames basicSword = 0;
+    public int NowWeapon; //현재 무기
+    
+
 
     public float bowMinPower = 0.2f;
     public float bowPower = 0.1f; // 화살 충전 데미지
@@ -128,7 +130,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     public bool isCooldodge;
     public bool isCoolTeleport;
 
-
+    public WarriorEquipChange warriorEquipChange;
     public Weapons weapons;
     public Image healthbar;
     public Text nickname;
@@ -140,6 +142,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         if (!photonView.IsMine)
             this.enabled = false;
 
+        warriorEquipChange = GetComponent<WarriorEquipChange>();
         saveManager = FindObjectOfType<SaveManager>();
         nickname = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<Text>();
         healthbar = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Image>();
@@ -166,9 +169,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         {
             return;
         }
-        nickname.text = PhotonNetwork.LocalPlayer.NickName;
         
-
+        nickname.text = PhotonNetwork.LocalPlayer.NickName;
         healthbar.CrossFadeAlpha(0, 0, true);  //자기자신 HP바 가리기
         //nickname.CrossFadeAlpha(0, 0, true);
         helathbarBack.CrossFadeAlpha(0, 0, true);
@@ -1361,7 +1363,5 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         NowWeapon = (int)WeaponNum;
         equipWeapon[NowWeapon].gameObject.SetActive(true);
         //QuikSlot.quikSlot.weapons = FindObjectOfType<Weapons>();
-    }
-
-
+    }  
 }
