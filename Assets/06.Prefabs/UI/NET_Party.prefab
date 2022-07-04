@@ -533,6 +533,7 @@ MonoBehaviour:
   NET_partyUI: {fileID: 1622641775602345096}
   Member: {fileID: 0}
   members: []
+  net_PartyPlayer: {fileID: 0}
 --- !u!1 &2899357810712187740
 GameObject:
   m_ObjectHideFlags: 0
