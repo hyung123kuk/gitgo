@@ -121,6 +121,13 @@ MonoBehaviour:
   - PartyLeaderExit
   - PartyMemberExit
   - ExpUp
+  - WarriorBackChange
+  - WarriorBootsChange
+  - WarriorChestChange
+  - WarriorGlovesChange
+  - WarriorHelmetChange
+  - WarriorPantsChange
+  - WarriorShoulderChange
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

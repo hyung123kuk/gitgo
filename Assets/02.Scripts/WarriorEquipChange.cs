@@ -64,11 +64,11 @@ public class WarriorEquipChange : MonoBehaviourPun
     {
         if (!photonView.IsMine)
         {
-            return;
+            this.enabled = false;
         }
-
-        #region 워리어 장비초기화
         warriorEquip = GetComponent<WarriorEquip>();
+        #region 워리어 장비초기화
+
         Helmet1 = new GameObject[3];
         Helmet3 = new GameObject[2];
         Helmet7 = new GameObject[2];
@@ -136,6 +136,7 @@ public class WarriorEquipChange : MonoBehaviourPun
     }
 
     #region 전사 방어구 변경
+    [PunRPC]
     public void WarriorHelmetChange(HelmetNames HelmetNum) //전사 머리변경
     {
         if ((int)HelmetNum == 2)
@@ -172,6 +173,7 @@ public class WarriorEquipChange : MonoBehaviourPun
             }
         }
     }
+    [PunRPC]
     public void WarriorShoulderChange(ShoulderNames ShoulderNum) //전사 어깨변경
     {
         if ((int)ShoulderNum == 2)
@@ -202,6 +204,7 @@ public class WarriorEquipChange : MonoBehaviourPun
             }
         }
     }
+    [PunRPC]
     public void WarriorChestChange(ChestNames ChestNum) //전사 상의변경
     {
         if ((int)ChestNum == 2)
@@ -235,6 +238,7 @@ public class WarriorEquipChange : MonoBehaviourPun
             }
         }
     }
+    [PunRPC]
     public void WarriorGlovesChange(GlovesNames GlovesNum) //전사 장갑변경
     {
         if ((int)GlovesNum == 2)
@@ -268,6 +272,7 @@ public class WarriorEquipChange : MonoBehaviourPun
             }
         }
     }
+    [PunRPC]
     public void WarriorPantsChange(PantsNames PantsNum) //전사 하의변경
     {
         if ((int)PantsNum == 2)
@@ -301,6 +306,7 @@ public class WarriorEquipChange : MonoBehaviourPun
             }
         }
     }
+    [PunRPC]
     public void WarriorBootsChange(BootsNames BootsNum) //전사 신발변경
     {
         if ((int)BootsNum == 2)
@@ -334,6 +340,7 @@ public class WarriorEquipChange : MonoBehaviourPun
             }
         }
     }
+    [PunRPC]
     public void WarriorBackChange(BackNames BackNum) //전사 망토변경
     {
         if ((int)BackNum == 2)
