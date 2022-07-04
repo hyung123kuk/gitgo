@@ -130,7 +130,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     public bool isCooldodge;
     public bool isCoolTeleport;
 
-    //public WarriorEquipChange warriorEquipChange;
+    public WarriorEquipChange warriorEquipChange;
     public Weapons weapons;
     public Image healthbar;
     public Text nickname;
@@ -143,7 +143,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         if (!photonView.IsMine)
             this.enabled = false;
 
-        //warriorEquipChange = GetComponent<WarriorEquipChange>();
+        warriorEquipChange = GetComponent<WarriorEquipChange>();
         saveManager = FindObjectOfType<SaveManager>();
         nickname = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<Text>();
         healthbar = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Image>();

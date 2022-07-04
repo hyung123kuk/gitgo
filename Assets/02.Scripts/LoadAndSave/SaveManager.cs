@@ -52,19 +52,30 @@ public class Data
     public bool slime_Success;
 
     public int goblinKill;
-    public bool Quest_goblin ;
+    public bool Quest_goblin;
     public bool goblin_Success;
 
     public int skelletonKill;
     public bool Quest_skelleton;
     public bool skelleton_Success;
 
+    #region 방어구 저장용
+    public int Helmet;
+    public int Shoulder;
+    public int Chest;
+    public int Gloves;
+    public int Pants;
+    public int Boots;
+    public int Back;
+    #endregion
+
+
 }
 
 
 public class SaveManager : MonoBehaviourPunCallbacks
 {
-    
+
     private string SAVE_DATA_DIRECTORY;//파일이름 Start에서 선언한다.
     #region 캐릭터 선택창 관련 변수
     private CharacterSelData characterSelData = new CharacterSelData();
@@ -104,14 +115,15 @@ public class SaveManager : MonoBehaviourPunCallbacks
     public bool SaveOn;
     public int CharacterNum;
 
+
     #region 캐릭터 기본스탯 관련 변수
     [SerializeField]
     private PlayerStat playerStat;
     [SerializeField]
     Data[] data = new Data[2];
-        
 
-    
+
+
     [SerializeField]
     Data ch1;
     [SerializeField]
@@ -133,40 +145,43 @@ public class SaveManager : MonoBehaviourPunCallbacks
     QuestStore questStore;
     [SerializeField]
     QuestNormal questNormal;
+    [SerializeField]
+    WarriorEquipChange warriorEquipChange;
+
 
     private void Awake()
     {
         data[0] = new Data();
 
         data[1] = new Data();
-        
+
     }
 
     private void Start()
     {
-        
+
 
         SAVE_DATA_DIRECTORY = Application.dataPath + "/Saves/";
 
         if (!Directory.Exists(SAVE_DATA_DIRECTORY))
         {
             Directory.CreateDirectory(SAVE_DATA_DIRECTORY);
- 
+
         }
         if (!SaveOn)// 캐릭터 선택창이라면
         {
             CharacterSelLoad();
         }
-        
-        
-            StartCoroutine(SaveStart());
-        
+
+
+        StartCoroutine(SaveStart());
+
     }
 
 
     IEnumerator SaveStart()
     {
-       
+
         yield return new WaitForSeconds(1.0f);
         if (!SaveOn) { yield break; }
         while (true)
@@ -182,7 +197,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
             {
                 File.WriteAllText(SAVE_DATA_DIRECTORY + ch2_SAVE_FILENAME, json);
             }
-            
+
             yield return new WaitForSeconds(0.2f); //0.2초마다 저장
         }
     }
@@ -205,6 +220,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
         QuickSave();
         EquSlotSave();
         QuestSave();
+        WarriorEquip(); //워리어 장비
     }
 
     public void InvenSave()
@@ -216,15 +232,16 @@ public class SaveManager : MonoBehaviourPunCallbacks
         data[CharacterNum].invenItemName.Clear();
         for (int i = 0; i < slots.Length; i++)
         {
-            
-            if(slots[i].item != null)
+
+            if (slots[i].item != null)
             {
                 data[CharacterNum].invenArrNum.Add(i);
                 data[CharacterNum].invenItemCount.Add(slots[i].itemCount);
                 data[CharacterNum].invenItemName.Add(slots[i].item.itemName);
 
             }
-            else {
+            else
+            {
                 data[CharacterNum].invenArrNum.Add(i);
                 data[CharacterNum].invenItemCount.Add(0);
                 data[CharacterNum].invenItemName.Add(" ");
@@ -252,7 +269,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
                 data[CharacterNum].QuickName.Add(quikslots[i].slot.item.itemName);
 
             }
-            else if(quikslots[i].skill.skill !=null)
+            else if (quikslots[i].skill.skill != null)
             {
                 data[CharacterNum].QuickisItem.Add(false);
                 data[CharacterNum].QuickArrNum.Add(i);
@@ -276,10 +293,27 @@ public class SaveManager : MonoBehaviourPunCallbacks
             {
                 data[CharacterNum].EQitemArrNum.Add(i);
                 data[CharacterNum].EQitemArrName.Add(slots[i].item.itemName);
-
             }
         }
 
+    }
+
+    public void WarriorEquip()
+    {
+        WarriorEquipChange[] warEquipChange = FindObjectsOfType<WarriorEquipChange>();
+        foreach (WarriorEquipChange warequipChange in warEquipChange)
+        {
+            if (warequipChange.GetComponent<PhotonView>().IsMine)
+                warriorEquipChange = warequipChange;
+        }
+
+        data[CharacterNum].Helmet = warriorEquipChange.EquipHelmet;
+        data[CharacterNum].Chest = warriorEquipChange.EquipChest;
+        data[CharacterNum].Shoulder = warriorEquipChange.EquipShoulder;
+        data[CharacterNum].Gloves = warriorEquipChange.EquipGloves;
+        data[CharacterNum].Pants = warriorEquipChange.EquipPants;
+        data[CharacterNum].Boots = warriorEquipChange.EquipBoots;
+        data[CharacterNum].Back = warriorEquipChange.EquipBack;
     }
 
     public void QuestSave()
@@ -288,9 +322,9 @@ public class SaveManager : MonoBehaviourPunCallbacks
         QuestSlot[] slots = questWindow.ReturnQuestSlots();
         data[CharacterNum].QuestName.Clear();
         data[CharacterNum].QuestNum.Clear();
-        for(int i = 0; i < slots.Length; i++)
+        for (int i = 0; i < slots.Length; i++)
         {
-            if(slots[i].questName != QuestSlot.QuestName.None)
+            if (slots[i].questName != QuestSlot.QuestName.None)
             {
                 data[CharacterNum].QuestNum.Add(i);
                 data[CharacterNum].QuestName.Add((int)slots[i].questName);
@@ -302,7 +336,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
 
         questExplain = FindObjectOfType<QuestExplain>();
         data[CharacterNum].QuestMainNum = questExplain.QuestNum;
-        if(data[CharacterNum].QuestMainNum>4)
+        if (data[CharacterNum].QuestMainNum > 4)
         {
             questExplain.DungeonOpen();
         }
@@ -334,30 +368,31 @@ public class SaveManager : MonoBehaviourPunCallbacks
     }
 
 
-    
+
     public void LoadCharacter()
     {
-        if (CharacterNum == 0) { 
-            if(File.Exists(SAVE_DATA_DIRECTORY+ ch1_SAVE_FILENAME))
+        if (CharacterNum == 0)
+        {
+            if (File.Exists(SAVE_DATA_DIRECTORY + ch1_SAVE_FILENAME))
             {
                 string loadJson = File.ReadAllText(SAVE_DATA_DIRECTORY + ch1_SAVE_FILENAME);
-                
+
                 LoadCh(loadJson);
-                
+
             }
         }
-        else if(CharacterNum == 1)
+        else if (CharacterNum == 1)
         {
-            if(File.Exists(SAVE_DATA_DIRECTORY + ch2_SAVE_FILENAME))
+            if (File.Exists(SAVE_DATA_DIRECTORY + ch2_SAVE_FILENAME))
             {
                 string loadJson = File.ReadAllText(SAVE_DATA_DIRECTORY + ch2_SAVE_FILENAME);
-               
+
                 LoadCh(loadJson);
             }
         }
 
 
-        
+
     }
 
     private void LoadCh(string _loadJson)
@@ -370,6 +405,13 @@ public class SaveManager : MonoBehaviourPunCallbacks
             if (playerstat.GetComponent<PhotonView>().IsMine)
                 playerStat = playerstat;
         }
+        WarriorEquipChange[] warEquipChange = FindObjectsOfType<WarriorEquipChange>();
+        foreach (WarriorEquipChange warequipChange in warEquipChange)
+        {
+            if (warequipChange.GetComponent<PhotonView>().IsMine)
+                warriorEquipChange = warequipChange;
+        }
+
 
         inven = FindObjectOfType<inventory>();
         QuikSlots = FindObjectOfType<QuickSlots>();
@@ -378,21 +420,32 @@ public class SaveManager : MonoBehaviourPunCallbacks
         questExplain = FindObjectOfType<QuestExplain>();
         questNormal = FindObjectOfType<QuestNormal>();
 
+        #region 전사 방어구 불러오기
+        warriorEquipChange.WarriorHelmetChange((WarriorEquipChange.HelmetNames)data[CharacterNum].Helmet);
+        warriorEquipChange.WarriorChestChange((WarriorEquipChange.ChestNames)data[CharacterNum].Chest);
+        warriorEquipChange.WarriorShoulderChange((WarriorEquipChange.ShoulderNames)data[CharacterNum].Shoulder);
+        warriorEquipChange.WarriorGlovesChange((WarriorEquipChange.GlovesNames)data[CharacterNum].Gloves);
+        warriorEquipChange.WarriorPantsChange((WarriorEquipChange.PantsNames)data[CharacterNum].Pants);
+        warriorEquipChange.WarriorBootsChange((WarriorEquipChange.BootsNames)data[CharacterNum].Boots);
+        warriorEquipChange.WarriorBackChange((WarriorEquipChange.BackNames)data[CharacterNum].Back);
+        #endregion
+
+
         playerStat.gameObject.transform.position = data[CharacterNum].Position;
-        playerStat._Hp= data[CharacterNum].Hp;
-  
+        playerStat._Hp = data[CharacterNum].Hp;
+
         playerStat._Mp = data[CharacterNum].Mp;
         playerStat.Level = data[CharacterNum].Level;
         playerStat.NowExp = data[CharacterNum].Exp;
         playerStat.MONEY = data[CharacterNum].Gold;
         playerStat.startLoad();
 
-        for(int i=0;i<data[CharacterNum].invenItemName.Count; i++)
+        for (int i = 0; i < data[CharacterNum].invenItemName.Count; i++)
         {
             inven.LoadToInven(data[CharacterNum].invenArrNum[i], data[CharacterNum].invenItemName[i], data[CharacterNum].invenItemCount[i]);
         }
 
-        for(int i = 0; i < data[CharacterNum].QuickName.Count; i++)
+        for (int i = 0; i < data[CharacterNum].QuickName.Count; i++)
         {
             QuikSlots.LoadToQuick(data[CharacterNum].QuickArrNum[i], data[CharacterNum].QuickName[i], data[CharacterNum].QuickitemCount[i], data[CharacterNum].QuickisItem[i]);
         }
@@ -442,7 +495,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
         characterSelData.Charater1 = (int)characterSel.character1;
         characterSelData.Charater1name = characterSel.Char1Name.text;
 
-       
+
         string json = JsonUtility.ToJson(characterSelData);
         File.WriteAllText(SAVE_DATA_DIRECTORY + Sel_SAVE_FILENAME, json);
     }
@@ -456,21 +509,22 @@ public class SaveManager : MonoBehaviourPunCallbacks
         File.WriteAllText(SAVE_DATA_DIRECTORY + Sel_SAVE_FILENAME, json);
     }
 
-    
+
     public void CharacterSelLoad()
     {
-        if(File.Exists(SAVE_DATA_DIRECTORY + Sel_SAVE_FILENAME)) //데이터 세이브 파일이 있다면
+        if (File.Exists(SAVE_DATA_DIRECTORY + Sel_SAVE_FILENAME)) //데이터 세이브 파일이 있다면
         {
             string loadJson = File.ReadAllText(SAVE_DATA_DIRECTORY + Sel_SAVE_FILENAME);
-            characterSelData = JsonUtility.FromJson<CharacterSelData>(loadJson);           
+            characterSelData = JsonUtility.FromJson<CharacterSelData>(loadJson);
             characterSel = FindObjectOfType<CharacterSel>();
             characterSel.Char1Name.text = characterSelData.Charater1name;
             characterSel.Char2Name.text = characterSelData.Charater2name;
 
 
-            if (characterSelData.Charater1 == 0) {
+            if (characterSelData.Charater1 == 0)
+            {
                 characterSel.MakeType = CharacterSel.Type.None;
-             }
+            }
             else if (characterSelData.Charater1 == 1)
             {
                 characterSel.MakeType = CharacterSel.Type.Warrior;
