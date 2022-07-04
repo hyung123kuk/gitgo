@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Photon.Pun;
 
-public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
+public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     public Item item; // 획득한 아이템
     public int itemCount; // 획득한 아이템의 개수
@@ -236,49 +237,56 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
                     {
                         if (item != null && playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel) //전사 상의 기본
                         {
-                            warriorEquipChange.WarriorHelmetChange(0);
+                            warriorEquipChange.photonView.RPC("WarriorHelmetChange", RpcTarget.AllBuffered ,0);
+                            //warriorEquipChange.WarriorHelmetChange(0);
                         }
                     }
                     if (gameObject.tag == "shoulder")
                     {
                         if (item != null && playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel) //전사 상의 기본
                         {
-                            warriorEquipChange.WarriorShoulderChange(0);
+                            warriorEquipChange.photonView.RPC("WarriorShoulderChange", RpcTarget.AllBuffered, 0);
+                          //  warriorEquipChange.WarriorShoulderChange(0);
                         }
                     }
                     if (gameObject.tag == "chest")
                     {
                         if (item != null && playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel) //전사 상의 기본
                         {
-                            warriorEquipChange.WarriorChestChange(0);
+                            warriorEquipChange.photonView.RPC("WarriorChestChange", RpcTarget.AllBuffered, 0);
+                           // warriorEquipChange.WarriorChestChange(0);
                         }
                     }
                     if (gameObject.tag == "gloves")
                     {
                         if (item != null && playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel) //전사 상의 기본
                         {
-                            warriorEquipChange.WarriorGlovesChange(0);
+                            warriorEquipChange.photonView.RPC("WarriorGlovesChange", RpcTarget.AllBuffered, 0);
+                           // warriorEquipChange.WarriorGlovesChange(0);
                         }
                     }
                     if (gameObject.tag == "pants")
                     {
                         if (item != null && playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel) //전사 상의 기본
                         {
-                            warriorEquipChange.WarriorPantsChange(0);
+                            warriorEquipChange.photonView.RPC("WarriorPantsChange", RpcTarget.AllBuffered, 0);
+                            //warriorEquipChange.WarriorPantsChange(0);
                         }
                     }
                     if (gameObject.tag == "boots")
                     {
                         if (item != null && playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel) //전사 상의 기본
                         {
-                            warriorEquipChange.WarriorBootsChange(0);
+                            warriorEquipChange.photonView.RPC("WarriorBootsChange", RpcTarget.AllBuffered, 0);
+                            //warriorEquipChange.WarriorBootsChange(0);
                         }
                     }
                     if (gameObject.tag == "cloak")
                     {
                         if (item != null && playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel) //전사 상의 기본
                         {
-                            warriorEquipChange.WarriorBackChange(0);
+                            warriorEquipChange.photonView.RPC("WarriorBackChange", RpcTarget.AllBuffered, 0);
+                           // warriorEquipChange.WarriorBackChange(0);
                         }
                     }
                     UiSound.uiSound.EquipSound();
@@ -360,7 +368,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             if (item.armortype == Item.ArmorType.steel)
             {
-                warriorEquipChange.WarriorShoulderChange(item.shoulderNames);
+                warriorEquipChange.photonView.RPC("WarriorShoulderChange", RpcTarget.AllBuffered, item.shoulderNames);
+               // warriorEquipChange.WarriorShoulderChange(item.shoulderNames);
             }
 
             if (WarriorSlot.shoulder.item != null) // ( 장착이 되어있을때 )
@@ -380,7 +389,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             if (item.armortype == Item.ArmorType.steel)
             {
-                warriorEquipChange.WarriorPantsChange(item.pantsNames);
+                warriorEquipChange.photonView.RPC("WarriorPantsChange", RpcTarget.AllBuffered, item.pantsNames);
+                //warriorEquipChange.WarriorPantsChange(item.pantsNames);
             }
             if (WarriorSlot.pants.item != null) // ( 장착이 되어있을때 )
             {
@@ -400,7 +410,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             if (item.armortype == Item.ArmorType.steel)
             {
-                warriorEquipChange.WarriorHelmetChange(item.helmetNames);
+                warriorEquipChange.photonView.RPC("WarriorHelmetChange", RpcTarget.AllBuffered, item.helmetNames);
+                //warriorEquipChange.WarriorHelmetChange(item.helmetNames);
             }
             if (WarriorSlot.helm.item != null) // ( 장착이 되어있을때 )
             {
@@ -420,7 +431,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             if (item.armortype == Item.ArmorType.steel)
             {
-                warriorEquipChange.WarriorGlovesChange(item.glovesNames);
+                warriorEquipChange.photonView.RPC("WarriorGlovesChange", RpcTarget.AllBuffered, item.glovesNames);
+                //warriorEquipChange.WarriorGlovesChange(item.glovesNames);
             }
             if (WarriorSlot.gloves.item != null) // ( 장착이 되어있을때 )
             {
@@ -439,7 +451,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             if (item.armortype == Item.ArmorType.steel)
             {
-                warriorEquipChange.WarriorBootsChange(item.bootsNames);
+                warriorEquipChange.photonView.RPC("WarriorBootsChange", RpcTarget.AllBuffered, item.bootsNames);
+                //warriorEquipChange.WarriorBootsChange(item.bootsNames);
             }
             if (WarriorSlot.boots.item != null) // ( 장착이 되어있을때 )
             {
@@ -458,7 +471,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             if (item.armortype == Item.ArmorType.steel)
             {
-                warriorEquipChange.WarriorBackChange(item.backNames);
+                warriorEquipChange.photonView.RPC("WarriorBackChange", RpcTarget.AllBuffered, item.backNames);
+                //warriorEquipChange.WarriorBackChange(item.backNames);
             }
             if (WarriorSlot.cloak.item != null) // ( 장착이 되어있을때 )
             {
@@ -477,7 +491,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             if (item.armortype == Item.ArmorType.steel)
             {
-                warriorEquipChange.WarriorChestChange(item.chestNames);
+                warriorEquipChange.photonView.RPC("WarriorChestChange", RpcTarget.AllBuffered, item.chestNames);
+               // warriorEquipChange.WarriorChestChange(item.chestNames);
             }
 
             if (WarriorSlot.chest.item != null) // ( 장착이 되어있을때 )
@@ -495,8 +510,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         if (item != null && item.equipType == Item.EquipType.Sword && playerSt.CharacterType == PlayerST.Type.Warrior)
         {
-
-            playerSt.WeaponChange(item.SwordNames);
+            playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, item.SwordNames);
+            //playerSt.WeaponChange(item.SwordNames);
             if (WarriorSlot.weapon.item != null) // ( 장착이 되어있을때 )
             {
                 SwapSlot(WarriorSlot.weapon);
@@ -511,7 +526,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         if (item != null && item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer)
         {
-            playerSt.WeaponChange(item.SwordNames);
+            playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, item.SwordNames);
+            //playerSt.WeaponChange(item.SwordNames);
 
 
             if (WarriorSlot.weapon.item != null) // ( 장착이 되어있을때 )
@@ -532,7 +548,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
     {
         if (item != null && item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage)
         {
-            playerSt.WeaponChange(item.SwordNames);
+            playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, item.SwordNames);
+            //playerSt.WeaponChange(item.SwordNames);
             if (WarriorSlot.weapon.item != null) // ( 장착이 되어있을때 )
             {
                 SwapSlot(WarriorSlot.weapon);
@@ -639,20 +656,20 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
 
             if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Sword)
             {
-
-                playerSt.WeaponChange(playerSt.basicSword);
+                playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, playerSt.basicSword);
+                //playerSt.WeaponChange(playerSt.basicSword);
                 ChangeSlot();
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Bow)
             {
-
-                playerSt.WeaponChange(playerSt.basicSword);
+                playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, playerSt.basicSword);
+               // playerSt.WeaponChange(playerSt.basicSword);
                 ChangeSlot();
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Staff)
             {
-
-                playerSt.WeaponChange(playerSt.basicSword);
+                playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, playerSt.basicSword);
+                // playerSt.WeaponChange(playerSt.basicSword);
                 ChangeSlot();
             }
 
@@ -662,17 +679,20 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Sword && playerSt.CharacterType == PlayerST.Type.Warrior)
             {
-                DragSlot.instance.dragSlot.playerSt.WeaponChange(DragSlot.instance.dragSlot.item.SwordNames);
+                DragSlot.instance.dragSlot.playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, DragSlot.instance.dragSlot.item.SwordNames);
+                //DragSlot.instance.dragSlot.playerSt.WeaponChange(DragSlot.instance.dragSlot.item.SwordNames);
                 ChangeSlot();
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer)
             {
-                DragSlot.instance.dragSlot.playerSt.WeaponChange(DragSlot.instance.dragSlot.item.SwordNames);
+                DragSlot.instance.dragSlot.playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, DragSlot.instance.dragSlot.item.SwordNames);
+                //DragSlot.instance.dragSlot.playerSt.WeaponChange(DragSlot.instance.dragSlot.item.SwordNames);
                 ChangeSlot();
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage)
             {
-                DragSlot.instance.dragSlot.playerSt.WeaponChange(DragSlot.instance.dragSlot.item.SwordNames);
+                DragSlot.instance.dragSlot.playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, DragSlot.instance.dragSlot.item.SwordNames);
+                //DragSlot.instance.dragSlot.playerSt.WeaponChange(DragSlot.instance.dragSlot.item.SwordNames);
                 ChangeSlot();
             }
         }
@@ -680,19 +700,22 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
         {
             if (item.equipType == Item.EquipType.Sword && playerSt.CharacterType == PlayerST.Type.Warrior)
             {
-                playerSt.WeaponChange(item.SwordNames);
+                playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, item.SwordNames);
+               // playerSt.WeaponChange(item.SwordNames);
 
                 ChangeSlot();
             }
             else if (item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer)
             {
-                playerSt.WeaponChange(item.SwordNames);
+                playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, item.SwordNames);
+                //playerSt.WeaponChange(item.SwordNames);
 
                 ChangeSlot();
             }
             else if (item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage)
             {
-                playerSt.WeaponChange(item.SwordNames);
+                playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, item.SwordNames);
+                //playerSt.WeaponChange(item.SwordNames);
 
                 ChangeSlot();
             }
@@ -703,7 +726,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {                                                                                              //캐릭터가 전사고 드래그 아이템이 강철
                 if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Warrior && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.steel)
                 {
-                    DragSlot.instance.dragSlot.warriorEquipChange.WarriorChestChange(DragSlot.instance.dragSlot.item.chestNames);
+                    DragSlot.instance.dragSlot.warriorEquipChange.photonView.RPC("WarriorChestChange", RpcTarget.AllBuffered, DragSlot.instance.dragSlot.item.chestNames);
+                    //DragSlot.instance.dragSlot.warriorEquipChange.WarriorChestChange(DragSlot.instance.dragSlot.item.chestNames);
                     ChangeSlot();
                 }
                 else if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Archer && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.leather)
@@ -722,7 +746,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {
                 if (playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel)
                 {
-                    warriorEquipChange.WarriorChestChange(item.chestNames);
+                    warriorEquipChange.photonView.RPC("WarriorChestChange", RpcTarget.AllBuffered, item.chestNames);
+                    //warriorEquipChange.WarriorChestChange(item.chestNames);
                     ChangeSlot();
                 }
                 else if (playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather)
@@ -741,7 +766,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {                                                                                              //캐릭터가 전사고 드래그 아이템이 강철
                 if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Warrior && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.steel)
                 {
-                    DragSlot.instance.dragSlot.warriorEquipChange.WarriorPantsChange(DragSlot.instance.dragSlot.item.pantsNames);
+                    DragSlot.instance.dragSlot.warriorEquipChange.photonView.RPC("WarriorPantsChange", RpcTarget.AllBuffered, DragSlot.instance.dragSlot.item.pantsNames);
+                    //DragSlot.instance.dragSlot.warriorEquipChange.WarriorPantsChange(DragSlot.instance.dragSlot.item.pantsNames);
                     ChangeSlot();
                 }
                 else if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Archer && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.leather)
@@ -760,7 +786,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {
                 if (playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel)
                 {
-                    warriorEquipChange.WarriorPantsChange(item.pantsNames);
+                    warriorEquipChange.photonView.RPC("WarriorPantsChange", RpcTarget.AllBuffered, item.pantsNames);
+                    //warriorEquipChange.WarriorPantsChange(item.pantsNames);
                     ChangeSlot();
                 }
                 else if (playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather)
@@ -780,7 +807,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {                                                                                              //캐릭터가 전사고 드래그 아이템이 강철
                 if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Warrior && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.steel)
                 {
-                    DragSlot.instance.dragSlot.warriorEquipChange.WarriorHelmetChange(DragSlot.instance.dragSlot.item.helmetNames);
+                    DragSlot.instance.dragSlot.warriorEquipChange.photonView.RPC("WarriorHelmetChange", RpcTarget.AllBuffered, DragSlot.instance.dragSlot.item.helmetNames);
+                    //DragSlot.instance.dragSlot.warriorEquipChange.WarriorHelmetChange(DragSlot.instance.dragSlot.item.helmetNames);
                     ChangeSlot();
                 }
                 else if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Archer && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.leather)
@@ -799,7 +827,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {
                 if (playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel)
                 {
-                    warriorEquipChange.WarriorHelmetChange(item.helmetNames);
+                    warriorEquipChange.photonView.RPC("WarriorHelmetChange", RpcTarget.AllBuffered, item.helmetNames);
+                    // warriorEquipChange.WarriorHelmetChange(item.helmetNames);
                     ChangeSlot();
                 }
                 else if (playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather)
@@ -819,7 +848,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {                                                                                              //캐릭터가 전사고 드래그 아이템이 강철
                 if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Warrior && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.steel)
                 {
-                    DragSlot.instance.dragSlot.warriorEquipChange.WarriorShoulderChange(DragSlot.instance.dragSlot.item.shoulderNames);
+                    DragSlot.instance.dragSlot.warriorEquipChange.photonView.RPC("WarriorShoulderChange", RpcTarget.AllBuffered, DragSlot.instance.dragSlot.item.shoulderNames);
+                    // DragSlot.instance.dragSlot.warriorEquipChange.WarriorShoulderChange(DragSlot.instance.dragSlot.item.shoulderNames);
                     ChangeSlot();
                 }
                 else if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Archer && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.leather)
@@ -838,7 +868,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {
                 if (playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel)
                 {
-                    warriorEquipChange.WarriorShoulderChange(item.shoulderNames);
+                    warriorEquipChange.photonView.RPC("WarriorShoulderChange", RpcTarget.AllBuffered, item.shoulderNames);
+                    //warriorEquipChange.WarriorShoulderChange(item.shoulderNames);
                     ChangeSlot();
                 }
                 else if (playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather)
@@ -858,7 +889,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {                                                                                              //캐릭터가 전사고 드래그 아이템이 강철
                 if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Warrior && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.steel)
                 {
-                    DragSlot.instance.dragSlot.warriorEquipChange.WarriorBootsChange(DragSlot.instance.dragSlot.item.bootsNames);
+                    DragSlot.instance.dragSlot.warriorEquipChange.photonView.RPC("WarriorBootsChange", RpcTarget.AllBuffered, DragSlot.instance.dragSlot.item.bootsNames);
+                    // DragSlot.instance.dragSlot.warriorEquipChange.WarriorBootsChange(DragSlot.instance.dragSlot.item.bootsNames);
                     ChangeSlot();
                 }
                 else if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Archer && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.leather)
@@ -877,7 +909,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {
                 if (playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel)
                 {
-                    warriorEquipChange.WarriorBootsChange(item.bootsNames);
+                    warriorEquipChange.photonView.RPC("WarriorBootsChange", RpcTarget.AllBuffered, item.bootsNames);
+                    //warriorEquipChange.WarriorBootsChange(item.bootsNames);
                     ChangeSlot();
                 }
                 else if (playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather)
@@ -897,7 +930,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {                                                                                              //캐릭터가 전사고 드래그 아이템이 강철
                 if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Warrior && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.steel)
                 {
-                    DragSlot.instance.dragSlot.warriorEquipChange.WarriorGlovesChange(DragSlot.instance.dragSlot.item.glovesNames);
+                    DragSlot.instance.dragSlot.warriorEquipChange.photonView.RPC("WarriorGlovesChange", RpcTarget.AllBuffered, DragSlot.instance.dragSlot.item.glovesNames);
+                    //DragSlot.instance.dragSlot.warriorEquipChange.WarriorGlovesChange(DragSlot.instance.dragSlot.item.glovesNames);
                     ChangeSlot();
                 }
                 else if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Archer && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.leather)
@@ -916,7 +950,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {
                 if (playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel)
                 {
-                    warriorEquipChange.WarriorGlovesChange(item.glovesNames);
+                    warriorEquipChange.photonView.RPC("WarriorGlovesChange", RpcTarget.AllBuffered, item.glovesNames);
+                    // warriorEquipChange.WarriorGlovesChange(item.glovesNames);
                     ChangeSlot();
                 }
                 else if (playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather)
@@ -936,7 +971,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {                                                                                              //캐릭터가 전사고 드래그 아이템이 강철
                 if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Warrior && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.steel)
                 {
-                    DragSlot.instance.dragSlot.warriorEquipChange.WarriorBackChange(DragSlot.instance.dragSlot.item.backNames);
+                    DragSlot.instance.dragSlot.warriorEquipChange.photonView.RPC("WarriorBackChange", RpcTarget.AllBuffered, DragSlot.instance.dragSlot.item.backNames);
+                    // DragSlot.instance.dragSlot.warriorEquipChange.WarriorBackChange(DragSlot.instance.dragSlot.item.backNames);
                     ChangeSlot();
                 }
                 else if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Archer && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.leather)
@@ -955,7 +991,8 @@ public class Slot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IP
             {
                 if (playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel)
                 {
-                    warriorEquipChange.WarriorBackChange(item.backNames);
+                    warriorEquipChange.photonView.RPC("WarriorBackChange", RpcTarget.AllBuffered, item.backNames);
+                    // warriorEquipChange.WarriorBackChange(item.backNames);
                     ChangeSlot();
                 }
                 else if (playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather)

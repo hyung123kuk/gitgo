@@ -59,7 +59,7 @@ public class Data
     public bool Quest_skelleton;
     public bool skelleton_Success;
 
-    #region 방어구 저장용
+    #region 방어구,무기 저장용
     public int Helmet;
     public int Shoulder;
     public int Chest;
@@ -67,6 +67,7 @@ public class Data
     public int Pants;
     public int Boots;
     public int Back;
+    public int Weapon;
     #endregion
 
 
@@ -147,7 +148,8 @@ public class SaveManager : MonoBehaviourPunCallbacks
     QuestNormal questNormal;
     [SerializeField]
     WarriorEquipChange warriorEquipChange;
-
+    [SerializeField]
+    PlayerST playerst;
 
     private void Awake()
     {
@@ -204,6 +206,12 @@ public class SaveManager : MonoBehaviourPunCallbacks
 
     public void PositionSave()
     {
+        PlayerST[] playerst2 = FindObjectsOfType<PlayerST>();
+        foreach (PlayerST playerst3 in playerst2)
+        {
+            if (playerst3.GetComponent<PhotonView>().IsMine)
+                playerst = playerst3;
+        }
         PlayerStat[] playerstats = FindObjectsOfType<PlayerStat>();
         foreach (PlayerStat playerstat in playerstats)
         {
@@ -314,6 +322,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
         data[CharacterNum].Pants = warriorEquipChange.EquipPants;
         data[CharacterNum].Boots = warriorEquipChange.EquipBoots;
         data[CharacterNum].Back = warriorEquipChange.EquipBack;
+        data[CharacterNum].Weapon = playerst.NowWeapon;
     }
 
     public void QuestSave()
@@ -411,7 +420,12 @@ public class SaveManager : MonoBehaviourPunCallbacks
             if (warequipChange.GetComponent<PhotonView>().IsMine)
                 warriorEquipChange = warequipChange;
         }
-
+        PlayerST[] playerst2 = FindObjectsOfType<PlayerST>();
+        foreach (PlayerST playerst3 in playerst2)
+        {
+            if (playerst3.GetComponent<PhotonView>().IsMine)
+                playerst = playerst3;
+        }
 
         inven = FindObjectOfType<inventory>();
         QuikSlots = FindObjectOfType<QuickSlots>();
@@ -420,14 +434,22 @@ public class SaveManager : MonoBehaviourPunCallbacks
         questExplain = FindObjectOfType<QuestExplain>();
         questNormal = FindObjectOfType<QuestNormal>();
 
-        #region 전사 방어구 불러오기
-        warriorEquipChange.WarriorHelmetChange((WarriorEquipChange.HelmetNames)data[CharacterNum].Helmet);
-        warriorEquipChange.WarriorChestChange((WarriorEquipChange.ChestNames)data[CharacterNum].Chest);
-        warriorEquipChange.WarriorShoulderChange((WarriorEquipChange.ShoulderNames)data[CharacterNum].Shoulder);
-        warriorEquipChange.WarriorGlovesChange((WarriorEquipChange.GlovesNames)data[CharacterNum].Gloves);
-        warriorEquipChange.WarriorPantsChange((WarriorEquipChange.PantsNames)data[CharacterNum].Pants);
-        warriorEquipChange.WarriorBootsChange((WarriorEquipChange.BootsNames)data[CharacterNum].Boots);
-        warriorEquipChange.WarriorBackChange((WarriorEquipChange.BackNames)data[CharacterNum].Back);
+        #region 전사 방어구,무기 불러오기
+        warriorEquipChange.photonView.RPC("WarriorHelmetChange", RpcTarget.AllBuffered,(WarriorEquipChange.HelmetNames)data[CharacterNum].Helmet);
+        warriorEquipChange.photonView.RPC("WarriorChestChange", RpcTarget.AllBuffered, (WarriorEquipChange.ChestNames)data[CharacterNum].Chest);
+        warriorEquipChange.photonView.RPC("WarriorShoulderChange", RpcTarget.AllBuffered, (WarriorEquipChange.ShoulderNames)data[CharacterNum].Shoulder);
+        warriorEquipChange.photonView.RPC("WarriorGlovesChange", RpcTarget.AllBuffered, (WarriorEquipChange.GlovesNames)data[CharacterNum].Gloves);
+        warriorEquipChange.photonView.RPC("WarriorPantsChange", RpcTarget.AllBuffered, (WarriorEquipChange.PantsNames)data[CharacterNum].Pants);
+        warriorEquipChange.photonView.RPC("WarriorBootsChange", RpcTarget.AllBuffered, (WarriorEquipChange.BootsNames)data[CharacterNum].Boots);
+        warriorEquipChange.photonView.RPC("WarriorBackChange", RpcTarget.AllBuffered, (WarriorEquipChange.BackNames)data[CharacterNum].Back);
+        playerst.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, (PlayerST.SwordNames)data[CharacterNum].Weapon);
+        //warriorEquipChange.WarriorHelmetChange((WarriorEquipChange.HelmetNames)data[CharacterNum].Helmet);
+        //warriorEquipChange.WarriorChestChange((WarriorEquipChange.ChestNames)data[CharacterNum].Chest);
+        //warriorEquipChange.WarriorShoulderChange((WarriorEquipChange.ShoulderNames)data[CharacterNum].Shoulder);
+        //warriorEquipChange.WarriorGlovesChange((WarriorEquipChange.GlovesNames)data[CharacterNum].Gloves);
+        //warriorEquipChange.WarriorPantsChange((WarriorEquipChange.PantsNames)data[CharacterNum].Pants);
+        //warriorEquipChange.WarriorBootsChange((WarriorEquipChange.BootsNames)data[CharacterNum].Boots);
+        //warriorEquipChange.WarriorBackChange((WarriorEquipChange.BackNames)data[CharacterNum].Back);
         #endregion
 
 
@@ -487,9 +509,9 @@ public class SaveManager : MonoBehaviourPunCallbacks
 
 
     #region 캐릭터 선택창 관련 로드/세이브 함수
-
     public void CharacterSelSave1()
     {
+
         characterSel = FindObjectOfType<CharacterSel>();
         nickname = FindObjectOfType<Nickname>();
         characterSelData.Charater1 = (int)characterSel.character1;
@@ -514,8 +536,13 @@ public class SaveManager : MonoBehaviourPunCallbacks
     {
         if (File.Exists(SAVE_DATA_DIRECTORY + Sel_SAVE_FILENAME)) //데이터 세이브 파일이 있다면
         {
+
             string loadJson = File.ReadAllText(SAVE_DATA_DIRECTORY + Sel_SAVE_FILENAME);
             characterSelData = JsonUtility.FromJson<CharacterSelData>(loadJson);
+            if (CharacterNum == 0)
+                PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater1name;
+            else if (CharacterNum == 1)
+                PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater2name;
             characterSel = FindObjectOfType<CharacterSel>();
             characterSel.Char1Name.text = characterSelData.Charater1name;
             characterSel.Char2Name.text = characterSelData.Charater2name;

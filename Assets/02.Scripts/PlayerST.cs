@@ -139,10 +139,13 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Awake()
     {
-        
-        if (!photonView.IsMine)
-            this.enabled = false;
 
+        if (!photonView.IsMine)
+        {
+           this.enabled = false;
+        }
+
+        photonView.RPC("Setting", RpcTarget.AllBuffered);
         warriorEquipChange = GetComponent<WarriorEquipChange>();
         saveManager = FindObjectOfType<SaveManager>();
         nickname = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<Text>();
@@ -152,8 +155,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
     void NicknameSerching() //닉넴찾기 다른플레이어
     {
-        PlayerST[] ownerplayers = FindObjectsOfType<PlayerST>();
-        foreach (PlayerST ownerplayer in ownerplayers)
+        PlayerMine[] ownerplayers = FindObjectsOfType<PlayerMine>();
+        foreach (PlayerMine ownerplayer in ownerplayers)
         {
             if (!ownerplayer.GetComponent<PhotonView>().IsMine)
             {
@@ -166,12 +169,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     }
     void Start()
     {
-        
-        if (!photonView.IsMine)
-        {
-            return;
-        }
-        
         nickname.text = PhotonNetwork.LocalPlayer.NickName;
         healthbar.CrossFadeAlpha(0, 0, true);  //자기자신 HP바 가리기
         //nickname.CrossFadeAlpha(0, 0, true);
@@ -182,7 +179,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         _transform = GetComponent<Transform>();
         anim = GetComponentInChildren<Animator>();
         
-        questStore = FindObjectOfType<QuestStore>();
+        
         playerST = this;
         dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
         weapons = FindObjectOfType<Weapons>();
@@ -199,6 +196,12 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         }
         Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
 
+    }
+
+    [PunRPC]
+    void Setting() //변수 동기화 이유: 무기낄때 퀘스트쪽에서 에러
+    {
+        questStore = FindObjectOfType<QuestStore>();
     }
 
 
@@ -889,10 +892,13 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Update()
     {
+        NicknameSerching(); //다른플레이어들 닉네임갱신
+
+
         if (!photonView.IsMine)
             return;
 
-        NicknameSerching(); //다른플레이어들 닉네임갱신
+        
 
 
         if (Input.GetKeyDown(KeyCode.H) && !HorseMode) //말 아이템이 없어서 이걸로 테스트했어요
@@ -1354,6 +1360,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
     }
 
+    [PunRPC]
     public void WeaponChange(SwordNames WeaponNum) //무기를 바꿨을때 캐릭터에 적용시키기 위해 사용하는 함수
     {
         if (WeaponNum != basicSword)
