@@ -29,16 +29,23 @@ public class Item : ScriptableObject
 
     }
     public enum Type { normal, rare }
-    public enum ArmorType { steel, leather, cloth ,none}
+    public enum ArmorType { steel, leather, cloth, none }
     public ItemType itemType; // 아이템 유형
     public ArmorType armortype;
     public EquipType equipType;
     public Type ItemGrade;
     public int itemEquLevel; // 아이템 장착 레벨
-    
+
 
 
     public PlayerST.SwordNames SwordNames;
+    public WarriorEquipChange.ChestNames chestNames;
+    public WarriorEquipChange.HelmetNames helmetNames;
+    public WarriorEquipChange.ShoulderNames shoulderNames;
+    public WarriorEquipChange.GlovesNames glovesNames;
+    public WarriorEquipChange.PantsNames pantsNames;
+    public WarriorEquipChange.BootsNames bootsNames;
+    public WarriorEquipChange.BackNames backNames;
 
     [TextArea]
     public string itemText;

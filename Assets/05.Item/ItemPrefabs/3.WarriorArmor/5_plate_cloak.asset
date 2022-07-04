@@ -18,6 +18,13 @@ MonoBehaviour:
   ItemGrade: 0
   itemEquLevel: 3
   SwordNames: 5
+  chestNames: 3
+  helmetNames: 3
+  shoulderNames: 3
+  glovesNames: 3
+  pantsNames: 3
+  bootsNames: 3
+  backNames: 1
   itemText: 
   itemName: "\uAC15\uCCA0 \uB9DD\uD1A0"
   itemImage: {fileID: 21300000, guid: ea64ce7e823847243b3bc069ec8e4647, type: 3}

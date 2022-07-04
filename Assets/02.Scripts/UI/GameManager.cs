@@ -30,7 +30,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             if (CharSel.character1 == CharacterSel.Type.Warrior)
             {
-                GameObject character = PhotonNetwork.Instantiate("gameWarrior", startPoint.position, Quaternion.identity);
+                GameObject character = PhotonNetwork.Instantiate("gameWarrior1", startPoint.position, Quaternion.identity);
                 GameObject Horseee = PhotonNetwork.Instantiate("Horse", GameManager.gameManager.HorsePoint.position, Quaternion.identity);
             }
             else if (CharSel.character1 == CharacterSel.Type.Archer)
@@ -50,7 +50,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         {
             if (CharSel.character2 == CharacterSel.Type.Warrior)
             {
-                GameObject character = PhotonNetwork.Instantiate("gameWarrior", startPoint.position, Quaternion.identity);
+                GameObject character = PhotonNetwork.Instantiate("gameWarrior1", startPoint.position, Quaternion.identity);
                 GameObject Horseee = PhotonNetwork.Instantiate("Horse", GameManager.gameManager.HorsePoint.position, Quaternion.identity);
 
             }
