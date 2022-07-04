@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 335146353}
   - component: {fileID: 335146352}
   m_Layer: 5
-  m_Name: BuyQuestionText
+  m_Name: QuestionText
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -78,7 +78,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 1
     m_VerticalOverflow: 1
     m_LineSpacing: 1
-  m_Text: "\uD2B8\uB808\uC774\uB4DC \uC2E0\uCCAD\uC774 \uC654\uC2B5\uB2C8\uB2E4."
+  m_Text: "\uAC70\uB798 \uC2E0\uCCAD\uC774 \uC654\uC2B5\uB2C8\uB2E4."
 --- !u!1 &531213620
 GameObject:
   m_ObjectHideFlags: 0
@@ -200,7 +200,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 277683892}
+      - m_Target: {fileID: 3965293823969096490}
         m_TargetAssemblyTypeName: NET_TradeRecieve, Assembly-CSharp
         m_MethodName: Cancle
         m_Mode: 1
@@ -569,7 +569,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 277683892}
+      - m_Target: {fileID: 3965293823969096490}
         m_TargetAssemblyTypeName: NET_TradeRecieve, Assembly-CSharp
         m_MethodName: Recieve
         m_Mode: 1
@@ -593,9 +593,9 @@ GameObject:
   - component: {fileID: 7422867839006894480}
   - component: {fileID: 7422867839006894481}
   - component: {fileID: 7422867839006894482}
-  - component: {fileID: 277683892}
+  - component: {fileID: 3965293823969096490}
   m_Layer: 0
-  m_Name: NETWORK_QuestionWindow
+  m_Name: NETWORK_RecieveWindow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -640,7 +640,7 @@ Canvas:
   m_SortingBucketNormalizedSize: 0
   m_AdditionalShaderChannelsFlag: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 0
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &7422867839006894481
 MonoBehaviour:
@@ -682,7 +682,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &277683892
+--- !u!114 &3965293823969096490
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
