@@ -43,23 +43,15 @@ public class WarriorEquipChange : MonoBehaviourPun
     public GameObject[] Back7;
 
     #endregion
-    #region 워리어 방어구 네임즈
-    public enum HelmetNames { Helmet1, Helmet3, Helmet7, None }; //머리
+    #region 워리어 방어구 현재입은거 확인용
     public int EquipHelmet;
-    public enum ShoulderNames { Shoulder1, Shoulder3, Shoulder7, None }; //어깨
     public int EquipShoulder;
-    public enum ChestNames { Chest1, Chest3, Chest7, None }; //상의
     public int EquipChest;
-    public enum GlovesNames { Glove1, Glove3, Glove7, None }; //장갑
     public int EquipGloves;
-    public enum PantsNames { Pants1, Pants3, Pants7, None }; //하의
     public int EquipPants;
-    public enum BootsNames { Boots1, Boots3, Boots7, None }; //신발
     public int EquipBoots;
-    public enum BackNames { Back1, Back3, Back7, None }; //등
     public int EquipBack;
     #endregion
-
     void Awake()
     {
         if (!photonView.IsMine)
@@ -180,7 +172,7 @@ public class WarriorEquipChange : MonoBehaviourPun
 
     #region 전사 방어구 변경
     [PunRPC]
-    public void WarriorHelmetChange(HelmetNames HelmetNum) //전사 머리변경
+    public void WarriorHelmetChange(Item.HelmetNames HelmetNum) //전사 머리변경
     {
         if ((int)HelmetNum == 2)
         {
@@ -217,7 +209,7 @@ public class WarriorEquipChange : MonoBehaviourPun
         }
     }
     [PunRPC]
-    public void WarriorShoulderChange(ShoulderNames ShoulderNum) //전사 어깨변경
+    public void WarriorShoulderChange(Item.ShoulderNames ShoulderNum) //전사 어깨변경
     {
         if ((int)ShoulderNum == 2)
         {
@@ -248,7 +240,7 @@ public class WarriorEquipChange : MonoBehaviourPun
         }
     }
     [PunRPC]
-    public void WarriorChestChange(ChestNames ChestNum) //전사 상의변경
+    public void WarriorChestChange(Item.ChestNames ChestNum) //전사 상의변경
     {
         if ((int)ChestNum == 2)
         {
@@ -282,7 +274,7 @@ public class WarriorEquipChange : MonoBehaviourPun
         }
     }
     [PunRPC]
-    public void WarriorGlovesChange(GlovesNames GlovesNum) //전사 장갑변경
+    public void WarriorGlovesChange(Item.GlovesNames GlovesNum) //전사 장갑변경
     {
         if ((int)GlovesNum == 2)
         {
@@ -316,7 +308,7 @@ public class WarriorEquipChange : MonoBehaviourPun
         }
     }
     [PunRPC]
-    public void WarriorPantsChange(PantsNames PantsNum) //전사 하의변경
+    public void WarriorPantsChange(Item.PantsNames PantsNum) //전사 하의변경
     {
         if ((int)PantsNum == 2)
         {
@@ -350,7 +342,7 @@ public class WarriorEquipChange : MonoBehaviourPun
         }
     }
     [PunRPC]
-    public void WarriorBootsChange(BootsNames BootsNum) //전사 신발변경
+    public void WarriorBootsChange(Item.BootsNames BootsNum) //전사 신발변경
     {
         if ((int)BootsNum == 2)
         {
@@ -384,7 +376,7 @@ public class WarriorEquipChange : MonoBehaviourPun
         }
     }
     [PunRPC]
-    public void WarriorBackChange(BackNames BackNum) //전사 망토변경
+    public void WarriorBackChange(Item.BackNames BackNum) //전사 망토변경
     {
         if ((int)BackNum == 2)
         {

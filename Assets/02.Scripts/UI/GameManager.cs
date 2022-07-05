@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
             else if (CharSel.character1 == CharacterSel.Type.Archer)
             {
-                GameObject character = PhotonNetwork.Instantiate("gameArcher", startPoint.position, Quaternion.identity);
+                GameObject character = PhotonNetwork.Instantiate("gameArcher1", startPoint.position, Quaternion.identity);
                 GameObject Horseee = PhotonNetwork.Instantiate("Horse", GameManager.gameManager.HorsePoint.position, Quaternion.identity);
 
             }
@@ -56,7 +56,7 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
             else if (CharSel.character2 == CharacterSel.Type.Archer)
             {
-                GameObject character = PhotonNetwork.Instantiate("gameArcher", startPoint.position, Quaternion.identity);
+                GameObject character = PhotonNetwork.Instantiate("gameArcher1", startPoint.position, Quaternion.identity);
                 GameObject Horseee = PhotonNetwork.Instantiate("Horse", GameManager.gameManager.HorsePoint.position, Quaternion.identity);
 
             }

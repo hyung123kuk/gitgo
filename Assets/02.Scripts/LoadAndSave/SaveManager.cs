@@ -149,6 +149,8 @@ public class SaveManager : MonoBehaviourPunCallbacks
     [SerializeField]
     WarriorEquipChange warriorEquipChange;
     [SerializeField]
+    ArcherEquipChange archerEquipChange;
+    [SerializeField]
     PlayerST playerst;
 
     private void Awake()
@@ -228,7 +230,11 @@ public class SaveManager : MonoBehaviourPunCallbacks
         QuickSave();
         EquSlotSave();
         QuestSave();
-        WarriorEquip(); //워리어 장비
+
+        if (playerst.CharacterType == PlayerST.Type.Warrior)
+            WarriorEquip(); //워리어 장비
+        else if (playerst.CharacterType == PlayerST.Type.Archer)
+            ArcherEquip(); //궁수장비
     }
 
     public void InvenSave()
@@ -324,6 +330,23 @@ public class SaveManager : MonoBehaviourPunCallbacks
         data[CharacterNum].Back = warriorEquipChange.EquipBack;
         data[CharacterNum].Weapon = playerst.NowWeapon;
     }
+    public void ArcherEquip()
+    {
+        ArcherEquipChange[] arcEquipChange = FindObjectsOfType<ArcherEquipChange>();
+        foreach (ArcherEquipChange archEquipChange in arcEquipChange)
+        {
+            if (archEquipChange.GetComponent<PhotonView>().IsMine)
+                archerEquipChange = archEquipChange;
+        }
+
+        data[CharacterNum].Helmet = archerEquipChange.EquipHelmet;
+        data[CharacterNum].Chest = archerEquipChange.EquipChest;
+        data[CharacterNum].Gloves = archerEquipChange.EquipGloves;
+        data[CharacterNum].Pants = archerEquipChange.EquipPants;
+        data[CharacterNum].Boots = archerEquipChange.EquipBoots;
+        data[CharacterNum].Back = archerEquipChange.EquipBack;
+        data[CharacterNum].Weapon = playerst.NowWeapon;
+    }
 
     public void QuestSave()
     {
@@ -408,6 +431,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
     {
         data[CharacterNum] = JsonUtility.FromJson<Data>(_loadJson);
 
+        #region 스크립트 추적
         PlayerStat[] playerstats = FindObjectsOfType<PlayerStat>();
         foreach (PlayerStat playerstat in playerstats)
         {
@@ -420,12 +444,20 @@ public class SaveManager : MonoBehaviourPunCallbacks
             if (warequipChange.GetComponent<PhotonView>().IsMine)
                 warriorEquipChange = warequipChange;
         }
+        ArcherEquipChange[] arcEquipChange = FindObjectsOfType<ArcherEquipChange>();
+        foreach (ArcherEquipChange archEquipChange in arcEquipChange)
+        {
+            if (archEquipChange.GetComponent<PhotonView>().IsMine)
+                archerEquipChange = archEquipChange;
+        }
         PlayerST[] playerst2 = FindObjectsOfType<PlayerST>();
         foreach (PlayerST playerst3 in playerst2)
         {
             if (playerst3.GetComponent<PhotonView>().IsMine)
                 playerst = playerst3;
         }
+        #endregion
+
 
         inven = FindObjectOfType<inventory>();
         QuikSlots = FindObjectOfType<QuickSlots>();
@@ -435,21 +467,31 @@ public class SaveManager : MonoBehaviourPunCallbacks
         questNormal = FindObjectOfType<QuestNormal>();
 
         #region 전사 방어구,무기 불러오기
-        warriorEquipChange.photonView.RPC("WarriorHelmetChange", RpcTarget.AllBuffered,(WarriorEquipChange.HelmetNames)data[CharacterNum].Helmet);
-        warriorEquipChange.photonView.RPC("WarriorChestChange", RpcTarget.AllBuffered, (WarriorEquipChange.ChestNames)data[CharacterNum].Chest);
-        warriorEquipChange.photonView.RPC("WarriorShoulderChange", RpcTarget.AllBuffered, (WarriorEquipChange.ShoulderNames)data[CharacterNum].Shoulder);
-        warriorEquipChange.photonView.RPC("WarriorGlovesChange", RpcTarget.AllBuffered, (WarriorEquipChange.GlovesNames)data[CharacterNum].Gloves);
-        warriorEquipChange.photonView.RPC("WarriorPantsChange", RpcTarget.AllBuffered, (WarriorEquipChange.PantsNames)data[CharacterNum].Pants);
-        warriorEquipChange.photonView.RPC("WarriorBootsChange", RpcTarget.AllBuffered, (WarriorEquipChange.BootsNames)data[CharacterNum].Boots);
-        warriorEquipChange.photonView.RPC("WarriorBackChange", RpcTarget.AllBuffered, (WarriorEquipChange.BackNames)data[CharacterNum].Back);
-        playerst.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, (PlayerST.SwordNames)data[CharacterNum].Weapon);
-        //warriorEquipChange.WarriorHelmetChange((WarriorEquipChange.HelmetNames)data[CharacterNum].Helmet);
-        //warriorEquipChange.WarriorChestChange((WarriorEquipChange.ChestNames)data[CharacterNum].Chest);
-        //warriorEquipChange.WarriorShoulderChange((WarriorEquipChange.ShoulderNames)data[CharacterNum].Shoulder);
-        //warriorEquipChange.WarriorGlovesChange((WarriorEquipChange.GlovesNames)data[CharacterNum].Gloves);
-        //warriorEquipChange.WarriorPantsChange((WarriorEquipChange.PantsNames)data[CharacterNum].Pants);
-        //warriorEquipChange.WarriorBootsChange((WarriorEquipChange.BootsNames)data[CharacterNum].Boots);
-        //warriorEquipChange.WarriorBackChange((WarriorEquipChange.BackNames)data[CharacterNum].Back);
+        if (playerst.CharacterType == PlayerST.Type.Warrior)
+        {
+            Debug.Log("워리어 로드.....");
+            warriorEquipChange.photonView.RPC("WarriorHelmetChange", RpcTarget.AllBuffered, (Item.HelmetNames)data[CharacterNum].Helmet);
+            warriorEquipChange.photonView.RPC("WarriorChestChange", RpcTarget.AllBuffered, (Item.ChestNames)data[CharacterNum].Chest);
+            warriorEquipChange.photonView.RPC("WarriorShoulderChange", RpcTarget.AllBuffered, (Item.ShoulderNames)data[CharacterNum].Shoulder);
+            warriorEquipChange.photonView.RPC("WarriorGlovesChange", RpcTarget.AllBuffered, (Item.GlovesNames)data[CharacterNum].Gloves);
+            warriorEquipChange.photonView.RPC("WarriorPantsChange", RpcTarget.AllBuffered, (Item.PantsNames)data[CharacterNum].Pants);
+            warriorEquipChange.photonView.RPC("WarriorBootsChange", RpcTarget.AllBuffered, (Item.BootsNames)data[CharacterNum].Boots);
+            warriorEquipChange.photonView.RPC("WarriorBackChange", RpcTarget.AllBuffered, (Item.BackNames)data[CharacterNum].Back);
+            playerst.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, (Item.SwordNames)data[CharacterNum].Weapon);
+        }
+        #endregion
+        #region 궁수 방어구,무기 불러오기
+        else if (playerst.CharacterType == PlayerST.Type.Archer)
+        {
+            Debug.Log("궁수 로드.....");
+            archerEquipChange.photonView.RPC("ArcherHelmetChange", RpcTarget.AllBuffered, (Item.HelmetNames)data[CharacterNum].Helmet);
+            archerEquipChange.photonView.RPC("ArcherChestChange", RpcTarget.AllBuffered, (Item.ChestNames)data[CharacterNum].Chest);
+            archerEquipChange.photonView.RPC("ArcherGlovesChange", RpcTarget.AllBuffered, (Item.GlovesNames)data[CharacterNum].Gloves);
+            archerEquipChange.photonView.RPC("ArcherPantsChange", RpcTarget.AllBuffered, (Item.PantsNames)data[CharacterNum].Pants);
+            archerEquipChange.photonView.RPC("ArcherBootsChange", RpcTarget.AllBuffered, (Item.BootsNames)data[CharacterNum].Boots);
+            archerEquipChange.photonView.RPC("ArcherBackChange", RpcTarget.AllBuffered, (Item.BackNames)data[CharacterNum].Back);
+            playerst.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, (Item.SwordNames)data[CharacterNum].Weapon);
+        }
         #endregion
 
 

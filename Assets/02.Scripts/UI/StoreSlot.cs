@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Photon.Pun;
 
-public class StoreSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler , IPointerClickHandler
+public class StoreSlot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler , IPointerClickHandler
 {
     public Image itemImage;
     public Item item;
@@ -17,7 +18,17 @@ public class StoreSlot : MonoBehaviour, IPointerEnterHandler, IPointerExitHandle
     void Start()
     {
         playerStat = FindObjectOfType<PlayerStat>();
-        playerSt = FindObjectOfType<PlayerST>();
+        PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
+
+
+        foreach (PlayerST myplayerSt in playerSts)
+        {
+            if (myplayerSt.GetComponent<PhotonView>().IsMine)
+            {
+                playerSt = myplayerSt;
+                break;
+            }
+        }
         ItembuyQuestion = FindObjectOfType<itemBuyQuestion>();
         if (item != null)
         {

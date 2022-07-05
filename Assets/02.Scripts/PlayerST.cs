@@ -22,8 +22,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     public CapsuleCollider SelectPlayer; //제어할 플레이어
     public Animator anim; //애니메이션
     public Weapons[] equipWeapon;    //현재 무기. 나중에 배열로 여러무기를 등록하려고함
-    public enum SwordNames { Sword1, Sword5_normal, Sword5_rare, Sword10_normal, Sword10_rare, None }; //무기이름 위의 배열의 순서에 따라.
-    public SwordNames basicSword = 0;
+    public Item.SwordNames swordNames;  //무기이름 위의 배열의 순서에 따라.
+    public Item.SwordNames basicSword = 0;
     public int NowWeapon; //현재 무기
     
 
@@ -130,7 +130,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     public bool isCooldodge;
     public bool isCoolTeleport;
 
-    public WarriorEquipChange warriorEquipChange;
     public Weapons weapons;
     public Image healthbar;
     public Text nickname;
@@ -146,7 +145,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         }
 
         photonView.RPC("Setting", RpcTarget.AllBuffered);
-        warriorEquipChange = GetComponent<WarriorEquipChange>();
         saveManager = FindObjectOfType<SaveManager>();
         nickname = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<Text>();
         healthbar = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Image>();
@@ -1364,7 +1362,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     [PunRPC]
-    public void WeaponChange(SwordNames WeaponNum) //무기를 바꿨을때 캐릭터에 적용시키기 위해 사용하는 함수
+    public void WeaponChange(Item.SwordNames WeaponNum) //무기를 바꿨을때 캐릭터에 적용시키기 위해 사용하는 함수
     {
         if (WeaponNum != basicSword)
         {
