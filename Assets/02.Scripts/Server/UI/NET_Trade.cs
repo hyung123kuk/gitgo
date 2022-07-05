@@ -317,13 +317,16 @@ public class NET_Trade : MonoBehaviourPun
 
         if (GoldInput.text != "" && GoldInput.text != "-")
         {
-            if (int.Parse(GoldInput.text) > net_UIPlayer.GetComponent<PlayerStat>().MONEY)
+            if (net_UIPlayer != null)
             {
-                GoldInput.text = net_UIPlayer.GetComponent<PlayerStat>().MONEY.ToString();
-            }
-            else if (int.Parse(GoldInput.text) < 0)
-            {
-                GoldInput.text = 0.ToString();
+                if (int.Parse(GoldInput.text) > net_UIPlayer.GetComponent<PlayerStat>().MONEY)
+                {
+                    GoldInput.text = net_UIPlayer.GetComponent<PlayerStat>().MONEY.ToString();
+                }
+                else if (int.Parse(GoldInput.text) < 0)
+                {
+                    GoldInput.text = 0.ToString();
+                }
             }
         }
     }

@@ -128,6 +128,11 @@ MonoBehaviour:
   - WarriorHelmetChange
   - WarriorPantsChange
   - WarriorShoulderChange
+  - EquipSetting
+  - WeaponChange
+  - Setting
+  - CharacterSelSave1
+  - Setting2
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

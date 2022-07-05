@@ -524,6 +524,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
     public void CharacterSelSave2()
     {
         characterSel = FindObjectOfType<CharacterSel>();
+        nickname = FindObjectOfType<Nickname>();
         characterSelData.Charater2 = (int)characterSel.character2;
         characterSelData.Charater2name = characterSel.Char2Name.text;
 
@@ -609,8 +610,10 @@ public class SaveManager : MonoBehaviourPunCallbacks
             PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater1name;
         else if (CharacterNum == 1)
             PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater2name;
-        characterSel.transform.GetChild(0).gameObject.SetActive(true);
+        
 
+        SceneManager.LoadScene(0);
+        characterSel.transform.GetChild(0).gameObject.SetActive(true);
     }
 
     private void OnApplicationQuit() //강제종료될때 자동저장

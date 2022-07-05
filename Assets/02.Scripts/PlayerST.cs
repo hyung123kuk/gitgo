@@ -152,7 +152,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         healthbar = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Image>();
         helathbarBack = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(2).GetComponent<Image>();
     }
-
+    [PunRPC]
     void NicknameSerching() //닉넴찾기 다른플레이어
     {
         PlayerMine[] ownerplayers = FindObjectsOfType<PlayerMine>();
@@ -160,7 +160,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (!ownerplayer.GetComponent<PhotonView>().IsMine)
             {
-                ownerplayer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).
+                ownerplayer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.
                     GetComponent<Text>().text = ownerplayer.GetComponent<PhotonView>().Owner.NickName;
                 if (ownerplayer == null)
                     break;
@@ -892,13 +892,16 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Update()
     {
-        NicknameSerching(); //다른플레이어들 닉네임갱신
-
+        if (this != null)
+        {
+            NicknameSerching(); //다른플레이어들 닉네임갱신
+            photonView.RPC("NicknameSerching", RpcTarget.OthersBuffered);
+        }
 
         if (!photonView.IsMine)
             return;
 
-        
+       
 
 
         if (Input.GetKeyDown(KeyCode.H) && !HorseMode) //말 아이템이 없어서 이걸로 테스트했어요
