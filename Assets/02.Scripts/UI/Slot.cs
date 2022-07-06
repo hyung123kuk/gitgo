@@ -26,6 +26,7 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
     public PlayerST playerSt;
     public WarriorEquipChange warriorEquipChange;
     public ArcherEquipChange archerEquipChange;
+    public MageEquipChange mageEquipChange;
     public ToolTip tooltip;
     [SerializeField]
     private PlayerStat playerStat;
@@ -53,6 +54,7 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
         playerSt = FindObjectOfType<PlayerST>();
         archerEquipChange = FindObjectOfType<ArcherEquipChange>();
         warriorEquipChange = FindObjectOfType<WarriorEquipChange>();
+        mageEquipChange = FindObjectOfType<MageEquipChange>();
 
         playerStat = FindObjectOfType<PlayerStat>();
         if (item != null)
@@ -237,11 +239,15 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                     {
                         if (item != null && playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel) //전사 머리 기본
                         {
-                            warriorEquipChange.photonView.RPC("WarriorHelmetChange", RpcTarget.AllBuffered ,0);
+                            warriorEquipChange.photonView.RPC("WarriorHelmetChange", RpcTarget.AllBuffered, 0);
                         }
                         else if (item != null && playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather) //궁수 머리 기본
                         {
                             archerEquipChange.photonView.RPC("ArcherHelmetChange", RpcTarget.AllBuffered, 0);
+                        }
+                        else if (item != null && playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth) //법사 머리 기본
+                        {
+                            mageEquipChange.photonView.RPC("MageHelmetChange", RpcTarget.AllBuffered, 0);
                         }
                     }
                     if (gameObject.tag == "shoulder")
@@ -249,7 +255,6 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                         if (item != null && playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel) //전사 어깨 기본
                         {
                             warriorEquipChange.photonView.RPC("WarriorShoulderChange", RpcTarget.AllBuffered, 0);
-                          //  warriorEquipChange.WarriorShoulderChange(0);
                         }
                     }
                     if (gameObject.tag == "chest")
@@ -257,11 +262,14 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                         if (item != null && playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel) //전사 상의 기본
                         {
                             warriorEquipChange.photonView.RPC("WarriorChestChange", RpcTarget.AllBuffered, 0);
-                           // warriorEquipChange.WarriorChestChange(0);
                         }
                         else if (item != null && playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather) //궁수 상의 기본
                         {
                             archerEquipChange.photonView.RPC("ArcherChestChange", RpcTarget.AllBuffered, 0);
+                        }
+                        else if (item != null && playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth) //법사 상의 기본
+                        {
+                            mageEquipChange.photonView.RPC("MageChestChange", RpcTarget.AllBuffered, 0);
                         }
                     }
                     if (gameObject.tag == "gloves")
@@ -269,11 +277,14 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                         if (item != null && playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel) //전사 장갑 기본
                         {
                             warriorEquipChange.photonView.RPC("WarriorGlovesChange", RpcTarget.AllBuffered, 0);
-                           // warriorEquipChange.WarriorGlovesChange(0);
                         }
                         else if (item != null && playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather) //궁수 장갑 기본
                         {
                             archerEquipChange.photonView.RPC("ArcherGlovesChange", RpcTarget.AllBuffered, 0);
+                        }
+                        else if (item != null && playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth) //법사 장갑 기본
+                        {
+                            mageEquipChange.photonView.RPC("MageGlovesChange", RpcTarget.AllBuffered, 0);
                         }
                     }
                     if (gameObject.tag == "pants")
@@ -281,11 +292,14 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                         if (item != null && playerSt.CharacterType == PlayerST.Type.Warrior && item.armortype == Item.ArmorType.steel) //전사 하의 기본
                         {
                             warriorEquipChange.photonView.RPC("WarriorPantsChange", RpcTarget.AllBuffered, 0);
-                            //warriorEquipChange.WarriorPantsChange(0);
                         }
                         else if (item != null && playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather) //궁수 하의 기본
                         {
                             archerEquipChange.photonView.RPC("ArcherPantsChange", RpcTarget.AllBuffered, 0);
+                        }
+                        else if (item != null && playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth) //법사 하의 기본
+                        {
+                            mageEquipChange.photonView.RPC("MagePantsChange", RpcTarget.AllBuffered, 0);
                         }
                     }
                     if (gameObject.tag == "boots")
@@ -298,6 +312,10 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                         {
                             archerEquipChange.photonView.RPC("ArcherBootsChange", RpcTarget.AllBuffered, 0);
                         }
+                        else if (item != null && playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth) //법사 신발 기본
+                        {
+                            mageEquipChange.photonView.RPC("MageBootsChange", RpcTarget.AllBuffered, 0);
+                        }
                     }
                     if (gameObject.tag == "cloak")
                     {
@@ -308,6 +326,10 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                         else if (item != null && playerSt.CharacterType == PlayerST.Type.Archer && item.armortype == Item.ArmorType.leather) //궁수 망토 기본
                         {
                             archerEquipChange.photonView.RPC("ArcherBackChange", RpcTarget.AllBuffered, 0);
+                        }
+                        else if (item != null && playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth) //법사 망토 기본
+                        {
+                            mageEquipChange.photonView.RPC("MageBackChange", RpcTarget.AllBuffered, 0);
                         }
                     }
                     UiSound.uiSound.EquipSound();
@@ -415,6 +437,10 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
             {
                 archerEquipChange.photonView.RPC("ArcherPantsChange", RpcTarget.AllBuffered, item.pantsNames);
             }
+            else if (item.armortype == Item.ArmorType.cloth)
+            {
+                mageEquipChange.photonView.RPC("MagePantsChange", RpcTarget.AllBuffered, item.pantsNames);
+            }
 
             if (WarriorSlot.pants.item != null) // ( 장착이 되어있을때 )
             {
@@ -439,6 +465,10 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
             else if (item.armortype == Item.ArmorType.leather)
             {
                 archerEquipChange.photonView.RPC("ArcherHelmetChange", RpcTarget.AllBuffered, item.helmetNames);
+            }
+            else if (item.armortype == Item.ArmorType.cloth)
+            {
+                mageEquipChange.photonView.RPC("MageHelmetChange", RpcTarget.AllBuffered, item.helmetNames);
             }
 
             if (WarriorSlot.helm.item != null) // ( 장착이 되어있을때 )
@@ -465,6 +495,10 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
             {
                 archerEquipChange.photonView.RPC("ArcherGlovesChange", RpcTarget.AllBuffered, item.glovesNames);
             }
+            else if (item.armortype == Item.ArmorType.cloth)
+            {
+                mageEquipChange.photonView.RPC("MageGlovesChange", RpcTarget.AllBuffered, item.glovesNames);
+            }
 
             if (WarriorSlot.gloves.item != null) // ( 장착이 되어있을때 )
             {
@@ -489,6 +523,10 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
             {
                 archerEquipChange.photonView.RPC("ArcherBootsChange", RpcTarget.AllBuffered, item.bootsNames);
             }
+            else if (item.armortype == Item.ArmorType.cloth)
+            {
+                mageEquipChange.photonView.RPC("MageBootsChange", RpcTarget.AllBuffered, item.bootsNames);
+            }
 
             if (WarriorSlot.boots.item != null) // ( 장착이 되어있을때 )
             {
@@ -508,11 +546,14 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
             if (item.armortype == Item.ArmorType.steel)
             {
                 warriorEquipChange.photonView.RPC("WarriorBackChange", RpcTarget.AllBuffered, item.backNames);
-                //warriorEquipChange.WarriorBackChange(item.backNames);
             }
             else if (item.armortype == Item.ArmorType.leather)
             {
                 archerEquipChange.photonView.RPC("ArcherBackChange", RpcTarget.AllBuffered, item.backNames);
+            }
+            else if (item.armortype == Item.ArmorType.cloth)
+            {
+                mageEquipChange.photonView.RPC("MageBackChange", RpcTarget.AllBuffered, item.backNames);
             }
 
             if (WarriorSlot.cloak.item != null) // ( 장착이 되어있을때 )
@@ -538,6 +579,10 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
             {
                 archerEquipChange.photonView.RPC("ArcherChestChange", RpcTarget.AllBuffered, item.chestNames);
             }
+            else if (item.armortype == Item.ArmorType.cloth)
+            {
+                mageEquipChange.photonView.RPC("MageChestChange", RpcTarget.AllBuffered, item.chestNames);
+            }
 
 
             if (WarriorSlot.chest.item != null) // ( 장착이 되어있을때 )
@@ -556,7 +601,6 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
         if (item != null && item.equipType == Item.EquipType.Sword && playerSt.CharacterType == PlayerST.Type.Warrior)
         {
             playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, item.swordNames);
-            //playerSt.WeaponChange(item.SwordNames);
             if (WarriorSlot.weapon.item != null) // ( 장착이 되어있을때 )
             {
                 SwapSlot(WarriorSlot.weapon);
@@ -572,9 +616,6 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
         if (item != null && item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer)
         {
             playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, item.swordNames);
-            //playerSt.WeaponChange(item.SwordNames);
-
-
             if (WarriorSlot.weapon.item != null) // ( 장착이 되어있을때 )
             {
 
@@ -594,7 +635,6 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
         if (item != null && item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage)
         {
             playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, item.swordNames);
-            //playerSt.WeaponChange(item.SwordNames);
             if (WarriorSlot.weapon.item != null) // ( 장착이 되어있을때 )
             {
                 SwapSlot(WarriorSlot.weapon);
@@ -702,19 +742,16 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
             if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Sword)
             {
                 playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, playerSt.basicSword);
-                //playerSt.WeaponChange(playerSt.basicSword);
                 ChangeSlot();
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Bow)
             {
                 playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, playerSt.basicSword);
-               // playerSt.WeaponChange(playerSt.basicSword);
                 ChangeSlot();
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Staff)
             {
                 playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, playerSt.basicSword);
-                // playerSt.WeaponChange(playerSt.basicSword);
                 ChangeSlot();
             }
 
@@ -725,19 +762,16 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
             if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Sword && playerSt.CharacterType == PlayerST.Type.Warrior)
             {
                 DragSlot.instance.dragSlot.playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, DragSlot.instance.dragSlot.item.swordNames);
-                //DragSlot.instance.dragSlot.playerSt.WeaponChange(DragSlot.instance.dragSlot.item.SwordNames);
                 ChangeSlot();
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer)
             {
                 DragSlot.instance.dragSlot.playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, DragSlot.instance.dragSlot.item.swordNames);
-                //DragSlot.instance.dragSlot.playerSt.WeaponChange(DragSlot.instance.dragSlot.item.SwordNames);
                 ChangeSlot();
             }
             else if (DragSlot.instance.dragSlot.item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage)
             {
                 DragSlot.instance.dragSlot.playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, DragSlot.instance.dragSlot.item.swordNames);
-                //DragSlot.instance.dragSlot.playerSt.WeaponChange(DragSlot.instance.dragSlot.item.SwordNames);
                 ChangeSlot();
             }
         }
@@ -746,21 +780,18 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
             if (item.equipType == Item.EquipType.Sword && playerSt.CharacterType == PlayerST.Type.Warrior)
             {
                 playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, item.swordNames);
-               // playerSt.WeaponChange(item.SwordNames);
 
                 ChangeSlot();
             }
             else if (item.equipType == Item.EquipType.Bow && playerSt.CharacterType == PlayerST.Type.Archer)
             {
                 playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, item.swordNames);
-                //playerSt.WeaponChange(item.SwordNames);
 
                 ChangeSlot();
             }
             else if (item.equipType == Item.EquipType.Staff && playerSt.CharacterType == PlayerST.Type.Mage)
             {
                 playerSt.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, item.swordNames);
-                //playerSt.WeaponChange(item.SwordNames);
 
                 ChangeSlot();
             }
@@ -781,7 +812,8 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                 }
                 else if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Mage && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.cloth)
                 {
-
+                    DragSlot.instance.dragSlot.mageEquipChange.photonView.RPC("MageChestChange", RpcTarget.AllBuffered, DragSlot.instance.dragSlot.item.chestNames);
+                    ChangeSlot();
                 }
             }
         }
@@ -801,7 +833,8 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                 }
                 else if (playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth)
                 {
-
+                    mageEquipChange.photonView.RPC("MageChestChange", RpcTarget.AllBuffered, item.chestNames);
+                    ChangeSlot();
                 }
             }
         }
@@ -821,7 +854,8 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                 }
                 else if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Mage && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.cloth)
                 {
-
+                    DragSlot.instance.dragSlot.mageEquipChange.photonView.RPC("MagePantsChange", RpcTarget.AllBuffered, DragSlot.instance.dragSlot.item.pantsNames);
+                    ChangeSlot();
                 }
             }
         }
@@ -841,7 +875,8 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                 }
                 else if (playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth)
                 {
-
+                    mageEquipChange.photonView.RPC("MagePantsChange", RpcTarget.AllBuffered, item.pantsNames);
+                    ChangeSlot();
                 }
             }
         }
@@ -862,7 +897,8 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                 }
                 else if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Mage && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.cloth)
                 {
-
+                    DragSlot.instance.dragSlot.mageEquipChange.photonView.RPC("MageHelmetChange", RpcTarget.AllBuffered, DragSlot.instance.dragSlot.item.helmetNames);
+                    ChangeSlot();
                 }
             }
         }
@@ -882,7 +918,8 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                 }
                 else if (playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth)
                 {
-
+                    mageEquipChange.photonView.RPC("MageHelmetChange", RpcTarget.AllBuffered, item.helmetNames);
+                    ChangeSlot();
                 }
             }
         }
@@ -926,7 +963,8 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                 }
                 else if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Mage && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.cloth)
                 {
-
+                    DragSlot.instance.dragSlot.mageEquipChange.photonView.RPC("MageBootsChange", RpcTarget.AllBuffered, DragSlot.instance.dragSlot.item.bootsNames);
+                    ChangeSlot();
                 }
             }
         }
@@ -946,7 +984,8 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                 }
                 else if (playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth)
                 {
-
+                    mageEquipChange.photonView.RPC("MageBootsChange", RpcTarget.AllBuffered, item.bootsNames);
+                    ChangeSlot();
                 }
             }
         }
@@ -967,7 +1006,8 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                 }
                 else if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Mage && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.cloth)
                 {
-
+                    DragSlot.instance.dragSlot.mageEquipChange.photonView.RPC("MageGlovesChange", RpcTarget.AllBuffered, DragSlot.instance.dragSlot.item.glovesNames);
+                    ChangeSlot();
                 }
             }
         }
@@ -987,7 +1027,8 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                 }
                 else if (playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth)
                 {
-
+                    mageEquipChange.photonView.RPC("MageGlovesChange", RpcTarget.AllBuffered, item.glovesNames);
+                    ChangeSlot();
                 }
             }
         }
@@ -1008,7 +1049,8 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                 }
                 else if (DragSlot.instance.dragSlot.playerSt.CharacterType == PlayerST.Type.Mage && DragSlot.instance.dragSlot.item.armortype == Item.ArmorType.cloth)
                 {
-
+                    DragSlot.instance.dragSlot.mageEquipChange.photonView.RPC("MageBackChange", RpcTarget.AllBuffered, DragSlot.instance.dragSlot.item.backNames);
+                    ChangeSlot();
                 }
             }
         }
@@ -1028,7 +1070,8 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                 }
                 else if (playerSt.CharacterType == PlayerST.Type.Mage && item.armortype == Item.ArmorType.cloth)
                 {
-
+                    mageEquipChange.photonView.RPC("MageBackChange", RpcTarget.AllBuffered, item.backNames);
+                    ChangeSlot();
                 }
             }
         }

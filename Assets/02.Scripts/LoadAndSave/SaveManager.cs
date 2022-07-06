@@ -151,6 +151,8 @@ public class SaveManager : MonoBehaviourPunCallbacks
     [SerializeField]
     ArcherEquipChange archerEquipChange;
     [SerializeField]
+    MageEquipChange mageEquipChange;
+    [SerializeField]
     PlayerST playerst;
 
     private void Awake()
@@ -235,6 +237,8 @@ public class SaveManager : MonoBehaviourPunCallbacks
             WarriorEquip(); //워리어 장비
         else if (playerst.CharacterType == PlayerST.Type.Archer)
             ArcherEquip(); //궁수장비
+        else if (playerst.CharacterType == PlayerST.Type.Mage)
+            MageEquip(); //마법사 장비
     }
 
     public void InvenSave()
@@ -347,6 +351,23 @@ public class SaveManager : MonoBehaviourPunCallbacks
         data[CharacterNum].Back = archerEquipChange.EquipBack;
         data[CharacterNum].Weapon = playerst.NowWeapon;
     }
+    public void MageEquip()
+    {
+        MageEquipChange[] magEquipChange = FindObjectsOfType<MageEquipChange>();
+        foreach (MageEquipChange mageeEquipChange in magEquipChange)
+        {
+            if (mageeEquipChange.GetComponent<PhotonView>().IsMine)
+                mageEquipChange = mageeEquipChange;
+        }
+
+        data[CharacterNum].Helmet = mageEquipChange.EquipHelmet;
+        data[CharacterNum].Chest = mageEquipChange.EquipChest;
+        data[CharacterNum].Gloves = mageEquipChange.EquipGloves;
+        data[CharacterNum].Pants = mageEquipChange.EquipPants;
+        data[CharacterNum].Boots = mageEquipChange.EquipBoots;
+        data[CharacterNum].Back = mageEquipChange.EquipBack;
+        data[CharacterNum].Weapon = playerst.NowWeapon;
+    }
 
     public void QuestSave()
     {
@@ -450,6 +471,12 @@ public class SaveManager : MonoBehaviourPunCallbacks
             if (archEquipChange.GetComponent<PhotonView>().IsMine)
                 archerEquipChange = archEquipChange;
         }
+        MageEquipChange[] magEquipChange = FindObjectsOfType<MageEquipChange>();
+        foreach (MageEquipChange mageeEquipChange in magEquipChange)
+        {
+            if (mageeEquipChange.GetComponent<PhotonView>().IsMine)
+                mageEquipChange = mageeEquipChange;
+        }
         PlayerST[] playerst2 = FindObjectsOfType<PlayerST>();
         foreach (PlayerST playerst3 in playerst2)
         {
@@ -493,7 +520,19 @@ public class SaveManager : MonoBehaviourPunCallbacks
             playerst.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, (Item.SwordNames)data[CharacterNum].Weapon);
         }
         #endregion
-
+        #region 마법사 방어구,무기 불러오기
+        else if (playerst.CharacterType == PlayerST.Type.Mage)
+        {
+            Debug.Log("마법사 로드.....");
+            mageEquipChange.photonView.RPC("MageHelmetChange", RpcTarget.AllBuffered, (Item.HelmetNames)data[CharacterNum].Helmet);
+            mageEquipChange.photonView.RPC("MageChestChange", RpcTarget.AllBuffered, (Item.ChestNames)data[CharacterNum].Chest);
+            mageEquipChange.photonView.RPC("MageGlovesChange", RpcTarget.AllBuffered, (Item.GlovesNames)data[CharacterNum].Gloves);
+            mageEquipChange.photonView.RPC("MagePantsChange", RpcTarget.AllBuffered, (Item.PantsNames)data[CharacterNum].Pants);
+            mageEquipChange.photonView.RPC("MageBootsChange", RpcTarget.AllBuffered, (Item.BootsNames)data[CharacterNum].Boots);
+            mageEquipChange.photonView.RPC("MageBackChange", RpcTarget.AllBuffered, (Item.BackNames)data[CharacterNum].Back);
+            playerst.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, (Item.SwordNames)data[CharacterNum].Weapon);
+        }
+        #endregion
 
         playerStat.gameObject.transform.position = data[CharacterNum].Position;
         playerStat._Hp = data[CharacterNum].Hp;
