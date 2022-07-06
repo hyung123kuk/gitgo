@@ -166,7 +166,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
     private void Start()
     {
 
-
+        characterSel = FindObjectOfType<CharacterSel>();
         SAVE_DATA_DIRECTORY = Application.dataPath + "/Saves/";
 
         if (!Directory.Exists(SAVE_DATA_DIRECTORY))
@@ -179,8 +179,12 @@ public class SaveManager : MonoBehaviourPunCallbacks
             CharacterSelLoad();
         }
 
+        if (characterSel.charSel == 1)
+            CharacterNum = 0;
+        else if (characterSel.charSel == 2)
+            CharacterNum = 1;
 
-        StartCoroutine(SaveStart());
+            StartCoroutine(SaveStart());
 
     }
 
@@ -695,6 +699,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
 
         SceneManager.LoadScene(0);
         characterSel.transform.GetChild(0).gameObject.SetActive(true);
+       SaveOn = false;
     }
 
     private void OnApplicationQuit() //강제종료될때 자동저장
@@ -706,6 +711,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
             PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater1name;
         else if (CharacterNum == 1)
             PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater2name;
+       SaveOn = false;
     }
 
 

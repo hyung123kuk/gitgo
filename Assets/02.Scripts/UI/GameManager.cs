@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         gameManager = this;
         CharSel = GameObject.FindGameObjectWithTag("SelManager").GetComponent<CharacterSel>();
         CharSel.audioListener.enabled = false;
-        
+
         //CharSel.sel.SetActive(false);
         if (CharSel.charSel == 1)
         {
