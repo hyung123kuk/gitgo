@@ -5,6 +5,8 @@ using Photon.Pun;
 
 public class WarriorEquipChange : MonoBehaviourPun
 {
+    public bool UICheck; //캐릭터선택창 체크용
+
     #region 장비변경
     public WarriorEquip warriorEquip;
 
@@ -54,7 +56,7 @@ public class WarriorEquipChange : MonoBehaviourPun
     #endregion
     void Awake()
     {
-        if (!photonView.IsMine)
+        if (!photonView.IsMine && !UICheck)
         {
             this.enabled = false;
         }

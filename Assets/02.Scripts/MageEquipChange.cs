@@ -5,6 +5,7 @@ using Photon.Pun;
 
 public class MageEquipChange : MonoBehaviourPun
 {
+    public bool UICheck; //캐릭터선택창 체크용
     #region 장비변경
     public MageEquip mageEquip;
 
@@ -44,7 +45,7 @@ public class MageEquipChange : MonoBehaviourPun
 
     void Awake()
     {
-        if (!photonView.IsMine)
+        if (!photonView.IsMine && !UICheck)
         {
             this.enabled = false;
         }

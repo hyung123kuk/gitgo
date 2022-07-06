@@ -31,9 +31,9 @@ public class ChSelSkill : MonoBehaviour
     void Start()
     {
         Aurapos = GameObject.Find("SelManager").transform.GetChild(0).transform.GetChild(2).transform.GetChild(3).transform.
-            GetChild(0).transform.GetChild(7).transform;
+            GetChild(0).transform.GetChild(2).transform;
         arrowPos = GameObject.Find("SelManager").transform.GetChild(0).transform.GetChild(2).transform.GetChild(3).transform.
-           GetChild(1).transform.GetChild(7).transform;
+           GetChild(1).transform.GetChild(2).transform;
         MagicPos = GameObject.Find("SelManager").transform.GetChild(0).transform.GetChild(2).transform.GetChild(3).transform.
            GetChild(2).transform.GetChild(2).transform.GetChild(3).transform;
         Mage1SkillPos1 = GameObject.Find("SelManager").transform.GetChild(0).transform.GetChild(2).transform.GetChild(3).transform.

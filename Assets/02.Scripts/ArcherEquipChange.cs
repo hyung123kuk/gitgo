@@ -5,6 +5,7 @@ using Photon.Pun;
 
 public class ArcherEquipChange : MonoBehaviourPun
 {
+    public bool UICheck; //캐릭터선택창 체크용
     #region 장비변경
     public ArcherEquip archerEquip;
 
@@ -44,7 +45,7 @@ public class ArcherEquipChange : MonoBehaviourPun
 
     void Awake()
     {
-        if (!photonView.IsMine)
+        if (!photonView.IsMine && !UICheck)
         {
             this.enabled = false;
         }

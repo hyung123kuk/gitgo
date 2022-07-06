@@ -25059,6 +25059,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c952497ed5d44554ca63a4c00832250c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UICheck: 0
   archerEquip: {fileID: 0}
   Helmet1: {fileID: 0}
   Helmet3: {fileID: 0}
