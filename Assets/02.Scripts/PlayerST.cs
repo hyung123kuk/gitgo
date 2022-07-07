@@ -116,7 +116,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     //======================마법사 스킬========================// 
     [Header("마법사 관련")]
     public MeshRenderer mesh;           //순간이동때 투명화
-    public SkinnedMeshRenderer smesh;   //순간이동때 투명화
+    public SkinnedMeshRenderer[] smesh;   //순간이동때 투명화
     public GameObject FlashEff;  //순간이동이펙트
     public bool isFlash; //현재 순간이동중?
     [SerializeField]
@@ -144,6 +144,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
            this.enabled = false;
         }
 
+        smesh = GetComponentsInChildren<SkinnedMeshRenderer>();
         photonView.RPC("Setting", RpcTarget.AllBuffered);
         saveManager = FindObjectOfType<SaveManager>();
         nickname = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<Text>();
@@ -852,7 +853,10 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         isFlash = true;
         isFall = true;
         mesh.enabled = false;
-        smesh.enabled = false;
+        for(int i=0;i<smesh.Length;i++)
+        {
+            smesh[i].enabled = false;
+        }
         FlashEff.SetActive(true);
         rigid.AddForce(transform.forward * 40 + transform.up * 10, ForceMode.Impulse);
         yield return new WaitForSeconds(0.3f);
@@ -861,7 +865,12 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         isFall = false;
         FlashEff.SetActive(false);
         mesh.enabled = true;
-        smesh.enabled = true;
+        for (int i = 0; i < smesh.Length; i++)
+        {
+            smesh[i].enabled = true;
+        }
+        yield return new WaitForSeconds(0.2f);
+        rigid.velocity = Vector3.zero;
 
         isCoolTeleport = true;//쿨타임
         attackdamage.Skill_Mage_Teleport_Cool();
@@ -1374,6 +1383,10 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         equipWeapon[NowWeapon].gameObject.SetActive(false);
         NowWeapon = (int)WeaponNum;
         equipWeapon[NowWeapon].gameObject.SetActive(true);
+        if(CharacterType == Type.Mage)
+        {
+            mesh = GetComponentInChildren<Weapons>().GetComponent<MeshRenderer>();
+        }
         //QuikSlot.quikSlot.weapons = FindObjectOfType<Weapons>();
     }  
 }

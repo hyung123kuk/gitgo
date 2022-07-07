@@ -5698,7 +5698,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &7978702811899332355
 Transform:
   m_ObjectHideFlags: 0
@@ -5846,8 +5846,9 @@ MonoBehaviour:
   isBackStep: 0
   isPoison: 0
   mesh: {fileID: 8821336509127807747}
-  smesh: {fileID: 0}
-  FlashEff: {fileID: 0}
+  smesh:
+  - {fileID: 0}
+  FlashEff: {fileID: 8821336508249781513}
   isFlash: 0
   questStore: {fileID: 0}
   isCool1: 0
@@ -6229,6 +6230,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 47f0a20acf34cdd48857a804e454b80f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UICheck: 0
+  playerst: {fileID: 0}
   mageEquip: {fileID: 0}
   Helmet1: {fileID: 0}
   Helmet3: {fileID: 0}

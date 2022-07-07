@@ -6,6 +6,7 @@ using Photon.Pun;
 public class MageEquipChange : MonoBehaviourPun
 {
     public bool UICheck; //캐릭터선택창 체크용
+    public PlayerST playerst;
     #region 장비변경
     public MageEquip mageEquip;
 
@@ -50,6 +51,7 @@ public class MageEquipChange : MonoBehaviourPun
             this.enabled = false;
         }
         mageEquip = GetComponent<MageEquip>();
+        playerst = GetComponent<PlayerST>();
         #region 장비초기화
         Chest1 = new GameObject[5];
         Chest3 = new GameObject[5];
@@ -126,6 +128,7 @@ public class MageEquipChange : MonoBehaviourPun
             Helmet7.SetActive(false);
             EquipHelmet = (int)HelmetNum;
         }
+        playerst.smesh = GetComponentsInChildren<SkinnedMeshRenderer>();
     }
     [PunRPC]
     public void MageChestChange(Item.ChestNames ChestNum) //법사 상의변경
@@ -160,6 +163,7 @@ public class MageEquipChange : MonoBehaviourPun
                 EquipChest = (int)ChestNum;
             }
         }
+        playerst.smesh = GetComponentsInChildren<SkinnedMeshRenderer>();
     }
     [PunRPC]
     public void MageGlovesChange(Item.GlovesNames GlovesNum) //법사 장갑변경
@@ -194,6 +198,7 @@ public class MageEquipChange : MonoBehaviourPun
                 EquipGloves = (int)GlovesNum;
             }
         }
+        playerst.smesh = GetComponentsInChildren<SkinnedMeshRenderer>();
     }
     [PunRPC]
     public void MagePantsChange(Item.PantsNames PantsNum) //법사 하의변경
@@ -219,6 +224,7 @@ public class MageEquipChange : MonoBehaviourPun
             Pants7.SetActive(false);
             EquipPants = (int)PantsNum;
         }
+        playerst.smesh = GetComponentsInChildren<SkinnedMeshRenderer>();
     }
     [PunRPC]
     public void MageBootsChange(Item.BootsNames BootsNum) //법사 신발변경
@@ -253,6 +259,7 @@ public class MageEquipChange : MonoBehaviourPun
                 EquipBoots = (int)BootsNum;
             }
         }
+        playerst.smesh = GetComponentsInChildren<SkinnedMeshRenderer>();
     }
     [PunRPC]
     public void MageBackChange(Item.BackNames BackNum) //법사 망토변경
@@ -275,6 +282,7 @@ public class MageEquipChange : MonoBehaviourPun
             Back7.SetActive(false);
             EquipBack = (int)BackNum;
         }
+        playerst.smesh = GetComponentsInChildren<SkinnedMeshRenderer>();
     }
     #endregion
 }

@@ -35708,7 +35708,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1388218498446456671
 Transform:
   m_ObjectHideFlags: 0
@@ -35855,7 +35855,8 @@ MonoBehaviour:
   isBackStep: 0
   isPoison: 0
   mesh: {fileID: 0}
-  smesh: {fileID: 0}
+  smesh:
+  - {fileID: 0}
   FlashEff: {fileID: 0}
   isFlash: 0
   questStore: {fileID: 0}
