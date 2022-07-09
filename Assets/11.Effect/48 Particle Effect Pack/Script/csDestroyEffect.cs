@@ -2,11 +2,29 @@
 using System.Collections;
 
 public class csDestroyEffect : MonoBehaviour {
-	
-	void Update () {
-        if (Input.GetKeyDown(KeyCode.X) || Input.GetKeyDown(KeyCode.Z) || Input.GetKeyDown(KeyCode.C))
+
+    [SerializeField]
+    ParticleSystem[] particles;
+
+    private void Start()
+    {
+        particleOff();
+    }
+
+    public void particleOn()
+    {
+        for(int i = 0; i < particles.Length; i++)
         {
-            Destroy(gameObject);
+            particles[i].Play();
         }
     }
+
+    public void particleOff()
+    {
+        for (int i = 0; i < particles.Length; i++)
+        {
+            particles[i].Stop();
+        }
+    }
+
 }
