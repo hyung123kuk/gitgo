@@ -7,6 +7,8 @@ public class AttackDamage : MonoBehaviourPun, IPunObservable
 {
     [SerializeField]
     private PlayerStat playerStat;
+    [SerializeField]
+    private PlayerST playerst;
     [Header("스킬 기본 쿨타임")]
     [Header("       버프 스킬")]
     [SerializeField]
@@ -126,6 +128,7 @@ public class AttackDamage : MonoBehaviourPun, IPunObservable
     {
         if (!photonView.IsMine)
             this.enabled = false;
+        playerst = GetComponent<PlayerST>();
         playerStat = FindObjectOfType<PlayerStat>();
         Skill1_time = Skill_1_cooltime;
         Skill2_time = Skill_2_cooltime;
@@ -429,6 +432,10 @@ public class AttackDamage : MonoBehaviourPun, IPunObservable
                 Debug.Log(SkillBuff_passedDurationgTime);
                 SkillBuff_passedDurationgTime = 0f;
                 Duration_Buff = false;
+                if(playerst.CharacterType == PlayerST.Type.Warrior)
+                {
+                    playerst.BuffEff.Stop();
+                }
             }
         }
 

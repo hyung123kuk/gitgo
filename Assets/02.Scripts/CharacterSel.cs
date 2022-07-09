@@ -116,8 +116,6 @@ public class CharacterSel : MonoBehaviourPunCallbacks
             {
                 PhotonNetwork.LocalPlayer.NickName = saveManager.Getname1;
             }
-            // StartCoroutine(LoadCoroutine());
-            //SceneManager.LoadScene(1);
         }
 
         IEnumerator LoadCoroutine()
@@ -137,7 +135,7 @@ public class CharacterSel : MonoBehaviourPunCallbacks
 
     }
 
-    void GameStart()
+    public void GameStart()
     {       
         saveManager.LoadCharacter();
         saveManager.SaveOn = true;
@@ -180,9 +178,6 @@ public class CharacterSel : MonoBehaviourPunCallbacks
             LobbyUi.SetActive(true);
             if(PhotonNetwork.LocalPlayer.NickName != null)
             PhotonNetwork.LocalPlayer.NickName = saveManager.Getname2;
-            //StartCoroutine(LoadCoroutine2());
-            //SceneManager.LoadScene(1);
-
         }
     }
 

@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviourPunCallbacks
         gameManager = this;
         CharSel = GameObject.FindGameObjectWithTag("SelManager").GetComponent<CharacterSel>();
         CharSel.audioListener.enabled = false;
-        
+
         //CharSel.sel.SetActive(false);
         if (CharSel.charSel == 1)
         {
@@ -35,13 +35,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
             else if (CharSel.character1 == CharacterSel.Type.Archer)
             {
-                GameObject character = PhotonNetwork.Instantiate("gameArcher", startPoint.position, Quaternion.identity);
+                GameObject character = PhotonNetwork.Instantiate("gameArcher1", startPoint.position, Quaternion.identity);
                 GameObject Horseee = PhotonNetwork.Instantiate("Horse", GameManager.gameManager.HorsePoint.position, Quaternion.identity);
 
             }
             else if (CharSel.character1 == CharacterSel.Type.Mage)
             {
-                GameObject character = PhotonNetwork.Instantiate("gameMage", startPoint.position, Quaternion.identity);
+                GameObject character = PhotonNetwork.Instantiate("gameMage1", startPoint.position, Quaternion.identity);
                 GameObject Horseee = PhotonNetwork.Instantiate("Horse", GameManager.gameManager.HorsePoint.position, Quaternion.identity);
 
             }
@@ -56,13 +56,13 @@ public class GameManager : MonoBehaviourPunCallbacks
             }
             else if (CharSel.character2 == CharacterSel.Type.Archer)
             {
-                GameObject character = PhotonNetwork.Instantiate("gameArcher", startPoint.position, Quaternion.identity);
+                GameObject character = PhotonNetwork.Instantiate("gameArcher1", startPoint.position, Quaternion.identity);
                 GameObject Horseee = PhotonNetwork.Instantiate("Horse", GameManager.gameManager.HorsePoint.position, Quaternion.identity);
 
             }
             else if (CharSel.character2 == CharacterSel.Type.Mage)
             {
-                GameObject character = PhotonNetwork.Instantiate("gameMage", startPoint.position, Quaternion.identity);
+                GameObject character = PhotonNetwork.Instantiate("gameMage1", startPoint.position, Quaternion.identity);
                 GameObject Horseee = PhotonNetwork.Instantiate("Horse", GameManager.gameManager.HorsePoint.position, Quaternion.identity);
 
             }

@@ -121,6 +121,34 @@ MonoBehaviour:
   - PartyLeaderExit
   - PartyMemberExit
   - ExpUp
+  - WarriorBackChange
+  - WarriorBootsChange
+  - WarriorChestChange
+  - WarriorGlovesChange
+  - WarriorHelmetChange
+  - WarriorPantsChange
+  - WarriorShoulderChange
+  - EquipSetting
+  - WeaponChange
+  - Setting
+  - CharacterSelSave1
+  - Setting2
+  - ArcherBackChange
+  - ArcherBootsChange
+  - ArcherChestChange
+  - ArcherGlovesChange
+  - ArcherHelmetChange
+  - ArcherPantsChange
+  - MageBackChange
+  - MageBootsChange
+  - MageChestChange
+  - MageGlovesChange
+  - MageHelmetChange
+  - MagePantsChange
+  - Attack1EffPlay
+  - Attack2EffPlay
+  - Attack3EffPlay
+  - Attack4EffPlay
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

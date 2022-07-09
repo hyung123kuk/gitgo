@@ -165,8 +165,9 @@ public class SpawnManager : MonoBehaviourPun
             GolemObjs++;
             StartCoroutine(GolemSpawn());
         }
-
-        setMosterNumber(SlimeObjs, BlueSlimeObjs, GoblinObjs, GoblinArObjs, SkeletonObjs, TurtleSlimeObjs, GolemObjs);
+       
+         setMosterNumber(SlimeObjs, BlueSlimeObjs, GoblinObjs, GoblinArObjs, SkeletonObjs, TurtleSlimeObjs, GolemObjs);
+        
     }
 
     [PunRPC]
@@ -174,7 +175,9 @@ public class SpawnManager : MonoBehaviourPun
     {
         if (PhotonNetwork.IsMasterClient)
         {
+        
             photonView.RPC("setMosterNumber", RpcTarget.Others, slime, blueslime, gobline, archer, skeleton, tutle, golem);
+            
         }
         else
         {

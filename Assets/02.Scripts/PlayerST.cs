@@ -15,6 +15,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     public Type CharacterType; //원래 앞에 static이 붙어있었는데 테스트할때 인스펙터창에 타입이 안떠서 임시로 뻈어요
     Transform _transform;
     public Rigidbody rigid;
+    ComboHit comboHit;
 
     public float jump = 5.0f; //점프력
     public float speed = 5.0f;  //플레이어 이동속도
@@ -22,10 +23,10 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     public CapsuleCollider SelectPlayer; //제어할 플레이어
     public Animator anim; //애니메이션
     public Weapons[] equipWeapon;    //현재 무기. 나중에 배열로 여러무기를 등록하려고함
-    public enum SwordNames { Sword1, Sword5_normal, Sword5_rare, Sword10_normal, Sword10_rare, None }; //무기이름 위의 배열의 순서에 따라.
-    public SwordNames basicSword = 0;
+    public Item.SwordNames swordNames;  //무기이름 위의 배열의 순서에 따라.
+    public Item.SwordNames basicSword = 0;
     public int NowWeapon; //현재 무기
-    
+
 
 
     public float bowMinPower = 0.2f;
@@ -98,9 +99,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     private bool isYes; //돌진 벽에서 쓰는행위 막는용도
 
 
-
     [Header("전사 관련")]
-    public GameObject BuffEff;
+    public ParticleSystem BuffEff;
     public GameObject RushEff;
     public Transform Aurapos;
     public GameObject SwordAura; //검기스킬 투사체
@@ -116,7 +116,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     //======================마법사 스킬========================// 
     [Header("마법사 관련")]
     public MeshRenderer mesh;           //순간이동때 투명화
-    public SkinnedMeshRenderer smesh;   //순간이동때 투명화
+    public SkinnedMeshRenderer[] smesh;   //순간이동때 투명화
     public GameObject FlashEff;  //순간이동이펙트
     public bool isFlash; //현재 순간이동중?
     [SerializeField]
@@ -130,34 +130,38 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     public bool isCooldodge;
     public bool isCoolTeleport;
 
-    public WarriorEquipChange warriorEquipChange;
     public Weapons weapons;
     public Image healthbar;
     public Text nickname;
     public Image helathbarBack;
     private SaveManager saveManager;
 
+
     private void Awake()
     {
-        
-        if (!photonView.IsMine)
-            this.enabled = false;
 
-        warriorEquipChange = GetComponent<WarriorEquipChange>();
+        if (!photonView.IsMine)
+        {
+            this.enabled = false;
+        }
+        comboHit = GetComponent<ComboHit>();
+        anim = GetComponentInChildren<Animator>();
+        smesh = GetComponentsInChildren<SkinnedMeshRenderer>();
+        photonView.RPC("Setting", RpcTarget.AllBuffered);
         saveManager = FindObjectOfType<SaveManager>();
         nickname = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<Text>();
         healthbar = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Image>();
         helathbarBack = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(2).GetComponent<Image>();
     }
-
+    [PunRPC]
     void NicknameSerching() //닉넴찾기 다른플레이어
     {
-        PlayerST[] ownerplayers = FindObjectsOfType<PlayerST>();
-        foreach (PlayerST ownerplayer in ownerplayers)
+        PlayerMine[] ownerplayers = FindObjectsOfType<PlayerMine>();
+        foreach (PlayerMine ownerplayer in ownerplayers)
         {
             if (!ownerplayer.GetComponent<PhotonView>().IsMine)
             {
-                ownerplayer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).
+                ownerplayer.transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.
                     GetComponent<Text>().text = ownerplayer.GetComponent<PhotonView>().Owner.NickName;
                 if (ownerplayer == null)
                     break;
@@ -166,12 +170,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     }
     void Start()
     {
-        
-        if (!photonView.IsMine)
-        {
-            return;
-        }
-        
         nickname.text = PhotonNetwork.LocalPlayer.NickName;
         healthbar.CrossFadeAlpha(0, 0, true);  //자기자신 HP바 가리기
         //nickname.CrossFadeAlpha(0, 0, true);
@@ -180,9 +178,9 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         playerstat = GetComponent<PlayerStat>();
         bowPower = bowMinPower;
         _transform = GetComponent<Transform>();
-        anim = GetComponentInChildren<Animator>();
-        
-        questStore = FindObjectOfType<QuestStore>();
+
+
+
         playerST = this;
         dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
         weapons = FindObjectOfType<Weapons>();
@@ -199,6 +197,12 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         }
         Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
 
+    }
+
+    [PunRPC]
+    void Setting() //변수 동기화 이유: 무기낄때 퀘스트쪽에서 에러
+    {
+        questStore = FindObjectOfType<QuestStore>();
     }
 
 
@@ -536,10 +540,13 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             return;
 
         if (sDown && !isJump && !isDodge && !isBlock && !isRush && !isAura && !isBackStep && !weapons.isEnergyReady &&
-           !weapons.isLightning && !weapons.isIceage && !weapons.isMeteo && !isFlash && !isStun
+           !weapons.isLightning && !weapons.isIceage && !weapons.isMeteo && !isFlash && !isStun && !isRun
             )
         {
-            photonView.RPC("JumpPlay", RpcTarget.All);
+            if (!archerattack && CharacterType == Type.Archer)
+                photonView.RPC("JumpPlay", RpcTarget.All);
+            else if (CharacterType == Type.Warrior || CharacterType == Type.Mage)
+                photonView.RPC("JumpPlay", RpcTarget.All);
         }
     }
     [PunRPC]
@@ -560,8 +567,20 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             return;
         rigid.AddForce(Vector3.up * jump, ForceMode.Impulse); //애드포스 : 힘을주다/ 포스모드,임펄스 : 즉발적
         anim.SetBool("isJump", true);
-        anim.SetTrigger("doJump");
+        if (CharacterType == Type.Warrior)
+        {
+            Invoke("WaJumpEnd", 0.2f); //전사 애니메이션 꼬임 방지용
+        }
         isJump = true;
+    }
+
+    void WaJumpEnd()
+    {
+        anim.SetBool("isAttack4", false);
+        anim.SetBool("isAttack3", false);
+        anim.SetBool("isAttack2", false);
+        anim.SetBool("isAttack", false);
+        comboHit.noOfClicks = 0;
     }
 
     public void Dodge()
@@ -571,7 +590,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             return;
 
         if (!isStun && !isJump && !isBlock && !isBackStep && !weapons.isEnergyReady && !isRush && !isAura && !isFlash &&
-           !weapons.isLightning && !weapons.isIceage && !weapons.isMeteo && attackdamage.Usable_Dodge)
+           !weapons.isLightning && !weapons.isIceage && !weapons.isMeteo && attackdamage.Usable_Dodge && !isRun)
         {
             DodgePlay();
             photonView.RPC("DodgePlay", RpcTarget.Others);
@@ -594,7 +613,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         attackdamage.Usable_Dodge = false;
         dodgeVec = moveVec;
         speed *= 2;
-        anim.SetTrigger("doDodge");
+        anim.SetBool("isDodge", true);
         isDodge = true;
         isDamage = true;
 
@@ -608,6 +627,15 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         speed *= 0.5f;
         isDodge = false;
         isDamage = false;
+        anim.SetBool("isDodge", false);
+        if (CharacterType == Type.Warrior)
+        {
+            anim.SetBool("isAttack4", false);
+            anim.SetBool("isAttack3", false);
+            anim.SetBool("isAttack2", false);
+            anim.SetBool("isAttack", false);
+            comboHit.noOfClicks = 0;
+        }
         if (!questStore.MainSuccess)
         {
             questStore.MainQuestSuccess(1);
@@ -647,6 +675,11 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         yield return new WaitForSeconds(0.5f);
         isCool1 = true;
         anim.SetBool("isBlock", false);
+        anim.SetBool("isAttack4", false);
+        anim.SetBool("isAttack3", false);
+        anim.SetBool("isAttack2", false);
+        anim.SetBool("isAttack", false);
+        comboHit.noOfClicks = 0;
         isBlock = false;
         isDamage = false;
 
@@ -668,21 +701,13 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     {
         SoundManager.soundManager.WarriorBuffSound();
         attackdamage.Skill_Buff_Cool();
-        BuffEff.SetActive(true);
-        if (attackdamage.Duration_Buff)
-        {
-            weapons.rate = 0.45f;
-        }
-        else if (!attackdamage.Duration_Buff)
-        {
-            BuffEff.SetActive(false);
-            weapons.rate = 0.6f;
-        }
+        BuffEff.Play();
     }
     public void Rush()
     {
         if (!photonView.IsMine)
             return;
+
         if (!isYes && !isJump && !isDodge && !isBlock && !isAura && !isStun && !isRun &&
             attackdamage.Usable_Skill2)
         {
@@ -700,7 +725,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         isRush = true;
         isFall = true;
         anim.SetBool("isRush", true);
-        yield return new WaitForSeconds(0.5f);
+        //yield return new WaitForSeconds(0.5f);
         SoundManager.soundManager.WarriorRushVoice();
         rigid.AddForce(transform.forward * 40 + transform.up * 20, ForceMode.Impulse);
         yield return new WaitForSeconds(0.5f);
@@ -716,6 +741,11 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         CCare.enabled = false;
         Skillare.enabled = false;
         anim.SetBool("isRush", false);
+        anim.SetBool("isAttack4", false);
+        anim.SetBool("isAttack3", false);
+        anim.SetBool("isAttack2", false);
+        anim.SetBool("isAttack", false);
+        comboHit.noOfClicks = 0;
         isRush = false;
         isFall = false;
         isCool2 = true;
@@ -761,6 +791,11 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         yield return new WaitForSeconds(0.8f);
         isAura = false;
         anim.SetBool("isAura", false);
+        anim.SetBool("isAttack4", false);
+        anim.SetBool("isAttack3", false);
+        anim.SetBool("isAttack2", false);
+        anim.SetBool("isAttack", false);
+        comboHit.noOfClicks = 0;
     }
     //==================================여기서부터 궁수스킬=======================================
     public void Smoke() //마우스 우클릭 연막
@@ -851,7 +886,10 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         isFlash = true;
         isFall = true;
         mesh.enabled = false;
-        smesh.enabled = false;
+        for (int i = 0; i < smesh.Length; i++)
+        {
+            smesh[i].enabled = false;
+        }
         FlashEff.SetActive(true);
         rigid.AddForce(transform.forward * 40 + transform.up * 10, ForceMode.Impulse);
         yield return new WaitForSeconds(0.3f);
@@ -860,7 +898,12 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         isFall = false;
         FlashEff.SetActive(false);
         mesh.enabled = true;
-        smesh.enabled = true;
+        for (int i = 0; i < smesh.Length; i++)
+        {
+            smesh[i].enabled = true;
+        }
+        yield return new WaitForSeconds(0.2f);
+        rigid.velocity = Vector3.zero;
 
         isCoolTeleport = true;//쿨타임
         attackdamage.Skill_Mage_Teleport_Cool();
@@ -889,10 +932,16 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Update()
     {
+        if (this != null)
+        {
+            NicknameSerching(); //다른플레이어들 닉네임갱신
+            photonView.RPC("NicknameSerching", RpcTarget.OthersBuffered);
+        }
+
         if (!photonView.IsMine)
             return;
 
-        NicknameSerching(); //다른플레이어들 닉네임갱신
+
 
 
         if (Input.GetKeyDown(KeyCode.H) && !HorseMode) //말 아이템이 없어서 이걸로 테스트했어요
@@ -926,12 +975,23 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             anim.SetFloat("Attack1Speed", 1.5f);
             anim.SetFloat("Attack2Speed", 1.5f);
             anim.SetFloat("Attack3Speed", 1.5f);
+            anim.SetFloat("Attack4Speed", 1.5f);
         }
         else if (!attackdamage.Duration_Buff && CharacterType == Type.Warrior)
         {
             anim.SetFloat("Attack1Speed", 1f);
             anim.SetFloat("Attack2Speed", 1f);
             anim.SetFloat("Attack3Speed", 1f);
+            anim.SetFloat("Attack4Speed", 1f);
+        }
+
+        if (attackdamage.Duration_Buff && CharacterType == Type.Warrior)
+        {
+            weapons.rate = 0.45f;
+        }
+        else if (!attackdamage.Duration_Buff && CharacterType == Type.Warrior)
+        {
+            weapons.rate = 0.6f;
         }
 
         if (fDowning && CharacterType == Type.Archer) //화살땡길때 이속감소
@@ -1023,7 +1083,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     {
 
 
-        if (!isStun && !weapons.isLightning && !weapons.isIceage && !weapons.isMeteo
+        if (!isStun && !weapons.isIceage && !weapons.isMeteo
             && !weapons.isEnergyReady && CharacterType == Type.Mage && !NoMove)
         {
             if (isDodge)
@@ -1354,7 +1414,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
     }
 
-    public void WeaponChange(SwordNames WeaponNum) //무기를 바꿨을때 캐릭터에 적용시키기 위해 사용하는 함수
+    [PunRPC]
+    public void WeaponChange(Item.SwordNames WeaponNum) //무기를 바꿨을때 캐릭터에 적용시키기 위해 사용하는 함수
     {
         if (WeaponNum != basicSword)
         {
@@ -1366,6 +1427,10 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         equipWeapon[NowWeapon].gameObject.SetActive(false);
         NowWeapon = (int)WeaponNum;
         equipWeapon[NowWeapon].gameObject.SetActive(true);
+        if (CharacterType == Type.Mage)
+        {
+            mesh = GetComponentInChildren<Weapons>().GetComponent<MeshRenderer>();
+        }
         //QuikSlot.quikSlot.weapons = FindObjectOfType<Weapons>();
-    }  
+    }
 }

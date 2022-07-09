@@ -59,7 +59,7 @@ public class Data
     public bool Quest_skelleton;
     public bool skelleton_Success;
 
-    #region 방어구 저장용
+    #region 방어구,무기 저장용
     public int Helmet;
     public int Shoulder;
     public int Chest;
@@ -67,6 +67,7 @@ public class Data
     public int Pants;
     public int Boots;
     public int Back;
+    public int Weapon;
     #endregion
 
 
@@ -147,7 +148,12 @@ public class SaveManager : MonoBehaviourPunCallbacks
     QuestNormal questNormal;
     [SerializeField]
     WarriorEquipChange warriorEquipChange;
-
+    [SerializeField]
+    ArcherEquipChange archerEquipChange;
+    [SerializeField]
+    MageEquipChange mageEquipChange;
+    [SerializeField]
+    PlayerST playerst;
 
     private void Awake()
     {
@@ -160,7 +166,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
     private void Start()
     {
 
-
+        characterSel = FindObjectOfType<CharacterSel>();
         SAVE_DATA_DIRECTORY = Application.dataPath + "/Saves/";
 
         if (!Directory.Exists(SAVE_DATA_DIRECTORY))
@@ -173,8 +179,12 @@ public class SaveManager : MonoBehaviourPunCallbacks
             CharacterSelLoad();
         }
 
+        if (characterSel.charSel == 1)
+            CharacterNum = 0;
+        else if (characterSel.charSel == 2)
+            CharacterNum = 1;
 
-        StartCoroutine(SaveStart());
+            StartCoroutine(SaveStart());
 
     }
 
@@ -204,6 +214,12 @@ public class SaveManager : MonoBehaviourPunCallbacks
 
     public void PositionSave()
     {
+        PlayerST[] playerst2 = FindObjectsOfType<PlayerST>();
+        foreach (PlayerST playerst3 in playerst2)
+        {
+            if (playerst3.GetComponent<PhotonView>().IsMine)
+                playerst = playerst3;
+        }
         PlayerStat[] playerstats = FindObjectsOfType<PlayerStat>();
         foreach (PlayerStat playerstat in playerstats)
         {
@@ -220,7 +236,13 @@ public class SaveManager : MonoBehaviourPunCallbacks
         QuickSave();
         EquSlotSave();
         QuestSave();
-        WarriorEquip(); //워리어 장비
+
+        if (playerst.CharacterType == PlayerST.Type.Warrior)
+            WarriorEquip(); //워리어 장비
+        else if (playerst.CharacterType == PlayerST.Type.Archer)
+            ArcherEquip(); //궁수장비
+        else if (playerst.CharacterType == PlayerST.Type.Mage)
+            MageEquip(); //마법사 장비
     }
 
     public void InvenSave()
@@ -314,6 +336,41 @@ public class SaveManager : MonoBehaviourPunCallbacks
         data[CharacterNum].Pants = warriorEquipChange.EquipPants;
         data[CharacterNum].Boots = warriorEquipChange.EquipBoots;
         data[CharacterNum].Back = warriorEquipChange.EquipBack;
+        data[CharacterNum].Weapon = playerst.NowWeapon;
+    }
+    public void ArcherEquip()
+    {
+        ArcherEquipChange[] arcEquipChange = FindObjectsOfType<ArcherEquipChange>();
+        foreach (ArcherEquipChange archEquipChange in arcEquipChange)
+        {
+            if (archEquipChange.GetComponent<PhotonView>().IsMine)
+                archerEquipChange = archEquipChange;
+        }
+
+        data[CharacterNum].Helmet = archerEquipChange.EquipHelmet;
+        data[CharacterNum].Chest = archerEquipChange.EquipChest;
+        data[CharacterNum].Gloves = archerEquipChange.EquipGloves;
+        data[CharacterNum].Pants = archerEquipChange.EquipPants;
+        data[CharacterNum].Boots = archerEquipChange.EquipBoots;
+        data[CharacterNum].Back = archerEquipChange.EquipBack;
+        data[CharacterNum].Weapon = playerst.NowWeapon;
+    }
+    public void MageEquip()
+    {
+        MageEquipChange[] magEquipChange = FindObjectsOfType<MageEquipChange>();
+        foreach (MageEquipChange mageeEquipChange in magEquipChange)
+        {
+            if (mageeEquipChange.GetComponent<PhotonView>().IsMine)
+                mageEquipChange = mageeEquipChange;
+        }
+
+        data[CharacterNum].Helmet = mageEquipChange.EquipHelmet;
+        data[CharacterNum].Chest = mageEquipChange.EquipChest;
+        data[CharacterNum].Gloves = mageEquipChange.EquipGloves;
+        data[CharacterNum].Pants = mageEquipChange.EquipPants;
+        data[CharacterNum].Boots = mageEquipChange.EquipBoots;
+        data[CharacterNum].Back = mageEquipChange.EquipBack;
+        data[CharacterNum].Weapon = playerst.NowWeapon;
     }
 
     public void QuestSave()
@@ -399,6 +456,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
     {
         data[CharacterNum] = JsonUtility.FromJson<Data>(_loadJson);
 
+        #region 스크립트 추적
         PlayerStat[] playerstats = FindObjectsOfType<PlayerStat>();
         foreach (PlayerStat playerstat in playerstats)
         {
@@ -411,6 +469,25 @@ public class SaveManager : MonoBehaviourPunCallbacks
             if (warequipChange.GetComponent<PhotonView>().IsMine)
                 warriorEquipChange = warequipChange;
         }
+        ArcherEquipChange[] arcEquipChange = FindObjectsOfType<ArcherEquipChange>();
+        foreach (ArcherEquipChange archEquipChange in arcEquipChange)
+        {
+            if (archEquipChange.GetComponent<PhotonView>().IsMine)
+                archerEquipChange = archEquipChange;
+        }
+        MageEquipChange[] magEquipChange = FindObjectsOfType<MageEquipChange>();
+        foreach (MageEquipChange mageeEquipChange in magEquipChange)
+        {
+            if (mageeEquipChange.GetComponent<PhotonView>().IsMine)
+                mageEquipChange = mageeEquipChange;
+        }
+        PlayerST[] playerst2 = FindObjectsOfType<PlayerST>();
+        foreach (PlayerST playerst3 in playerst2)
+        {
+            if (playerst3.GetComponent<PhotonView>().IsMine)
+                playerst = playerst3;
+        }
+        #endregion
 
 
         inven = FindObjectOfType<inventory>();
@@ -420,16 +497,46 @@ public class SaveManager : MonoBehaviourPunCallbacks
         questExplain = FindObjectOfType<QuestExplain>();
         questNormal = FindObjectOfType<QuestNormal>();
 
-        #region 전사 방어구 불러오기
-        warriorEquipChange.WarriorHelmetChange((WarriorEquipChange.HelmetNames)data[CharacterNum].Helmet);
-        warriorEquipChange.WarriorChestChange((WarriorEquipChange.ChestNames)data[CharacterNum].Chest);
-        warriorEquipChange.WarriorShoulderChange((WarriorEquipChange.ShoulderNames)data[CharacterNum].Shoulder);
-        warriorEquipChange.WarriorGlovesChange((WarriorEquipChange.GlovesNames)data[CharacterNum].Gloves);
-        warriorEquipChange.WarriorPantsChange((WarriorEquipChange.PantsNames)data[CharacterNum].Pants);
-        warriorEquipChange.WarriorBootsChange((WarriorEquipChange.BootsNames)data[CharacterNum].Boots);
-        warriorEquipChange.WarriorBackChange((WarriorEquipChange.BackNames)data[CharacterNum].Back);
+        #region 전사 방어구,무기 불러오기
+        if (playerst.CharacterType == PlayerST.Type.Warrior)
+        {
+            Debug.Log("워리어 로드.....");
+            warriorEquipChange.photonView.RPC("WarriorHelmetChange", RpcTarget.AllBuffered, (Item.HelmetNames)data[CharacterNum].Helmet);
+            warriorEquipChange.photonView.RPC("WarriorChestChange", RpcTarget.AllBuffered, (Item.ChestNames)data[CharacterNum].Chest);
+            warriorEquipChange.photonView.RPC("WarriorShoulderChange", RpcTarget.AllBuffered, (Item.ShoulderNames)data[CharacterNum].Shoulder);
+            warriorEquipChange.photonView.RPC("WarriorGlovesChange", RpcTarget.AllBuffered, (Item.GlovesNames)data[CharacterNum].Gloves);
+            warriorEquipChange.photonView.RPC("WarriorPantsChange", RpcTarget.AllBuffered, (Item.PantsNames)data[CharacterNum].Pants);
+            warriorEquipChange.photonView.RPC("WarriorBootsChange", RpcTarget.AllBuffered, (Item.BootsNames)data[CharacterNum].Boots);
+            warriorEquipChange.photonView.RPC("WarriorBackChange", RpcTarget.AllBuffered, (Item.BackNames)data[CharacterNum].Back);
+            playerst.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, (Item.SwordNames)data[CharacterNum].Weapon);
+        }
         #endregion
-
+        #region 궁수 방어구,무기 불러오기
+        else if (playerst.CharacterType == PlayerST.Type.Archer)
+        {
+            Debug.Log("궁수 로드.....");
+            archerEquipChange.photonView.RPC("ArcherHelmetChange", RpcTarget.AllBuffered, (Item.HelmetNames)data[CharacterNum].Helmet);
+            archerEquipChange.photonView.RPC("ArcherChestChange", RpcTarget.AllBuffered, (Item.ChestNames)data[CharacterNum].Chest);
+            archerEquipChange.photonView.RPC("ArcherGlovesChange", RpcTarget.AllBuffered, (Item.GlovesNames)data[CharacterNum].Gloves);
+            archerEquipChange.photonView.RPC("ArcherPantsChange", RpcTarget.AllBuffered, (Item.PantsNames)data[CharacterNum].Pants);
+            archerEquipChange.photonView.RPC("ArcherBootsChange", RpcTarget.AllBuffered, (Item.BootsNames)data[CharacterNum].Boots);
+            archerEquipChange.photonView.RPC("ArcherBackChange", RpcTarget.AllBuffered, (Item.BackNames)data[CharacterNum].Back);
+            playerst.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, (Item.SwordNames)data[CharacterNum].Weapon);
+        }
+        #endregion
+        #region 마법사 방어구,무기 불러오기
+        else if (playerst.CharacterType == PlayerST.Type.Mage)
+        {
+            Debug.Log("마법사 로드.....");
+            mageEquipChange.photonView.RPC("MageHelmetChange", RpcTarget.AllBuffered, (Item.HelmetNames)data[CharacterNum].Helmet);
+            mageEquipChange.photonView.RPC("MageChestChange", RpcTarget.AllBuffered, (Item.ChestNames)data[CharacterNum].Chest);
+            mageEquipChange.photonView.RPC("MageGlovesChange", RpcTarget.AllBuffered, (Item.GlovesNames)data[CharacterNum].Gloves);
+            mageEquipChange.photonView.RPC("MagePantsChange", RpcTarget.AllBuffered, (Item.PantsNames)data[CharacterNum].Pants);
+            mageEquipChange.photonView.RPC("MageBootsChange", RpcTarget.AllBuffered, (Item.BootsNames)data[CharacterNum].Boots);
+            mageEquipChange.photonView.RPC("MageBackChange", RpcTarget.AllBuffered, (Item.BackNames)data[CharacterNum].Back);
+            playerst.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, (Item.SwordNames)data[CharacterNum].Weapon);
+        }
+        #endregion
 
         playerStat.gameObject.transform.position = data[CharacterNum].Position;
         playerStat._Hp = data[CharacterNum].Hp;
@@ -487,9 +594,9 @@ public class SaveManager : MonoBehaviourPunCallbacks
 
 
     #region 캐릭터 선택창 관련 로드/세이브 함수
-
     public void CharacterSelSave1()
     {
+
         characterSel = FindObjectOfType<CharacterSel>();
         nickname = FindObjectOfType<Nickname>();
         characterSelData.Charater1 = (int)characterSel.character1;
@@ -502,6 +609,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
     public void CharacterSelSave2()
     {
         characterSel = FindObjectOfType<CharacterSel>();
+        nickname = FindObjectOfType<Nickname>();
         characterSelData.Charater2 = (int)characterSel.character2;
         characterSelData.Charater2name = characterSel.Char2Name.text;
 
@@ -514,8 +622,13 @@ public class SaveManager : MonoBehaviourPunCallbacks
     {
         if (File.Exists(SAVE_DATA_DIRECTORY + Sel_SAVE_FILENAME)) //데이터 세이브 파일이 있다면
         {
+
             string loadJson = File.ReadAllText(SAVE_DATA_DIRECTORY + Sel_SAVE_FILENAME);
             characterSelData = JsonUtility.FromJson<CharacterSelData>(loadJson);
+            if (CharacterNum == 0)
+                PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater1name;
+            else if (CharacterNum == 1)
+                PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater2name;
             characterSel = FindObjectOfType<CharacterSel>();
             characterSel.Char1Name.text = characterSelData.Charater1name;
             characterSel.Char2Name.text = characterSelData.Charater2name;
@@ -582,8 +695,11 @@ public class SaveManager : MonoBehaviourPunCallbacks
             PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater1name;
         else if (CharacterNum == 1)
             PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater2name;
-        characterSel.transform.GetChild(0).gameObject.SetActive(true);
+        
 
+        SceneManager.LoadScene(0);
+        characterSel.transform.GetChild(0).gameObject.SetActive(true);
+       SaveOn = false;
     }
 
     private void OnApplicationQuit() //강제종료될때 자동저장
@@ -595,6 +711,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
             PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater1name;
         else if (CharacterNum == 1)
             PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater2name;
+       SaveOn = false;
     }
 
 

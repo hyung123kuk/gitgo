@@ -36,16 +36,29 @@ public class Item : ScriptableObject
     public Type ItemGrade;
     public int itemEquLevel; // 아이템 장착 레벨
 
+    public enum SwordNames { Sword1, Sword5_normal, Sword5_rare, Sword10_normal, Sword10_rare, None };
+    public SwordNames swordNames;
 
+    public enum HelmetNames { Helmet1, Helmet3, Helmet7, None };
+    public HelmetNames helmetNames;
 
-    public PlayerST.SwordNames SwordNames;
-    public WarriorEquipChange.ChestNames chestNames;
-    public WarriorEquipChange.HelmetNames helmetNames;
-    public WarriorEquipChange.ShoulderNames shoulderNames;
-    public WarriorEquipChange.GlovesNames glovesNames;
-    public WarriorEquipChange.PantsNames pantsNames;
-    public WarriorEquipChange.BootsNames bootsNames;
-    public WarriorEquipChange.BackNames backNames;
+    public enum ChestNames { Chest1, Chest3, Chest7, None };
+    public ChestNames chestNames;
+
+    public enum ShoulderNames { Shoulder1, Shoulder3, Shoulder7, None };
+    public ShoulderNames shoulderNames;
+
+    public enum GlovesNames { Gloves1, Gloves3, Gloves7, None };
+    public GlovesNames glovesNames;
+
+    public enum PantsNames { Pants1, Pants3, Pants7, None };
+    public PantsNames pantsNames;
+
+    public enum BootsNames { Boots1, Boots3, Boots7, None };
+    public BootsNames bootsNames;
+
+    public enum BackNames { Back1, Back3, Back7, None };
+    public BackNames backNames;
 
     [TextArea]
     public string itemText;

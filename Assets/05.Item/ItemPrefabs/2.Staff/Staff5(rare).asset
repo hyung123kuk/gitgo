@@ -17,7 +17,14 @@ MonoBehaviour:
   equipType: 2
   ItemGrade: 1
   itemEquLevel: 3
-  SwordNames: 2
+  swordNames: 2
+  helmetNames: 3
+  chestNames: 3
+  shoulderNames: 3
+  glovesNames: 3
+  pantsNames: 3
+  bootsNames: 3
+  backNames: 3
   itemText: "\uB300\uC7A5\uC7A5\uC774 \uC18C\uD53C\uC544\uAC00 \uB9CC\uB4E0 \uCD5C\uACE0\uC758
     \uBB34\uAE30\uC774\uB2E4."
   itemName: "\uC18C\uD53C\uC544\uC758 \uAC15\uCCA0 \uC2A4\uD0DC\uD504"

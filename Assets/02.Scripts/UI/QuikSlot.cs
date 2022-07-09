@@ -114,7 +114,10 @@ public class QuikSlot : MonoBehaviour
     
     void Update()
     {
-        weapons = playerST.GetComponentInChildren<Weapons>();
+        if (playerST != null)
+        {
+            weapons = playerST.GetComponentInChildren<Weapons>();
+        }
        
         if (AllUI.isUI)
             return;

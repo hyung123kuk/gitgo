@@ -17,7 +17,14 @@ MonoBehaviour:
   equipType: 1
   ItemGrade: 1
   itemEquLevel: 7
-  SwordNames: 4
+  swordNames: 4
+  helmetNames: 3
+  chestNames: 3
+  shoulderNames: 3
+  glovesNames: 3
+  pantsNames: 3
+  bootsNames: 3
+  backNames: 3
   itemText: "\uC7AC\uBE60\uB978 \uC790\uAC00 \uC0B4\uC544 \uB0A8\uB294\uB2E4!! <\uC0AC\uBE44\uC2A4>"
   itemName: "\uC0AC\uBE44\uC2A4\uC758 \uBD84\uD64D \uD65C"
   itemImage: {fileID: 21300000, guid: 5639d123438352043b966306ee334b86, type: 3}
