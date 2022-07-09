@@ -24569,7 +24569,7 @@ Animator:
   m_GameObject: {fileID: 7985020556990939197}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 038320a534bd8b444b43734860d1a211, type: 3}
-  m_Controller: {fileID: 9100000, guid: 31a7d36c914c6754e85bd4b70828c3f8, type: 2}
+  m_Controller: {fileID: 9100000, guid: 49f46d46f77e6df458cacc0b0f73e18c, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -24652,9 +24652,9 @@ MonoBehaviour:
   isRun: 0
   attackdamage: {fileID: 5331783459779208749}
   playerstat: {fileID: 5331783459779208746}
-  Skillarea: {fileID: 0}
+  Skillarea: {fileID: 4947185037898891180}
   Skillarea2: {fileID: 0}
-  CCarea: {fileID: 0}
+  CCarea: {fileID: 4947185038433292883}
   playerST: {fileID: 5331783459779208739}
   HorseMode: 0
   Horsee: {fileID: 0}
@@ -24679,7 +24679,8 @@ MonoBehaviour:
   isBackStep: 0
   isPoison: 0
   mesh: {fileID: 0}
-  smesh: {fileID: 0}
+  smesh:
+  - {fileID: 0}
   FlashEff: {fileID: 0}
   isFlash: 0
   questStore: {fileID: 0}
@@ -24782,6 +24783,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStat: {fileID: 5331783459779208746}
+  playerst: {fileID: 0}
   Skill_Buff_cooltime: 30
   Usable_Buff: 1
   Skill_Buff_duration: 12
@@ -24904,33 +24906,18 @@ MonoBehaviour:
   - Type: 4
     SynchronizeType: 2
     Name: right
-  - Type: 4
-    SynchronizeType: 2
-    Name: isRun
-  - Type: 9
-    SynchronizeType: 0
-    Name: doJump
-  - Type: 9
-    SynchronizeType: 0
-    Name: doDodge
-  - Type: 4
-    SynchronizeType: 2
-    Name: isJump
-  - Type: 4
-    SynchronizeType: 2
-    Name: isStun
-  - Type: 4
-    SynchronizeType: 2
-    Name: isHorse
-  - Type: 4
-    SynchronizeType: 2
-    Name: isDie
   - Type: 9
     SynchronizeType: 0
     Name: doSwing
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: doShot
+  - Type: 4
+    SynchronizeType: 2
+    Name: isRun
+  - Type: 4
+    SynchronizeType: 2
+    Name: isJump
   - Type: 4
     SynchronizeType: 2
     Name: isSmoke
@@ -24945,7 +24932,19 @@ MonoBehaviour:
     Name: isShot
   - Type: 4
     SynchronizeType: 2
+    Name: isStun
+  - Type: 4
+    SynchronizeType: 2
+    Name: isHorse
+  - Type: 4
+    SynchronizeType: 2
+    Name: isDie
+  - Type: 4
+    SynchronizeType: 2
     Name: DefaultShot
+  - Type: 4
+    SynchronizeType: 2
+    Name: isDodge
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0

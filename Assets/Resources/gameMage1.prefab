@@ -5736,7 +5736,7 @@ Animator:
   m_GameObject: {fileID: 7975951415671502545}
   m_Enabled: 1
   m_Avatar: {fileID: 9000000, guid: 038320a534bd8b444b43734860d1a211, type: 3}
-  m_Controller: {fileID: 9100000, guid: 01530f9b5a6bf3347bd3228211bf6169, type: 2}
+  m_Controller: {fileID: 9100000, guid: b8557c5b72f3a9f46a1b5d58e86b45d2, type: 2}
   m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -5950,6 +5950,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerStat: {fileID: 5304805644854743238}
+  playerst: {fileID: 0}
   Skill_Buff_cooltime: 30
   Usable_Buff: 1
   Skill_Buff_duration: 12
@@ -6061,63 +6062,60 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: forword
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: back
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: left
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: right
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isRun
-  - Type: 9
-    SynchronizeType: 0
-    Name: doJump
-  - Type: 9
-    SynchronizeType: 0
-    Name: doDodge
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isJump
   - Type: 4
-    SynchronizeType: 0
-    Name: isAttack
-  - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: isStun
   - Type: 4
-    SynchronizeType: 0
-    Name: isHorse
+    SynchronizeType: 2
+    Name: isAttack
   - Type: 4
-    SynchronizeType: 0
-    Name: isDie
-  - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Skill1
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Skill2
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Skill3
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Skill31
   - Type: 4
-    SynchronizeType: 0
+    SynchronizeType: 2
     Name: Skill3Cut
   - Type: 9
     SynchronizeType: 0
     Name: DoSkill3
+  - Type: 4
+    SynchronizeType: 2
+    Name: isHorse
+  - Type: 4
+    SynchronizeType: 2
+    Name: isDie
+  - Type: 4
+    SynchronizeType: 2
+    Name: isDodge
   m_SynchronizeLayers:
   - SynchronizeType: 2
     LayerIndex: 0
-  - SynchronizeType: 0
+  - SynchronizeType: 2
     LayerIndex: 1
 --- !u!114 &5304805644854743245
 MonoBehaviour:
