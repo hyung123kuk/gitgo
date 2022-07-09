@@ -153,12 +153,12 @@ public class CharacterSel : MonoBehaviourPunCallbacks
     public void CharButton2()
     {
         charSel = 2;
-        UiSound.uiSound.UiOptionSound();
+        //UiSound.uiSound.UiOptionSound();
         if (character2 == Type.None)
         {
-            nickname.nickNameInput2.gameObject.SetActive(true);
-            nickname.nickNameInput1.gameObject.SetActive(false);
-            StopSoundManager.stopSoundManager.WarriorTalk1();
+            //nickname.nickNameInput2.gameObject.SetActive(true);
+            //nickname.nickNameInput1.gameObject.SetActive(false);
+            //StopSoundManager.stopSoundManager.WarriorTalk1();
             widx = 1;
 
             sel.SetActive(false);
