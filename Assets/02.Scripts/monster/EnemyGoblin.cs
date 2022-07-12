@@ -2,10 +2,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using DG.Tweening;
 using Photon.Pun;
 public class EnemyGoblin : Monster
 {
-   
+
     public BoxCollider meleeArea; //���� ���ݹ���
     public bool isChase; //�������� ����
     public bool isAttack; //���� ������
@@ -13,6 +14,8 @@ public class EnemyGoblin : Monster
     private bool isDie;
     public bool isStun;
     public bool isDamage; //현재맞고있나
+
+    public LayerMask whatIsTarget; // 공격 대상 레이어
 
     public ParticleSystem Hiteff; //������ ����Ʈ
     public ParticleSystem Hiteff2; //������ ����Ʈ
@@ -27,6 +30,22 @@ public class EnemyGoblin : Monster
 
     [SerializeField]
     Attacking attacking;
+
+    private bool hasTarget
+    {
+        get
+        {
+            // 추적할 대상이 존재하고, 대상이 사망하지 않았다면 true
+            if (target != null && !target.GetComponent<PlayerST>().isDie)
+            {
+                return true;
+            }
+
+            // 그렇지 않다면 false
+            return false;
+        }
+    }
+
     void Awake()
     {
         attacking = transform.GetChild(4).GetComponent<Attacking>();
@@ -35,9 +54,6 @@ public class EnemyGoblin : Monster
         mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        StartMonster();
-        Monstername.text = "고블린";
-        level.text = "4";
         questNormal = FindObjectOfType<QuestNormal>();
     }
     private void OnEnable()
@@ -49,47 +65,93 @@ public class EnemyGoblin : Monster
         curHealth = maxHealth;
         mat.color = Color.white;
         isStun = false;
+        anim = GetComponent<Animator>();
+        StartMonster();
+        Monstername.text = "고블린";
+        level.text = "4";
         coin = 20;
+
+        // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
+
+        if (PhotonNetwork.IsMasterClient) //호스트에서만 추적
+        {
+            StartCoroutine(UpdatePath());
+        }
     }
     void Update()
     {
-        if (isDie)  //�׾����� ����������� �ڷ�ƾ ��������
+        if (isDie)
         {
             StopAllCoroutines();
         }
-        target = GameObject.FindGameObjectWithTag("Player").transform;
-        if (!isStun)
+        if (isChase || isAttack) //룩엣
+            if (!isDie && !playerST.isJump && !playerST.isFall && !isStun)
+                transform.LookAt(target);
+    }
+    private IEnumerator UpdatePath()
+    {
+
+        // 살아있는 동안 무한 루프
+        while (!isDie)
         {
-            Targerting();
-            if (Vector3.Distance(target.position, transform.position) <= 15f && nav.enabled) //15���� �ȿ� ����
+
+            if (hasTarget)
             {
+                // 추적 대상 존재 : 경로를 갱신하고 AI 이동을 계속 진행
+                Targerting();
+                nav.SetDestination(target.position);
+                nav.speed = 3.5f;
+                if (isAttack)
+                {
+                    isChase = false;
+                    nav.isStopped = true;
+                    anim.SetBool("isWalk", false);
+                }
                 if (!isAttack)
                 {
-                    anim.SetBool("isRun", false);
-                    nav.speed = 4.5f;
                     isChase = true;
                     nav.isStopped = false;
-                    nav.destination = target.position;
                     anim.SetBool("isWalk", true);
-                    if (Vector3.Distance(target.position, transform.position) >= 6f && nav.enabled)
+                }
+                if (Vector3.Distance(target.position, transform.position) > 15f)
+                {
+                    EnemyReset();
+                    target = null;
+                }
+
+
+            }
+            else
+            {
+                // 추적 대상 없음 : AI 이동 중지
+                EnemyReset();
+
+                // 20 유닛의 반지름을 가진 가상의 구를 그렸을때, 구와 겹치는 모든 콜라이더를 가져옴
+                // 단, targetLayers에 해당하는 레이어를 가진 콜라이더만 가져오도록 필터링
+                Collider[] colliders =
+                    Physics.OverlapSphere(transform.position, 16f, whatIsTarget);
+
+                // 모든 콜라이더들을 순회하면서, 살아있는 플레이어를 찾기
+                for (int i = 0; i < colliders.Length; i++)
+                {
+                    // 콜라이더로부터 PlayerST 컴포넌트 가져오기
+                    PlayerST livingEntity = colliders[i].GetComponent<PlayerST>();
+
+                    // PlayerST 컴포넌트가 존재하며, 해당 LivingEntity가 살아있다면,
+                    if (livingEntity != null && !livingEntity.isDie)
                     {
-                        anim.SetBool("isWalk", false);
-                        nav.speed = 10f;
-                        anim.SetBool("isRun", true);
+                        // 추적 대상을 해당 LivingEntity로 설정
+                        target = livingEntity.transform;
+
+                        // for문 루프 즉시 정지
+                        break;
                     }
-                    if (playerST.isDie)
-                        EnemyReset();
                 }
             }
-            else if (Vector3.Distance(target.position, transform.position) > 15f && nav.enabled) //15���� ��
-            {
-                EnemyReset();
-            }
-        }
 
-        if (isChase || isAttack)
-            if (!isDie && !playerST.isJump && !playerST.isFall && !isStun)
-                transform.LookAt(target); 
+            // 0.25초 주기로 처리 반복
+            yield return new WaitForSeconds(0.25f);
+        }
     }
     void EnemyReset()
     {
@@ -124,16 +186,16 @@ public class EnemyGoblin : Monster
 
         if (rayHits.Length > 0 && !isAttack && !isDie) //����ĳ��Ʈ�� �÷��̾ �����ٸ� && ���� �������� �ƴ϶��
         {
-            StartCoroutine(Attack());
+            photonView.RPC("Attack", RpcTarget.All);
             MonsterAttack();
         }
     }
 
-    
+    [PunRPC]
     IEnumerator Attack() //������ �ϰ� �������ϰ� �ٽ� ������ ����
     {
         attacking.isAttacking = true;
-        
+
 
         isChase = false;
         isAttack = true;
@@ -200,7 +262,7 @@ public class EnemyGoblin : Monster
         anim.SetBool("isStun", false);
     }
 
-     IEnumerator OnDamage()
+    IEnumerator OnDamage()
     {
         HitMonster();
         HitSoundManager.hitsoundManager.GoblinHitSound();
@@ -210,15 +272,14 @@ public class EnemyGoblin : Monster
         Hiteff2.Play();
         yield return new WaitForSeconds(0.1f);
         isDamage = false;
-       // SetHpBar();
+        // SetHpBar();
         if (curHealth > 0)
         {
-            
             mat.color = Color.white;
         }
         else
         {
-           // Die();
+            // Die();
         }
     }
 
@@ -238,8 +299,8 @@ public class EnemyGoblin : Monster
     void Diegg()
     {
 
-            respawn.gameObject.SetActive(true);
-            --SpawnManager.spawnManager.GoblinObjs;
+        respawn.gameObject.SetActive(true);
+        --SpawnManager.spawnManager.GoblinObjs;
 
         gameObject.SetActive(false);
     }

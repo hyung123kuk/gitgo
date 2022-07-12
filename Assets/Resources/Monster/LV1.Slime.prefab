@@ -300,7 +300,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &428553792361270582
 Transform:
   m_ObjectHideFlags: 0
@@ -461,16 +461,16 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isWalk
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isAttack
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isDie
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isStun
   m_SynchronizeLayers:
   - SynchronizeType: 2

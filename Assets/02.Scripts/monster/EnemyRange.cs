@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
+using DG.Tweening;
 public class EnemyRange : Monster
 {
     
@@ -15,6 +16,8 @@ public class EnemyRange : Monster
     public bool isStun;
     public bool isDamage; //현재맞고있나
 
+    public LayerMask whatIsTarget; // 공격 대상 레이어
+
     public ParticleSystem Hiteff; //������ ����Ʈ
     public ParticleSystem Hiteff2; //������ ����Ʈ
     Transform target;
@@ -24,6 +27,21 @@ public class EnemyRange : Monster
     NavMeshAgent nav; //����
     Animator anim;
     QuestNormal questNormal;
+
+    private bool hasTarget
+    {
+        get
+        {
+            // 추적할 대상이 존재하고, 대상이 사망하지 않았다면 true
+            if (target != null && !target.GetComponent<PlayerST>().isDie)
+            {
+                return true;
+            }
+
+            // 그렇지 않다면 false
+            return false;
+        }
+    }
     void Awake()
     {
         bullet = Resources.Load<GameObject>("Fireball");
@@ -31,9 +49,7 @@ public class EnemyRange : Monster
         boxCollider = GetComponent<BoxCollider>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
-        StartMonster();
-        Monstername.text = "고블린 아처";
-        level.text = "6";
+        
         questNormal = FindObjectOfType<QuestNormal>();
 
     }
@@ -46,40 +62,92 @@ public class EnemyRange : Monster
         curHealth = maxHealth;
         mat.material.color = Color.white;
         isStun = false;
+        StartMonster();
+        Monstername.text = "고블린 아처";
+        level.text = "6";
         coin = 30;
+
+        // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
+
+        if (PhotonNetwork.IsMasterClient) //호스트에서만 추적
+        {
+            StartCoroutine(UpdatePath());
+        }
     }
     void Update()
     {
-        if (isDie)  //�׾����� ����������� �ڷ�ƾ ��������
+        if (isDie)
         {
             StopAllCoroutines();
         }
-        target = GameObject.FindGameObjectWithTag("Player").transform;
-        if (!isStun)
+        if (isChase || isAttack) //룩엣
+            if (!isDie && !playerST.isJump && !playerST.isFall && !isStun)
+                transform.LookAt(target);
+    }
+    private IEnumerator UpdatePath()
+    {
+
+        // 살아있는 동안 무한 루프
+        while (!isDie)
         {
-            Targerting();
-            if (Vector3.Distance(target.position, transform.position) <= 25f && nav.enabled ) //추적
+
+            if (hasTarget)
             {
+                // 추적 대상 존재 : 경로를 갱신하고 AI 이동을 계속 진행
+                Targerting();
+                nav.SetDestination(target.position);
+                nav.speed = 3.5f;
+                if (isAttack)
+                {
+                    isChase = false;
+                    nav.isStopped = true;
+                    anim.SetBool("isWalk", false);
+                }
                 if (!isAttack)
                 {
-                    anim.SetBool("isWalk", true);
-                    nav.speed = 3.5f;
                     isChase = true;
                     nav.isStopped = false;
-                    nav.destination = target.position;
-                    if (playerST.isDie)
-                        EnemyReset();
+                    anim.SetBool("isWalk", true);
+                }
+                if (Vector3.Distance(target.position, transform.position) > 15f)
+                {
+                    EnemyReset();
+                    target = null;
+                }
+
+
+            }
+            else
+            {
+                // 추적 대상 없음 : AI 이동 중지
+                EnemyReset();
+
+                // 20 유닛의 반지름을 가진 가상의 구를 그렸을때, 구와 겹치는 모든 콜라이더를 가져옴
+                // 단, targetLayers에 해당하는 레이어를 가진 콜라이더만 가져오도록 필터링
+                Collider[] colliders =
+                    Physics.OverlapSphere(transform.position, 16f, whatIsTarget);
+
+                // 모든 콜라이더들을 순회하면서, 살아있는 플레이어를 찾기
+                for (int i = 0; i < colliders.Length; i++)
+                {
+                    // 콜라이더로부터 PlayerST 컴포넌트 가져오기
+                    PlayerST livingEntity = colliders[i].GetComponent<PlayerST>();
+
+                    // PlayerST 컴포넌트가 존재하며, 해당 LivingEntity가 살아있다면,
+                    if (livingEntity != null && !livingEntity.isDie)
+                    {
+                        // 추적 대상을 해당 LivingEntity로 설정
+                        target = livingEntity.transform;
+
+                        // for문 루프 즉시 정지
+                        break;
+                    }
                 }
             }
-            else if (Vector3.Distance(target.position, transform.position) > 25f) //리셋
-            {
-                EnemyReset();
-            }
-        }
 
-        if (isChase || isAttack) //�����̳� �������϶���
-            if (!isDie && !playerST.isJump && !playerST.isFall && !isStun)
-                transform.LookAt(target); //�÷��̾� �ٶ󺸱�
+            // 0.25초 주기로 처리 반복
+            yield return new WaitForSeconds(0.25f);
+        }
     }
     void EnemyReset() //리셋
     {
@@ -114,10 +182,11 @@ public class EnemyRange : Monster
 
         if (rayHits.Length > 0 && !isAttack && !isDie) //����ĳ��Ʈ�� �÷��̾ �����ٸ� && ���� �������� �ƴ϶��
         {
-            StartCoroutine(Attack());
+            photonView.RPC("Attack", RpcTarget.All);
+            MonsterAttack();
         }
     }
-
+    [PunRPC]
     IEnumerator Attack() //������ �ϰ� �������ϰ� �ٽ� ������ ����
     {
         isChase = false;

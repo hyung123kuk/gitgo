@@ -15,7 +15,7 @@ public class EnemyBoss2 : MonsterBoss
     public Transform respawn;
     public SphereCollider nuckarea;
 
- 
+
 
 
     public GameObject sohwane;
@@ -161,14 +161,14 @@ public class EnemyBoss2 : MonsterBoss
                 case 0:
                 case 1:
                     //폭주 버프스킬
-                    StartCoroutine(Pokju());
+                    photonView.RPC("Pokju", RpcTarget.All);
                     MonsterAttack();
                     break;
                 case 2:
                 case 3:
                 case 4:
                     //몬스터 소환스킬
-                    StartCoroutine(Sohwan());
+                    photonView.RPC("Sohwan", RpcTarget.All);
                     MonsterAttack();
                     break;
                 case 5:
@@ -176,12 +176,12 @@ public class EnemyBoss2 : MonsterBoss
                 case 7:
                 case 8:
                     //공굴리기 스킬
-                    StartCoroutine(FireBall());
+                    photonView.RPC("FireBall", RpcTarget.All);
                     MonsterAttack();
                     break;
                 case 9:
                     //스턴거는스킬
-                    StartCoroutine(Stun());
+                    photonView.RPC("Stun", RpcTarget.All);
                     MonsterAttack();
                     break;
             }
@@ -208,12 +208,12 @@ public class EnemyBoss2 : MonsterBoss
 
         if (rayHits.Length > 0 && !isAttack && !isDie && !isSkill)
         {
-            //StopCoroutine(Attack());
-            StartCoroutine(Attack());
+            photonView.RPC("Attack", RpcTarget.All);
             MonsterAttack();
         }
 
     }
+    [PunRPC]
     IEnumerator Sohwan()
     {
         isSkill = true;
@@ -242,6 +242,7 @@ public class EnemyBoss2 : MonsterBoss
         //StartCoroutine(Pattern());
 
     }
+    [PunRPC]
     IEnumerator Stun()
     {
         isSkill = true;
@@ -274,6 +275,7 @@ public class EnemyBoss2 : MonsterBoss
         //StartCoroutine(Pattern());
 
     }
+    [PunRPC]
     IEnumerator Pokju()
     {
 
@@ -304,6 +306,7 @@ public class EnemyBoss2 : MonsterBoss
         pokju.SetActive(false);
     }
 
+    [PunRPC]
     IEnumerator FireBall()
     {
         isSkill = true;
@@ -336,10 +339,11 @@ public class EnemyBoss2 : MonsterBoss
 
     }
 
+    [PunRPC]
     IEnumerator Attack() //������ �ϰ� �������ϰ� �ٽ� ������ ����
     {
         attacking.isAttacking = true;
-        
+
 
         isChase = false;
         isAttack = true;
@@ -351,7 +355,7 @@ public class EnemyBoss2 : MonsterBoss
         yield return new WaitForSeconds(0.8f);
         // rigid.velocity = Vector3.zero;
         meleeArea.enabled = false;
-       
+
 
         isChase = true;
         isAttack = false;
@@ -414,7 +418,7 @@ public class EnemyBoss2 : MonsterBoss
         // foreach (SkinnedMeshRenderer mesh in mat)
         //   mesh.material.color = Color.red;
         HitMonster();
-       // SetHpBar();
+        // SetHpBar();
 
         if (curHealth < 0)
         {
@@ -449,8 +453,8 @@ public class EnemyBoss2 : MonsterBoss
     void Diegg()
     {
 
-            respawn.GetChild(0).gameObject.SetActive(true);
-            --SpawnManager.spawnManager.GolemObjs;
+        respawn.GetChild(0).gameObject.SetActive(true);
+        --SpawnManager.spawnManager.GolemObjs;
 
         gameObject.SetActive(false);
     }
