@@ -29,7 +29,7 @@ public class UiSound : MonoBehaviour
     //=====================유아이 사운드===============================
     private void Update()
     {
-        if (SceneManager.GetActiveScene().name != "ChSel_sangin")  //캐릭터선택창 씬에서는 적용X
+        if (SceneManager.GetActiveScene().name != "NewChSel")  //캐릭터선택창 씬에서는 적용X
             audioSource.volume = soundbar.UIVolume;
     }
 

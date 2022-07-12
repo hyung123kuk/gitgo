@@ -92,7 +92,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         //모든 룸 참가자가 Main 씬을 로드하게 함
         PhotonNetwork.LoadLevel("Play_HYUNGKUK2 1");
-        CharacterSel.characterSel.LobbyUi.SetActive(false);
+        //CharacterSel.characterSel.LobbyUi.SetActive(false);
         Character.SetActive(false);
 
         

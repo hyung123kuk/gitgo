@@ -13,6 +13,6 @@ public class LobbyUI_Switch : MonoBehaviour
 
     private void OnEnable()
     {
-        characterSel.LobbyUi = GameObject.Find("Canvas_Lobby").transform.GetChild(0).gameObject;
+        //characterSel.LobbyUi = GameObject.Find("Canvas_Lobby").transform.GetChild(0).gameObject;
     }
 }

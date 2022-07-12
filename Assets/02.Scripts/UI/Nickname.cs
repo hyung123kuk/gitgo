@@ -18,10 +18,10 @@ public class Nickname : MonoBehaviourPun
 
     private void Awake()
     {
-        nickNameInput1 = transform.GetChild(0).transform.GetChild(2).transform.GetChild(0).transform.GetChild(10).
+       /* nickNameInput1 = transform.GetChild(0).transform.GetChild(2).transform.GetChild(0).transform.GetChild(10).
             GetComponent<InputField>();
         nickNameInput2 = transform.GetChild(0).transform.GetChild(2).transform.GetChild(0).transform.GetChild(11).
-            GetComponent<InputField>();
+            GetComponent<InputField>();*/
 
 
         saveManager = FindObjectOfType<SaveManager>();

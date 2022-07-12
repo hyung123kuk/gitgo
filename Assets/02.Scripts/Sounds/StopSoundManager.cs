@@ -27,7 +27,7 @@ public class StopSoundManager : MonoBehaviour
     //==============================도중에 끊어야할 사운드=========================================//
     private void Update()
     {
-        if (SceneManager.GetActiveScene().name != "ChSel_sangin") //캐릭터선택창 씬에서는 적용X
+        if (SceneManager.GetActiveScene().name != "NewChSel") //캐릭터선택창 씬에서는 적용X
             audioSource.volume = soundbar.CharacterVolume;
     }
     public void ArcherChargeSound() //궁수 활시위 당기는소리
