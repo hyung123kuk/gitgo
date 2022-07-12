@@ -21,10 +21,11 @@ public class LoadCamera : MonoBehaviour
         Loadcam = GetComponent<Camera>();
         processLayer = GetComponent<PostProcessLayer>();
         state = State.WorldMap;
+        EndCamera = GameObject.Find("Camera").transform.GetComponent<Camera>();
 
 
 
-        
+
     }
 
 
