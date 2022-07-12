@@ -17,7 +17,7 @@ public class EnemyBoss1 : MonsterBoss
     public bool isDie;
     public Transform respawn;
 
-    
+    public LayerMask whatIsTarget; // 공격 대상 레이어
 
 
     private Light stunarea;
@@ -37,6 +37,21 @@ public class EnemyBoss1 : MonsterBoss
 
     [SerializeField]
     Attacking attacking;
+
+    private bool hasTarget
+    {
+        get
+        {
+            // 추적할 대상이 존재하고, 대상이 사망하지 않았다면 true
+            if (target != null && !target.GetComponent<PlayerST>().isDie)
+            {
+                return true;
+            }
+
+            // 그렇지 않다면 false
+            return false;
+        }
+    }
     void Awake()
     {
         stunarea = GetComponentInChildren<Light>();
@@ -48,14 +63,30 @@ public class EnemyBoss1 : MonsterBoss
         attacking = transform.GetChild(2).GetComponent<Attacking>();
         questStore = FindObjectOfType<QuestStore>();
 
+    }
+    private void OnEnable()
+    {
+        boxCollider.enabled = true;
+        isAttack = false;
+        nav.isStopped = false;
+        isDie = false;
+        curHealth = maxHealth;
+        isStun = false;
+        anim = GetComponent<Animator>();
+
         StartBossMonster();
         BossItemSet();
         Monstername.text = "거북 슬라임";
         level.text = "5";
         coin = 30;
+        // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
+
+        if (PhotonNetwork.IsMasterClient) //호스트에서만 추적
+        {
+            StartCoroutine(UpdatePath());
+        }
 
     }
-
 
 
     public void BossItemSet()
@@ -68,39 +99,80 @@ public class EnemyBoss1 : MonsterBoss
 
     void Update()
     {
-        if (isDie && Patterning)
+        if (isDie)
         {
             StopAllCoroutines();
         }
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        if (isChase || isAttack) //룩엣
+            if (!isDie && !playerST.isJump && !playerST.isFall && !isStun)
+                transform.LookAt(target);
 
-        if (!isbansa && !isRush && !isStun && !isDie)
+    }
+    private IEnumerator UpdatePath()
+    {
+
+        // 살아있는 동안 무한 루프
+        while (!isDie)
         {
-            Targerting();
-            if (Vector3.Distance(target.position, transform.position) <= 27f && nav.enabled)
+
+            if (hasTarget)
             {
+                // 추적 대상 존재 : 경로를 갱신하고 AI 이동을 계속 진행
+                Targerting();
                 PatternStart();
-                if (!isAttack && !isDie)
+                nav.SetDestination(target.position);
+                nav.speed = 5f;
+                if (isAttack)
                 {
-                    nav.speed = 5f;
+                    isChase = false;
+                    nav.isStopped = true;
+                    anim.SetBool("isWalk", false);
+                }
+                if (!isAttack)
+                {
                     isChase = true;
                     nav.isStopped = false;
-                    nav.destination = target.position;
-                    anim.SetBool("isRun", true);
-                    if (playerST.isDie)
-                        EnemyReset();
+                    anim.SetBool("isWalk", true);
+                }
+                if (Vector3.Distance(target.position, transform.position) > 15f)
+                {
+                    EnemyReset();
+                    target = null;
+                }
+
+
+            }
+            else
+            {
+                // 추적 대상 없음 : AI 이동 중지
+                EnemyReset();
+
+                // 20 유닛의 반지름을 가진 가상의 구를 그렸을때, 구와 겹치는 모든 콜라이더를 가져옴
+                // 단, targetLayers에 해당하는 레이어를 가진 콜라이더만 가져오도록 필터링
+                Collider[] colliders =
+                    Physics.OverlapSphere(transform.position, 16f, whatIsTarget);
+
+                // 모든 콜라이더들을 순회하면서, 살아있는 플레이어를 찾기
+                for (int i = 0; i < colliders.Length; i++)
+                {
+                    // 콜라이더로부터 PlayerST 컴포넌트 가져오기
+                    PlayerST livingEntity = colliders[i].GetComponent<PlayerST>();
+
+                    // PlayerST 컴포넌트가 존재하며, 해당 LivingEntity가 살아있다면,
+                    if (livingEntity != null && !livingEntity.isDie)
+                    {
+                        // 추적 대상을 해당 LivingEntity로 설정
+                        target = livingEntity.transform;
+
+                        // for문 루프 즉시 정지
+                        break;
+                    }
                 }
             }
-            else if (Vector3.Distance(target.position, transform.position) > 27f && nav.enabled)
-            {
-               EnemyReset();
-            }
+
+            // 0.25초 주기로 처리 반복
+            yield return new WaitForSeconds(0.25f);
         }
-
-        if (isChase || isAttack)
-            if (!isDie && !playerST.isJump && !playerST.isFall)
-                transform.LookAt(target); //플레이어가 공중에 뜬 상태가 아닐때만 바라보기
-
     }
     void EnemyReset()
     {
@@ -117,7 +189,7 @@ public class EnemyBoss1 : MonsterBoss
     }
     void PatternStart()
     {
-        if (!Patterning)
+        if (!Patterning && !playerST.isDie)
         {
             StartCoroutine(Pattern());
             Patterning = true;
@@ -130,29 +202,26 @@ public class EnemyBoss1 : MonsterBoss
         yield return new WaitForSeconds(6f);
         if (!isDie)
         {
-            int ranAction = Random.Range(0,9);
+            int ranAction = Random.Range(0, 9);
             switch (ranAction)
             {
                 case 0:
                 case 1:
                 case 2:
                 case 3:
-
-                    StartCoroutine(Stun());
+                    photonView.RPC("Stun", RpcTarget.All);
                     MonsterAttack();
                     break;
                 case 4:
                 case 5:
                 case 6:
-
-                    StartCoroutine(Rush());
+                    photonView.RPC("Rush", RpcTarget.All);
                     MonsterAttack();
                     break;
                 case 7:
                 case 8:
                 case 9:
-
-                    StartCoroutine(Reflect());
+                    photonView.RPC("Reflect", RpcTarget.All);
                     MonsterAttack();
                     break;
             }
@@ -182,12 +251,12 @@ public class EnemyBoss1 : MonsterBoss
             targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));  //����ĳ��Ʈ
         if (rayHits.Length > 0 && !isAttack && !isDie && !isSkill) //����ĳ��Ʈ�� �÷��̾ �����ٸ� && ���� �������� �ƴ϶��
         {
-            //StopCoroutine(Attack());
-            StartCoroutine(Attack());
+            photonView.RPC("Attack", RpcTarget.All);
             MonsterAttack();
         }
 
     }
+    [PunRPC]
     IEnumerator Stun()
     {
         isSkill = true;
@@ -218,6 +287,7 @@ public class EnemyBoss1 : MonsterBoss
         Patterning = false;
 
     }
+    [PunRPC]
     IEnumerator Reflect()
     {
         isSkill = true;
@@ -239,6 +309,7 @@ public class EnemyBoss1 : MonsterBoss
         Patterning = false;
 
     }
+    [PunRPC]
     IEnumerator Rush()
     {
         isSkill = true;
@@ -268,10 +339,11 @@ public class EnemyBoss1 : MonsterBoss
         Patterning = false;
 
     }
+    [PunRPC]
     IEnumerator Attack() //������ �ϰ� �������ϰ� �ٽ� ������ ����
     {
         attacking.isAttacking = true;
-        
+
 
         isChase = false;
         isAttack = true;
@@ -279,7 +351,7 @@ public class EnemyBoss1 : MonsterBoss
         anim.SetBool("isAttack", true);
         yield return new WaitForSeconds(0.4f);
         meleeArea.enabled = true;
-        
+
         yield return new WaitForSeconds(1f);
         rigid.velocity = Vector3.zero;
         meleeArea.enabled = false;
@@ -357,7 +429,7 @@ public class EnemyBoss1 : MonsterBoss
             foreach (SkinnedMeshRenderer mesh in mat)
                 mesh.material.color = Color.white;
         HitMonster();
-       // SetHpBar();
+        // SetHpBar();
         if (curHealth < 0)
         {
             //Die();
@@ -389,9 +461,9 @@ public class EnemyBoss1 : MonsterBoss
     void Diegg()
     {
 
-            respawn.gameObject.SetActive(true);
-            --SpawnManager.spawnManager.TurtleSlimeObjs;
-        
+        respawn.gameObject.SetActive(true);
+        --SpawnManager.spawnManager.TurtleSlimeObjs;
+
         gameObject.SetActive(false);
     }
 }

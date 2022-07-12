@@ -449,6 +449,7 @@ MonoBehaviour:
   Monstername: {fileID: 0}
   Geteff: {fileID: 0}
   weapons: {fileID: 0}
+  attackdamage: {fileID: 0}
   maxHealth: 1000
   curHealth: 1000
   explPower: 0
@@ -469,6 +470,9 @@ MonoBehaviour:
   isDamage: 0
   speed: 5
   check: 0
+  whatIsTarget:
+    serializedVersion: 2
+    m_Bits: 0
   Hiteff: {fileID: 7314378071803065310}
   Hiteff2: {fileID: 7349683962983291086}
   movingpos: {fileID: 0}
@@ -490,16 +494,16 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isWalk
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isAttack
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isDie
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isStun
   m_SynchronizeLayers:
   - SynchronizeType: 2
