@@ -65,7 +65,7 @@ public class MonsterManager : MonoBehaviourPun
             EnemySlime[] slimes = GameObject.FindObjectsOfType<EnemySlime>();
             EnemyBlueSlime[]blueslimes = GameObject.FindObjectsOfType<EnemyBlueSlime>();
             EnemyGoblin[] goblins = GameObject.FindObjectsOfType<EnemyGoblin>();
-            EnemyGoblin[] goblins2 = GameObject.FindObjectsOfType<EnemyGoblin>();
+            EnemyGoblin2[] goblins2 = GameObject.FindObjectsOfType<EnemyGoblin2>();
             EnemyRange[] Ranges = GameObject.FindObjectsOfType<EnemyRange>();
             EnemySkeleton[] skelletons = GameObject.FindObjectsOfType<EnemySkeleton>();
 

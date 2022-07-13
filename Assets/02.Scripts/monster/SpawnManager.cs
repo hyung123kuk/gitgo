@@ -106,7 +106,7 @@ public class SpawnManager : MonoBehaviourPun
             GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[3]);
 
             enemy.transform.position = Goblin2Points[i].position;
-            enemy.GetComponent<EnemyGoblin>().respawn = Goblin2Points[i];
+            enemy.GetComponent<EnemyGoblin2>().respawn = Goblin2Points[i];
             Goblin2Points[i].gameObject.SetActive(false);
         }
         for (int i = 0; i < MonsterManager.monsterManager.GoblinArcher.Length; i++)
@@ -163,7 +163,7 @@ public class SpawnManager : MonoBehaviourPun
         }
         if (Goblin2Objs < 10)
         {
-            GoblinObjs++;
+            Goblin2Objs++;
             StartCoroutine(Goblin2Spawn());
         }
         if (GoblinArObjs < 10)
@@ -301,7 +301,7 @@ public class SpawnManager : MonoBehaviourPun
 
                 GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[2]);
 
-                enemy.transform.position = GoblinPoints[goblinidx].position;
+                enemy.transform.position = GoblinPoints[goblinidx].position;    
                 enemy.GetComponent<EnemyGoblin>().respawn = GoblinPoints[goblinidx];
                 GoblinPoints[goblinidx].gameObject.SetActive(false);
                 goblinidx = 0;
@@ -333,7 +333,7 @@ public class SpawnManager : MonoBehaviourPun
                 GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[3]);
 
                 enemy.transform.position = Goblin2Points[goblin2idx].position;
-                enemy.GetComponent<EnemyGoblin>().respawn = Goblin2Points[goblin2idx];
+                enemy.GetComponent<EnemyGoblin2>().respawn = Goblin2Points[goblin2idx];
                 Goblin2Points[goblin2idx].gameObject.SetActive(false);
                 goblin2idx = 0;
                 break;

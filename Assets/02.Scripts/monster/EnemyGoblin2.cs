@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 using DG.Tweening;
 using Photon.Pun;
-public class EnemyGoblin : Monster
+public class EnemyGoblin2 : Monster
 {
 
     public BoxCollider meleeArea; //���� ���ݹ���
@@ -72,8 +72,8 @@ public class EnemyGoblin : Monster
         anim = GetComponent<Animator>();
         StartMonster();
         Monstername.text = "고블린";
-        level.text = "5";
-        coin = 25;
+        level.text = "4";
+        coin = 20;
 
         // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
 
@@ -343,7 +343,7 @@ public class EnemyGoblin : Monster
     {
 
         respawn.gameObject.SetActive(true);
-        --SpawnManager.spawnManager.GoblinObjs;
+        --SpawnManager.spawnManager.Goblin2Objs;
 
         gameObject.SetActive(false);
     }
