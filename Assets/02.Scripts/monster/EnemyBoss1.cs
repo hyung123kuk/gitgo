@@ -67,6 +67,7 @@ public class EnemyBoss1 : MonsterBoss
     }
     private void OnEnable()
     {
+        isDamage = false;
         boxCollider.enabled = true;
         isAttack = false;
         nav.isStopped = false;

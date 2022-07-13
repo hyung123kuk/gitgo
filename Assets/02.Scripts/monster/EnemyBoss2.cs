@@ -56,12 +56,24 @@ public class EnemyBoss2 : MonsterBoss
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         questStore = FindObjectOfType<QuestStore>();
+
+    }
+    private void OnEnable()
+    {
+        isDamage = false;
+        boxCollider.enabled = true;
+        isAttack = false;
+        nav.isStopped = false;
+        isDie = false;
+        curHealth = maxHealth;
+        isStun = false;
+        anim = GetComponent<Animator>();
+
         StartBossMonster();
         BossItemSet();
         Monstername.text = "골렘";
         level.text = "10";
         coin = 50;
-
     }
 
 

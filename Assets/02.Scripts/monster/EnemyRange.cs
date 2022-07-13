@@ -59,6 +59,7 @@ public class EnemyRange : Monster
     }
     private void OnEnable()
     {
+        isDamage = false;
         boxCollider.enabled = true;
         isAttack = false;
         nav.isStopped = false;

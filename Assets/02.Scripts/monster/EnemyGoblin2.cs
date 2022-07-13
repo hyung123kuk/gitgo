@@ -62,6 +62,7 @@ public class EnemyGoblin2 : Monster
     }
     private void OnEnable()
     {
+        isDamage = false;
         boxCollider.enabled = true;
         isAttack = false;
         nav.isStopped = false;

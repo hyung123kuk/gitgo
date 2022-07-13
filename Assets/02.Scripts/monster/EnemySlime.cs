@@ -79,7 +79,7 @@ public class EnemySlime : Monster
         mat.color = Color.white;
         isStun = false;
         anim = GetComponent<Animator>();
-
+        isDamage = false;
         StartMonster();
         Monstername.text = "슬라임";
         level.text = "1";
