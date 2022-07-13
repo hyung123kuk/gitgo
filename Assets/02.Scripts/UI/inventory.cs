@@ -61,7 +61,7 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
     private void Awake()
     {
 
-        LoadingUI = GameObject.Find("UIENd").transform.GetChild(6).gameObject;
+        //LoadingUI = GameObject.Find("UIENd").transform.GetChild(6).gameObject;
         slots = SlotsParent.GetComponentsInChildren<Slot>();
         
         allUI = FindObjectOfType<AllUI>();
@@ -97,7 +97,7 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
     IEnumerator LoadingSet() 
     {
         yield return new WaitForSeconds(2f);
-        LoadingUI.SetActive(false);
+        //LoadingUI.SetActive(false);
 
     }
 
