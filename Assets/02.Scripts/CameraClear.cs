@@ -35,12 +35,14 @@ public class CameraClear : MonoBehaviourPunCallbacks
             {
                 MainCamera.transform.localPosition = Vector3.Lerp(MainCamera.transform.localPosition, MainCamera.transform.localPosition + Vector3.forward, Time.deltaTime * 10);
                 MainCamera.transform.position = hit.point;
+                Debug.Log("충돌1");
             }
-            else
-            {
-                MainCamera.transform.localPosition = Vector3.Lerp(MainCamera.transform.localPosition, new Vector3(0, 0, -CameraMaxDistance), Time.deltaTime * 5f);
-                //Debug.DrawRay(transform.position, MainCamera.transform.position, Color.red);
-            }
+            //else
+            //{
+            //    Debug.Log("충돌2");
+            //    MainCamera.transform.localPosition = Vector3.Lerp(MainCamera.transform.localPosition, new Vector3(0, 0, -CameraMaxDistance), Time.deltaTime * 5f);
+            //    //Debug.DrawRay(transform.position, MainCamera.transform.position, Color.red);
+            //}
         }
     }
 }

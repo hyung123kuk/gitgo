@@ -37,6 +37,7 @@ public class EnemyBoss1 : MonsterBoss
 
     [SerializeField]
     Attacking attacking;
+    float targetRange = 3f; //몬스터 공격사정거리
 
     private bool hasTarget
     {
@@ -66,6 +67,7 @@ public class EnemyBoss1 : MonsterBoss
     }
     private void OnEnable()
     {
+        isDamage = false;
         boxCollider.enabled = true;
         isAttack = false;
         nav.isStopped = false;
@@ -122,12 +124,6 @@ public class EnemyBoss1 : MonsterBoss
                 PatternStart();
                 nav.SetDestination(target.position);
                 nav.speed = 5f;
-                if (isAttack)
-                {
-                    isChase = false;
-                    nav.isStopped = true;
-                    anim.SetBool("isWalk", false);
-                }
                 if (!isAttack)
                 {
                     isChase = true;
@@ -239,13 +235,6 @@ public class EnemyBoss1 : MonsterBoss
     void Targerting()//Ÿ����
     {
         float targetRadius = 1f;
-        float targetRange = 3f;
-
-
-        //if (isRush)
-        //{
-        //    targetRange = 20f;
-        //}
         RaycastHit[] rayHits =
             Physics.SphereCastAll(transform.position,
             targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));  //����ĳ��Ʈ
@@ -349,6 +338,7 @@ public class EnemyBoss1 : MonsterBoss
         isAttack = true;
         nav.isStopped = true;
         anim.SetBool("isAttack", true);
+        anim.SetBool("isWalk", false);
         yield return new WaitForSeconds(0.4f);
         meleeArea.enabled = true;
 

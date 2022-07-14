@@ -42,6 +42,7 @@ public class EnemyBoss2 : MonsterBoss
     public bool Patterning; //현재 패턴진행중?
     public bool isSkill; //현재 스킬사용중?
 
+    float targetRange = 3f; //몬스터 공격사정거리
     QuestStore questStore;
     [SerializeField]
     Attacking attacking;
@@ -55,12 +56,24 @@ public class EnemyBoss2 : MonsterBoss
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         questStore = FindObjectOfType<QuestStore>();
+
+    }
+    private void OnEnable()
+    {
+        isDamage = false;
+        boxCollider.enabled = true;
+        isAttack = false;
+        nav.isStopped = false;
+        isDie = false;
+        curHealth = maxHealth;
+        isStun = false;
+        anim = GetComponent<Animator>();
+
         StartBossMonster();
         BossItemSet();
         Monstername.text = "골렘";
         level.text = "10";
         coin = 50;
-
     }
 
 
@@ -200,7 +213,6 @@ public class EnemyBoss2 : MonsterBoss
     void Targerting()
     {
         float targetRadius = 1f;
-        float targetRange = 3f;
 
         RaycastHit[] rayHits =
             Physics.SphereCastAll(transform.position,
@@ -350,6 +362,7 @@ public class EnemyBoss2 : MonsterBoss
         nav.isStopped = true;
 
         anim.SetBool("isAttack", true);
+        anim.SetBool("isWalk", false);
         yield return new WaitForSeconds(0.8f);
         meleeArea.enabled = true;
         yield return new WaitForSeconds(0.8f);

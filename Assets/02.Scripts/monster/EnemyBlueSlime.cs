@@ -15,6 +15,9 @@ public class EnemyBlueSlime : Monster
     public bool isDamage; //현재맞고있나
     public float speed = 5;
     public bool check;
+    public bool isReset; //리셋이 끝났는가?
+    public int Corotineidx; //코루틴 중복방지
+    public Transform movepoint;
 
     public LayerMask whatIsTarget; // 공격 대상 레이어
 
@@ -30,6 +33,7 @@ public class EnemyBlueSlime : Monster
     NavMeshAgent nav;
     Animator anim;
     QuestNormal questNormal;
+    float targetRange = 2f; //몬스터 공격사정거리
 
 
     [SerializeField]
@@ -62,6 +66,7 @@ public class EnemyBlueSlime : Monster
 
     private void OnEnable()
     {
+        isDamage = false;
         boxCollider.enabled = true;
         isAttack = false;
         nav.isStopped = false;
@@ -103,16 +108,13 @@ public class EnemyBlueSlime : Monster
 
             if (hasTarget)
             {
+                Corotineidx = 0;
+                isReset = false;
                 // 추적 대상 존재 : 경로를 갱신하고 AI 이동을 계속 진행
                 Targerting();
                 nav.SetDestination(target.position);
                 nav.speed = 3.5f;
-                if (isAttack)
-                {
-                    isChase = false;
-                    nav.isStopped = true;
-                    anim.SetBool("isWalk", false);
-                }
+
                 if (!isAttack)
                 {
                     isChase = true;
@@ -161,16 +163,42 @@ public class EnemyBlueSlime : Monster
     }
     void EnemyReset()
     {
-
-        nav.SetDestination(respawn.transform.position);
-        nav.speed = 20f;
-        //curHealth = maxHealth;
-        isChase = false;
-        if (Vector3.Distance(respawn.position, transform.position) < 1f)
+        if (PhotonNetwork.IsMasterClient && !isReset)
         {
+            nav.SetDestination(respawn.transform.position);
+            nav.speed = 5f;
+            //curHealth = maxHealth;  서버에서 체력동기화가 잘 안일어나서 우선 주석 했습니다.
+            isChase = false;
+            if (Vector3.Distance(respawn.position, transform.position) < 1f)
+            {
+                nav.isStopped = true;
+                anim.SetBool("isWalk", false);
+                isReset = true;
+            }
+        }
+        else if (PhotonNetwork.IsMasterClient && isReset) //방황
+        {
+            if (isReset && Corotineidx == 0)
+            {
+                Corotineidx = 1;
+                StartCoroutine(Move());
+            }
+        }
+    }
+    IEnumerator Move()
+    {
+        while (isReset)
+        {
+            yield return new WaitForSeconds(Random.Range(0.1f, 3.0f));
+            transform.Rotate(new Vector3(0, 1, 0) * Random.Range(1000, 5000) * Time.smoothDeltaTime);
+            nav.isStopped = false;
+            anim.SetBool("isWalk", true);
+            nav.SetDestination(movepoint.position);
+            nav.speed = 0.5f;
+            yield return new WaitForSeconds(4f);
             nav.isStopped = true;
             anim.SetBool("isWalk", false);
-
+            yield return new WaitForSeconds(3f);
         }
     }
 
@@ -185,13 +213,12 @@ public class EnemyBlueSlime : Monster
     void Targerting()
     {
         float targetRadius = 1f;
-        float targetRange = 0.7f;
 
         RaycastHit[] rayHits =
             Physics.SphereCastAll(transform.position,
             targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));
 
-        if (rayHits.Length > 0 && !isAttack && !isDie)
+        if (rayHits.Length > 0 && !isAttack && !isDie && !isStun)
         {
             photonView.RPC("Attack", RpcTarget.All);
             MonsterAttack();
@@ -207,6 +234,7 @@ public class EnemyBlueSlime : Monster
         isAttack = true;
         nav.isStopped = true;
         anim.SetBool("isAttack", true);
+        anim.SetBool("isWalk", false);
         yield return new WaitForSeconds(0.2f);
         meleeArea.enabled = true;
         yield return new WaitForSeconds(0.7f);
@@ -263,8 +291,10 @@ public class EnemyBlueSlime : Monster
     {
         isStun = true;
         anim.SetBool("isStun", true);
+        nav.isStopped = true;
         yield return new WaitForSeconds(3f);
         isStun = false;
+        nav.isStopped = false;
         anim.SetBool("isStun", false);
     }
 

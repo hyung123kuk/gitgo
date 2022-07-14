@@ -8,6 +8,7 @@ public class MonsterManager : MonoBehaviourPun
     public GameObject SlimePrefabs;
     public GameObject BlueSlimePrefabs;
     public GameObject GoblinPrefabs;
+    public GameObject Goblin2Prefabs;
     public GameObject GoblinArcherPrefabs;
     public GameObject SkeletonPrefabs;
     public GameObject TurtleSlimePrefabs;
@@ -18,6 +19,7 @@ public class MonsterManager : MonoBehaviourPun
     public GameObject[] Slime;
     public GameObject[] BlueSlime;
     public GameObject[] Goblin;
+    public GameObject[] Goblin2; //여자고블린 추가
     public GameObject[] GoblinArcher;
     public GameObject[] Skeleton;
     public GameObject TurtleSlime;
@@ -27,33 +29,25 @@ public class MonsterManager : MonoBehaviourPun
 
     private void Awake()
     {
-       
-
-
         monsterManager = this;
-        Slime = new GameObject[20];
-        BlueSlime = new GameObject[20];
-        Goblin = new GameObject[20];
+        Slime = new GameObject[10];
+        BlueSlime = new GameObject[10];
+        Goblin = new GameObject[10];
+        Goblin2 = new GameObject[10];
         GoblinArcher = new GameObject[10];
-        Skeleton = new GameObject[20];
+        Skeleton = new GameObject[10];
 
-        for (int i = 0; i < 20; i++)
+        for (int i = 0; i < 10; i++)
         {
-            Slime[i] = transform.GetChild(0).GetChild(6).GetChild(i).gameObject;
+            Slime[i] = transform.GetChild(0).GetChild(7).GetChild(i).gameObject;
             BlueSlime[i] = transform.GetChild(0).GetChild(0).GetChild(i).gameObject;
             Goblin[i] = transform.GetChild(0).GetChild(1).GetChild(i).gameObject;
-            
-            Skeleton[i] = transform.GetChild(0).GetChild(5).GetChild(i).gameObject;
-        }
-
-        for(int i = 0; i < 10; i++)
-        {
+            Goblin2[i] = transform.GetChild(0).GetChild(2).GetChild(i).gameObject;
             GoblinArcher[i] = transform.GetChild(0).GetChild(2).GetChild(i).gameObject;
-
+            Skeleton[i] = transform.GetChild(0).GetChild(3).GetChild(i).gameObject;
         }
-
-        TurtleSlime = transform.GetChild(0).GetChild(3).GetChild(0).gameObject;
-        Golem = transform.GetChild(0).GetChild(4).GetChild(0).gameObject;
+        TurtleSlime = transform.GetChild(0).GetChild(4).GetChild(0).gameObject;
+        Golem = transform.GetChild(0).GetChild(5).GetChild(0).gameObject;
         Invoke("Generate", 0.2f); //마스터 플레이어가 나갔을때 몬스터가 생성이 안된다면 이 0.2초사이에 마스터플레이어가 나갔을 것입니다.. 수정 필요하긴합니다 이부분.
     }
 
@@ -62,6 +56,7 @@ public class MonsterManager : MonoBehaviourPun
         GameObject SlimePools = new GameObject("Slime Pool");
         GameObject BlueSlimePools = new GameObject("BlueSlime Pool");
         GameObject GoblinPools = new GameObject("Goblin Pool");
+        GameObject Goblin2Pools = new GameObject("Goblin2 Pool");
         GameObject GoblinArcherPools = new GameObject("GoblinArcher Pool");
         GameObject SkeletonPools = new GameObject("Skeleton Pool");
 
@@ -70,6 +65,7 @@ public class MonsterManager : MonoBehaviourPun
             EnemySlime[] slimes = GameObject.FindObjectsOfType<EnemySlime>();
             EnemyBlueSlime[]blueslimes = GameObject.FindObjectsOfType<EnemyBlueSlime>();
             EnemyGoblin[] goblins = GameObject.FindObjectsOfType<EnemyGoblin>();
+            EnemyGoblin2[] goblins2 = GameObject.FindObjectsOfType<EnemyGoblin2>();
             EnemyRange[] Ranges = GameObject.FindObjectsOfType<EnemyRange>();
             EnemySkeleton[] skelletons = GameObject.FindObjectsOfType<EnemySkeleton>();
 
@@ -91,6 +87,12 @@ public class MonsterManager : MonoBehaviourPun
             {
                 goblins[i].transform.parent = GoblinPools.transform;
                 Goblin[i] = goblins[i].gameObject;
+            }
+
+            for (int i = 0; i < goblins2.Length; i++)
+            {
+                goblins2[i].transform.parent = Goblin2Pools.transform;
+                Goblin2[i] = goblins2[i].gameObject;
             }
 
 
@@ -133,36 +135,44 @@ public class MonsterManager : MonoBehaviourPun
             }
             for (int i = 0; i < Goblin.Length; i++)
             {
-                Goblin[i] = PhotonNetwork.Instantiate("Monster/LV4.Goblin", transform.position, Quaternion.identity);
+                Goblin[i] = PhotonNetwork.Instantiate("Monster/LV4.Goblin(M)", transform.position, Quaternion.identity);
                 Goblin[i].transform.parent = GoblinPools.transform;
                 Goblin[i].SetActive(false);
                 Goblin[i].transform.position = SpawnManager.spawnManager.GoblinPoints[i].transform.position;
             }
+            for (int i = 0; i < Goblin2.Length; i++)
+            {
+                Goblin2[i] = PhotonNetwork.Instantiate("Monster/LV4.Goblin(W)", transform.position, Quaternion.identity);
+                Goblin2[i].transform.parent = Goblin2Pools.transform;
+                Goblin2[i].SetActive(false);
+                Goblin2[i].transform.position = SpawnManager.spawnManager.Goblin2Points[i].transform.position;
+            }
             for (int i = 0; i < GoblinArcher.Length; i++)
             {
-                GoblinArcher[i] = PhotonNetwork.Instantiate("Monster/LV6.GoblinArcher", transform.position, Quaternion.identity);
+                GoblinArcher[i] = PhotonNetwork.Instantiate("Monster/LV6.GoblinArcher(Old)", transform.position, Quaternion.identity);
                 GoblinArcher[i].transform.parent = GoblinArcherPools.transform;
                 GoblinArcher[i].SetActive(false);
                 GoblinArcher[i].transform.position = SpawnManager.spawnManager.GoblinArcherPoints[i].transform.position;
             }
             for (int i = 0; i < Skeleton.Length; i++)
             {
-                Skeleton[i] = PhotonNetwork.Instantiate("Monster/LV8.Skeleton", transform.position, Quaternion.identity);
+                Skeleton[i] = PhotonNetwork.Instantiate("Monster/LV8.Skeleton(Old)", transform.position, Quaternion.identity);
                 Skeleton[i].transform.parent = SkeletonPools.transform;
                 Skeleton[i].SetActive(false);
                 Skeleton[i].transform.position = SpawnManager.spawnManager.SkeletonPoints[i].transform.position;
             }
 
-            TurtleSlime = PhotonNetwork.Instantiate("Monster/LV5.Boss.TurtleSlime", transform.position, Quaternion.identity);
+            TurtleSlime = PhotonNetwork.Instantiate("Monster/LV5.Boss.TurtleSlime(Old)", transform.position, Quaternion.identity);
             TurtleSlime.SetActive(false);
             TurtleSlime.transform.position = SpawnManager.spawnManager.TurtleSlimePoint.transform.position;
 
-            Golem = PhotonNetwork.Instantiate("Monster/LV10.Boss.Golem", transform.position, Quaternion.identity);
+            Golem = PhotonNetwork.Instantiate("Monster/LV10.Boss.Golem(Old)", transform.position, Quaternion.identity);
             Golem.SetActive(false);
             Golem.transform.position = SpawnManager.spawnManager.GolemPoint.transform.position;
 
 
-            SpawnManager.spawnManager.start();
+            SpawnManager.spawnManager.photonView.RPC("start", RpcTarget.AllBuffered);
+            //SpawnManager.spawnManager.start();
         }
 
 
@@ -184,6 +194,9 @@ public class MonsterManager : MonoBehaviourPun
                     break;
                 case "Goblin":
                     targetPool = Goblin;
+                    break;
+                case "Goblin2":
+                    targetPool = Goblin2;
                     break;
                 case "GoblinArcher":
                     targetPool = GoblinArcher;

@@ -14,6 +14,9 @@ public class EnemyGoblin : Monster
     private bool isDie;
     public bool isStun;
     public bool isDamage; //현재맞고있나
+    public bool isReset; //리셋이 끝났는가?
+    public int Corotineidx; //코루틴 중복방지
+    public Transform movepoint;
 
     public LayerMask whatIsTarget; // 공격 대상 레이어
 
@@ -22,7 +25,7 @@ public class EnemyGoblin : Monster
 
     Transform target;
     Rigidbody rigid;
-    BoxCollider boxCollider;
+    CapsuleCollider boxCollider;
     Material mat; //�ǰݽ� �����ϰ�
     NavMeshAgent nav; //����
     Animator anim;
@@ -30,6 +33,7 @@ public class EnemyGoblin : Monster
 
     [SerializeField]
     Attacking attacking;
+    float targetRange = 1f; //몬스터 공격사정거리
 
     private bool hasTarget
     {
@@ -48,9 +52,9 @@ public class EnemyGoblin : Monster
 
     void Awake()
     {
-        attacking = transform.GetChild(4).GetComponent<Attacking>();
+        attacking = transform.GetChild(0).GetComponent<Attacking>();
         rigid = GetComponent<Rigidbody>();
-        boxCollider = GetComponent<BoxCollider>();
+        boxCollider = GetComponent<CapsuleCollider>();
         mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
@@ -58,6 +62,7 @@ public class EnemyGoblin : Monster
     }
     private void OnEnable()
     {
+        isDamage = false;
         boxCollider.enabled = true;
         isAttack = false;
         nav.isStopped = false;
@@ -68,8 +73,8 @@ public class EnemyGoblin : Monster
         anim = GetComponent<Animator>();
         StartMonster();
         Monstername.text = "고블린";
-        level.text = "4";
-        coin = 20;
+        level.text = "5";
+        coin = 25;
 
         // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
 
@@ -95,23 +100,24 @@ public class EnemyGoblin : Monster
         while (!isDie)
         {
 
-            if (hasTarget)
+            if (hasTarget && !isStun)
             {
+                Corotineidx = 0;
+                isReset = false;
                 // 추적 대상 존재 : 경로를 갱신하고 AI 이동을 계속 진행
                 Targerting();
                 nav.SetDestination(target.position);
                 nav.speed = 3.5f;
-                if (isAttack)
-                {
-                    isChase = false;
-                    nav.isStopped = true;
-                    anim.SetBool("isWalk", false);
-                }
                 if (!isAttack)
                 {
                     isChase = true;
                     nav.isStopped = false;
                     anim.SetBool("isWalk", true);
+                }
+                if(Vector3.Distance(target.position, transform.position) > 10f && Vector3.Distance(target.position, transform.position) < 15f
+                    && !isStun)
+                {
+                    Dash(); //대쉬로 거리좁히기용도
                 }
                 if (Vector3.Distance(target.position, transform.position) > 15f)
                 {
@@ -155,18 +161,54 @@ public class EnemyGoblin : Monster
     }
     void EnemyReset()
     {
-        anim.SetBool("isRun", false);
-        nav.SetDestination(respawn.transform.position);
-        nav.speed = 20f;
-        //curHealth = maxHealth;
-        isChase = false;
-        if (Vector3.Distance(respawn.position, transform.position) < 1f)
+        if (PhotonNetwork.IsMasterClient && !isReset)
         {
-            nav.isStopped = true;
-            anim.SetBool("isWalk", false);
+            nav.SetDestination(respawn.transform.position);
+            nav.speed = 5f;
+            //curHealth = maxHealth;  서버에서 체력동기화가 잘 안일어나서 우선 주석 했습니다.
+            isChase = false;
+            if (Vector3.Distance(respawn.position, transform.position) < 1f)
+            {
+                nav.isStopped = true;
+                anim.SetBool("isWalk", false);
+                isReset = true;
+            }
+        }
+        else if (PhotonNetwork.IsMasterClient && isReset) //방황
+        {
+            if (isReset && Corotineidx == 0)
+            {
+                Corotineidx = 1;
+                StartCoroutine(Move());
+            }
         }
     }
-
+    IEnumerator Move()
+    {
+        while (isReset)
+        {
+            yield return new WaitForSeconds(Random.Range(0.1f, 3.0f));
+            transform.Rotate(new Vector3(0, 1, 0) * Random.Range(1000, 5000) * Time.smoothDeltaTime);
+            nav.isStopped = false;
+            anim.SetBool("isMove", true);
+            nav.SetDestination(movepoint.position);
+            nav.speed = 0.5f;
+            yield return new WaitForSeconds(4f);
+            nav.isStopped = true;
+            anim.SetBool("isMove", false);
+            yield return new WaitForSeconds(3f);
+        }
+    }
+    void Dash()
+    {
+        anim.SetBool("isDash", true);
+        transform.DOMove(target.position, 1f).SetEase(Ease.Linear);
+        Invoke("DashEnd", 1f);
+    }
+    void DashEnd()
+    {
+        anim.SetBool("isDash", false);
+    }
     void FreezeVelocity() //�̵�����
     {
         if (isChase)
@@ -178,13 +220,12 @@ public class EnemyGoblin : Monster
     void Targerting()//Ÿ����
     {
         float targetRadius = 1f;
-        float targetRange = 0.5f;
 
         RaycastHit[] rayHits =
             Physics.SphereCastAll(transform.position,
             targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));  //����ĳ��Ʈ
 
-        if (rayHits.Length > 0 && !isAttack && !isDie) //����ĳ��Ʈ�� �÷��̾ �����ٸ� && ���� �������� �ƴ϶��
+        if (rayHits.Length > 0 && !isAttack && !isDie && !isStun) //����ĳ��Ʈ�� �÷��̾ �����ٸ� && ���� �������� �ƴ϶��
         {
             photonView.RPC("Attack", RpcTarget.All);
             MonsterAttack();
@@ -201,7 +242,8 @@ public class EnemyGoblin : Monster
         isAttack = true;
         nav.isStopped = true;
         anim.SetBool("isAttack", true);
-        yield return new WaitForSeconds(0.5f);
+        anim.SetBool("isWalk", false);
+        yield return new WaitForSeconds(0.44f);
         meleeArea.enabled = true;
         yield return new WaitForSeconds(0.2f);
         rigid.velocity = Vector3.zero;
@@ -257,8 +299,10 @@ public class EnemyGoblin : Monster
     {
         isStun = true;
         anim.SetBool("isStun", true);
+        nav.isStopped = true;
         yield return new WaitForSeconds(3f);
         isStun = false;
+        nav.isStopped = false;
         anim.SetBool("isStun", false);
     }
 
