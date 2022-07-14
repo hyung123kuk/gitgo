@@ -1270,6 +1270,16 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                 }
             }
 
+            if (other.tag == "DunjeonPortal")
+            {
+                gameObject.transform.position = Portal.portal.WorldPortal.position + Portal.portal.WorldPortal.transform.forward*-2;
+            }
+
+            if (other.tag == "WorldPortal")
+            {
+                gameObject.transform.position = Portal.portal.DunjeonPortal.position + Portal.portal.DunjeonPortal.transform.forward * -2; 
+            }
+
 
 
             if (other.tag == "BGM1")   //마을입장
@@ -1325,16 +1335,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                     transform.rotation = HorseSpawn.transform.rotation;
                     //Quaternion.LookRotation(new Vector3(h, 0f, v));
                 }
-            }
-
-            if (other.name == "In-Portal" && Input.GetKeyDown(KeyCode.F))
-            {
-                Portal.portal.InDunJeonPortal(gameObject);
-            }
-
-            if (other.name == "Out-Portal" && Input.GetKeyDown(KeyCode.F))
-            {
-                Portal.portal.OutDunJeonPortal(gameObject);
             }
 
             if (other.name == "Boss2Arena")
