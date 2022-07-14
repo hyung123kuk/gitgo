@@ -417,7 +417,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 0
+  sceneViewId: 2
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &666829142059258481
@@ -3644,6 +3644,14 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 32767
       objectReference: {fileID: 0}
+    - target: {fileID: 342680750397086974, guid: f136477c45c9b6546ab13a547c29e8fa, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 83ea0f288e5c367408d92ad6ff9e1e9b, type: 3}
+    - target: {fileID: 342680751510878507, guid: f136477c45c9b6546ab13a547c29e8fa, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: 83ea0f288e5c367408d92ad6ff9e1e9b, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f136477c45c9b6546ab13a547c29e8fa, type: 3}
 --- !u!114 &972917989239509599 stripped
@@ -3906,7 +3914,7 @@ PrefabInstance:
       objectReference: {fileID: 972917989239509599}
     - target: {fileID: 5209970398088709278, guid: 16ea880670d186445a299d42e28f4c35, type: 3}
       propertyPath: sceneViewId
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5209970398526494433, guid: 16ea880670d186445a299d42e28f4c35, type: 3}
       propertyPath: m_AnchoredPosition.y
