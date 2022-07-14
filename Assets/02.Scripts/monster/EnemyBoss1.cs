@@ -202,7 +202,6 @@ public class EnemyBoss1 : MonsterBoss
 
     IEnumerator Pattern() //��������
     {
-
         yield return new WaitForSeconds(6f);
         if (!isDie)
         {
