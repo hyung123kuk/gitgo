@@ -14442,10 +14442,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tr: {fileID: 0}
-  col: {fileID: 0}
-  item: {fileID: 11400000, guid: e96161882b072f2408931f65ea35ad47, type: 2}
+  item: {fileID: 11400000, guid: 515e9925e8d53bd48804bc347766634f, type: 2}
   playerStat: {fileID: 0}
   Coin: 0
+  col: {fileID: 0}
+  rbody: {fileID: 0}
   RangeText: {fileID: 0}
   RotateSpeed: 2
 --- !u!135 &2623187304300153757
