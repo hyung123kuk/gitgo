@@ -155,8 +155,8 @@ public class Monster : MonoBehaviourPun
         OnDamage(attackdamage.attackDamage, attackdamage.critical, true) ; //맞았을때 로컬을 트루로해서 다른데에서도 OnDamage가 적용되게
 
         DamageSet();
+        BossHpBarSet();
 
-        
     }
 
 
@@ -409,7 +409,14 @@ public class Monster : MonoBehaviourPun
     public void MonsterAttack()
     {
         StartCoroutine(MonsterHpBarOn());
-            
+
+
+
+    }
+
+    public virtual void BossHpBarSet()
+    {
+      
     }
 
     IEnumerator MonsterHpBarOn()

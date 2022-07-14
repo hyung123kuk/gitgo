@@ -1,21 +1,61 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MonsterBoss : Monster
 {
     [SerializeField]
     public GameObject[] item;
-   
+    [SerializeField]
+    protected GameObject bossHpBar;
+    public Image BossHpBar;
+    public Text BossHp;
 
-   public void StartBossMonster()
+    public void StartBossMonster()
     {
         StartMonster();
+
+
+    }
+    public void BossMonsterHpBarSet()
+    {
+        BossHpBarSettting();
+
+        bossHpBar.transform.GetChild(1).GetChild(0).GetComponent<Text>().text = "Lv." + level.text;
+        bossHpBar.transform.GetChild(1).GetChild(1).GetComponent<Text>().text = Monstername.text;
+        BossHpBar = bossHpBar.transform.GetChild(2).GetChild(1).GetComponent<Image>();
+        BossHp = bossHpBar.transform.GetChild(2).GetChild(1).GetChild(0).GetComponent<Text>();
+
+    }
+
+    public virtual void BossHpBarSettting(){
+    }
+
+    public override void BossHpBarSet()
+    {
+        if (curHealth <= 0)
+        {
+            bossHpBar.SetActive(false);
+            return;
+        }
+        Debug.Log("bossattac22k");
+        if (bossHpBar != null)
+        {
+            StopAllCoroutines();
+            StartCoroutine(BossHpOn());
+            BossHpBar.fillAmount = curHealth / maxHealth;
+            BossHp.text = (int)curHealth + " / " + (int)maxHealth;
+        }
     }
 
 
-    
-
+    public IEnumerator BossHpOn()
+    {
+        bossHpBar.SetActive(true);
+        yield return new WaitForSeconds(5.0f);
+        bossHpBar.SetActive(false);
+    }
 
     public void BossDrop()
     {

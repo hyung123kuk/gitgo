@@ -48,6 +48,7 @@ public class EnemyBoss2 : MonsterBoss
     Attacking attacking;
     void Awake()
     {
+       
         attacking = transform.GetChild(2).GetComponent<Attacking>();
         stunarea = GetComponentInChildren<Light>();
         rigid = GetComponent<Rigidbody>();
@@ -68,14 +69,20 @@ public class EnemyBoss2 : MonsterBoss
         curHealth = maxHealth;
         isStun = false;
         anim = GetComponent<Animator>();
-
         StartBossMonster();
         BossItemSet();
+
         Monstername.text = "골렘";
         level.text = "10";
         coin = 50;
+        BossMonsterHpBarSet();
+
     }
 
+    public override void BossHpBarSettting()
+    {
+        bossHpBar = GameObject.Find("BossMonsterHp").transform.GetChild(1).gameObject;
+    }
 
     public void BossItemSet()
     {

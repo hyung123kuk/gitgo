@@ -74,6 +74,12 @@ public class EnemyBoss1 : MonsterBoss
         questStore = FindObjectOfType<QuestStore>();
         RushEff = GameObject.Find("EffectPool").transform.GetChild(0).GetComponent<ParticleSystem>();
     }
+
+    public override void BossHpBarSettting()
+    {
+        bossHpBar = GameObject.Find("BossMonsterHp").transform.GetChild(0).gameObject;
+    }
+
     private void OnEnable()
     {
         isDamage = false;
@@ -91,6 +97,7 @@ public class EnemyBoss1 : MonsterBoss
         level.text = "5";
         coin = 30;
         // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
+        BossMonsterHpBarSet();
 
         if (PhotonNetwork.IsMasterClient) //호스트에서만 추적
         {
@@ -445,6 +452,8 @@ public class EnemyBoss1 : MonsterBoss
 
         gameObject.SetActive(false);
     }
+
+    
 }
 
 
