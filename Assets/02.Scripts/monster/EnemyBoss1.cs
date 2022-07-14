@@ -39,6 +39,8 @@ public class EnemyBoss1 : MonsterBoss
     Attacking attacking;
     float targetRange = 3f; //몬스터 공격사정거리
 
+   
+
     private bool hasTarget
     {
         get
@@ -55,6 +57,7 @@ public class EnemyBoss1 : MonsterBoss
     }
     void Awake()
     {
+       
         stunarea = GetComponentInChildren<Light>();
         rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
@@ -65,6 +68,12 @@ public class EnemyBoss1 : MonsterBoss
         questStore = FindObjectOfType<QuestStore>();
 
     }
+
+    public override void BossHpBarSettting()
+    {
+        bossHpBar = GameObject.Find("BossMonsterHp").transform.GetChild(0).gameObject;
+    }
+
     private void OnEnable()
     {
         isDamage = false;
@@ -82,6 +91,7 @@ public class EnemyBoss1 : MonsterBoss
         level.text = "5";
         coin = 30;
         // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
+        BossMonsterHpBarSet();
 
         if (PhotonNetwork.IsMasterClient) //호스트에서만 추적
         {
@@ -456,6 +466,8 @@ public class EnemyBoss1 : MonsterBoss
 
         gameObject.SetActive(false);
     }
+
+    
 }
 
 
