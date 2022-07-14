@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
+using DG.Tweening;
 public class EnemyBoss1 : MonsterBoss
 {
 
@@ -13,7 +14,7 @@ public class EnemyBoss1 : MonsterBoss
     public bool isAttack; //���� ������
     public bool isRush;
     public bool isStun;
-    public bool isbansa;
+    public bool isThrow;
     public bool isDie;
     public Transform respawn;
 
@@ -23,8 +24,7 @@ public class EnemyBoss1 : MonsterBoss
     private Light stunarea;
     Transform target;
     Rigidbody rigid;
-    BoxCollider boxCollider;
-    SkinnedMeshRenderer[] mat;
+    CapsuleCollider boxCollider;
     NavMeshAgent nav;
     Animator anim;
     QuestStore questStore;
@@ -38,8 +38,15 @@ public class EnemyBoss1 : MonsterBoss
     [SerializeField]
     Attacking attacking;
     float targetRange = 3f; //몬스터 공격사정거리
+    public Transform ThrowPoint;
+    public Transform ThrowEndPoint;
 
-   
+    [SerializeField]
+    ParticleSystem RushEff; //돌진스킬 이펙트
+    [SerializeField]
+    GameObject ThrowEff;
+    [SerializeField]
+    SkinnedMeshRenderer mat;
 
     private bool hasTarget
     {
@@ -57,16 +64,15 @@ public class EnemyBoss1 : MonsterBoss
     }
     void Awake()
     {
-       
+        mat = transform.GetChild(7).transform.GetComponent<SkinnedMeshRenderer>();
         stunarea = GetComponentInChildren<Light>();
         rigid = GetComponent<Rigidbody>();
-        boxCollider = GetComponent<BoxCollider>();
-        mat = GetComponentsInChildren<SkinnedMeshRenderer>();
+        boxCollider = GetComponent<CapsuleCollider>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         attacking = transform.GetChild(2).GetComponent<Attacking>();
         questStore = FindObjectOfType<QuestStore>();
-
+        RushEff = GameObject.Find("EffectPool").transform.GetChild(0).GetComponent<ParticleSystem>();
     }
 
     public override void BossHpBarSettting()
@@ -87,7 +93,7 @@ public class EnemyBoss1 : MonsterBoss
 
         StartBossMonster();
         BossItemSet();
-        Monstername.text = "거북 슬라임";
+        Monstername.text = "이끼 골렘";
         level.text = "5";
         coin = 30;
         // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
@@ -125,22 +131,21 @@ public class EnemyBoss1 : MonsterBoss
 
         // 살아있는 동안 무한 루프
         while (!isDie)
-        {
-
+        { 
             if (hasTarget)
             {
                 // 추적 대상 존재 : 경로를 갱신하고 AI 이동을 계속 진행
                 Targerting();
                 PatternStart();
                 nav.SetDestination(target.position);
-                nav.speed = 5f;
-                if (!isAttack)
+                nav.speed = 4f;
+                if (!isAttack && !isSkill)
                 {
                     isChase = true;
                     nav.isStopped = false;
-                    anim.SetBool("isWalk", true);
+                    anim.SetBool("isRun", true);
                 }
-                if (Vector3.Distance(target.position, transform.position) > 15f)
+                if (Vector3.Distance(target.position, transform.position) > 40f)
                 {
                     EnemyReset();
                     target = null;
@@ -184,7 +189,7 @@ public class EnemyBoss1 : MonsterBoss
     {
         nav.SetDestination(respawn.position);
         isChase = false;
-        nav.speed = 20f;
+        nav.speed = 5f;
         nav.isStopped = false;
         //curHealth = maxHealth;
         if (Vector3.Distance(respawn.position, transform.position) < 1f)
@@ -208,16 +213,9 @@ public class EnemyBoss1 : MonsterBoss
         yield return new WaitForSeconds(6f);
         if (!isDie)
         {
-            int ranAction = Random.Range(0, 9);
+            int ranAction = Random.Range(4, 9);
             switch (ranAction)
             {
-                case 0:
-                case 1:
-                case 2:
-                case 3:
-                    photonView.RPC("Stun", RpcTarget.All);
-                    MonsterAttack();
-                    break;
                 case 4:
                 case 5:
                 case 6:
@@ -227,7 +225,7 @@ public class EnemyBoss1 : MonsterBoss
                 case 7:
                 case 8:
                 case 9:
-                    photonView.RPC("Reflect", RpcTarget.All);
+                    photonView.RPC("RockThrow", RpcTarget.All);
                     MonsterAttack();
                     break;
             }
@@ -287,26 +285,45 @@ public class EnemyBoss1 : MonsterBoss
 
     }
     [PunRPC]
-    IEnumerator Reflect()
+    IEnumerator RockThrow()
     {
         isSkill = true;
-        isbansa = true;
+        isThrow = true;
         isChase = false;
         nav.isStopped = true;
-        anim.SetBool("isDefend", true);
-        yield return new WaitForSeconds(5f);
+        mat.material.DOColor(Color.red, 2f);
+        anim.SetBool("isThrow", true);
         rigid.velocity = Vector3.zero;
-        meleeArea.enabled = false;
+        yield return new WaitForSeconds(3f);
+        anim.SetBool("isThrowShot", true);
+        Collider[] colliders =
+                    Physics.OverlapSphere(transform.position, 5f, LayerMask.GetMask("Player"));
 
-        if (!isDie)
-            anim.SetBool("isDefend", false);
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            PlayerST livingEntity = colliders[i].GetComponent<PlayerST>();
+            if (livingEntity != null && !livingEntity.isDie && !livingEntity.isDamage)
+            {
+                Instantiate(ThrowEff, livingEntity.transform.position, livingEntity.transform.rotation);
+                //photonView.RPC("StunEffStop", RpcTarget.All);
+                livingEntity.GetComponent<PlayerStat>()._Hp -= 100;
+                Debug.Log("데미지 들어감" + livingEntity.GetComponent<PlayerStat>()._Hp);
+            }
+            if (livingEntity != null && !livingEntity.isDie)
+            {
+                livingEntity.SendMessage("OnDamageNuck");
+            }   
+        }
+        yield return new WaitForSeconds(0.2f);
+        anim.SetBool("isThrowShot", false);
+        anim.SetBool("isThrow", false);
+        mat.material.DOColor(Color.white, 2f);
         isChase = true;
         nav.isStopped = false;
-        isbansa = false;
+        isThrow = false;
         isSkill = false;
         yield return new WaitForSeconds(2.5f);
         Patterning = false;
-
     }
     [PunRPC]
     IEnumerator Rush()
@@ -316,21 +333,15 @@ public class EnemyBoss1 : MonsterBoss
         isAttack = true;
         nav.isStopped = true;
         isRush = true;
-        //anim.SetBool("isRush", true);
-        meleeArea.enabled = true;
-        yield return new WaitForSeconds(0.2f);
-        rigid.AddForce(transform.forward * 40 + transform.up * 20, ForceMode.Impulse);
-
-        yield return new WaitForSeconds(1f);
-        transform.position = target.position + Vector3.back * 2;
+        anim.SetBool("isRush", true);
+        transform.DOJump(target.position, 1.5f, 1, 1.2f);
+        yield return new WaitForSeconds(0.8f);
+        anim.SetBool("isRush", false);
+        RushEff.transform.position = target.position;
+        RushEff.Play();
         isRush = false;
-        meleeArea.enabled = false;
-        rigid.velocity = Vector3.zero;
-
         isChase = true;
         isAttack = false;
-
-        //anim.SetBool("isRush", false);
         nav.isStopped = false;
         isSkill = false;
         yield return new WaitForSeconds(2.5f);
@@ -338,6 +349,7 @@ public class EnemyBoss1 : MonsterBoss
         Patterning = false;
 
     }
+
     [PunRPC]
     IEnumerator Attack() //������ �ϰ� �������ϰ� �ٽ� ������ ����
     {
@@ -348,8 +360,8 @@ public class EnemyBoss1 : MonsterBoss
         isAttack = true;
         nav.isStopped = true;
         anim.SetBool("isAttack", true);
-        anim.SetBool("isWalk", false);
-        yield return new WaitForSeconds(0.4f);
+        anim.SetBool("isRun", false);
+        yield return new WaitForSeconds(0.8f);
         meleeArea.enabled = true;
 
         yield return new WaitForSeconds(1f);
@@ -370,7 +382,7 @@ public class EnemyBoss1 : MonsterBoss
 
     void OnTriggerEnter(Collider other)  //�ǰ�
     {
-        if (!isbansa && !isDamage)
+        if (!isDamage)
         {
             if (other.tag == "Melee")
             {
@@ -395,26 +407,6 @@ public class EnemyBoss1 : MonsterBoss
                 StartCoroutine(OnDamage());
             }
         }
-        else if (isbansa)
-        {
-            if (other.tag == "Melee")
-            {
-                Weapons weapon = other.GetComponent<Weapons>();
-                playerStat._Hp -= weapon.damage;
-            }
-            else if (other.tag == "Arrow")
-            {
-                Arrow arrow = other.GetComponent<Arrow>();
-                playerStat._Hp -= arrow.damage;
-            }
-            else if (other.tag == "ArrowSkill")
-            {
-                ArrowSkill arrow = other.GetComponent<ArrowSkill>();
-                curHealth -= arrow.damage;
-
-                StartCoroutine(OnDamage());
-            }
-        }
     }
 
     IEnumerator OnDamage()
@@ -425,9 +417,6 @@ public class EnemyBoss1 : MonsterBoss
         isDamage = true;
         yield return new WaitForSeconds(0.1f);
         isDamage = false;
-        if (curHealth > 0)
-            foreach (SkinnedMeshRenderer mesh in mat)
-                mesh.material.color = Color.white;
         HitMonster();
         // SetHpBar();
         if (curHealth < 0)
@@ -445,8 +434,6 @@ public class EnemyBoss1 : MonsterBoss
         nav.isStopped = true;
         isDie = true;
         boxCollider.enabled = false;
-        foreach (SkinnedMeshRenderer mesh in mat)
-            mesh.material.color = Color.white;
         isChase = false; //�׾����� ��������
         anim.SetBool("isDie", true);
         gameObject.SetActive(false);

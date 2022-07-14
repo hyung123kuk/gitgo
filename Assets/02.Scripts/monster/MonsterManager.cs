@@ -162,7 +162,7 @@ public class MonsterManager : MonoBehaviourPun
                 Skeleton[i].transform.position = SpawnManager.spawnManager.SkeletonPoints[i].transform.position;
             }
 
-            TurtleSlime = PhotonNetwork.Instantiate("Monster/LV5.Boss.TurtleSlime(Old)", transform.position, Quaternion.identity);
+            TurtleSlime = PhotonNetwork.Instantiate("Monster/LV5.Boss.Golem", transform.position, Quaternion.identity);
             TurtleSlime.SetActive(false);
             TurtleSlime.transform.position = SpawnManager.spawnManager.TurtleSlimePoint.transform.position;
 
