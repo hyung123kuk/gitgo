@@ -100,7 +100,7 @@ public class EnemyGoblin2 : Monster
         while (!isDie)
         {
 
-            if (hasTarget && !isStun)
+            if (hasTarget )
             {
                 Corotineidx = 0;
                 isReset = false;
@@ -108,7 +108,7 @@ public class EnemyGoblin2 : Monster
                 Targerting();
                 nav.SetDestination(target.position);
                 nav.speed = 3.5f;
-                if (!isAttack)
+                if (!isAttack && !isStun)
                 {
                     isChase = true;
                     nav.isStopped = false;
@@ -289,21 +289,25 @@ public class EnemyGoblin2 : Monster
 
         if (other.tag == "CCAREA")
         {
-            StartCoroutine(Stun());
+            photonView.RPC("Stun", RpcTarget.All);
         }
 
 
     }
-
+    [PunRPC]
     IEnumerator Stun()
     {
+        rigid.velocity = Vector3.zero;
         isStun = true;
         anim.SetBool("isStun", true);
         nav.isStopped = true;
         yield return new WaitForSeconds(3f);
-        isStun = false;
-        nav.isStopped = false;
-        anim.SetBool("isStun", false);
+        if (!isDie)
+        {
+            isStun = false;
+            nav.isStopped = false;
+            anim.SetBool("isStun", false);
+        }
     }
 
     IEnumerator OnDamage()

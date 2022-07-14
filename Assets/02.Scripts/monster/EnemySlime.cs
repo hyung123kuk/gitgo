@@ -111,7 +111,7 @@ public class EnemySlime : Monster
         while (!isDie)
         {
 
-            if (hasTarget)
+            if (hasTarget && !isStun)
             {
                 Corotineidx = 0;
                 isReset = false;
@@ -290,7 +290,7 @@ public class EnemySlime : Monster
         }
         if (other.tag == "CCAREA")
         {
-            StartCoroutine(Stun());
+            photonView.RPC("Stun", RpcTarget.All);
         }
     }
 
@@ -306,16 +306,19 @@ public class EnemySlime : Monster
     //    }
     //}
 
-
+    [PunRPC]
     IEnumerator Stun()
     {
         isStun = true;
         anim.SetBool("isStun", true);
         nav.isStopped = true;
         yield return new WaitForSeconds(3f);
-        isStun = false;
-        nav.isStopped = false;
-        anim.SetBool("isStun", false);
+        if (!isDie)
+        {
+            isStun = false;
+            nav.isStopped = false;
+            anim.SetBool("isStun", false);
+        }
     }
 
     IEnumerator OnDamage()
