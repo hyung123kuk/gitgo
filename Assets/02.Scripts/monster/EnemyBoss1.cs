@@ -370,6 +370,7 @@ public class EnemyBoss1 : MonsterBoss
         isChase = true;
         isAttack = false;
         anim.SetBool("isAttack", false);
+        if(!isDie)
         nav.isStopped = false;
 
     }
