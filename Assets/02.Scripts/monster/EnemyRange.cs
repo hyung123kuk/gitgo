@@ -25,12 +25,12 @@ public class EnemyRange : Monster
     public ParticleSystem Hiteff2; //������ ����Ʈ
     Transform target;
     Rigidbody rigid;
-    BoxCollider boxCollider;
-    public SkinnedMeshRenderer mat; //�ǰݽ� �����ϰ�
+    CapsuleCollider boxCollider;
+    //public SkinnedMeshRenderer mat; //�ǰݽ� �����ϰ�
     NavMeshAgent nav; //����
     Animator anim;
     QuestNormal questNormal;
-    float targetRange = 20f; //몬스터 공격사정거리
+    float targetRange = 15f; //몬스터 공격사정거리
 
     private bool hasTarget
     {
@@ -50,7 +50,7 @@ public class EnemyRange : Monster
     {
         bullet = Resources.Load<GameObject>("Fireball");
         rigid = GetComponent<Rigidbody>();
-        boxCollider = GetComponent<BoxCollider>();
+        boxCollider = GetComponent<CapsuleCollider>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         
@@ -65,12 +65,11 @@ public class EnemyRange : Monster
         nav.isStopped = false;
         isDie = false;
         curHealth = maxHealth;
-        mat.material.color = Color.white;
         isStun = false;
         StartMonster();
-        Monstername.text = "고블린 아처";
-        level.text = "6";
-        coin = 30;
+        Monstername.text = "리치";
+        level.text = "7";
+        coin = 35;
 
         // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
 
@@ -93,23 +92,18 @@ public class EnemyRange : Monster
     {
 
         // 살아있는 동안 무한 루프
-        while (!isDie)
+        while (!isDie )
         {
 
-            if (hasTarget)
+            if (hasTarget && !isStun)
             {
                 // 추적 대상 존재 : 경로를 갱신하고 AI 이동을 계속 진행
                 Targerting();
-                nav.SetDestination(target.position);
                 nav.speed = 3.5f;
-                if (isAttack)
+                if (!isAttack )
                 {
-                    isChase = false;
-                    nav.isStopped = true;
-                    anim.SetBool("isWalk", false);
-                }
-                if (!isAttack)
-                {
+                    
+                    nav.SetDestination(target.position);
                     isChase = true;
                     nav.isStopped = false;
                     anim.SetBool("isWalk", true);
@@ -224,23 +218,24 @@ public class EnemyRange : Monster
         isChase = false;
         isAttack = true;
         nav.isStopped = true;
+        nav.speed = 0f;
         anim.SetBool("isAttack", true);
         anim.SetBool("isWalk", false);
+        yield return new WaitForSeconds(1f);
         GameObject instantBullet = Instantiate(bullet, firepos.position, firepos.rotation);
         Attacking attackingbullet = instantBullet.GetComponent<Attacking>();
         attackingbullet.isAttacking = true;
         Rigidbody rigidBullet = instantBullet.GetComponent<Rigidbody>();
-        rigidBullet.velocity = transform.forward * 20;
+        rigidBullet.velocity = transform.forward * 15;
         Destroy(instantBullet, 2f);
-
-        yield return new WaitForSeconds(0.5f);
-        rigid.velocity = Vector3.zero;
 
         yield return new WaitForSeconds(2f);
         isChase = true;
         isAttack = false;
         anim.SetBool("isAttack", false);
+        if(!isDie)
         nav.isStopped = false;
+        nav.speed = 3.5f;
     }
     void FixedUpdate()
     {
@@ -281,19 +276,25 @@ public class EnemyRange : Monster
 
         if (other.tag == "CCAREA")
         {
-            StartCoroutine(Stun());
+            photonView.RPC("Stun", RpcTarget.All);
             MonsterAttack();
         }
     }
+    [PunRPC]
     IEnumerator Stun()
     {
+        nav.speed = 0f;
         isStun = true;
         anim.SetBool("isStun", true);
         nav.isStopped = true;
         yield return new WaitForSeconds(3f);
-        isStun = false;
-        nav.isStopped = false;
-        anim.SetBool("isStun", false);
+        if (!isDie)
+        {
+            nav.speed = 3.5f;
+            isStun = false;
+            nav.isStopped = false;
+            anim.SetBool("isStun", false);
+        }
     }
     IEnumerator OnDamage()
     {
@@ -302,21 +303,9 @@ public class EnemyRange : Monster
         isDamage = true;
         Hiteff.Play();
         Hiteff2.Play();
-        mat.material.color = Color.red;
         yield return new WaitForSeconds(0.1f);
         isDamage = false;
         SetHpBar();
-        if (curHealth > 0)
-        {
-            
-            mat.material.color = Color.white;
-            
-        }
-        else
-        {
-            //Die();
-
-        }
     }
 
     public override void Die()
@@ -325,7 +314,6 @@ public class EnemyRange : Monster
         MonsterDie();
         nav.isStopped = true;
         boxCollider.enabled = false;
-        mat.material.color = Color.black;
         isDie = true;
         isChase = false; //�׾����� ��������
         anim.SetBool("isDie", true);
