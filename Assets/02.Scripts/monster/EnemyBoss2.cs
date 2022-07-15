@@ -55,8 +55,10 @@ public class EnemyBoss2 : MonsterBoss
     public Transform HealPoint;
     public bool isHeal; //현재 힐 캐스팅중?
     public bool HealStop;
+    IEnumerator HealCorotine;
     void Awake()
     {
+        HealCorotine = Heal();
         attacking = transform.GetChild(2).GetComponent<Attacking>();
         stunarea = GetComponentInChildren<Light>();
         rigid = GetComponent<Rigidbody>();
@@ -291,49 +293,34 @@ public class EnemyBoss2 : MonsterBoss
         if (curHealth > maxHealth)
             curHealth = maxHealth;
         yield return new WaitForSeconds(1f);
-        if(HealStop)
+        if (!HealStop)
         {
-            Debug.Log("힐끊김!");
-            anim.SetBool("Heal", false);
-            Patterning = false;
-            HealStop = false;
+            curHealth += 500;
+            if (curHealth > maxHealth)
+                curHealth = maxHealth;
         }
-        curHealth += 500;
-        if (curHealth > maxHealth)
-            curHealth = maxHealth;
         yield return new WaitForSeconds(2f);
-        if (HealStop)
+        if (!HealStop)
         {
-            Debug.Log("힐끊김!");
-            anim.SetBool("Heal", false);
-            Patterning = false;
-            HealStop = false;
+            curHealth += 500;
+            if (curHealth > maxHealth)
+                curHealth = maxHealth;
         }
-        curHealth += 500;
-        if (curHealth > maxHealth)
-            curHealth = maxHealth;
         yield return new WaitForSeconds(2f);
-        if (HealStop)
+        if (!HealStop)
         {
-            Debug.Log("힐끊김!");
-            anim.SetBool("Heal", false);
-            Patterning = false;
-            HealStop = false;
+            curHealth += 500;
+            if (curHealth > maxHealth)
+                curHealth = maxHealth;
         }
-        curHealth += 500;
-        if (curHealth > maxHealth)
-            curHealth = maxHealth;
         yield return new WaitForSeconds(2f);
-        if (HealStop)
+        if (!HealStop)
         {
-            Debug.Log("힐끊김!");
-            anim.SetBool("Heal", false);
-            Patterning = false;
-            HealStop = false;
+            curHealth += 500;
+            if (curHealth > maxHealth)
+                curHealth = maxHealth;
         }
-        curHealth += 500;
-        if (curHealth > maxHealth)
-            curHealth = maxHealth;
+        
         Debug.Log("꺼억");
         anim.SetBool("Heal", false);
         nav.speed = 6f;
@@ -341,6 +328,7 @@ public class EnemyBoss2 : MonsterBoss
         isAttack = false;
         nav.isStopped = false;
         isSkill = false;
+        HealStop = false;
         yield return new WaitForSeconds(2.5f);
         if(Patterning)
         Patterning = false;
@@ -428,6 +416,7 @@ public class EnemyBoss2 : MonsterBoss
         isChase = true;
         isAttack = false;
         anim.SetBool("isAttack", false);
+        if(!isDie)
         nav.isStopped = false;
 
     }
@@ -468,7 +457,7 @@ public class EnemyBoss2 : MonsterBoss
 
         if (other.tag == "CCAREA")
         {
-            HealStop = true;
+            HealStop = true; 
         }
     }
 
