@@ -166,7 +166,7 @@ public class MonsterManager : MonoBehaviourPun
             TurtleSlime.SetActive(false);
             TurtleSlime.transform.position = SpawnManager.spawnManager.TurtleSlimePoint.transform.position;
 
-            Golem = PhotonNetwork.Instantiate("Monster/LV10.Boss.Golem(Old)", transform.position, Quaternion.identity);
+            Golem = PhotonNetwork.Instantiate("Monster/LV10.Boss.EvilGod", transform.position, Quaternion.identity);
             Golem.SetActive(false);
             Golem.transform.position = SpawnManager.spawnManager.GolemPoint.transform.position;
 

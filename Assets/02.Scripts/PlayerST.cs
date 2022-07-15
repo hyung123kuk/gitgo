@@ -1258,7 +1258,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             {
                 if (!isDamage) //무적타이밍이 아닐때만 실행
                 {
-
                     EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
                     playerstat.DamagedHp(enemyRange.damage);
                     healthbar.fillAmount = playerstat._Hp / playerstat._MAXHP;
@@ -1364,21 +1363,21 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                 anim.SetBool("isJump", false);
                 isJump = false;
             }
-            if (collision.gameObject.tag == "WALL")
-            {
-                isYes = true; //벽쪽에서 돌진스킬못쓰게
-            }
+            //if (collision.gameObject.tag == "WALL")
+            //{
+            //    isYes = true; //벽쪽에서 돌진스킬못쓰게
+            //}
         }
     }
     private void OnCollisionExit(Collision collision)
     {
-        if (photonView.IsMine)
-        {
-            if (collision.gameObject.tag == "WALL")
-            {
-                isYes = false;
-            }
-        }
+        //if (photonView.IsMine)
+        //{
+        //    if (collision.gameObject.tag == "WALL")
+        //    {
+        //        isYes = false;
+        //    }
+        //}
     }
 
 

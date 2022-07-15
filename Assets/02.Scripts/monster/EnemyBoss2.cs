@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
+using DG.Tweening;
 public class EnemyBoss2 : MonsterBoss
 {
 
@@ -11,7 +12,6 @@ public class EnemyBoss2 : MonsterBoss
     public bool isAttack; //���� ������
     public bool isDie;
     public bool isBuff;
-    private bool isStun;
     public Transform respawn;
     public SphereCollider nuckarea;
 
@@ -28,10 +28,12 @@ public class EnemyBoss2 : MonsterBoss
     public Transform fokjupos;
     public Transform Shpos1;
     public Transform Shpos2;
+
     Transform target;
     Rigidbody rigid;
-    BoxCollider boxCollider;
-    SkinnedMeshRenderer[] mat;
+    CapsuleCollider boxCollider;
+    [SerializeField]
+    SkinnedMeshRenderer mat;
     NavMeshAgent nav;
     Animator anim;
 
@@ -46,18 +48,27 @@ public class EnemyBoss2 : MonsterBoss
     QuestStore questStore;
     [SerializeField]
     Attacking attacking;
+
+    public ParticleSystem SkillStarEff;
+    public ParticleSystem[] Skill1Effs = new ParticleSystem[10];
+    public Transform[] Sohwanpos = new Transform[5];
+    public Transform HealPoint;
+    public bool isHeal; //현재 힐 캐스팅중?
+    public bool HealStop;
     void Awake()
     {
-       
         attacking = transform.GetChild(2).GetComponent<Attacking>();
         stunarea = GetComponentInChildren<Light>();
         rigid = GetComponent<Rigidbody>();
-        boxCollider = GetComponent<BoxCollider>();
-        mat = GetComponentsInChildren<SkinnedMeshRenderer>();
+        boxCollider = GetComponent<CapsuleCollider>();
+        mat = transform.GetChild(4).transform.GetComponent<SkinnedMeshRenderer>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         questStore = FindObjectOfType<QuestStore>();
-
+        for (int i = 0; i < 10; i++)
+        {
+            Skill1Effs[i] = GameObject.Find("EffectPool").transform.GetChild(1).transform.GetChild(i).gameObject.GetComponent<ParticleSystem>();
+        }
     }
     private void OnEnable()
     {
@@ -67,12 +78,11 @@ public class EnemyBoss2 : MonsterBoss
         nav.isStopped = false;
         isDie = false;
         curHealth = maxHealth;
-        isStun = false;
         anim = GetComponent<Animator>();
         StartBossMonster();
         BossItemSet();
 
-        Monstername.text = "골렘";
+        Monstername.text = "저주받은자 아몬";
         level.text = "10";
         coin = 50;
         BossMonsterHpBarSet();
@@ -108,30 +118,29 @@ public class EnemyBoss2 : MonsterBoss
         if (!isDie)
         {
             Targerting();
-            if (!isStun)
+
+            if (nav.enabled && playerST.DunjeonBossArena) //추적
             {
-                if (nav.enabled && playerST.DunjeonBossArena) //추적
+                PatternStart();
+                if (!isAttack && !isDie)
                 {
-                    PatternStart();
-                    if (!isAttack && !isDie)
-                    {
 
-                        if (!isBuff)
-                            nav.speed = 4f;
+                    if (!isBuff && !isSkill)
+                        nav.speed = 6f;
 
-                        isChase = true;
-                        nav.isStopped = false;
-                        nav.destination = target.position;
-                        anim.SetBool("isRun", true);
-                        if (playerST.isDie)
-                            EnemyReset();
-                    }
-                }
-                else if (!playerST.DunjeonBossArena && nav.enabled) //복귀
-                {
-                    EnemyReset();
+                    isChase = true;
+                    nav.isStopped = false;
+                    nav.destination = target.position;
+                    anim.SetBool("isRun", true);
+                    if (playerST.isDie)
+                        EnemyReset();
                 }
             }
+            else if (!playerST.DunjeonBossArena && nav.enabled) //복귀
+            {
+                EnemyReset();
+            }
+
         }
 
         if (playerST.DunjeonBossArena)
@@ -175,14 +184,15 @@ public class EnemyBoss2 : MonsterBoss
 
         if (!isDie)
         {
-            int ranAction = Random.Range(0, 9);
+            //int ranAction = Random.Range(2, 4);
+            int ranAction = 9;
             switch (ranAction)
             {
                 case 0:
                 case 1:
-                    //폭주 버프스킬
-                    photonView.RPC("Pokju", RpcTarget.All);
-                    MonsterAttack();
+                    ////폭주 버프스킬
+                    //photonView.RPC("Pokju", RpcTarget.All);
+                    //MonsterAttack();
                     break;
                 case 2:
                 case 3:
@@ -195,13 +205,13 @@ public class EnemyBoss2 : MonsterBoss
                 case 6:
                 case 7:
                 case 8:
-                    //공굴리기 스킬
-                    photonView.RPC("FireBall", RpcTarget.All);
+                    //어둠장판 만드는스킬
+                    photonView.RPC("Skill1", RpcTarget.All);
                     MonsterAttack();
                     break;
                 case 9:
-                    //스턴거는스킬
-                    photonView.RPC("Stun", RpcTarget.All);
+                    //피 회복스킬
+                    photonView.RPC("Heal", RpcTarget.All);
                     MonsterAttack();
                     break;
             }
@@ -235,63 +245,105 @@ public class EnemyBoss2 : MonsterBoss
     [PunRPC]
     IEnumerator Sohwan()
     {
+        StopCoroutine(Attack());
         isSkill = true;
         isChase = false;
         isAttack = true;
         nav.isStopped = true;
-        anim.SetBool("isSh", true);
-        sohwane.SetActive(true);
-        yield return new WaitForSeconds(2f);
-        anim.SetBool("isSh", false);
-        GameObject instantSkele1 = Instantiate(skele, Shpos1.position, Shpos1.rotation);
-        GameObject instantSkele2 = Instantiate(skele, Shpos2.position, Shpos2.rotation);
-        Destroy(instantSkele1, 30f);
-        Destroy(instantSkele2, 30f);
-
+        nav.speed = 0f;
+        anim.SetBool("Skill1", true);
+        for (int i = 0; i < 5; i++)
+        {
+            Sohwanpos[i].gameObject.SetActive(true);
+        }
+        yield return new WaitForSeconds(3f);
+        for (int i = 0; i < 5; i++)
+        {
+            Sohwanpos[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < 5; i++)
+        {
+            Instantiate(skele, Sohwanpos[i].position, Sohwanpos[i].rotation);
+        }
+        anim.SetBool("Skill1", false);
         nav.isStopped = false;
         isChase = true;
         isAttack = false;
-        yield return new WaitForSeconds(1f);
-        sohwane.SetActive(false);
         isSkill = false;
-
+        nav.speed = 4f;
         yield return new WaitForSeconds(1.5f);
         Patterning = false;
-
-        //StartCoroutine(Pattern());
-
     }
     [PunRPC]
-    IEnumerator Stun()
+    IEnumerator Heal()
     {
+        Debug.Log("힐 코로틴 시작");
+        transform.DOMove(HealPoint.position, 0.5f).SetEase(Ease.Linear);
         isSkill = true;
-        isStun = true;
         isChase = false;
         isAttack = true;
+        yield return new WaitForSeconds(0.5f);
+        anim.SetBool("Heal", true);
         nav.isStopped = true;
-        stunarea.enabled = true;
-        anim.SetBool("isRun", false);
-        anim.SetBool("isAttack", false);
-        yield return new WaitForSeconds(3f);
-        anim.SetBool("isStun", true);
-        yield return new WaitForSeconds(1.3f);
-        stun.SetActive(true);
-        nuckarea.enabled = true;
-        stunarea.enabled = false;
-        yield return new WaitForSeconds(0.2f);
+        nav.speed = 0f;
 
-        nuckarea.enabled = false;
-        anim.SetBool("isStun", false);
-        isStun = false;
+        curHealth += 500;
+        if (curHealth > maxHealth)
+            curHealth = maxHealth;
+        yield return new WaitForSeconds(1f);
+        if(HealStop)
+        {
+            Debug.Log("힐끊김!");
+            anim.SetBool("Heal", false);
+            Patterning = false;
+            HealStop = false;
+        }
+        curHealth += 500;
+        if (curHealth > maxHealth)
+            curHealth = maxHealth;
+        yield return new WaitForSeconds(2f);
+        if (HealStop)
+        {
+            Debug.Log("힐끊김!");
+            anim.SetBool("Heal", false);
+            Patterning = false;
+            HealStop = false;
+        }
+        curHealth += 500;
+        if (curHealth > maxHealth)
+            curHealth = maxHealth;
+        yield return new WaitForSeconds(2f);
+        if (HealStop)
+        {
+            Debug.Log("힐끊김!");
+            anim.SetBool("Heal", false);
+            Patterning = false;
+            HealStop = false;
+        }
+        curHealth += 500;
+        if (curHealth > maxHealth)
+            curHealth = maxHealth;
+        yield return new WaitForSeconds(2f);
+        if (HealStop)
+        {
+            Debug.Log("힐끊김!");
+            anim.SetBool("Heal", false);
+            Patterning = false;
+            HealStop = false;
+        }
+        curHealth += 500;
+        if (curHealth > maxHealth)
+            curHealth = maxHealth;
+        Debug.Log("꺼억");
+        anim.SetBool("Heal", false);
+        nav.speed = 6f;
         isChase = true;
         isAttack = false;
         nav.isStopped = false;
-        yield return new WaitForSeconds(1f);
         isSkill = false;
-        stun.SetActive(false);
-        yield return new WaitForSeconds(1.5f);
+        yield return new WaitForSeconds(2.5f);
+        if(Patterning)
         Patterning = false;
-        //StartCoroutine(Pattern());
 
     }
     [PunRPC]
@@ -326,36 +378,32 @@ public class EnemyBoss2 : MonsterBoss
     }
 
     [PunRPC]
-    IEnumerator FireBall()
+    IEnumerator Skill1()
     {
+        StopCoroutine(Attack());
+        anim.SetBool("Skill1", true);
+        SkillStarEff.Play();
         isSkill = true;
         isChase = false;
         isAttack = true;
         nav.isStopped = true;
-
-        anim.SetBool("isBall", true);
-
-        yield return new WaitForSeconds(1f);
-        GameObject instantBullet = Instantiate(bullet, firepos.position, firepos.rotation);
-        Rigidbody rigidBullet = instantBullet.GetComponent<Rigidbody>();
-        rigidBullet.velocity = transform.forward * 5;
-
-        Destroy(instantBullet, 4f);
-
-
-        yield return new WaitForSeconds(1f);
+        nav.speed = 0f;
+        yield return new WaitForSeconds(2f);
+        for (int i = 0; i < 10; i++)
+        {
+            float XPOS = Random.Range(300, 358);
+            float ZPOS = Random.Range(453, 528);
+            Skill1Effs[i].transform.position = new Vector3(XPOS, 11.5f, ZPOS);
+        }
         isSkill = false;
-        rigid.velocity = Vector3.zero;
-
         isChase = true;
         isAttack = false;
-
-        anim.SetBool("isBall", false);
+        anim.SetBool("Skill1", false);
         nav.isStopped = false;
+        nav.speed = 4f;
+        SkillStarEff.Stop();
         yield return new WaitForSeconds(2.5f);
         Patterning = false;
-        //StartCoroutine(Pattern());
-
     }
 
     [PunRPC]
@@ -369,7 +417,7 @@ public class EnemyBoss2 : MonsterBoss
         nav.isStopped = true;
 
         anim.SetBool("isAttack", true);
-        anim.SetBool("isWalk", false);
+        anim.SetBool("isRun", false);
         yield return new WaitForSeconds(0.8f);
         meleeArea.enabled = true;
         yield return new WaitForSeconds(0.8f);
@@ -417,24 +465,21 @@ public class EnemyBoss2 : MonsterBoss
                 StartCoroutine(OnDamage());
             }
         }
+
+        if (other.tag == "CCAREA")
+        {
+            HealStop = true;
+        }
     }
 
     IEnumerator OnDamage()
     {
         HitSoundManager.hitsoundManager.GolemHitSound();
-        foreach (SkinnedMeshRenderer mesh in mat)
-            mesh.material.color = Color.red;
         isDamage = true;
         Hiteff.Play();
         Hiteff2.Play();
         yield return new WaitForSeconds(0.1f);
         isDamage = false;
-
-        if (curHealth > 0)
-        {
-            foreach (SkinnedMeshRenderer mesh in mat)
-                mesh.material.color = Color.gray;
-        }
         // foreach (SkinnedMeshRenderer mesh in mat)
         //   mesh.material.color = Color.red;
         HitMonster();
@@ -461,8 +506,6 @@ public class EnemyBoss2 : MonsterBoss
         isChase = false; //�׾����� ��������
         anim.SetBool("isDie", true);
         gameObject.SetActive(false);
-        foreach (SkinnedMeshRenderer mesh in mat)
-            mesh.material.color = Color.gray;
         Invoke("Diegg", 1.5f);
         if (!questStore.MainSuccess)
         {
