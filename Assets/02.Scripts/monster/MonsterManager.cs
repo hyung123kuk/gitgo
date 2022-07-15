@@ -135,7 +135,7 @@ public class MonsterManager : MonoBehaviourPun
             }
             for (int i = 0; i < Goblin.Length; i++)
             {
-                Goblin[i] = PhotonNetwork.Instantiate("Monster/LV4.Goblin(M)", transform.position, Quaternion.identity);
+                Goblin[i] = PhotonNetwork.Instantiate("Monster/LV5.Goblin(M)", transform.position, Quaternion.identity);
                 Goblin[i].transform.parent = GoblinPools.transform;
                 Goblin[i].SetActive(false);
                 Goblin[i].transform.position = SpawnManager.spawnManager.GoblinPoints[i].transform.position;
@@ -149,7 +149,7 @@ public class MonsterManager : MonoBehaviourPun
             }
             for (int i = 0; i < GoblinArcher.Length; i++)
             {
-                GoblinArcher[i] = PhotonNetwork.Instantiate("Monster/LV6.GoblinArcher(Old)", transform.position, Quaternion.identity);
+                GoblinArcher[i] = PhotonNetwork.Instantiate("Monster/LV7.Rich", transform.position, Quaternion.identity);
                 GoblinArcher[i].transform.parent = GoblinArcherPools.transform;
                 GoblinArcher[i].SetActive(false);
                 GoblinArcher[i].transform.position = SpawnManager.spawnManager.GoblinArcherPoints[i].transform.position;

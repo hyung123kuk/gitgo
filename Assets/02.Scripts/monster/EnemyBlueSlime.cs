@@ -244,7 +244,8 @@ public class EnemyBlueSlime : Monster
         isChase = true;
         isAttack = false;
         anim.SetBool("isAttack", false);
-        nav.isStopped = false;
+        if (!isDie)
+            nav.isStopped = false;
     }
     void FixedUpdate()
     {

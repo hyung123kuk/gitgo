@@ -138,6 +138,8 @@ public class EnemyBoss1 : MonsterBoss
                 Targerting();
                 PatternStart();
                 nav.SetDestination(target.position);
+                
+                if(!isThrow)
                 nav.speed = 4f;
                 if (!isAttack && !isSkill)
                 {
@@ -188,6 +190,7 @@ public class EnemyBoss1 : MonsterBoss
     void EnemyReset()
     {
         nav.SetDestination(respawn.position);
+        RushEff.Stop();
         isChase = false;
         nav.speed = 5f;
         nav.isStopped = false;
@@ -209,23 +212,22 @@ public class EnemyBoss1 : MonsterBoss
 
     IEnumerator Pattern() //��������
     {
-
         yield return new WaitForSeconds(6f);
         if (!isDie)
         {
-            int ranAction = Random.Range(4, 9);
+            int ranAction = Random.Range(7, 9);
             switch (ranAction)
             {
                 case 4:
                 case 5:
                 case 6:
-                    photonView.RPC("Rush", RpcTarget.All);
+                    photonView.RPC("Rush", RpcTarget.All); //돌진스킬
                     MonsterAttack();
                     break;
                 case 7:
                 case 8:
                 case 9:
-                    photonView.RPC("RockThrow", RpcTarget.All);
+                    photonView.RPC("RockThrow", RpcTarget.All); //제자리서서 스턴거는스킬
                     MonsterAttack();
                     break;
             }
@@ -254,50 +256,22 @@ public class EnemyBoss1 : MonsterBoss
 
     }
     [PunRPC]
-    IEnumerator Stun()
-    {
-        isSkill = true;
-        isStun = true;
-        isChase = false;
-        isAttack = true;
-        nav.isStopped = true;
-        stunarea.enabled = true;
-        anim.SetBool("isRun", false);
-        anim.SetBool("isAttack", false);
-        yield return new WaitForSeconds(2f);
-        anim.SetBool("isStun", true);
-        yield return new WaitForSeconds(0.3f);
-        nuckarea.enabled = true;
-        stunarea.enabled = false;
-        anim.SetBool("isStun", false);
-        yield return new WaitForSeconds(0.2f);
-        nuckarea.enabled = false;
-
-        isSkill = false;
-
-
-        isStun = false;
-        isChase = true;
-        isAttack = false;
-        nav.isStopped = false;
-        yield return new WaitForSeconds(2.5f);
-        Patterning = false;
-
-    }
-    [PunRPC]
     IEnumerator RockThrow()
     {
+        nav.speed = 0f;
         isSkill = true;
         isThrow = true;
         isChase = false;
-        nav.isStopped = true;
         mat.material.DOColor(Color.red, 2f);
-        anim.SetBool("isThrow", true);
         rigid.velocity = Vector3.zero;
+        nav.isStopped = true;
+        StopCoroutine(Attack());
+        anim.SetBool("isAttack",false);
+        anim.SetBool("isThrow", true);
         yield return new WaitForSeconds(3f);
         anim.SetBool("isThrowShot", true);
         Collider[] colliders =
-                    Physics.OverlapSphere(transform.position, 5f, LayerMask.GetMask("Player"));
+                    Physics.OverlapSphere(transform.position, 8f, LayerMask.GetMask("Player"));
 
         for (int i = 0; i < colliders.Length; i++)
         {
@@ -317,9 +291,11 @@ public class EnemyBoss1 : MonsterBoss
         yield return new WaitForSeconds(0.2f);
         anim.SetBool("isThrowShot", false);
         anim.SetBool("isThrow", false);
+        nav.speed = 4f;
         mat.material.DOColor(Color.white, 2f);
         isChase = true;
-        nav.isStopped = false;
+        if (!isDie)
+            nav.isStopped = false;
         isThrow = false;
         isSkill = false;
         yield return new WaitForSeconds(2.5f);
@@ -333,6 +309,8 @@ public class EnemyBoss1 : MonsterBoss
         isAttack = true;
         nav.isStopped = true;
         isRush = true;
+        StopCoroutine(Attack());
+        anim.SetBool("isAttack", false);
         anim.SetBool("isRush", true);
         transform.DOJump(target.position, 1.5f, 1, 1.2f);
         yield return new WaitForSeconds(0.8f);
@@ -342,7 +320,8 @@ public class EnemyBoss1 : MonsterBoss
         isRush = false;
         isChase = true;
         isAttack = false;
-        nav.isStopped = false;
+        if (!isDie)
+            nav.isStopped = false;
         isSkill = false;
         yield return new WaitForSeconds(2.5f);
 
@@ -363,14 +342,15 @@ public class EnemyBoss1 : MonsterBoss
         anim.SetBool("isRun", false);
         yield return new WaitForSeconds(0.8f);
         meleeArea.enabled = true;
-
         yield return new WaitForSeconds(1f);
         rigid.velocity = Vector3.zero;
         meleeArea.enabled = false;
 
+        if(!isSkill)
         isChase = true;
         isAttack = false;
         anim.SetBool("isAttack", false);
+        if(!isDie)
         nav.isStopped = false;
 
     }
