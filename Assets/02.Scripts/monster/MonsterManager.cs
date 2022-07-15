@@ -156,7 +156,7 @@ public class MonsterManager : MonoBehaviourPun
             }
             for (int i = 0; i < Skeleton.Length; i++)
             {
-                Skeleton[i] = PhotonNetwork.Instantiate("Monster/LV8.Skeleton(Old)", transform.position, Quaternion.identity);
+                Skeleton[i] = PhotonNetwork.Instantiate("Monster/LV8.Skeleton", transform.position, Quaternion.identity);
                 Skeleton[i].transform.parent = SkeletonPools.transform;
                 Skeleton[i].SetActive(false);
                 Skeleton[i].transform.position = SpawnManager.spawnManager.SkeletonPoints[i].transform.position;

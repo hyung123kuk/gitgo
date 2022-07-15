@@ -100,6 +100,10 @@ public class EnemySlime : Monster
         {
             StopAllCoroutines();
         }
+        if (isStun && !isDie)
+        {
+            nav.speed = 0f;
+        }
         if (isChase || isAttack) //룩엣
             if (!isDie && !playerST.isJump && !playerST.isFall && !isStun)
                 transform.LookAt(target);
@@ -111,7 +115,7 @@ public class EnemySlime : Monster
         while (!isDie)
         {
 
-            if (hasTarget && !isStun)
+            if (hasTarget )
             {
                 Corotineidx = 0;
                 isReset = false;
@@ -119,7 +123,7 @@ public class EnemySlime : Monster
                 Targerting();
                 nav.SetDestination(target.position);
                 nav.speed = 3.5f;
-                if (!isAttack)
+                if (!isAttack && !isStun)
                 {
                     isChase = true;
                     nav.isStopped = false;

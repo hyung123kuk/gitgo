@@ -84,6 +84,10 @@ public class EnemyRange : Monster
         {
             StopAllCoroutines();
         }
+        if(isStun && !isDie)
+        {
+            nav.speed = 0f;
+        }
         if (isChase || isAttack) //룩엣
             if (!isDie && !playerST.isJump && !playerST.isFall && !isStun)
                 transform.LookAt(target);
@@ -95,12 +99,12 @@ public class EnemyRange : Monster
         while (!isDie )
         {
 
-            if (hasTarget && !isStun)
+            if (hasTarget )
             {
                 // 추적 대상 존재 : 경로를 갱신하고 AI 이동을 계속 진행
                 Targerting();
                 nav.speed = 3.5f;
-                if (!isAttack )
+                if (!isAttack && !isStun)
                 {
                     
                     nav.SetDestination(target.position);

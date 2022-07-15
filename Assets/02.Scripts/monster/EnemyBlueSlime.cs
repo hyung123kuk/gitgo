@@ -95,6 +95,10 @@ public class EnemyBlueSlime : Monster
         {
             StopAllCoroutines();
         }
+        if (isStun && !isDie)
+        {
+            nav.speed = 0f;
+        }
         if (isChase || isAttack) //·è¿§
             if (!isDie && !playerST.isJump && !playerST.isFall && !isStun)
                 transform.LookAt(target);
