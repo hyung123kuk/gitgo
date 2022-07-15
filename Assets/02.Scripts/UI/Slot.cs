@@ -709,6 +709,7 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
     {
         DragSlot.instance.SetColor(0);
         DragSlot.instance.dragSlot = null;
+        itemSellScope.SetActive(false);
     }
 
     public void OnDrop(PointerEventData eventData)
