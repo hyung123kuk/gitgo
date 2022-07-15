@@ -78,6 +78,7 @@ public class EnemyBlueSlime : Monster
         StartMonster();
         Monstername.text = "블루 슬라임";
         level.text = "3";
+        Exp = 50;
         coin = 10;
         // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
 
