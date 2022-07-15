@@ -15,6 +15,7 @@ public class NET_ChatManager : MonoBehaviourPunCallbacks
     public ScrollRect scroll_rect = null;
     string chatters;
 
+    public string[] forbidWord;
 
     void Start()
     {
@@ -42,7 +43,27 @@ public class NET_ChatManager : MonoBehaviourPunCallbacks
     public void SendButtonOnClicked()
     {
         if (input.text.Equals("")) { Debug.Log("Empty"); return; }
-        string msg = string.Format("[{0}] {1}", PhotonNetwork.LocalPlayer.NickName, input.text);
+
+        
+
+        string msg = "[" + PhotonNetwork.LocalPlayer.NickName + "]" +  input.text;
+
+        for (int i = 0; i < forbidWord.Length; i++)
+        {
+            string chage = "";
+            for (int j = 0; j < forbidWord[i].Length; j++)
+            {
+                chage += "*";
+            }
+         
+            Debug.Log(msg);
+            Debug.Log(forbidWord[i]);
+            Debug.Log(chage);
+
+            msg = msg.Replace(forbidWord[i], chage);
+        }
+
+
         photonView.RPC("ReceiveMsg", RpcTarget.OthersBuffered, msg);
         ReceiveMsg(msg);
         input.ActivateInputField();
@@ -52,6 +73,7 @@ public class NET_ChatManager : MonoBehaviourPunCallbacks
     [PunRPC]
     public void ReceiveMsg(string msg)
     {
+       
         chatLog.text += "\n" + msg;
         scroll_rect.verticalNormalizedPosition = 0.0f;
         

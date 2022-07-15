@@ -510,8 +510,11 @@ public class CharacterSelEffect : MonoBehaviour
         }
     }
 
-    public void StartButton()
+    public void CharacterRemoverButton()
     {
+
+        chSel.MakeType = CharacterSel.Type.None;
+        chSel.MakeBut();
         
     }
 

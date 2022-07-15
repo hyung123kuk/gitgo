@@ -353,6 +353,12 @@ public class CharacterSel : MonoBehaviourPunCallbacks
                 characterImage1[1].SetActive(false);
                 characterImage1[2].SetActive(true);
             }
+            else if (MakeType == Type.None)
+            {
+                characterImage1[0].SetActive(false);
+                characterImage1[1].SetActive(false);
+                characterImage1[2].SetActive(false);
+            }
             int index = -1;
             for (int i = 0; i < 3; i++)
             {
@@ -394,6 +400,12 @@ public class CharacterSel : MonoBehaviourPunCallbacks
                 characterImage2[0].SetActive(false);
                 characterImage2[1].SetActive(false);
                 characterImage2[2].SetActive(true);
+            }
+            else if (MakeType == Type.None)
+            {
+                characterImage1[0].SetActive(false);
+                characterImage1[1].SetActive(false);
+                characterImage1[2].SetActive(false);
             }
 
             int index = -1;
