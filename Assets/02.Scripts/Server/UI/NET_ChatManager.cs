@@ -25,8 +25,16 @@ public class NET_ChatManager : MonoBehaviourPunCallbacks
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Return))
-        {
+        {            
             SendButtonOnClicked();
+            
+            input.Select();
+            
+            AllUI.allUI.CheckCursorLock();
+        }
+        if(input.text != "")
+        {
+            AllUI.isUI = true;
         }
     }
 
