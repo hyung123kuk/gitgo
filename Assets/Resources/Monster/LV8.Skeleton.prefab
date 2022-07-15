@@ -7186,7 +7186,7 @@ GameObject:
   - component: {fileID: 5534501632464345220}
   - component: {fileID: 4304968935437401265}
   m_Layer: 6
-  m_Name: LV8.Skeleton(Old)
+  m_Name: LV8.Skeleton
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7333,7 +7333,7 @@ MonoBehaviour:
   Hiteff2: {fileID: 6286751540556992572}
   whatIsTarget:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 256
   NoMove: 0
   nav: {fileID: 0}
   attacking: {fileID: 0}
@@ -7353,19 +7353,19 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isWalk
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isAttack
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isDie
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isRun
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isStun
   m_SynchronizeLayers:
   - SynchronizeType: 2

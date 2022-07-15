@@ -89,6 +89,10 @@ public class EnemyGoblin2 : Monster
         {
             StopAllCoroutines();
         }
+        if (isStun && !isDie)
+        {
+            nav.speed = 0f;
+        }
         if (isChase || isAttack) //룩엣
             if (!isDie && !playerST.isJump && !playerST.isFall && !isStun)
                 transform.LookAt(target);

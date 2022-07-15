@@ -13,5 +13,9 @@ public class EnemyAttack : MonoBehaviour
         {
             Destroy(gameObject, 0.5f);
         }
+        if(!isMelee && other.tag == "WALL")
+        {
+            Destroy(gameObject);
+        }
     }
 }

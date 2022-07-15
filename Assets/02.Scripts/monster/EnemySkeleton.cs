@@ -91,6 +91,10 @@ public class EnemySkeleton : Monster
         {
             StopAllCoroutines();
         }
+        if (isStun && !isDie)
+        {
+            nav.speed = 0f;
+        }
         if (isChase || isAttack) //·è¿§
             if (!isDie && !playerST.isJump && !playerST.isFall && !isStun)
                 transform.LookAt(target);
@@ -102,7 +106,7 @@ public class EnemySkeleton : Monster
         while (!isDie)
         {
 
-            if (hasTarget && !isStun)
+            if (hasTarget )
             {
                 Corotineidx = 0;
                 isReset = false;
@@ -110,7 +114,7 @@ public class EnemySkeleton : Monster
                 Targerting();
                 nav.SetDestination(target.position);
                 nav.speed = 4f;
-                if (!isAttack )
+                if (!isAttack && !isStun)
                 {
                     isChase = true;
                     nav.isStopped = false;
