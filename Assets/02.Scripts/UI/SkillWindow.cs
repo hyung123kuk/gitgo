@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Photon.Pun;
+using UnityEngine.Video;
 
 public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
 {
@@ -27,6 +28,8 @@ public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
     [SerializeField]
     private SkillToolTip skillToolTip;
 
+    [SerializeField]
+    public VideoPlayer videoPlayer;
 
     public static bool kDown = false;
 
@@ -104,6 +107,8 @@ public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
         Cursor.lockState = CursorLockMode.Confined;
         allUI.MouseCursor.transform_cursor.gameObject.SetActive(true);
         kDown = true;
+        
+        
 
     }
 
@@ -114,6 +119,7 @@ public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
 
         kDown = false;
         AllUI.allUI.CheckCursorLock();
+       
     }
 
 

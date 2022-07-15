@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Video;
 
 [CreateAssetMenu(fileName = "New Skill", menuName = "New Skill/Skill")]
 public class SkillUI : ScriptableObject
@@ -17,5 +18,6 @@ public class SkillUI : ScriptableObject
     [TextArea]
     public string skillText;
 
+    public VideoClip[] skillVideo;
     
 }

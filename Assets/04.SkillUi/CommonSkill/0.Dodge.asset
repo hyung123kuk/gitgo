@@ -20,3 +20,7 @@ MonoBehaviour:
   skillType: 2
   skillText: "\uBCF4\uB294 \uBC29\uD5A5\uC73C\uB85C \uAD74\uB7EC \uACF5\uACA9\uC744
     \uD68C\uD53C\uD569\uB2C8\uB2E4."
+  skillVideo:
+  - {fileID: 32900000, guid: b6bd6b4d3549ea5449cedca7116b902e, type: 3}
+  - {fileID: 32900000, guid: 9533f780091cea24a88d6baf1735945a, type: 3}
+  - {fileID: 32900000, guid: 61b0dcede7a7df54087fdeb5674c3673, type: 3}

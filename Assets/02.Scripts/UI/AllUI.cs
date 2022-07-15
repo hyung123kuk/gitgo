@@ -88,7 +88,7 @@ public class AllUI : MonoBehaviourPun
                     return;
                 }
             }
-
+            
             AllWindowEnd();
             MouseCursor.transform_cursor.gameObject.SetActive(false);
             MouseCursor.SetNormalCursor();
@@ -225,6 +225,8 @@ public class AllUI : MonoBehaviourPun
         {
             FindObjectOfType<NET_Trade>().FailTrade();
         }
+
+        
     }
 
     public void CheckCursorLock()
