@@ -5,32 +5,32 @@ using Photon.Pun;
 
 public class SpawnManager : MonoBehaviourPun
 {
-    public Transform[] SlimePoints;   //스폰포인트 
+    public Transform[] SlimePoints = new Transform[10];   //스폰포인트 
     public int SlimeObjs;             //현재 살아있는 몬스터수
     bool Slimeready;                  //스폰준비완료?
     public int slimeidx = 0;          //동시 소환 제어
 
-    public Transform[] BlueSlimePoints;
+    public Transform[] BlueSlimePoints = new Transform[10];
     public int BlueSlimeObjs;
     bool BlueSlimeready;                  
     public int blueslimeidx = 0;
     
-    public Transform[] GoblinPoints;
+    public Transform[] GoblinPoints = new Transform[10];
     public int GoblinObjs;
     bool Goblinready;
     public int goblinidx = 0;
 
-    public Transform[] Goblin2Points;
+    public Transform[] Goblin2Points = new Transform[10];
     public int Goblin2Objs;
     bool Goblin2ready;
     public int goblin2idx = 0;
 
-    public Transform[] GoblinArcherPoints;
+    public Transform[] GoblinArcherPoints = new Transform[10];
     public int GoblinArObjs;
     bool GoblinArcherready;
     public int goblinarcheridx = 0;
 
-    public Transform[] SkeletonPoints;
+    public Transform[] SkeletonPoints = new Transform[10];
     public int SkeletonObjs;
     bool Skeletonready;
     public int Skeletonidx = 0;
@@ -60,8 +60,6 @@ public class SpawnManager : MonoBehaviourPun
 
     private void Awake()
     {
-
-
         SlimeObjs = 10;
         BlueSlimeObjs = 10;
         GoblinObjs = 10;
@@ -73,7 +71,6 @@ public class SpawnManager : MonoBehaviourPun
         spawnManager = this;
         monsters = new string[] { "Slime", "BlueSlime", "Goblin", "Goblin2", "GoblinArcher", "Skeleton", "TurtleSlime", "Golem" };
     }
-    [PunRPC]
     public void start() //소환해놓기
     {
         for (int i = 0; i < MonsterManager.monsterManager.Slime.Length; i++)
@@ -212,7 +209,6 @@ public class SpawnManager : MonoBehaviourPun
             GolemObjs = golem;
         }
     }
-
 
     IEnumerator SlimeSpawn()
     {

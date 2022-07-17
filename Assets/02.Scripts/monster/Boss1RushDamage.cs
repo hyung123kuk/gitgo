@@ -29,8 +29,14 @@ public class Boss1RushDamage : MonoBehaviour
             PlayerST livingEntity = colliders[i].GetComponent<PlayerST>();
             if (livingEntity != null && !livingEntity.isDie && !livingEntity.isDamage)
             {
-                livingEntity.GetComponent<PlayerStat>()._Hp -= 100;
+                livingEntity.GetComponent<PlayerStat>().DamagedHp(100);
+                livingEntity.GetComponent<PlayerST>().healthbar.fillAmount = livingEntity.GetComponent<PlayerStat>().playerstat._Hp /
+                    livingEntity.GetComponent<PlayerStat>().playerstat._MAXHP;
                 Debug.Log("데미지 들어감" + livingEntity.GetComponent<PlayerStat>()._Hp);
+                if (livingEntity.GetComponent<PlayerStat>()._Hp <= 0)
+                {
+                    livingEntity.GetComponent<PlayerST>().PlayerDie();
+                }
             }
         }
         StartCoroutine(DamageDelay());

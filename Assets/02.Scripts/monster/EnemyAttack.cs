@@ -6,14 +6,15 @@ public class EnemyAttack : MonoBehaviour
 {
     public float damage;
     public bool isMelee;
+    public bool isRazor;
     private void OnTriggerEnter(Collider other)
     {
         
-        if (!isMelee&&other.tag == "Player")
+        if (!isMelee&& !isRazor && other.tag == "Player")
         {
             Destroy(gameObject, 0.5f);
         }
-        if(!isMelee && other.tag == "WALL")
+        if(!isMelee && !isRazor && other.tag == "WALL")
         {
             Destroy(gameObject);
         }

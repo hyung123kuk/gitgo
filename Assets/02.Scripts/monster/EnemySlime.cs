@@ -67,6 +67,7 @@ public class EnemySlime : Monster
         anim = GetComponent<Animator>();
         questNormal = FindObjectOfType<QuestNormal>();
     }
+
     private void OnEnable()
     {
         boxCollider.enabled = true;

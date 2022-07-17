@@ -1043,6 +1043,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             //}
             if (horsecount == 0) //소환 
             {
+                HorseSpawn.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 HorseSpawn.transform.parent = null;
                 SoundManager.soundManager.Horse();
                 HorseSpawn.transform.position = horsepos1.position;
@@ -1166,7 +1167,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         FreezeVelocity();
         StopMove();
     }
-    void PlayerDie() //사망
+    public void PlayerDie() //사망
     {
 
         if (!photonView.IsMine)
@@ -1203,11 +1204,28 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (photonView.IsMine)
         {
+            if(other.tag =="DeathZone")
+            {
+                SendMessage("TownResurrection");
+            }
+
+            if(other.tag == "BOSS2_RAZOR")
+            {
+                if (!isDamage)
+                {
+                    Debug.Log("으악!");
+                    EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
+                    playerstat.DamagedHp(enemyRange.damage);
+                    healthbar.fillAmount = playerstat._Hp / playerstat._MAXHP;
+                    if (playerstat._Hp <= 0)
+                    {
+                        PlayerDie();
+                    }
+                }
+            }
+
             if (other.gameObject.tag == "EnemyRange")  //적에게 맞았다면
             {
-                //if (!isDamage) //무적타이밍이 아닐때만 실행
-                //{
-
                 if (other.gameObject.GetComponent<Attacking>().isAttacking && !isDamage)
                 {
                     EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
@@ -1219,9 +1237,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                         PlayerDie();
                     }
                 }
-                //StartCoroutine(OnDamage());
-
-                //}
             }
             else if (other.gameObject.tag == "Boss1Skill")  //1보스 스턴스킬
             {

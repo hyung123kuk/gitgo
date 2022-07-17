@@ -120,7 +120,7 @@ public class Horse : MonoBehaviourPun
                     | RigidbodyConstraints.FreezeRotationZ;
             }
 
-            rigid.angularVelocity = Vector3.zero;
+            //rigid.angularVelocity = Vector3.zero;
 
         }
 

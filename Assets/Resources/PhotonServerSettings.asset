@@ -162,6 +162,9 @@ MonoBehaviour:
   - ReceiveMsg
   - Skill1
   - Heal
+  - SlimeSpawn
+  - SpawnPoint
+  - Razor
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

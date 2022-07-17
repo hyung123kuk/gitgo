@@ -268,7 +268,7 @@ public class EnemyBoss1 : MonsterBoss
         StopCoroutine(Attack());
         anim.SetBool("isAttack",false);
         anim.SetBool("isThrow", true);
-        yield return new WaitForSeconds(3f);
+        yield return new WaitForSeconds(2.8f);
         anim.SetBool("isThrowShot", true);
         Collider[] colliders =
                     Physics.OverlapSphere(transform.position, 8f, LayerMask.GetMask("Player"));
@@ -280,8 +280,14 @@ public class EnemyBoss1 : MonsterBoss
             {
                 Instantiate(ThrowEff, livingEntity.transform.position, livingEntity.transform.rotation);
                 //photonView.RPC("StunEffStop", RpcTarget.All);
-                livingEntity.GetComponent<PlayerStat>()._Hp -= 100;
+                livingEntity.GetComponent<PlayerStat>().DamagedHp(100);
+                livingEntity.GetComponent<PlayerST>().healthbar.fillAmount = livingEntity.GetComponent<PlayerStat>().playerstat._Hp /
+                    livingEntity.GetComponent<PlayerStat>().playerstat._MAXHP;
                 Debug.Log("데미지 들어감" + livingEntity.GetComponent<PlayerStat>()._Hp);
+                if (livingEntity.GetComponent<PlayerStat>()._Hp <= 0)
+                {
+                    livingEntity.GetComponent<PlayerST>().PlayerDie();
+                }
             }
             if (livingEntity != null && !livingEntity.isDie)
             {

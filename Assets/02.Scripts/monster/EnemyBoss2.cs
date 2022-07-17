@@ -12,11 +12,12 @@ public class EnemyBoss2 : MonsterBoss
     public bool isAttack; //���� ������
     public bool isDie;
     public bool isBuff;
+    public bool isBuffPlay;
     public Transform respawn;
     public SphereCollider nuckarea;
 
 
-
+    public LayerMask whatIsTarget; // 공격 대상 레이어
 
     public GameObject sohwane;
     public GameObject pokju;
@@ -55,10 +56,13 @@ public class EnemyBoss2 : MonsterBoss
     public Transform HealPoint;
     public bool isHeal; //현재 힐 캐스팅중?
     public bool HealStop;
-    IEnumerator HealCorotine;
+    public ParticleSystem Healeff;
+    public ParticleSystem Pokjueff;
+    public GameObject Razoreff;
+    public ParticleSystem RazorReadyeff;
+    public bool isRazor;
     void Awake()
     {
-        HealCorotine = Heal();
         attacking = transform.GetChild(2).GetComponent<Attacking>();
         stunarea = GetComponentInChildren<Light>();
         rigid = GetComponent<Rigidbody>();
@@ -102,55 +106,82 @@ public class EnemyBoss2 : MonsterBoss
 
     }
 
-
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 30);
+    }
     void Update()
     {
         if (isDie && Patterning)
         {
             StopAllCoroutines();
         }
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+
+        Collider[] colliders =
+                    Physics.OverlapSphere(transform.position, 30f, whatIsTarget);
+
+
+        for (int i = 0; i < colliders.Length; i++)
+        {
+      
+            PlayerST livingEntity = colliders[i].GetComponent<PlayerST>();
+
+
+            if (livingEntity != null && !livingEntity.isDie)
+            { 
+                target = livingEntity.transform;
+                break;
+            }
+        }
+
         if (isBuff)
         {
+            isBuff = false;
             nav.speed = 10f;
             EnemyAttack enemyRange = GetComponentInChildren<EnemyAttack>();
-            enemyRange.damage *= 2;
+            enemyRange.damage *= 2f;
         }
 
         if (!isDie)
         {
             Targerting();
-
-            if (nav.enabled && playerST.DunjeonBossArena) //추적
+            if (target != null)
             {
-                PatternStart();
-                if (!isAttack && !isDie)
+                if (nav.enabled && target.GetComponent<PlayerST>().DunjeonBossArena) //추적
                 {
+                    PatternStart();
+                    if (!isAttack && !isDie)
+                    {
 
-                    if (!isBuff && !isSkill)
-                        nav.speed = 6f;
+                        if (!isBuffPlay && !isSkill)
+                            nav.speed = 6f;
 
-                    isChase = true;
-                    nav.isStopped = false;
-                    nav.destination = target.position;
-                    anim.SetBool("isRun", true);
-                    if (playerST.isDie)
-                        EnemyReset();
+                        isChase = true;
+                        nav.isStopped = false;
+                        nav.destination = target.position;
+                        anim.SetBool("isRun", true);
+                        if (playerST.isDie)
+                            EnemyReset();
+                    }
                 }
-            }
-            else if (!playerST.DunjeonBossArena && nav.enabled) //복귀
-            {
-                EnemyReset();
+                else if (!target.GetComponent<PlayerST>().DunjeonBossArena && nav.enabled) //복귀
+                {
+                    EnemyReset();
+                }
             }
 
         }
 
-        if (playerST.DunjeonBossArena)
+        if (target != null)
         {
-            if (isChase || isAttack)
+            if (target.GetComponent<PlayerST>().DunjeonBossArena)
             {
-                if (!isDie && !playerST.isJump && !playerST.isFall)//플레이어가 공중에 뜬 상태가 아닐때만 바라보기
-                    transform.LookAt(target);
+                if (isChase || isAttack)
+                {
+                    if (!isDie && !playerST.isJump && !playerST.isFall && !isRazor)//플레이어가 공중에 뜬 상태가 아닐때만 바라보기
+                        transform.LookAt(target);
+                }
             }
         }
 
@@ -186,15 +217,14 @@ public class EnemyBoss2 : MonsterBoss
 
         if (!isDie)
         {
-            //int ranAction = Random.Range(2, 4);
-            int ranAction = 9;
+            int ranAction = Random.Range(5, 6);
             switch (ranAction)
             {
                 case 0:
                 case 1:
-                    ////폭주 버프스킬
-                    //photonView.RPC("Pokju", RpcTarget.All);
-                    //MonsterAttack();
+                    //폭주 버프스킬
+                    photonView.RPC("Pokju", RpcTarget.All);
+                    MonsterAttack();
                     break;
                 case 2:
                 case 3:
@@ -205,6 +235,10 @@ public class EnemyBoss2 : MonsterBoss
                     break;
                 case 5:
                 case 6:
+                    //레이저스킬
+                    photonView.RPC("Razor", RpcTarget.All);
+                    MonsterAttack();
+                    break;
                 case 7:
                 case 8:
                     //어둠장판 만드는스킬
@@ -245,6 +279,35 @@ public class EnemyBoss2 : MonsterBoss
 
     }
     [PunRPC]
+    IEnumerator Razor()
+    {
+        StopCoroutine(Attack());
+        RazorReadyeff.Play();
+        isSkill = true;
+        isChase = false;
+        isAttack = true;
+        nav.isStopped = true;
+        nav.speed = 0f;
+        isRazor = true;
+        anim.SetBool("Razor", true);
+        yield return new WaitForSeconds(3f);
+        Razoreff.SetActive(true);
+        transform.DORotate(new Vector3(0, 360, 0), 10f, RotateMode.FastBeyond360)
+                     .SetEase(Ease.Linear);
+        yield return new WaitForSeconds(10f);
+        RazorReadyeff.Stop();
+        isRazor = true;
+        Razoreff.SetActive(false);
+        anim.SetBool("Razor", false);
+        nav.speed = 6f;
+        nav.isStopped = false;
+        isSkill = false;
+        isChase = true;
+        isAttack = false;
+        yield return new WaitForSeconds(2.5f);
+        Patterning = false;
+    }
+    [PunRPC]
     IEnumerator Sohwan()
     {
         StopCoroutine(Attack());
@@ -279,12 +342,14 @@ public class EnemyBoss2 : MonsterBoss
     [PunRPC]
     IEnumerator Heal()
     {
-        Debug.Log("힐 코로틴 시작");
+        StopCoroutine(Attack());
+        isHeal = true;
         transform.DOMove(HealPoint.position, 0.5f).SetEase(Ease.Linear);
         isSkill = true;
         isChase = false;
         isAttack = true;
         yield return new WaitForSeconds(0.5f);
+        Healeff.Play();
         anim.SetBool("Heal", true);
         nav.isStopped = true;
         nav.speed = 0f;
@@ -298,71 +363,85 @@ public class EnemyBoss2 : MonsterBoss
             curHealth += 500;
             if (curHealth > maxHealth)
                 curHealth = maxHealth;
+            Debug.Log(curHealth);
         }
-        yield return new WaitForSeconds(2f);
+        if(HealStop)
+            nav.speed = 6f;
+        yield return new WaitForSeconds(1f);
         if (!HealStop)
         {
             curHealth += 500;
             if (curHealth > maxHealth)
                 curHealth = maxHealth;
+            Debug.Log(curHealth);
         }
-        yield return new WaitForSeconds(2f);
+        if (HealStop)
+            nav.speed = 6f;
+        yield return new WaitForSeconds(1f);
         if (!HealStop)
         {
             curHealth += 500;
             if (curHealth > maxHealth)
                 curHealth = maxHealth;
+            Debug.Log(curHealth);
         }
-        yield return new WaitForSeconds(2f);
+        if (HealStop)
+            nav.speed = 6f;
+        yield return new WaitForSeconds(1f);
         if (!HealStop)
         {
             curHealth += 500;
             if (curHealth > maxHealth)
                 curHealth = maxHealth;
+            Debug.Log(curHealth);
         }
-        
-        Debug.Log("꺼억");
+        isHeal = false;
+        Healeff.Stop();
         anim.SetBool("Heal", false);
         nav.speed = 6f;
         isChase = true;
         isAttack = false;
+        if(!isDie)
         nav.isStopped = false;
         isSkill = false;
         HealStop = false;
         yield return new WaitForSeconds(2.5f);
         if(Patterning)
         Patterning = false;
-
     }
     [PunRPC]
     IEnumerator Pokju()
     {
-
+        StopCoroutine(Attack());
         isSkill = true;
         isChase = false;
         nav.isStopped = true;
         isAttack = true;
-        anim.SetBool("isBuff", true);
+        anim.SetBool("Buff", true);
+        nav.speed = 0f;
+        mat.material.DOColor(Color.red, 3f);
 
         yield return new WaitForSeconds(3f);
+        Pokjueff.Play();
+        nav.speed = 6f;
         isSkill = false;
-        pokju.SetActive(true);
         isBuff = true;
+        isBuffPlay = true;
         Invoke("BuffTime", 6f);
-        anim.SetBool("isBuff", false);
+        anim.SetBool("Buff", false);
         isChase = true;
         nav.isStopped = false;
         isAttack = false;
 
-        yield return new WaitForSeconds(2.5f);
+        yield return new WaitForSeconds(3.5f);
         Patterning = false;
-        //StartCoroutine(Pattern());
-
+       
     }
     void BuffTime()
     {
-        isBuff = false;
-        pokju.SetActive(false);
+        Pokjueff.Stop();
+        isBuffPlay = false;
+        mat.material.DOColor(Color.white, 1f);
     }
 
     [PunRPC]
@@ -406,7 +485,7 @@ public class EnemyBoss2 : MonsterBoss
 
         anim.SetBool("isAttack", true);
         anim.SetBool("isRun", false);
-        yield return new WaitForSeconds(0.8f);
+        yield return new WaitForSeconds(0.6f);
         meleeArea.enabled = true;
         yield return new WaitForSeconds(0.8f);
         // rigid.velocity = Vector3.zero;
@@ -457,7 +536,13 @@ public class EnemyBoss2 : MonsterBoss
 
         if (other.tag == "CCAREA")
         {
-            HealStop = true; 
+            if (isHeal)
+            {
+                HealStop = true;
+                Healeff.Stop();
+                anim.SetBool("Heal", false);
+                isSkill = false;
+            }
         }
     }
 

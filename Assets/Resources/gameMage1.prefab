@@ -119220,11 +119220,11 @@ GameObject:
   - component: {fileID: 8445936719463363595}
   - component: {fileID: 8445936719463363594}
   - component: {fileID: 8445936719463363589}
-  - component: {fileID: 8445936719463363588}
   - component: {fileID: 4706948410107388199}
   - component: {fileID: 5916550820439577115}
   - component: {fileID: 5916550820439577112}
   - component: {fileID: 2664131684223015819}
+  - component: {fileID: -6524242300949926563}
   m_Layer: 8
   m_Name: gameMage1
   m_TagString: Player
@@ -119575,7 +119575,7 @@ MonoBehaviour:
   - {fileID: 8445936719463363598}
   - {fileID: 8445936719463363593}
   - {fileID: 8445936719463363594}
-  - {fileID: 8445936719463363588}
+  - {fileID: -6524242300949926563}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -119670,22 +119670,6 @@ MonoBehaviour:
   menu: {fileID: 0}
   Target: {fileID: 0}
   TradeNum: 0
---- !u!114 &8445936719463363588
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5916550820439577113}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 0
 --- !u!114 &4706948410107388199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -119831,6 +119815,39 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   warriorController: {fileID: 0}
+--- !u!114 &-6524242300949926563
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5916550820439577113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_PositionModel:
+    SynchronizeEnabled: 1
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 3
+    InterpolateOption: 2
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 1
+    ExtrapolateOption: 0
+    ExtrapolateSpeed: 1
+    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateNumberOfStoredPositions: 1
+  m_RotationModel:
+    SynchronizeEnabled: 1
+    InterpolateOption: 1
+    InterpolateRotateTowardsSpeed: 180
+    InterpolateLerpSpeed: 5
+  m_ScaleModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 0
 --- !u!1 &5916551075717002491
 GameObject:
   m_ObjectHideFlags: 0
@@ -132134,7 +132151,7 @@ GameObject:
   - component: {fileID: 5917571221510094541}
   - component: {fileID: 5917571221510094540}
   - component: {fileID: 5917571221510094543}
-  m_Layer: 8
+  m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
   m_Icon: {fileID: 0}

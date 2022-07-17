@@ -22,7 +22,7 @@ public class Resurrection : MonoBehaviour
     {
         gameUI = FindObjectOfType<GameUI>();
         bar = FindObjectOfType<Bar>();
-        playerst = FindObjectOfType<PlayerST>();
+        playerst = GetComponent<PlayerST>();
         resurrection = this;
         Town = GameObject.Find("Mausoleum-Town").transform.GetChild(0).transform;
         Dunjeon = GameObject.Find("Mausoleum-Dunjeon").transform.GetChild(0).transform;

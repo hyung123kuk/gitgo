@@ -56,10 +56,11 @@ public class WarriorEquipChange : MonoBehaviourPun
     #endregion
     void Awake()
     {
-        if (!photonView.IsMine && !UICheck)
+        if (!photonView.IsMine)
         {
             this.enabled = false;
         }
+
         warriorEquip = GetComponent<WarriorEquip>();
         #region 워리어 장비초기화
 

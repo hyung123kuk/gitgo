@@ -113,11 +113,6 @@ public class MonsterManager : MonoBehaviourPun
 
         if (PhotonNetwork.IsMasterClient)
         {
-
-
-
-
-
             for (int i = 0; i < Slime.Length; i++)
             {
                 Slime[i] = PhotonNetwork.Instantiate("Monster/LV1.Slime", transform.position, Quaternion.identity);
@@ -170,12 +165,10 @@ public class MonsterManager : MonoBehaviourPun
             Golem.SetActive(false);
             Golem.transform.position = SpawnManager.spawnManager.GolemPoint.transform.position;
 
-
-            SpawnManager.spawnManager.photonView.RPC("start", RpcTarget.AllBuffered);
-            //SpawnManager.spawnManager.start();
+            SpawnManager.spawnManager.start();
         }
 
-
+        
     }
 
 
