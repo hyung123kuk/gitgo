@@ -411,6 +411,7 @@ MonoBehaviour:
   isChase: 0
   isAttack: 0
   respawn: {fileID: 5382062797729728546}
+  MoveRespawn: {fileID: 5382062797729728546}
   isDie: 0
   isStun: 0
   isDamage: 0
@@ -516,10 +517,10 @@ MonoBehaviour:
   m_PositionModel:
     SynchronizeEnabled: 1
     TeleportEnabled: 1
-    TeleportIfDistanceGreaterThan: 3
-    InterpolateOption: 2
+    TeleportIfDistanceGreaterThan: 100
+    InterpolateOption: 4
     InterpolateMoveTowardsSpeed: 1
-    InterpolateLerpSpeed: 1
+    InterpolateLerpSpeed: 10
     ExtrapolateOption: 0
     ExtrapolateSpeed: 1
     ExtrapolateIncludingRoundTripTime: 1

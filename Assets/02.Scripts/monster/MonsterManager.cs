@@ -101,6 +101,7 @@ public class MonsterManager : MonoBehaviourPun
             TurtleSlime = turtle.gameObject;
             Golem = golem.gameObject;
 
+            //SpawnManager.spawnManager.startSetting();
         }
 
         if (PhotonNetwork.IsMasterClient)
