@@ -231,7 +231,7 @@ public class SpawnManager : MonoBehaviourPun
             {
                 
                 GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[0]);
-                Debug.Log(enemy);
+                Debug.Log(enemy); //enemy가 널리퍼
                 enemy.transform.position = SlimePoints[slimeidx].position;
 
                 enemy.GetComponent<Monster>().MonsterPosition(SlimePoints[slimeidx].position);

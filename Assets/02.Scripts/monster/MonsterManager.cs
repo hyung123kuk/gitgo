@@ -174,9 +174,12 @@ public class MonsterManager : MonoBehaviourPun
 
     public GameObject MakeObj(string type) //Ǯ�� ��ȯ
     {
+
+        Debug.Log("makeobj함수 들어오나?");
+
         if (PhotonNetwork.IsMasterClient)
         {
-
+            Debug.Log(PhotonNetwork.IsMasterClient); //마스터 클라이언트에서만 일어나나?
             switch (type)
             {
                 case "Slime":
@@ -215,6 +218,7 @@ public class MonsterManager : MonoBehaviourPun
 
             for (int i = 0; i < targetPool.Length; i++)
             {
+                Debug.Log(targetPool); //타겟풀 누구?
                 if (!targetPool[i].activeSelf)
                 {
                     //targetPool[i].SetActive(true);
@@ -223,6 +227,7 @@ public class MonsterManager : MonoBehaviourPun
                 }
             }
             return null;
+            Debug.Log("여기 오나?");
         }
         return null;
     }
