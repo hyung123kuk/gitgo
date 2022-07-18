@@ -80,9 +80,10 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable //포톤으로 만들
         gameUI = FindObjectOfType<GameUI>();
         skillWindow = FindObjectOfType<SkillWindow>();
         statWindow = FindObjectOfType<StatWindow>();
+        inven.invenOn();
         equSlots = GameObject.FindGameObjectWithTag("EqueSlot").GetComponentsInChildren<Slot>(); //여기서 오류가 뜬다면 인벤토리디자인을 킨 상태로 시작해주세요.
+        inven.invenOff();
 
-        
         Invoke("StartSet", 0.1f);
 
 
@@ -267,6 +268,7 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable //포톤으로 만들
             {
                 QuestStore.qustore.MainQuestSuccess(4);
             }
+            
         }
     }
 

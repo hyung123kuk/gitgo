@@ -50,6 +50,7 @@ public class itemStore : MonoBehaviour,IPointerClickHandler
 
     public void storeOff()
     {
+        if(allUI)
         allUI.MouseCursor.SetNormalCursor();
         Store.SetActive(false);
         

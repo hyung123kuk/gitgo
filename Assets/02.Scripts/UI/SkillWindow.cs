@@ -40,15 +40,16 @@ public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
         warriorSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(2).gameObject;
         acherSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(3).gameObject;
         mageSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(4).gameObject;
-
+        skillWindow.SetActive(true);
         skillslots = GetComponentsInChildren<SkillSlot>();
+
         skillToolTip = FindObjectOfType<SkillToolTip>();
 
 
     }
     private void Start()
     {
-        
+       
         PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
 
 
@@ -82,7 +83,12 @@ public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
 
         //StartCoroutine(Setting());
 
+        Invoke("loadSkill", 0.1f);
 
+    }
+    void loadSkill()
+    {
+        skillWindow.SetActive(false);
     }
 
     //IEnumerator Setting()
@@ -132,6 +138,7 @@ public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
     {
         for (int i = 0; i < skillslots.Length; i++)
         {
+            
             skillslots[i].SetSkillColor();
 
         }
