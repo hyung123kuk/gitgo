@@ -62,37 +62,9 @@ public class Monster : MonoBehaviourPun
         Portion = Resources.LoadAll<GameObject>("DROP/Portion");
         Geteff = Resources.Load<GameObject>("GetEff");
         Damage = Resources.Load<GameObject>("Damage");
-
-        PlayerST[] playerst2 = FindObjectsOfType<PlayerST>();
-        foreach (PlayerST playerst3 in playerst2)
-        {
-            if (playerst3.GetComponent<PhotonView>().IsMine)
-            {
-                playerST = playerst3;
-            }
-        }
-
-        PlayerStat[] playerstat2 = FindObjectsOfType<PlayerStat>();
-        foreach (PlayerStat playerstat3 in playerstat2)
-        {
-            if (playerstat3.GetComponent<PhotonView>().IsMine)
-            {
-                playerStat = playerstat3;
-            }
-        }
-
-        Weapons[] weapons2 = FindObjectsOfType<Weapons>();
-        foreach (Weapons weapons3 in weapons2)
-        {
-            if (weapons3.GetComponent<PhotonView>().IsMine)
-            {
-                weapons = weapons3;
-            }
-        }
-        //playerST = FindObjectOfType<PlayerST>();
-        //playerStat = FindObjectOfType<PlayerStat>();
-        //weapons = FindObjectOfType<Weapons>();
-
+        playerST = FindObjectOfType<PlayerST>();
+        playerStat = FindObjectOfType<PlayerStat>();
+        weapons = FindObjectOfType<Weapons>();
 
         AttackDamage[] attackDamages = FindObjectsOfType<AttackDamage>();
 
@@ -133,14 +105,13 @@ public class Monster : MonoBehaviourPun
     [PunRPC]
     public virtual void OnDamage(float _attackdamage, bool critical, bool Local)
     {
-        
+
         if (Local) // 로컬일때 다른곳에서 보냄 로컬아니면 중복 막기위해 막음
         {
             photonView.RPC("OnDamage", RpcTarget.Others, _attackdamage, critical, false);
             SetTarget(attackdamage.gameObject);
         }
-        if (curHealth <= 0)
-            return;
+
         GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
 
         if (!Local)
@@ -150,7 +121,6 @@ public class Monster : MonoBehaviourPun
         }
 
 
-        
 
         var _damage = damage.GetComponent<DamageUI>();
         _damage.targetTr = this.gameObject.transform;
