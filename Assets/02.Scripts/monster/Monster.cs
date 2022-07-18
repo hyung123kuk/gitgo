@@ -133,13 +133,14 @@ public class Monster : MonoBehaviourPun
     [PunRPC]
     public virtual void OnDamage(float _attackdamage, bool critical, bool Local)
     {
-
+        
         if (Local) // 로컬일때 다른곳에서 보냄 로컬아니면 중복 막기위해 막음
         {
             photonView.RPC("OnDamage", RpcTarget.Others, _attackdamage, critical, false);
             SetTarget(attackdamage.gameObject);
         }
-
+        if (curHealth <= 0)
+            return;
         GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
 
         if (!Local)
@@ -149,6 +150,7 @@ public class Monster : MonoBehaviourPun
         }
 
 
+        
 
         var _damage = damage.GetComponent<DamageUI>();
         _damage.targetTr = this.gameObject.transform;
