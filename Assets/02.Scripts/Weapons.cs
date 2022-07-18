@@ -179,7 +179,8 @@ public class Weapons : MonoBehaviourPun, IPunObservable
     {
         isBombArrow = true;
         playerST.isCool2 = true;
-        attackdamage.Skill_2_Cool();
+        if (photonView.IsMine)
+            attackdamage.Skill_2_Cool();
         SoundManager.soundManager.ArcherSkill2_1Sound();
         anim.SetBool("isBomb", true);
         GameObject bombarrow = Instantiate(Arc2Skilarrow, arrowPos.position, arrowPos.rotation);
@@ -194,6 +195,7 @@ public class Weapons : MonoBehaviourPun, IPunObservable
         anim.SetBool("isBomb", false);
         yield return new WaitForSeconds(0.2f);
         isBombArrow = false;
+
     }
 
     public void EnergyArrow()
@@ -213,7 +215,7 @@ public class Weapons : MonoBehaviourPun, IPunObservable
     public void EnergyArrowPlay()
     {
         if (archer_skill4_Order == 0 && !playerST.isDodge && !playerST.isStun && !playerST.isJump && !playerST.isRun &&
-            attackdamage.Usable_Skill3)
+        attackdamage.Usable_Skill3)
         {
             if (!StopSoundManager.stopSoundManager.audioSource.isPlaying)
                 StopSoundManager.stopSoundManager.ArcherSkill3ChargeSound();
@@ -270,7 +272,6 @@ public class Weapons : MonoBehaviourPun, IPunObservable
             photonView.RPC("EnergyArrowOut", RpcTarget.All);
             photonView.RPC("EnergyAnimOut", RpcTarget.All);
         }
-
     }
     [PunRPC]
     void EnergyShot1()
@@ -284,6 +285,7 @@ public class Weapons : MonoBehaviourPun, IPunObservable
         arrowskill.damage = attackdamage.Skill_3_Damamge();
         energyfullCharging = false;
         Destroy(intantArrow, 2f);
+
     }
     [PunRPC]
     void EnergyShot2()
@@ -297,6 +299,7 @@ public class Weapons : MonoBehaviourPun, IPunObservable
         arrowskill.damage = 1.5f * attackdamage.Skill_3_Damamge();
         energyfullCharging = true;
         Destroy(intantArrow, 2f);
+
     }
     [PunRPC]
     IEnumerator EnergyArrowOut()
@@ -305,12 +308,15 @@ public class Weapons : MonoBehaviourPun, IPunObservable
         Arc3SkillBuff1.SetActive(false);
         Arc3SkillBuff2.SetActive(false);
         Arc3SkillBuff3.SetActive(false);
+
     }
     [PunRPC]
     IEnumerator EnergyAnimOut()
     {
+
         yield return new WaitForSeconds(1f);
         anim.SetBool("isShot", false);
+
     }
     //============================================마법사 스킬=====================================================
     public void LightningBall()
@@ -353,7 +359,8 @@ public class Weapons : MonoBehaviourPun, IPunObservable
         Destroy(darkball3, 1.1f);
 
         playerST.isCool1 = true;
-        attackdamage.Skill_1_Cool();
+        if (photonView.IsMine)
+            attackdamage.Skill_1_Cool();
 
 
         yield return new WaitForSeconds(0.5f);
@@ -377,7 +384,7 @@ public class Weapons : MonoBehaviourPun, IPunObservable
     IEnumerator IceAgeStart()
     {
         ArrowSkill.arrowSkill.NoDestroy = true;
-        attackdamage.Skill_2_Cool();
+        //attackdamage.Skill_2_Cool();
         SoundManager.soundManager.MageSkill2Voice();
         playerST.isCool2 = false;
         attackdamage.Usable_Skill2 = false;
@@ -398,7 +405,8 @@ public class Weapons : MonoBehaviourPun, IPunObservable
         Mage2SkillEff.SetActive(true);
 
         playerST.isCool2 = true;
-        attackdamage.Skill_2_Cool();
+        if (photonView.IsMine)
+            attackdamage.Skill_2_Cool();
 
         yield return new WaitForSeconds(0.2f);
         CCare.enabled = false;
@@ -411,6 +419,7 @@ public class Weapons : MonoBehaviourPun, IPunObservable
 
         yield return new WaitForSeconds(1f);
         Mage2SkillEff.SetActive(false);
+
     }
     public void Meteo()
     {

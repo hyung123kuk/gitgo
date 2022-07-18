@@ -599,6 +599,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     void DodgePlay()
     {
+
         FootSound.footSound.audioSource.Stop();
         if (CharacterType == Type.Archer)
             SoundManager.soundManager.ArcherJump();
@@ -611,20 +612,26 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
         isCooldodge = false;
         attackdamage.Usable_Dodge = false;
-        dodgeVec = moveVec;
-        speed *= 2;
+        if (photonView.IsMine)
+        {
+            dodgeVec = moveVec;
+            speed *= 2;
+        }
         anim.SetBool("isDodge", true);
         isDodge = true;
         isDamage = true;
 
         Invoke("DodgeOut", 0.4f); //구르기를 하면 0.4초후에 이동속도가 정상으로돌아옴
+
     }
 
     void DodgeOut()
     {
         isCooldodge = true;
-        attackdamage.Skill_Dodge_Cool();
-        speed *= 0.5f;
+        if (photonView.IsMine)
+            attackdamage.Skill_Dodge_Cool();
+        if (photonView.IsMine)
+            speed *= 0.5f;
         isDodge = false;
         isDamage = false;
         anim.SetBool("isDodge", false);
@@ -634,12 +641,14 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             anim.SetBool("isAttack3", false);
             anim.SetBool("isAttack2", false);
             anim.SetBool("isAttack", false);
-            comboHit.noOfClicks = 0;
+            if (photonView.IsMine)
+                comboHit.noOfClicks = 0;
         }
         if (!questStore.MainSuccess)
         {
             questStore.MainQuestSuccess(1);
         }
+
     }
 
     //==================================여기서부터 전사스킬=======================================
@@ -658,32 +667,36 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     IEnumerator BlockPlay()
     {
-        isCool1 = false;
-        attackdamage.Usable_Skill1 = false;
-        anim.SetBool("isBlock", true);
-        isBlock = true;
-        isDamage = true;
-        yield return new WaitForSeconds(0.3f);
-        BoxCollider Skillare = Skillarea2.GetComponent<BoxCollider>(); // 데미지 콜라이더 활성화
-        Skillare.enabled = true;
-        SoundManager.soundManager.WarriorShieldSound();
-        ArrowSkill arrow = Skillarea2.GetComponent<ArrowSkill>(); //스킬데미지설정
-        arrow.damage = attackdamage.Skill_1_Damamge();
-        yield return new WaitForSeconds(0.2f);
-        Skillare.enabled = false;
+        if (photonView.IsMine)
+        {
+            isCool1 = false;
+            attackdamage.Usable_Skill1 = false;
+            anim.SetBool("isBlock", true);
+            isBlock = true;
+            isDamage = true;
+            yield return new WaitForSeconds(0.3f);
+            BoxCollider Skillare = Skillarea2.GetComponent<BoxCollider>(); // 데미지 콜라이더 활성화
+            Skillare.enabled = true;
+            SoundManager.soundManager.WarriorShieldSound();
+            ArrowSkill arrow = Skillarea2.GetComponent<ArrowSkill>(); //스킬데미지설정
+            arrow.damage = attackdamage.Skill_1_Damamge();
+            yield return new WaitForSeconds(0.2f);
+            Skillare.enabled = false;
 
-        yield return new WaitForSeconds(0.5f);
-        isCool1 = true;
-        anim.SetBool("isBlock", false);
-        anim.SetBool("isAttack4", false);
-        anim.SetBool("isAttack3", false);
-        anim.SetBool("isAttack2", false);
-        anim.SetBool("isAttack", false);
-        comboHit.noOfClicks = 0;
-        isBlock = false;
-        isDamage = false;
-
-        attackdamage.Skill_1_Cool();  //방패치기쿨타임
+            yield return new WaitForSeconds(0.5f);
+            isCool1 = true;
+            anim.SetBool("isBlock", false);
+            anim.SetBool("isAttack4", false);
+            anim.SetBool("isAttack3", false);
+            anim.SetBool("isAttack2", false);
+            anim.SetBool("isAttack", false);
+            if (photonView.IsMine)
+                comboHit.noOfClicks = 0;
+            isBlock = false;
+            isDamage = false;
+            if (photonView.IsMine)
+                attackdamage.Skill_1_Cool();  //방패치기쿨타임
+        }
     }
     public void Buff()
     {
@@ -700,8 +713,10 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     void BuffPlay()
     {
         SoundManager.soundManager.WarriorBuffSound();
-        attackdamage.Skill_Buff_Cool();
+        if (photonView.IsMine)
+            attackdamage.Skill_Buff_Cool();
         BuffEff.Play();
+
     }
     public void Rush()
     {
@@ -727,8 +742,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         anim.SetBool("isRush", true);
         //yield return new WaitForSeconds(0.5f);
         SoundManager.soundManager.WarriorRushVoice();
-        if(photonView.IsMine)
-             rigid.AddForce(transform.forward * 40 + transform.up * 20, ForceMode.Impulse);
+        if (photonView.IsMine)
+            rigid.AddForce(transform.forward * 40 + transform.up * 20, ForceMode.Impulse);
         yield return new WaitForSeconds(0.5f);
         SoundManager.soundManager.WarriorRushSound();
         BoxCollider Skillare = Skillarea.GetComponent<BoxCollider>(); //돌진착지지점 데미지 콜라이더 활성화
@@ -773,6 +788,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     IEnumerator AuraPlay()
     {
+
         isCool3 = false;
         attackdamage.Usable_Skill3 = false;
         isAura = true;
@@ -790,7 +806,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
         Destroy(swordaura, 1f);
         isCool3 = true;
-        attackdamage.Skill_3_Cool();
+        if (photonView.IsMine)
+            attackdamage.Skill_3_Cool();
         yield return new WaitForSeconds(0.8f);
         isAura = false;
         anim.SetBool("isAura", false);
@@ -798,7 +815,9 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         anim.SetBool("isAttack3", false);
         anim.SetBool("isAttack2", false);
         anim.SetBool("isAttack", false);
-        comboHit.noOfClicks = 0;
+        if (photonView.IsMine)
+            comboHit.noOfClicks = 0;
+
     }
     //==================================여기서부터 궁수스킬=======================================
     public void Smoke() //마우스 우클릭 연막
@@ -815,35 +834,41 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     IEnumerator SmokePlay()
     {
-        ArrowSkill.arrowSkill.NoDestroy = true;
-        isCool1 = true;
-        attackdamage.Skill_1_Cool();
-        gameObject.layer = LayerMask.NameToLayer("Back");
-        isFall = true;
-        isBackStep = true;
-        rigid.AddForce(transform.forward * -23 + transform.up * 10, ForceMode.Impulse);
-        GameObject arceff = Instantiate(BackStepEff, BackStepPos.position, BackStepPos.rotation); //이펙트
-        SoundManager.soundManager.ArcherBackStepSound();
-        BoxCollider Skillare = Skillarea.GetComponent<BoxCollider>(); // 데미지 콜라이더 활성화
-        Skillare.enabled = true;
-        BoxCollider CCare = CCarea.GetComponent<BoxCollider>(); // cc기 콜라이더 활성화
-        CCare.enabled = true;
-        ArrowSkill arrow = Skillare.GetComponent<ArrowSkill>();
-        arrow.damage = attackdamage.Skill_1_Damamge();
-        Destroy(arceff, 2f);
-        anim.SetBool("isSmoke", true);
+        if (photonView.IsMine)
+        {
+            ArrowSkill.arrowSkill.NoDestroy = true;
+            isCool1 = true;
+            if (photonView.IsMine)
+                attackdamage.Skill_1_Cool();
+            if (photonView.IsMine)
+                gameObject.layer = LayerMask.NameToLayer("Back");
+            isFall = true;
+            isBackStep = true;
+            if (photonView.IsMine)
+                rigid.AddForce(transform.forward * -23 + transform.up * 10, ForceMode.Impulse);
+            GameObject arceff = Instantiate(BackStepEff, BackStepPos.position, BackStepPos.rotation); //이펙트
+            SoundManager.soundManager.ArcherBackStepSound();
+            BoxCollider Skillare = Skillarea.GetComponent<BoxCollider>(); // 데미지 콜라이더 활성화
+            Skillare.enabled = true;
+            BoxCollider CCare = CCarea.GetComponent<BoxCollider>(); // cc기 콜라이더 활성화
+            CCare.enabled = true;
+            ArrowSkill arrow = Skillare.GetComponent<ArrowSkill>();
+            arrow.damage = attackdamage.Skill_1_Damamge();
+            Destroy(arceff, 2f);
+            anim.SetBool("isSmoke", true);
 
-        yield return new WaitForSeconds(0.2f);
-        Skillare.enabled = false;
-        CCare.enabled = false;
-        yield return new WaitForSeconds(0.2f);
+            yield return new WaitForSeconds(0.2f);
+            Skillare.enabled = false;
+            CCare.enabled = false;
+            yield return new WaitForSeconds(0.2f);
 
-        gameObject.layer = LayerMask.NameToLayer("Player");
-        anim.SetBool("isSmoke", false);
-        isBackStep = false;
-        isFall = false;
-        yield return new WaitForSeconds(0.5f);
-        ArrowSkill.arrowSkill.NoDestroy = false;
+            gameObject.layer = LayerMask.NameToLayer("Player");
+            anim.SetBool("isSmoke", false);
+            isBackStep = false;
+            isFall = false;
+            yield return new WaitForSeconds(0.5f);
+            ArrowSkill.arrowSkill.NoDestroy = false;
+        }
     }
     public void PoisonArrow()
     {
@@ -860,8 +885,11 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     void PoisonPlay()
     {
+
         SoundManager.soundManager.ArcherSkill1Sound();
-        attackdamage.Skill_Buff_Cool();
+        if (photonView.IsMine)
+            attackdamage.Skill_Buff_Cool();
+
     }
     //==================================여기서부터 마법사스킬=======================================
     public void Flash()
@@ -879,13 +907,15 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     IEnumerator FlashStart()
     {
+
         SoundManager.soundManager.MageTeleportSound();
-        attackdamage.Skill_Mage_Teleport_Cool();
+        if (photonView.IsMine)
+            attackdamage.Skill_Mage_Teleport_Cool();
         isCoolTeleport = false;//쿨타임
         attackdamage.Usable_Teleport = false;
 
-
-        gameObject.layer = LayerMask.NameToLayer("Back");
+        if (photonView.IsMine)
+            gameObject.layer = LayerMask.NameToLayer("Back");
         isFlash = true;
         isFall = true;
         mesh.enabled = false;
@@ -894,9 +924,11 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             smesh[i].enabled = false;
         }
         FlashEff.SetActive(true);
-        rigid.AddForce(transform.forward * 40 + transform.up * 10, ForceMode.Impulse);
+        if (photonView.IsMine)
+            rigid.AddForce(transform.forward * 40 + transform.up * 10, ForceMode.Impulse);
         yield return new WaitForSeconds(0.3f);
-        gameObject.layer = LayerMask.NameToLayer("Player");
+        if (photonView.IsMine)
+            gameObject.layer = LayerMask.NameToLayer("Player");
         isFlash = false;
         isFall = false;
         FlashEff.SetActive(false);
@@ -909,7 +941,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         rigid.velocity = Vector3.zero;
 
         isCoolTeleport = true;//쿨타임
-        attackdamage.Skill_Mage_Teleport_Cool();
+        if (photonView.IsMine)
+            attackdamage.Skill_Mage_Teleport_Cool();
 
     }
     void InputManager()
@@ -1207,12 +1240,12 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (photonView.IsMine)
         {
-            if(other.tag =="DeathZone")
+            if (other.tag == "DeathZone")
             {
                 SendMessage("TownResurrection");
             }
 
-            if(other.tag == "BOSS2_RAZOR")
+            if (other.tag == "BOSS2_RAZOR")
             {
                 if (!isDamage)
                 {
@@ -1289,12 +1322,12 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
             if (other.tag == "DunjeonPortal")
             {
-                gameObject.transform.position = Portal.portal.WorldPortal.position + Portal.portal.WorldPortal.transform.forward*-2;
+                gameObject.transform.position = Portal.portal.WorldPortal.position + Portal.portal.WorldPortal.transform.forward * -2;
             }
 
             if (other.tag == "WorldPortal")
             {
-                gameObject.transform.position = Portal.portal.DunjeonPortal.position + Portal.portal.DunjeonPortal.transform.forward * -2; 
+                gameObject.transform.position = Portal.portal.DunjeonPortal.position + Portal.portal.DunjeonPortal.transform.forward * -2;
             }
 
 
