@@ -152,7 +152,7 @@ public class Monster : MonoBehaviourPun
 
     public void HitMonster()
     {
-        if (weapons.GetComponent<PhotonView>().IsMine)
+        if (playerST.CharacterType == PlayerST.Type.Warrior || weapons.GetComponent<PhotonView>().IsMine)
         {
             OnDamage(attackdamage.attackDamage, attackdamage.critical, true); //맞았을때 로컬을 트루로해서 다른데에서도 OnDamage가 적용되게
 
