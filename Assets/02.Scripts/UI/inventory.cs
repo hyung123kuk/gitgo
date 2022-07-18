@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Photon.Pun;
 
-public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
+public class inventory : MonoBehaviourPun, IPointerClickHandler, IEndDragHandler
 {
-    int invencheck = 0; //인벤 처음 열릴때 소리안나게하기위함
+    int invencheck = 1; //인벤 처음 열릴때 소리안나게하기위함
     public static inventory inven;
     public static bool iDown; // 인벤토리가 열려있으면 true
     public GameObject Inven; // 인벤토리 창
@@ -73,7 +74,7 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
         //StartCoroutine(invenSet());
         
         StartCoroutine(LoadingSet());
-        invenOn();
+        Inven.SetActive(true);
         slots = SlotsParent.GetComponentsInChildren<Slot>();
         eqslots = GameObject.FindGameObjectWithTag("EqueSlot").GetComponentsInChildren<Slot>();
        
@@ -83,7 +84,20 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
     private void Start()
     {
 
-        playerStat = FindObjectOfType<PlayerStat>();
+        if (playerStat == null)
+        {
+            PlayerStat[] playerStats = GameObject.FindObjectsOfType<PlayerStat>();
+
+
+            foreach (PlayerStat myplayerStat in playerStats)
+            {
+                if (myplayerStat.GetComponent<PhotonView>().IsMine)
+                {
+                    playerStat = myplayerStat;
+                    break;
+                }
+            }
+        }
         GoldUpdate();
 
        
@@ -151,6 +165,22 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
    
     public void GoldUpdate()
     {
+
+        if (playerStat == null)
+        {
+            PlayerStat[] playerStats = GameObject.FindObjectsOfType<PlayerStat>();
+
+
+            foreach (PlayerStat myplayerStat in playerStats)
+            {
+                if (myplayerStat.GetComponent<PhotonView>().IsMine)
+                {
+                    playerStat = myplayerStat;
+                    break;
+                }
+            }
+        }
+
         playerStat.MONEY = (int)playerStat.MONEY;
         Gold.text = "Gold : " + playerStat.MONEY.ToString();
     }
