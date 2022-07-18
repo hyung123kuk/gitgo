@@ -144,7 +144,8 @@ public class EnemyBoss1 : MonsterBoss
                 if (!isAttack && !isSkill)
                 {
                     isChase = true;
-                    nav.isStopped = false;
+                    if (!isDie)
+                        nav.isStopped = false;
                     anim.SetBool("isRun", true);
                 }
                 if (Vector3.Distance(target.position, transform.position) > 40f)
@@ -193,11 +194,13 @@ public class EnemyBoss1 : MonsterBoss
         RushEff.Stop();
         isChase = false;
         nav.speed = 5f;
-        nav.isStopped = false;
+        if (!isDie)
+            nav.isStopped = false;
         //curHealth = maxHealth;
         if (Vector3.Distance(respawn.position, transform.position) < 1f)
         {
-            nav.isStopped = true;
+            if (!isDie)
+                nav.isStopped = true;
             anim.SetBool("isRun", false);
         }
     }
@@ -264,7 +267,8 @@ public class EnemyBoss1 : MonsterBoss
         isChase = false;
         mat.material.DOColor(Color.red, 2f);
         rigid.velocity = Vector3.zero;
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
         StopCoroutine(Attack());
         anim.SetBool("isAttack",false);
         anim.SetBool("isThrow", true);
@@ -313,7 +317,8 @@ public class EnemyBoss1 : MonsterBoss
         isSkill = true;
         isChase = false;
         isAttack = true;
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
         isRush = true;
         StopCoroutine(Attack());
         anim.SetBool("isAttack", false);
@@ -343,7 +348,8 @@ public class EnemyBoss1 : MonsterBoss
 
         isChase = false;
         isAttack = true;
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
         anim.SetBool("isAttack", true);
         anim.SetBool("isRun", false);
         yield return new WaitForSeconds(0.8f);

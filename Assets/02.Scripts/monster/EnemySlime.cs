@@ -127,7 +127,8 @@ public class EnemySlime : Monster
                 if (!isAttack && !isStun)
                 {
                     isChase = true;
-                    nav.isStopped = false;
+                    if (!isDie)
+                        nav.isStopped = false;
                     anim.SetBool("isWalk", true);
                 }
 
@@ -181,7 +182,8 @@ public class EnemySlime : Monster
             isChase = false;
             if (Vector3.Distance(respawn.position, transform.position) < 1f)
             {
-                nav.isStopped = true;
+                if (!isDie)
+                    nav.isStopped = true;
                 anim.SetBool("isWalk", false);
                 isReset = true;
             }
@@ -201,12 +203,14 @@ public class EnemySlime : Monster
         {
             yield return new WaitForSeconds(Random.Range(0.1f,3.0f));
             transform.Rotate(new Vector3(0, 1, 0) * Random.Range(1000,5000) * Time.smoothDeltaTime);
-            nav.isStopped = false;
+            if (!isDie)
+                nav.isStopped = false;
             anim.SetBool("isWalk", true);
             nav.SetDestination(movepoint.position);
             nav.speed = 0.5f;
             yield return new WaitForSeconds(4f);
-            nav.isStopped = true;
+            if (!isDie)
+                nav.isStopped = true;
             anim.SetBool("isWalk", false);
             yield return new WaitForSeconds(3f);
         }
@@ -244,6 +248,7 @@ public class EnemySlime : Monster
 
         isChase = false;
         isAttack = true;
+        if(!isDie)
         nav.isStopped = true;
         anim.SetBool("isWalk", false);
         anim.SetBool("isAttack", true);
@@ -317,7 +322,8 @@ public class EnemySlime : Monster
     {
         isStun = true;
         anim.SetBool("isStun", true);
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
         yield return new WaitForSeconds(3f);
         if (!isDie)
         {
