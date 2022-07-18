@@ -284,10 +284,9 @@ public class EnemyBoss1 : MonsterBoss
             if (livingEntity != null && !livingEntity.isDie && !livingEntity.isDamage)
             {
                 Instantiate(ThrowEff, livingEntity.transform.position, livingEntity.transform.rotation);
-                //photonView.RPC("StunEffStop", RpcTarget.All);
                 livingEntity.GetComponent<PlayerStat>().DamagedHp(100);
-                livingEntity.GetComponent<PlayerST>().healthbar.fillAmount = livingEntity.GetComponent<PlayerStat>().playerstat._Hp /
-                    livingEntity.GetComponent<PlayerStat>().playerstat._MAXHP;
+                livingEntity.GetComponent<PlayerST>().healthbar.fillAmount = livingEntity.GetComponent<PlayerStat>()._Hp /
+                    livingEntity.GetComponent<PlayerStat>()._MAXHP;
                 Debug.Log("데미지 들어감" + livingEntity.GetComponent<PlayerStat>()._Hp);
                 if (livingEntity.GetComponent<PlayerStat>()._Hp <= 0)
                 {
