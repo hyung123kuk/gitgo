@@ -219,7 +219,7 @@ public class EnemyBoss1 : MonsterBoss
         yield return new WaitForSeconds(6f);
         if (!isDie)
         {
-            int ranAction = Random.Range(7, 9);
+            int ranAction = Random.Range(4, 9);
             switch (ranAction)
             {
                 case 4:
