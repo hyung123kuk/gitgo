@@ -38815,6 +38815,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UIENd
       objectReference: {fileID: 0}
+    - target: {fileID: 666829141749520011, guid: 3b5cd591ce20cfe4ebdae1a40b3ba168, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 666829141749520012, guid: 3b5cd591ce20cfe4ebdae1a40b3ba168, type: 3}
       propertyPath: m_RootOrder
       value: 11
@@ -39470,6 +39474,10 @@ PrefabInstance:
     - target: {fileID: 6623288463334704831, guid: 3b5cd591ce20cfe4ebdae1a40b3ba168, type: 3}
       propertyPath: m_AnchoredPosition.y
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7365797130872116556, guid: 3b5cd591ce20cfe4ebdae1a40b3ba168, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7842305447205081327, guid: 3b5cd591ce20cfe4ebdae1a40b3ba168, type: 3}
       propertyPath: m_AnchorMax.y
