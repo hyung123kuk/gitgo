@@ -423,7 +423,8 @@ public class EnemyBoss1 : MonsterBoss
     {
         BossDrop();
         MonsterDie();
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
         isDie = true;
         boxCollider.enabled = false;
         isChase = false; //�׾����� ��������

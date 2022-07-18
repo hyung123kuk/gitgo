@@ -116,7 +116,7 @@ public class EnemySlime : Monster
         while (!isDie)
         {
 
-            if (hasTarget )
+            if (hasTarget)
             {
                 Corotineidx = 0;
                 isReset = false;
@@ -201,8 +201,8 @@ public class EnemySlime : Monster
     {
         while (isReset)
         {
-            yield return new WaitForSeconds(Random.Range(0.1f,3.0f));
-            transform.Rotate(new Vector3(0, 1, 0) * Random.Range(1000,5000) * Time.smoothDeltaTime);
+            yield return new WaitForSeconds(Random.Range(0.1f, 3.0f));
+            transform.Rotate(new Vector3(0, 1, 0) * Random.Range(1000, 5000) * Time.smoothDeltaTime);
             if (!isDie)
                 nav.isStopped = false;
             anim.SetBool("isWalk", true);
@@ -248,8 +248,8 @@ public class EnemySlime : Monster
 
         isChase = false;
         isAttack = true;
-        if(!isDie)
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
         anim.SetBool("isWalk", false);
         anim.SetBool("isAttack", true);
 
@@ -364,7 +364,8 @@ public class EnemySlime : Monster
     public override void Die()
     {
         MonsterDie();
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
         boxCollider.enabled = false;
         mat.color = Color.black;
         isChase = false; //�׾����� ��������

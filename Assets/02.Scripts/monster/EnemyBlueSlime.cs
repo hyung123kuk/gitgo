@@ -342,7 +342,8 @@ public class EnemyBlueSlime : Monster
     public override void Die()
     {
         MonsterDie();
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
         boxCollider.enabled = false;
         mat.color = Color.black;
         isChase = false;

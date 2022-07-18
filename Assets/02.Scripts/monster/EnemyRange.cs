@@ -322,7 +322,8 @@ public class EnemyRange : Monster
     {
         questNormal.GoblinKillCount();
         MonsterDie();
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
         boxCollider.enabled = false;
         isDie = true;
         isChase = false; //�׾����� ��������
