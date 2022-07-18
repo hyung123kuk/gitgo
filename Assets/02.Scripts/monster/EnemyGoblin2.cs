@@ -348,7 +348,8 @@ public class EnemyGoblin2 : Monster
         questNormal.GoblinKillCount();
         boxCollider.enabled = false;
         mat.color = Color.black;
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
         isDie = true;
         isChase = false; //�׾����� ��������
         anim.SetBool("isDie", true);
