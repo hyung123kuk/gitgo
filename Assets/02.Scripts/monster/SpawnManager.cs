@@ -71,6 +71,52 @@ public class SpawnManager : MonoBehaviourPun
         spawnManager = this;
         monsters = new string[] { "Slime", "BlueSlime", "Goblin", "Goblin2", "GoblinArcher", "Skeleton", "TurtleSlime", "Golem" };
     }
+    public void RemoteMonsterReset()
+    {
+        for (int i = 0; i < MonsterManager.monsterManager.Slime.Length; i++)
+        {
+            MonsterManager.monsterManager.Slime[i].GetComponent<EnemySlime>().UpdatePath();
+        }
+    }
+    public void startSetting()
+    {
+        Debug.Log("으아아아아아악");
+        for (int i = 0; i < MonsterManager.monsterManager.Slime.Length; i++)
+        {  
+            MonsterManager.monsterManager.Slime[i].GetComponent<EnemySlime>().respawn = SlimePoints[i];
+            SlimePoints[i].gameObject.SetActive(false);
+        }
+
+        for (int i = 0; i < MonsterManager.monsterManager.BlueSlime.Length; i++)
+        {
+            MonsterManager.monsterManager.BlueSlime[i].GetComponent<EnemyBlueSlime>().respawn = BlueSlimePoints[i];
+            BlueSlimePoints[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < MonsterManager.monsterManager.Goblin.Length; i++)
+        {
+            MonsterManager.monsterManager.Goblin[i].GetComponent<EnemyGoblin>().respawn = GoblinPoints[i];
+            GoblinPoints[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < MonsterManager.monsterManager.Goblin2.Length; i++)
+        {
+            MonsterManager.monsterManager.Goblin2[i].GetComponent<EnemyGoblin2>().respawn = Goblin2Points[i];
+            Goblin2Points[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < MonsterManager.monsterManager.GoblinArcher.Length; i++)
+        {
+            MonsterManager.monsterManager.GoblinArcher[i].GetComponent<EnemyRange>().respawn = GoblinArcherPoints[i];
+            GoblinArcherPoints[i].gameObject.SetActive(false);
+        }
+        for (int i = 0; i < MonsterManager.monsterManager.Skeleton.Length; i++)
+        {
+            MonsterManager.monsterManager.Skeleton[i].GetComponent<EnemySkeleton>().respawn = SkeletonPoints[i];
+            SkeletonPoints[i].gameObject.SetActive(false);
+        }
+        MonsterManager.monsterManager.TurtleSlime.GetComponent<EnemyBoss1>().respawn = TurtleSlimePoint;
+        TurtleSlimePoint.gameObject.SetActive(false);
+        MonsterManager.monsterManager.Golem.GetComponent<EnemyBoss2>().respawn = GolemPoint;
+        GolemPoint.gameObject.SetActive(false);
+    }
     public void start() //소환해놓기
     {
         for (int i = 0; i < MonsterManager.monsterManager.Slime.Length; i++)

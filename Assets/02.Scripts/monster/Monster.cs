@@ -62,9 +62,37 @@ public class Monster : MonoBehaviourPun
         Portion = Resources.LoadAll<GameObject>("DROP/Portion");
         Geteff = Resources.Load<GameObject>("GetEff");
         Damage = Resources.Load<GameObject>("Damage");
-        playerST = FindObjectOfType<PlayerST>();
-        playerStat = FindObjectOfType<PlayerStat>();
-        weapons = FindObjectOfType<Weapons>();
+
+        PlayerST[] playerst2 = FindObjectsOfType<PlayerST>();
+        foreach (PlayerST playerst3 in playerst2)
+        {
+            if (playerst3.GetComponent<PhotonView>().IsMine)
+            {
+                playerST = playerst3;
+            }
+        }
+
+        PlayerStat[] playerstat2 = FindObjectsOfType<PlayerStat>();
+        foreach (PlayerStat playerstat3 in playerstat2)
+        {
+            if (playerstat3.GetComponent<PhotonView>().IsMine)
+            {
+                playerStat = playerstat3;
+            }
+        }
+
+        Weapons[] weapons2 = FindObjectsOfType<Weapons>();
+        foreach (Weapons weapons3 in weapons2)
+        {
+            if (weapons3.GetComponent<PhotonView>().IsMine)
+            {
+                weapons = weapons3;
+            }
+        }
+        //playerST = FindObjectOfType<PlayerST>();
+        //playerStat = FindObjectOfType<PlayerStat>();
+        //weapons = FindObjectOfType<Weapons>();
+
 
         AttackDamage[] attackDamages = FindObjectsOfType<AttackDamage>();
 

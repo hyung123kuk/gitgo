@@ -11,6 +11,8 @@ public class EnemySlime : Monster
     public bool isChase;
     public bool isAttack;
     public Transform respawn;
+    [SerializeField]
+    Transform MoveRespawn;
     public bool isDie;
     public bool isStun;
     public bool isDamage; //현재맞고있나
@@ -70,6 +72,7 @@ public class EnemySlime : Monster
 
     private void OnEnable()
     {
+        isReset = true;
         anim.SetBool("isDie", false);
         boxCollider.enabled = true;
         isAttack = false;
@@ -110,7 +113,7 @@ public class EnemySlime : Monster
             if (!isDie && !playerST.isJump && !playerST.isFall && !isStun)
                 transform.LookAt(target);
     }
-    private IEnumerator UpdatePath()
+    public IEnumerator UpdatePath()
     {
 
         // 살아있는 동안 무한 루프
@@ -177,6 +180,7 @@ public class EnemySlime : Monster
     {
         if (PhotonNetwork.IsMasterClient && !isReset)
         {
+            if(respawn != null)
             nav.SetDestination(respawn.transform.position);
             nav.speed = 5f;
             //curHealth = maxHealth;  서버에서 체력동기화가 잘 안일어나서 우선 주석 했습니다.
