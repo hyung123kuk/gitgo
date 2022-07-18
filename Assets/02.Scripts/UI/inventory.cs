@@ -62,17 +62,21 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
     {
 
         //LoadingUI = GameObject.Find("UIENd").transform.GetChild(6).gameObject;
-        slots = SlotsParent.GetComponentsInChildren<Slot>();
+
+       
         
         allUI = FindObjectOfType<AllUI>();
         itemStore = FindObjectOfType<itemStore>();
         toolTip = FindObjectOfType<ToolTip>();
         inven = this;
         iDown = false;
-        StartCoroutine(invenSet());
+        //StartCoroutine(invenSet());
+        
         StartCoroutine(LoadingSet());
+        invenOn();
+        slots = SlotsParent.GetComponentsInChildren<Slot>();
         eqslots = GameObject.FindGameObjectWithTag("EqueSlot").GetComponentsInChildren<Slot>();
-
+       
 
     }
 
@@ -127,7 +131,8 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
         if (invencheck == 1)
             UiSound.uiSound.InventoryCloseSound();
 
-        itemStore.storeOff();
+        if(itemStore)
+            itemStore.storeOff();
         Inven.SetActive(false);
         
         toolTip.ToolTipOff();

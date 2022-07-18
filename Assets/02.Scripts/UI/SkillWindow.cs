@@ -42,14 +42,14 @@ public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
         mageSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(4).gameObject;
         skillWindow.SetActive(true);
         skillslots = GetComponentsInChildren<SkillSlot>();
-        skillWindow.SetActive(false);
+
         skillToolTip = FindObjectOfType<SkillToolTip>();
 
 
     }
     private void Start()
     {
-        
+       
         PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
 
 
@@ -83,7 +83,12 @@ public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
 
         //StartCoroutine(Setting());
 
+        Invoke("loadSkill", 0.1f);
 
+    }
+    void loadSkill()
+    {
+        skillWindow.SetActive(false);
     }
 
     //IEnumerator Setting()
