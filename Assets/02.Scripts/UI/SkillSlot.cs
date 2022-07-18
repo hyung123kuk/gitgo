@@ -79,16 +79,20 @@ public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEnd
         
         
         SkillSet();
-        SetSkillColor();
+        Invoke("SetSkillColor", 0.3f);
+      
 
 
     }
 
 
+
     public void SetSkillColor()
     {
+        Debug.Log(1);
         if (gameObject.layer == LayerMask.NameToLayer("SkillSlot"))
         {
+            
             if (skill.Level > playerStat.Level)
             {
                 imageSkill.color = new Color(1, 0, 0);

@@ -145,6 +145,7 @@ public class SpawnManager : MonoBehaviourPun
 
         if (SlimeObjs < 10)
         {
+            Debug.Log(SlimeObjs);
             SlimeObjs++;
             StartCoroutine(SlimeSpawn());
         }
@@ -214,6 +215,7 @@ public class SpawnManager : MonoBehaviourPun
     {
         while (true)
         {
+            Debug.Log(1);
             int i;
             slimetime = Random.Range(5, 9);
             yield return new WaitForSeconds(slimetime);

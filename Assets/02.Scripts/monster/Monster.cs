@@ -131,7 +131,7 @@ public class Monster : MonoBehaviourPun
             damage.GetComponent<Outline>().enabled = false;
             damagevalue.color = Color.red;
         }
-        Debug.Log(_attackdamage);
+        //Debug.Log(_attackdamage);
         string dam = ((int)_attackdamage).ToString();
 
         damagevalue.text = dam;

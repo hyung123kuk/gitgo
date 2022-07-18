@@ -7,7 +7,7 @@ using Photon.Pun;
 
 public class inventory : MonoBehaviourPun, IPointerClickHandler, IEndDragHandler
 {
-    int invencheck = 1; //인벤 처음 열릴때 소리안나게하기위함
+    int invencheck = 0; //인벤 처음 열릴때 소리안나게하기위함
     public static inventory inven;
     public static bool iDown; // 인벤토리가 열려있으면 true
     public GameObject Inven; // 인벤토리 창
@@ -71,7 +71,7 @@ public class inventory : MonoBehaviourPun, IPointerClickHandler, IEndDragHandler
         toolTip = FindObjectOfType<ToolTip>();
         inven = this;
         iDown = false;
-        //StartCoroutine(invenSet());
+        StartCoroutine(invenSet());
         
         StartCoroutine(LoadingSet());
         Inven.SetActive(true);
