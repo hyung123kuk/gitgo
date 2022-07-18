@@ -342,6 +342,8 @@ public class EnemySkeleton : Monster
         mat.color = Color.black;
         if (!isDie)
             nav.isStopped = true;
+        if (isDie)
+            return;
         isDie = true;
         isChase = false;
         anim.SetBool("isDie", true);

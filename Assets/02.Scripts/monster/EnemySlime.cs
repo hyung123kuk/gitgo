@@ -364,12 +364,16 @@ public class EnemySlime : Monster
 
     public override void Die()
     {
+        
+
         MonsterDie();
         if (!isDie)
             nav.isStopped = true;
         boxCollider.enabled = false;
         mat.color = Color.black;
         isChase = false; //�׾����� ��������
+        if (isDie)
+            return;
         isDie = true;
         anim.SetBool("isDie", true);
         Invoke("Diegg", 1.5f);

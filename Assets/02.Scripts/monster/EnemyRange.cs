@@ -326,6 +326,8 @@ public class EnemyRange : Monster
         if (!isDie)
             nav.isStopped = true;
         boxCollider.enabled = false;
+        if (isDie)
+            return;
         isDie = true;
         isChase = false; //�׾����� ��������
         anim.SetBool("isDie", true);
