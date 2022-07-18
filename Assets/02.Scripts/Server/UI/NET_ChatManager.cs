@@ -16,6 +16,7 @@ public class NET_ChatManager : MonoBehaviourPunCallbacks
     string chatters;
 
     public string[] forbidWord;
+    public Scrollbar scrollbar;
 
     void Start()
     {
@@ -76,8 +77,19 @@ public class NET_ChatManager : MonoBehaviourPunCallbacks
        
         chatLog.text += "\n" + msg;
         scroll_rect.verticalNormalizedPosition = 0.0f;
-        
+        ScrollUp();
     }
 
+    void ScrollUp()
+    {
+        Invoke("Scroll", 0.1f);
+       
+    }
+    void Scroll()
+    {
+        scrollbar.value = 0f;
+    }
+
+    
 
 }
