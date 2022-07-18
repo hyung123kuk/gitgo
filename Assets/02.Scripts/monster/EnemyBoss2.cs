@@ -158,7 +158,8 @@ public class EnemyBoss2 : MonsterBoss
                             nav.speed = 6f;
 
                         isChase = true;
-                        nav.isStopped = false;
+                        if (!isDie)
+                            nav.isStopped = false;
                         nav.destination = target.position;
                         anim.SetBool("isRun", true);
                         if (playerST.isDie)
@@ -194,11 +195,13 @@ public class EnemyBoss2 : MonsterBoss
         nav.SetDestination(respawn.transform.position);
         isChase = false;
         nav.speed = 20f;
-        nav.isStopped = false;
+        if (!isDie)
+            nav.isStopped = false;
         //curHealth = maxHealth;
         if (Vector3.Distance(respawn.position, transform.position) < 1f)
         {
-            nav.isStopped = true;
+            if (!isDie)
+                nav.isStopped = true;
             anim.SetBool("isRun", false);
         }
     }
@@ -286,7 +289,8 @@ public class EnemyBoss2 : MonsterBoss
         isSkill = true;
         isChase = false;
         isAttack = true;
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
         nav.speed = 0f;
         isRazor = true;
         anim.SetBool("Razor", true);
@@ -300,7 +304,8 @@ public class EnemyBoss2 : MonsterBoss
         Razoreff.SetActive(false);
         anim.SetBool("Razor", false);
         nav.speed = 6f;
-        nav.isStopped = false;
+        if (!isDie)
+            nav.isStopped = false;
         isSkill = false;
         isChase = true;
         isAttack = false;
@@ -314,7 +319,8 @@ public class EnemyBoss2 : MonsterBoss
         isSkill = true;
         isChase = false;
         isAttack = true;
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
         nav.speed = 0f;
         anim.SetBool("Skill1", true);
         for (int i = 0; i < 5; i++)
@@ -351,7 +357,8 @@ public class EnemyBoss2 : MonsterBoss
         yield return new WaitForSeconds(0.5f);
         Healeff.Play();
         anim.SetBool("Heal", true);
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
         nav.speed = 0f;
 
         curHealth += 500;
@@ -415,7 +422,8 @@ public class EnemyBoss2 : MonsterBoss
         StopCoroutine(Attack());
         isSkill = true;
         isChase = false;
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
         isAttack = true;
         anim.SetBool("Buff", true);
         nav.speed = 0f;
@@ -430,7 +438,8 @@ public class EnemyBoss2 : MonsterBoss
         Invoke("BuffTime", 6f);
         anim.SetBool("Buff", false);
         isChase = true;
-        nav.isStopped = false;
+        if (!isDie)
+            nav.isStopped = false;
         isAttack = false;
 
         yield return new WaitForSeconds(3.5f);
@@ -453,7 +462,8 @@ public class EnemyBoss2 : MonsterBoss
         isSkill = true;
         isChase = false;
         isAttack = true;
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
         nav.speed = 0f;
         yield return new WaitForSeconds(2f);
         for (int i = 0; i < 10; i++)
@@ -466,7 +476,8 @@ public class EnemyBoss2 : MonsterBoss
         isChase = true;
         isAttack = false;
         anim.SetBool("Skill1", false);
-        nav.isStopped = false;
+        if (!isDie)
+            nav.isStopped = false;
         nav.speed = 4f;
         SkillStarEff.Stop();
         yield return new WaitForSeconds(2.5f);
@@ -481,7 +492,8 @@ public class EnemyBoss2 : MonsterBoss
 
         isChase = false;
         isAttack = true;
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
 
         anim.SetBool("isAttack", true);
         anim.SetBool("isRun", false);
