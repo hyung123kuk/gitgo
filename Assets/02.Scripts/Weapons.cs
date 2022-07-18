@@ -596,6 +596,7 @@ public class Weapons : MonoBehaviourPun, IPunObservable
     [PunRPC]
     IEnumerator MagicShot()
     {
+        if(type == Type.Mage)
         anim.SetBool("isAttack", true);
         yield return new WaitForSeconds(0.3f); //애니메이션과 화살나가는속도와 맞추기위함
         SoundManager.soundManager.MageAttackSound();
@@ -606,7 +607,8 @@ public class Weapons : MonoBehaviourPun, IPunObservable
         arrow.damage = attackdamage.Attack_Dam();
         Destroy(intantArrow, 0.7f);
         yield return new WaitForSeconds(0.3f);
-        anim.SetBool("isAttack", false);
+        if (type == Type.Mage)
+            anim.SetBool("isAttack", false);
         yield return null;
     }
 

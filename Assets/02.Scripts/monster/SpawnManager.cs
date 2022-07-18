@@ -416,7 +416,7 @@ public class SpawnManager : MonoBehaviourPun
                 }
             }
 
-            if (GoblinArcherready)
+            if (Skeletonready)
             {
 
                 GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[5]);
