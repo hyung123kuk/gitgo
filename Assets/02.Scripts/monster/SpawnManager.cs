@@ -265,11 +265,13 @@ public class SpawnManager : MonoBehaviourPun
 
             if (BlueSlimeready)
             {
-
                 GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[1]);
                 Debug.Log(enemy); //enemy가 널리퍼
                 Debug.Log(BlueSlimePoints[i]);
                 enemy.transform.position = BlueSlimePoints[i].position;
+
+                enemy.GetComponent<Monster>().MonsterPosition(BlueSlimePoints[i].position);
+                
                 enemy.GetComponent<EnemyBlueSlime>().respawn = BlueSlimePoints[i];
                 BlueSlimePoints[i].gameObject.SetActive(false);
                 blueslimeidx = 0;

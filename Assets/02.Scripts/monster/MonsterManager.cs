@@ -36,22 +36,10 @@ public class MonsterManager : MonoBehaviourPun
         Goblin2 = new GameObject[10];
         GoblinArcher = new GameObject[10];
         Skeleton = new GameObject[10];
-
-        for (int i = 0; i < 10; i++)
-        {
-            Slime[i] = transform.GetChild(0).GetChild(7).GetChild(i).gameObject;
-            BlueSlime[i] = transform.GetChild(0).GetChild(0).GetChild(i).gameObject;
-            Goblin[i] = transform.GetChild(0).GetChild(1).GetChild(i).gameObject;
-            Goblin2[i] = transform.GetChild(0).GetChild(2).GetChild(i).gameObject;
-            GoblinArcher[i] = transform.GetChild(0).GetChild(2).GetChild(i).gameObject;
-            Skeleton[i] = transform.GetChild(0).GetChild(3).GetChild(i).gameObject;
-        }
-        TurtleSlime = transform.GetChild(0).GetChild(4).GetChild(0).gameObject;
-        Golem = transform.GetChild(0).GetChild(5).GetChild(0).gameObject;
         Invoke("Generate", 0.2f); //마스터 플레이어가 나갔을때 몬스터가 생성이 안된다면 이 0.2초사이에 마스터플레이어가 나갔을 것입니다.. 수정 필요하긴합니다 이부분.
     }
 
-    void Generate()  //Ǯ�� ����
+    public void Generate()  //Ǯ�� ����
     {
         GameObject SlimePools = new GameObject("Slime Pool");
         GameObject BlueSlimePools = new GameObject("BlueSlime Pool");
@@ -63,14 +51,16 @@ public class MonsterManager : MonoBehaviourPun
         if (!PhotonNetwork.IsMasterClient)
         {
             EnemySlime[] slimes = GameObject.FindObjectsOfType<EnemySlime>();
-            EnemyBlueSlime[]blueslimes = GameObject.FindObjectsOfType<EnemyBlueSlime>();
+            EnemyBlueSlime[] blueslimes = GameObject.FindObjectsOfType<EnemyBlueSlime>();
             EnemyGoblin[] goblins = GameObject.FindObjectsOfType<EnemyGoblin>();
             EnemyGoblin2[] goblins2 = GameObject.FindObjectsOfType<EnemyGoblin2>();
             EnemyRange[] Ranges = GameObject.FindObjectsOfType<EnemyRange>();
             EnemySkeleton[] skelletons = GameObject.FindObjectsOfType<EnemySkeleton>();
+            EnemyBoss1 turtle = GameObject.FindObjectOfType<EnemyBoss1>();
+            EnemyBoss2 golem = GameObject.FindObjectOfType<EnemyBoss2>();
 
-            
-            for(int i = 0; i < slimes.Length; i++)
+
+            for (int i = 0; i < slimes.Length; i++)
             {
                 slimes[i].transform.parent = SlimePools.transform;
                 Slime[i] = slimes[i].gameObject;
@@ -108,6 +98,8 @@ public class MonsterManager : MonoBehaviourPun
                 skelletons[i].transform.parent = SkeletonPools.transform;
                 Skeleton[i] = skelletons[i].gameObject;
             }
+            TurtleSlime = turtle.gameObject;
+            Golem = golem.gameObject;
 
         }
 
@@ -119,7 +111,6 @@ public class MonsterManager : MonoBehaviourPun
                 Slime[i].transform.parent = SlimePools.transform;
                 Slime[i].SetActive(false);
                 Slime[i].transform.position = SpawnManager.spawnManager.SlimePoints[i].transform.position;
-
             }
             for (int i = 0; i < BlueSlime.Length; i++)
             {
@@ -168,7 +159,7 @@ public class MonsterManager : MonoBehaviourPun
             SpawnManager.spawnManager.start();
         }
 
-        
+
     }
 
 
@@ -226,7 +217,7 @@ public class MonsterManager : MonoBehaviourPun
                     return targetPool[i];
                 }
             }
-            return null;
+            // return null;
             Debug.Log("여기 오나?");
         }
         return null;
