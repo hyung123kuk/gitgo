@@ -214,10 +214,11 @@ public class SpawnManager : MonoBehaviourPun
     {
         while (true)
         {
+            int i;
             slimetime = Random.Range(5, 9);
             yield return new WaitForSeconds(slimetime);
 
-            for (int i = 0; i < MonsterManager.monsterManager.Slime.Length; i++)
+            for (i = 0; i < MonsterManager.monsterManager.Slime.Length; i++)
             {
                 slimeidx=i;
                 if (SlimePoints[i].gameObject.activeSelf)
@@ -232,7 +233,7 @@ public class SpawnManager : MonoBehaviourPun
                 
                 GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[0]);
                 Debug.Log(enemy); //enemy가 널리퍼
-                enemy.transform.position = SlimePoints[slimeidx].position;
+                enemy.transform.position = SlimePoints[i].position;
 
                 enemy.GetComponent<Monster>().MonsterPosition(SlimePoints[slimeidx].position);
 
@@ -248,10 +249,11 @@ public class SpawnManager : MonoBehaviourPun
     {
         while (true)
         {
+            int i;
             blueslimetime = Random.Range(5, 9);
             yield return new WaitForSeconds(blueslimetime);
 
-            for (int i = 0; i < MonsterManager.monsterManager.BlueSlime.Length; i++)
+            for (i = 0; i < MonsterManager.monsterManager.BlueSlime.Length; i++)
             {
                 blueslimeidx = i;
                 if (BlueSlimePoints[i].gameObject.activeSelf)
@@ -265,8 +267,9 @@ public class SpawnManager : MonoBehaviourPun
             {
 
                 GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[1]);
-
-                enemy.transform.position = BlueSlimePoints[blueslimeidx].position;
+                Debug.Log(enemy); //enemy가 널리퍼
+                Debug.Log(BlueSlimePoints[i]);
+                enemy.transform.position = BlueSlimePoints[i].position;
                 enemy.GetComponent<EnemyBlueSlime>().respawn = BlueSlimePoints[blueslimeidx];
                 BlueSlimePoints[blueslimeidx].gameObject.SetActive(false);
                 blueslimeidx = 0;
