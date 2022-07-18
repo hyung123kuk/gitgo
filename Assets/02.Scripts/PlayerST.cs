@@ -727,7 +727,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         anim.SetBool("isRush", true);
         //yield return new WaitForSeconds(0.5f);
         SoundManager.soundManager.WarriorRushVoice();
-        rigid.AddForce(transform.forward * 40 + transform.up * 20, ForceMode.Impulse);
+        if(photonView.IsMine)
+             rigid.AddForce(transform.forward * 40 + transform.up * 20, ForceMode.Impulse);
         yield return new WaitForSeconds(0.5f);
         SoundManager.soundManager.WarriorRushSound();
         BoxCollider Skillare = Skillarea.GetComponent<BoxCollider>(); //돌진착지지점 데미지 콜라이더 활성화
@@ -745,11 +746,13 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         anim.SetBool("isAttack3", false);
         anim.SetBool("isAttack2", false);
         anim.SetBool("isAttack", false);
-        comboHit.noOfClicks = 0;
+        if (photonView.IsMine)
+            comboHit.noOfClicks = 0;
         isRush = false;
         isFall = false;
         isCool2 = true;
-        attackdamage.Skill_2_Cool();  //돌진쿨타임
+        if (photonView.IsMine)
+            attackdamage.Skill_2_Cool();  //돌진쿨타임
         yield return new WaitForSeconds(0.5f);
 
         ArrowSkill.arrowSkill.NoDestroy = false;
