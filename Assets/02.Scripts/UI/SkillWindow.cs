@@ -40,8 +40,9 @@ public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
         warriorSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(2).gameObject;
         acherSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(3).gameObject;
         mageSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(4).gameObject;
-
+        skillWindow.SetActive(true);
         skillslots = GetComponentsInChildren<SkillSlot>();
+        skillWindow.SetActive(false);
         skillToolTip = FindObjectOfType<SkillToolTip>();
 
 
@@ -132,6 +133,7 @@ public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
     {
         for (int i = 0; i < skillslots.Length; i++)
         {
+            
             skillslots[i].SetSkillColor();
 
         }

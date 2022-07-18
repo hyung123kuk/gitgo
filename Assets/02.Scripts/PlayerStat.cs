@@ -267,6 +267,7 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable //포톤으로 만들
             {
                 QuestStore.qustore.MainQuestSuccess(4);
             }
+            
         }
     }
 
