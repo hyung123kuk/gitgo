@@ -217,7 +217,7 @@ public class EnemyBoss2 : MonsterBoss
 
         if (!isDie)
         {
-            int ranAction = Random.Range(5, 6);
+            int ranAction = Random.Range(0, 9);
             switch (ranAction)
             {
                 case 0:
