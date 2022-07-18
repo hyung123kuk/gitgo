@@ -13,13 +13,13 @@ public class StoreSlot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHan
     public itemBuyQuestion ItembuyQuestion;
     public PlayerST playerSt;
     private PlayerStat playerStat;
-    
 
-    void Start()
+
+
+    void OnEnable()
     {
         playerStat = FindObjectOfType<PlayerStat>();
         PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
-
 
         foreach (PlayerST myplayerSt in playerSts)
         {
