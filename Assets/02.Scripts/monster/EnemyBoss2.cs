@@ -83,6 +83,7 @@ public class EnemyBoss2 : MonsterBoss
         boxCollider.enabled = true;
         isAttack = false;
         nav.isStopped = false;
+
         isDie = false;
         curHealth = maxHealth;
         anim = GetComponent<Animator>();
@@ -588,6 +589,8 @@ public class EnemyBoss2 : MonsterBoss
 
         if (!isDie)
             nav.isStopped = true;
+        if (isDie)
+            return;
         isDie = true;
         boxCollider.enabled = false;
 

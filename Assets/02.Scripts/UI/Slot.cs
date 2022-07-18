@@ -73,6 +73,7 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
 
             }
             SetColor(1);
+            Invoke("ItemLimitColorRed", 0.3f);
             ItemLimitColorRed();
         }
     }

@@ -348,6 +348,8 @@ public class EnemyBlueSlime : Monster
         boxCollider.enabled = false;
         mat.color = Color.black;
         isChase = false;
+        if (isDie)
+            return;
         isDie = true;
         anim.SetBool("isDie", true);
         Invoke("Diegg", 1.5f);

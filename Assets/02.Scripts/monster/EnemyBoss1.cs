@@ -426,6 +426,8 @@ public class EnemyBoss1 : MonsterBoss
         MonsterDie();
         if (!isDie)
             nav.isStopped = true;
+        if (isDie)
+            return;
         isDie = true;
         boxCollider.enabled = false;
         isChase = false; //�׾����� ��������
