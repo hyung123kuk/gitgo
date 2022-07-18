@@ -62,6 +62,7 @@ public class EnemyGoblin2 : Monster
     }
     private void OnEnable()
     {
+        anim.SetBool("isDie", false);
         isDamage = false;
         boxCollider.enabled = true;
         isAttack = false;

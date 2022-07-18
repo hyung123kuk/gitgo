@@ -70,6 +70,7 @@ public class EnemySlime : Monster
 
     private void OnEnable()
     {
+        anim.SetBool("isDie", false);
         boxCollider.enabled = true;
         isAttack = false;
         nav.isStopped = false;

@@ -938,7 +938,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             smesh[i].enabled = true;
         }
         yield return new WaitForSeconds(0.2f);
-        rigid.velocity = Vector3.zero;
+        if (photonView.IsMine)
+            rigid.velocity = Vector3.zero;
 
         isCoolTeleport = true;//쿨타임
         if (photonView.IsMine)
