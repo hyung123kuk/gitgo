@@ -1212,6 +1212,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             return;
         SelectPlayer.enabled = false;
         rigid.useGravity = false;
+        DunjeonBossArena = false;
         DiePRC(true, true); //죽음을 알림.
         anim.SetBool("isDie", true);
         if (CharacterType == Type.Warrior || CharacterType == Type.Mage)
@@ -1382,6 +1383,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             if (other.name == "Boss2Arena")
             {
                 DunjeonBossArena = true;
+                EnemyBoss2.enemyBoss2.target = transform;//보스타겟에 자기자신넣기
             }
 
             if (other.tag == "BOSS2_RAZOR")
