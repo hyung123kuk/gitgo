@@ -42,11 +42,13 @@ public class EnemyBoss1 : MonsterBoss
     public Transform ThrowEndPoint;
 
     [SerializeField]
-    ParticleSystem RushEff; //돌진스킬 이펙트
+    GameObject RushEff; //돌진스킬 이펙트
     [SerializeField]
     GameObject ThrowEff;
     [SerializeField]
     SkinnedMeshRenderer mat;
+    [SerializeField]
+    Transform RushPoint;
 
     private bool hasTarget
     {
@@ -72,7 +74,8 @@ public class EnemyBoss1 : MonsterBoss
         anim = GetComponent<Animator>();
         attacking = transform.GetChild(2).GetComponent<Attacking>();
         questStore = FindObjectOfType<QuestStore>();
-        RushEff = GameObject.Find("EffectPool").transform.GetChild(0).GetComponent<ParticleSystem>();
+        RushEff  = Resources.Load<GameObject>("Boss1_RushEff");
+        //RushEff = GameObject.Find("EffectPool").transform.GetChild(0).gameObject;
     }
 
     public override void BossHpBarSettting()
@@ -125,9 +128,6 @@ public class EnemyBoss1 : MonsterBoss
         if (isChase || isAttack) //룩엣
             if (!isDie && !playerST.isJump && !playerST.isFall && !isStun)
                 transform.LookAt(target);
-
-        if (target == null)
-            RushEff.gameObject.SetActive(false);
 
     }
     private IEnumerator UpdatePath()
@@ -195,7 +195,6 @@ public class EnemyBoss1 : MonsterBoss
     void EnemyReset()
     {
         nav.SetDestination(respawn.position);
-        RushEff.Stop();
         isChase = false;
         nav.speed = 5f;
         if (!isDie)
@@ -317,7 +316,6 @@ public class EnemyBoss1 : MonsterBoss
     [PunRPC]
     IEnumerator Rush()
     {
-        RushEff.gameObject.SetActive(true);
         isSkill = true;
         isChase = false;
         isAttack = true;
@@ -332,9 +330,10 @@ public class EnemyBoss1 : MonsterBoss
         yield return new WaitForSeconds(0.8f);
         anim.SetBool("isRush", false);
         if (target != null)
-            RushEff.transform.position = target.position;
-        if (RushEff.gameObject.activeSelf)
-            RushEff.Play();
+        {
+            GameObject rusheff = PhotonNetwork.Instantiate("Boss1_RushEff", target.transform.position, target.transform.rotation);
+            StartCoroutine(Rusheffend(rusheff));
+        }
         isRush = false;
         isChase = true;
         isAttack = false;
@@ -345,6 +344,11 @@ public class EnemyBoss1 : MonsterBoss
 
         Patterning = false;
 
+    }
+    IEnumerator Rusheffend(GameObject rusheff)
+    {
+        yield return new WaitForSeconds(10f);
+        PhotonNetwork.Destroy(rusheff);
     }
 
     [PunRPC]
