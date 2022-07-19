@@ -35,7 +35,7 @@ public class EnemyRange : Monster
     void OnDrawGizmos()
     {
         Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 6.5f);
+        Gizmos.DrawWireSphere(transform.position, 16f);
     }
     private bool hasTarget
     {
@@ -119,7 +119,7 @@ public class EnemyRange : Monster
                         nav.isStopped = false;
                     anim.SetBool("isWalk", true);
                 }
-                if (Vector3.Distance(target.position, transform.position) > 15f)
+                if (Vector3.Distance(target.position, transform.position) > 20f)
                 {
                     EnemyReset();
                     target = null;
@@ -135,7 +135,7 @@ public class EnemyRange : Monster
                 // 20 유닛의 반지름을 가진 가상의 구를 그렸을때, 구와 겹치는 모든 콜라이더를 가져옴
                 // 단, targetLayers에 해당하는 레이어를 가진 콜라이더만 가져오도록 필터링
                 Collider[] colliders =
-                    Physics.OverlapSphere(transform.position, 6.5f, whatIsTarget);
+                    Physics.OverlapSphere(transform.position, 16f, whatIsTarget);
 
                 // 모든 콜라이더들을 순회하면서, 살아있는 플레이어를 찾기
                 for (int i = 0; i < colliders.Length; i++)
