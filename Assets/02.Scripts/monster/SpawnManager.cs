@@ -460,10 +460,11 @@ public class SpawnManager : MonoBehaviourPun
     {
         while (true)
         {
+            int i;
             skeletontime = Random.Range(5,7);
             yield return new WaitForSeconds(skeletontime);
 
-            for (int i = 0; i < MonsterManager.monsterManager.Skeleton.Length; i++)
+            for (i = 0; i < MonsterManager.monsterManager.Skeleton.Length; i++)
             {
                 Skeletonidx = i;
                 if (SkeletonPoints[i].gameObject.activeSelf)
@@ -478,9 +479,9 @@ public class SpawnManager : MonoBehaviourPun
 
                 GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[5]);
 
-                enemy.transform.position = SkeletonPoints[goblinarcheridx].position;
-                enemy.GetComponent<EnemyRange>().respawn = SkeletonPoints[goblinarcheridx];
-                SkeletonPoints[goblinarcheridx].gameObject.SetActive(false);
+                enemy.transform.position = SkeletonPoints[i].position;
+                enemy.GetComponent<EnemyRange>().respawn = SkeletonPoints[i];
+                SkeletonPoints[i].gameObject.SetActive(false);
                 Skeletonidx = 0;
                 break;
             }
