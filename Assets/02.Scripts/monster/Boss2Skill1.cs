@@ -30,6 +30,13 @@ public class Boss2Skill1 : MonoBehaviour
             {
                 livingEntity.GetComponent<PlayerStat>()._Hp -= 100;
                 Debug.Log("데미지 들어감" + livingEntity.GetComponent<PlayerStat>()._Hp);
+                livingEntity.GetComponent<PlayerST>().healthbar.fillAmount = livingEntity.GetComponent<PlayerStat>()._Hp /
+                    livingEntity.GetComponent<PlayerStat>()._MAXHP;
+                Debug.Log("데미지 들어감" + livingEntity.GetComponent<PlayerStat>()._Hp);
+                if (livingEntity.GetComponent<PlayerStat>()._Hp <= 0)
+                {
+                    livingEntity.GetComponent<PlayerST>().PlayerDie();
+                }
             }
         }
         yield return new WaitForSeconds(1f);

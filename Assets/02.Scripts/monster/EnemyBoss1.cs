@@ -126,22 +126,25 @@ public class EnemyBoss1 : MonsterBoss
             if (!isDie && !playerST.isJump && !playerST.isFall && !isStun)
                 transform.LookAt(target);
 
+        if (target == null)
+            RushEff.gameObject.SetActive(false);
+
     }
     private IEnumerator UpdatePath()
     {
 
         // 살아있는 동안 무한 루프
         while (!isDie)
-        { 
+        {
             if (hasTarget)
             {
                 // 추적 대상 존재 : 경로를 갱신하고 AI 이동을 계속 진행
                 Targerting();
                 PatternStart();
                 nav.SetDestination(target.position);
-                
-                if(!isThrow)
-                nav.speed = 4f;
+
+                if (!isThrow)
+                    nav.speed = 4f;
                 if (!isAttack && !isSkill)
                 {
                     isChase = true;
@@ -271,7 +274,7 @@ public class EnemyBoss1 : MonsterBoss
         if (!isDie)
             nav.isStopped = true;
         StopCoroutine(Attack());
-        anim.SetBool("isAttack",false);
+        anim.SetBool("isAttack", false);
         anim.SetBool("isThrow", true);
         yield return new WaitForSeconds(2.8f);
         anim.SetBool("isThrowShot", true);
@@ -296,7 +299,7 @@ public class EnemyBoss1 : MonsterBoss
             if (livingEntity != null && !livingEntity.isDie)
             {
                 livingEntity.SendMessage("OnDamageNuck");
-            }   
+            }
         }
         yield return new WaitForSeconds(0.2f);
         anim.SetBool("isThrowShot", false);
@@ -314,6 +317,7 @@ public class EnemyBoss1 : MonsterBoss
     [PunRPC]
     IEnumerator Rush()
     {
+        RushEff.gameObject.SetActive(true);
         isSkill = true;
         isChase = false;
         isAttack = true;
@@ -323,11 +327,14 @@ public class EnemyBoss1 : MonsterBoss
         StopCoroutine(Attack());
         anim.SetBool("isAttack", false);
         anim.SetBool("isRush", true);
-        transform.DOJump(target.position, 1.5f, 1, 1.2f);
+        if (target != null)
+            transform.DOJump(target.position, 1.5f, 1, 1.2f);
         yield return new WaitForSeconds(0.8f);
         anim.SetBool("isRush", false);
-        RushEff.transform.position = target.position;
-        RushEff.Play();
+        if (target != null)
+            RushEff.transform.position = target.position;
+        if (RushEff.gameObject.activeSelf)
+            RushEff.Play();
         isRush = false;
         isChase = true;
         isAttack = false;
@@ -358,12 +365,12 @@ public class EnemyBoss1 : MonsterBoss
         rigid.velocity = Vector3.zero;
         meleeArea.enabled = false;
 
-        if(!isSkill)
-        isChase = true;
+        if (!isSkill)
+            isChase = true;
         isAttack = false;
         anim.SetBool("isAttack", false);
-        if(!isDie)
-        nav.isStopped = false;
+        if (!isDie)
+            nav.isStopped = false;
 
     }
     void FixedUpdate()
@@ -449,7 +456,7 @@ public class EnemyBoss1 : MonsterBoss
         gameObject.SetActive(false);
     }
 
-    
+
 }
 
 
