@@ -545,7 +545,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
         playerStat.Level = data[CharacterNum].Level;
         playerStat.NowExp = data[CharacterNum].Exp;
         playerStat.MONEY = data[CharacterNum].Gold;
-        playerStat.startLoad();
+       
 
         for (int i = 0; i < data[CharacterNum].invenItemName.Count; i++)
         {
@@ -561,7 +561,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
         {
             inven.LoadToEq(data[CharacterNum].EQitemArrNum[i], data[CharacterNum].EQitemArrName[i]);
         }
-
+        playerStat.startLoad();
         questExplain.QuestNum = data[CharacterNum].QuestMainNum;
         questStore.isMainRecive = data[CharacterNum].MainRecieve;
         questStore.mainNum = data[CharacterNum].MainNum;

@@ -246,7 +246,7 @@ public class AllUI : MonoBehaviourPun
         {
             isUI = false;
             Cursor.lockState = CursorLockMode.Locked;
-            allUI.MouseCursor.transform_cursor.gameObject.SetActive(false);
+            allUI.MouseCursor.transform_cursor.gameObject.SetActive(false); 
             allUI.MouseCursor.Init_Cursor();
         }
         else

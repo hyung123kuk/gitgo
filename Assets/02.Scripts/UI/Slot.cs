@@ -683,6 +683,7 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                 item = null;
                 inventory.slots[i].itemImage.sprite = inventory.slots[i].item.itemImage;
                 inventory.slots[i].SetColor(1);
+                inventory.slots[i].ItemLimitColorRed();
                 break;
             }
         }
@@ -714,6 +715,7 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
     {
         DragSlot.instance.SetColor(0);
         DragSlot.instance.dragSlot = null;
+        if(itemSellScope)
         itemSellScope.SetActive(false);
     }
 
