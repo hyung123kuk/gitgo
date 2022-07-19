@@ -235,7 +235,7 @@ public class inventory : MonoBehaviourPun, IPointerClickHandler, IEndDragHandler
                 {
                     if (buyitem.itemName == slots[i].item.itemName)
                     {
-
+                        
                         slots[i].SetSlotCount(num);
                         playerStat.MONEY -= buyitem._PRICE * num;
                         GoldUpdate();
@@ -259,6 +259,7 @@ public class inventory : MonoBehaviourPun, IPointerClickHandler, IEndDragHandler
                 {
                     playerStat.MONEY -= buyitem._PRICE;
                 }
+                Debug.Log(buyitem.itemName);
                 slots[i].item = buyitem;
                 slots[i].itemImage.sprite = slots[i].item.itemImage;
                 slots[i].SetColor(1);
