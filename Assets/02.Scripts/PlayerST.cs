@@ -171,9 +171,10 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     void Start()
     {
         nickname.text = PhotonNetwork.LocalPlayer.NickName;
-        healthbar.CrossFadeAlpha(0, 0, true);  //자기자신 HP바 가리기
+        //healthbar.CrossFadeAlpha(0, 0, true);  //자기자신 HP바 가리기
         //nickname.CrossFadeAlpha(0, 0, true);
         helathbarBack.CrossFadeAlpha(0, 0, true);
+        healthbar.fillAmount = playerstat._Hp / playerstat._MAXHP;
         bgm = GameObject.Find("Sounds").transform.GetChild(3).GetComponent<BGM>();
         playerstat = GetComponent<PlayerStat>();
         bowPower = bowMinPower;
@@ -1246,19 +1247,9 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                 SendMessage("TownResurrection");
             }
 
-            if (other.tag == "BOSS2_RAZOR")
+            if (other.tag == "DeathZoneDun")
             {
-                if (!isDamage)
-                {
-                    Debug.Log("으악!");
-                    EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
-                    playerstat.DamagedHp(enemyRange.damage);
-                    healthbar.fillAmount = playerstat._Hp / playerstat._MAXHP;
-                    if (playerstat._Hp <= 0)
-                    {
-                        PlayerDie();
-                    }
-                }
+                SendMessage("DunjeonResurrection");
             }
 
             if (other.gameObject.tag == "EnemyRange")  //적에게 맞았다면
@@ -1391,6 +1382,21 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             if (other.name == "Boss2Arena")
             {
                 DunjeonBossArena = true;
+            }
+
+            if (other.tag == "BOSS2_RAZOR")
+            {
+                if (!isDamage)
+                {
+                    Debug.Log("응애");
+                    EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
+                    playerstat.DamagedHp(enemyRange.damage);
+                    healthbar.fillAmount = playerstat._Hp / playerstat._MAXHP;
+                    if (playerstat._Hp <= 0)
+                    {
+                        PlayerDie();
+                    }
+                }
             }
         }
 

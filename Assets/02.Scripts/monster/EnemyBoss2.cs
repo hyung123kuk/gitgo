@@ -233,23 +233,23 @@ public class EnemyBoss2 : MonsterBoss
                     break;
                 case 2:
                 case 3:
-                case 4:
                     //몬스터 소환스킬
                     photonView.RPC("Sohwan", RpcTarget.All);
                     MonsterAttack();
                     break;
+                case 4:
                 case 5:
-                case 6:
                     //레이저스킬
                     photonView.RPC("Razor", RpcTarget.All);
                     MonsterAttack();
                     break;
+                case 6:  
                 case 7:
-                case 8:
                     //어둠장판 만드는스킬
                     photonView.RPC("Skill1", RpcTarget.All);
                     MonsterAttack();
                     break;
+                case 8:     
                 case 9:
                     //피 회복스킬
                     photonView.RPC("Heal", RpcTarget.All);
@@ -366,12 +366,16 @@ public class EnemyBoss2 : MonsterBoss
         curHealth += 500;
         if (curHealth > maxHealth)
             curHealth = maxHealth;
+        BossHpBarSet();
+        SetHpBar();
         yield return new WaitForSeconds(1f);
         if (!HealStop)
         {
             curHealth += 500;
             if (curHealth > maxHealth)
                 curHealth = maxHealth;
+            BossHpBarSet();
+            SetHpBar();
             Debug.Log(curHealth);
         }
         if(HealStop)
@@ -382,6 +386,8 @@ public class EnemyBoss2 : MonsterBoss
             curHealth += 500;
             if (curHealth > maxHealth)
                 curHealth = maxHealth;
+            BossHpBarSet();
+            SetHpBar();
             Debug.Log(curHealth);
         }
         if (HealStop)
@@ -392,6 +398,8 @@ public class EnemyBoss2 : MonsterBoss
             curHealth += 500;
             if (curHealth > maxHealth)
                 curHealth = maxHealth;
+            BossHpBarSet();
+            SetHpBar();
             Debug.Log(curHealth);
         }
         if (HealStop)
@@ -402,6 +410,8 @@ public class EnemyBoss2 : MonsterBoss
             curHealth += 500;
             if (curHealth > maxHealth)
                 curHealth = maxHealth;
+            BossHpBarSet();
+            SetHpBar();
             Debug.Log(curHealth);
         }
         isHeal = false;
@@ -433,7 +443,6 @@ public class EnemyBoss2 : MonsterBoss
 
         yield return new WaitForSeconds(3f);
         Pokjueff.Play();
-        nav.speed = 6f;
         isSkill = false;
         isBuff = true;
         isBuffPlay = true;
