@@ -27,8 +27,11 @@ public class GetEff : MonoBehaviourPun
 
     public void Target(GameObject tr)
     {
-        target = tr.transform;
-        playerStat = tr.GetComponent<PlayerStat>();
+        if (tr != null)
+        {
+            target = tr.transform;
+            playerStat = tr.GetComponent<PlayerStat>();
+        }
     }
 
     void Update()

@@ -99,7 +99,56 @@ public class Monster : MonoBehaviourPun
         tr.position = pos;
     }
 
+    [PunRPC]
+    public virtual void MasterDamaged(float _attackdamage,bool critical) {
 
+        if (PhotonNetwork.IsMasterClient)
+        {
+            curHealth -= _attackdamage;
+            bool die = false;
+            if(curHealth <= 0)
+            {
+                Die();
+                die = true;
+            }
+            photonView.RPC("Damaged", RpcTarget.All, curHealth, critical, die, _attackdamage);
+
+            
+        }
+    }
+    [PunRPC]
+    public virtual void Damaged(float _hp, bool critical, bool die,float _attackdamage)
+    {
+        if (!PhotonNetwork.IsMasterClient)
+        {
+            curHealth = _hp;
+            if (die)
+            {
+                Die();
+            }
+        }
+
+        GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
+        var _damage = damage.GetComponent<DamageUI>();
+        _damage.targetTr = this.gameObject.transform;
+        Text damagevalue = damage.GetComponent<Text>();
+        if (!critical)
+        {
+            damage.transform.GetChild(0).gameObject.SetActive(false);
+            damage.GetComponent<Outline>().enabled = false;
+            damagevalue.color = Color.red;
+        }
+        //Debug.Log(_attackdamage);
+        string dam = ((int)_attackdamage).ToString();
+
+        damagevalue.text = dam;
+        SetHpBar();
+
+        shakeTime = Time.time;
+        if (gameObject.activeSelf)
+            StartCoroutine(HitShake());
+
+    }
 
 
     [PunRPC]
@@ -154,7 +203,10 @@ public class Monster : MonoBehaviourPun
     {
         if (playerST.CharacterType == PlayerST.Type.Warrior || weapons.GetComponent<PhotonView>().IsMine)
         {
-            OnDamage(attackdamage.attackDamage, attackdamage.critical, true); //맞았을때 로컬을 트루로해서 다른데에서도 OnDamage가 적용되게
+
+            photonView.RPC("MasterDamaged", RpcTarget.MasterClient, attackdamage.attackDamage, attackdamage.critical);
+            SetTarget(attackdamage.gameObject);
+            //OnDamage(attackdamage.attackDamage, attackdamage.critical, true); //맞았을때 로컬을 트루로해서 다른데에서도 OnDamage가 적용되게
 
             DamageSet();
             BossHpBarSet();
