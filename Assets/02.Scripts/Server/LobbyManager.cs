@@ -11,13 +11,15 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
     public Text connectionInfoText; // 네트워크 정보를 표시할 텍스트
     public Button joinButton; // 룸 접속 버튼
-    private SaveManager saveManager;
+    
     private GameObject Character; //셀매니저 첫번째 자식 끄기
+    [SerializeField]
+    GameObject LoadingUI;
     // 게임 실행과 동시에 마스터 서버 접속 시도
     private void Awake()
     {
         Character = GameObject.Find("SelManager").transform.GetChild(0).gameObject;
-        saveManager = FindObjectOfType<SaveManager>();
+        LoadingUI = transform.parent.transform.GetChild(3).gameObject;
     }
     private void Start()
     {
@@ -92,14 +94,8 @@ public class LobbyManager : MonoBehaviourPunCallbacks
 
         //모든 룸 참가자가 Main 씬을 로드하게 함
         PhotonNetwork.LoadLevel("Play_HYUNGKUK2 1");
-        //CharacterSel.characterSel.LobbyUi.SetActive(false);
+        LoadingUI.SetActive(true);
         Character.SetActive(false);
-
-        
-
-       
-
-
     }
 
 

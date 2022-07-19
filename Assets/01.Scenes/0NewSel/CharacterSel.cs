@@ -39,6 +39,7 @@ public class CharacterSel : MonoBehaviourPunCallbacks
 
     public AudioListener audioListener;
 
+    
     [SerializeField]
     GameObject[] characterImage1;
     [SerializeField]
@@ -65,7 +66,7 @@ public class CharacterSel : MonoBehaviourPunCallbacks
         nickname = GetComponent<Nickname>();
         audioListener = GetComponent<AudioListener>();
         saveManager = FindObjectOfType<SaveManager>();
-        //LobbyUi = GameObject.Find("Canvas_Lobby").transform.GetChild(0).gameObject;
+        
         ch_selEffect = GetComponent<CharacterSelEffect>();
         if (CharacterSel.characterSel == null)
         {

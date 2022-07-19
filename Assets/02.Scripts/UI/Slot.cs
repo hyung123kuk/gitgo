@@ -172,8 +172,7 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
         {
             SoundManager.soundManager.DrinkSound();
             playerStat.RecoverHp(50);
-            playerStat.RecoverMp(50);
-
+            playerStat.RecoverMp(50);  
         }
         else if (item.itemName == "<color=#FF0000>체력 회복 물약</color>")
         {
@@ -190,6 +189,7 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
             UiSound.uiSound.GetCoinSound();
             playerStat.AddGold(100);
         }
+        playerSt.healthbar.fillAmount = playerStat._Hp / playerStat._MAXHP;
         gameUI.bar_set();
     }
 

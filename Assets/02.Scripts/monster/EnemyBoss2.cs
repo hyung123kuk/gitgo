@@ -595,7 +595,7 @@ public class EnemyBoss2 : MonsterBoss
     {
         BossDrop();
         MonsterDie();
-
+        BossHpBarSet();
         if (!isDie)
             nav.isStopped = true;
         if (isDie)
