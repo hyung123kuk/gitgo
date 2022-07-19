@@ -45,7 +45,7 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
 
         item_sell_question = FindObjectOfType<itemSellQuestion>();
         tooltip = FindObjectOfType<ToolTip>();
-
+        
 
     }
 
@@ -73,11 +73,15 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
 
             }
             SetColor(1);
-            Invoke("ItemLimitColorRed", 0.3f);
-            ItemLimitColorRed();
+            
+            
         }
     }
-
+    private void OnEnable()
+    {
+        if(playerStat !=null)
+        ItemLimitColorRed();
+    }
     public void ItemLimitColorRed()
     {
         if (item == null)

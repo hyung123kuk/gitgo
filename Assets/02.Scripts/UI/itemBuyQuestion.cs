@@ -86,6 +86,8 @@ public class itemBuyQuestion : MonoBehaviour , IPointerClickHandler
 
     public void BuyItem()
     {
+        if (isBuyQuestion == false)
+            return;
         isBuyQuestion = false;
         if (item.itemType == Item.ItemType.Equipment)
         {
@@ -108,7 +110,7 @@ public class itemBuyQuestion : MonoBehaviour , IPointerClickHandler
                 return;
             }
         }
-        if(int.Parse(PortionNum.text)!=0)
+        if(item.itemType == Item.ItemType.Used && int.Parse(PortionNum.text)!=0)
             inven.BuyItem(item, int.Parse(PortionNum.text));
         if (item.itemType == Item.ItemType.Equipment)
             inven.BuyItem(item, 1);
