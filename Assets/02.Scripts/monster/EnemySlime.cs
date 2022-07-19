@@ -273,7 +273,7 @@ public class EnemySlime : Monster
     void FixedUpdate()
     {
 
-        FreezeVelocity();
+        //FreezeVelocity();
     }
 
     void OnTriggerEnter(Collider other)  //�ǰ�

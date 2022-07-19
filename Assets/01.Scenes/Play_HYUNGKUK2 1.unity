@@ -24725,6 +24725,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 370032111310843940, guid: 1852bc24690359940ae4f65b09cf6c9b, type: 3}
+      propertyPath: sceneViewId
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 5238164607977656636, guid: 1852bc24690359940ae4f65b09cf6c9b, type: 3}
       propertyPath: m_RootOrder
       value: 10
@@ -44449,6 +44453,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2902990328466574259, guid: 98dc29fc640672a40800660a32540488, type: 3}
+      propertyPath: m_Size.z
+      value: 65.15915
+      objectReference: {fileID: 0}
+    - target: {fileID: 2902990328466574259, guid: 98dc29fc640672a40800660a32540488, type: 3}
+      propertyPath: m_Center.z
+      value: 35.551437
+      objectReference: {fileID: 0}
     - target: {fileID: 6233579533194161453, guid: 98dc29fc640672a40800660a32540488, type: 3}
       propertyPath: m_Name
       value: MonsterManager
@@ -44496,18 +44508,6 @@ PrefabInstance:
     - target: {fileID: 6233579533194161455, guid: 98dc29fc640672a40800660a32540488, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6379993106721743419, guid: 98dc29fc640672a40800660a32540488, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -2.83
-      objectReference: {fileID: 0}
-    - target: {fileID: 6379993107487480256, guid: 98dc29fc640672a40800660a32540488, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 273.01
-      objectReference: {fileID: 0}
-    - target: {fileID: 6379993107487480256, guid: 98dc29fc640672a40800660a32540488, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 6.98
       objectReference: {fileID: 0}
     - target: {fileID: 6511338557522879885, guid: 98dc29fc640672a40800660a32540488, type: 3}
       propertyPath: sceneViewId

@@ -144,6 +144,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         {
             this.enabled = false;
         }
+        
         comboHit = GetComponent<ComboHit>();
         anim = GetComponentInChildren<Animator>();
         smesh = GetComponentsInChildren<SkinnedMeshRenderer>();
@@ -1253,6 +1254,17 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                 SendMessage("DunjeonResurrection");
             }
 
+            if (other.name == "Boss2Arena")
+            {
+                DunjeonBossArena = true;
+                Debug.Log("여기????");
+            }
+            if (other.name == "Boss2ArenaOut")
+            {
+                DunjeonBossArena = false;
+                Debug.Log("아웃");
+            }
+
             if (other.gameObject.tag == "EnemyRange")  //적에게 맞았다면
             {
                 if (other.gameObject.GetComponent<Attacking>().isAttacking && !isDamage)
@@ -1380,12 +1392,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                 }
             }
 
-            if (other.name == "Boss2Arena")
-            {
-                DunjeonBossArena = true;
-                EnemyBoss2.enemyBoss2.target = transform;//보스타겟에 자기자신넣기
-            }
-
             if (other.tag == "BOSS2_RAZOR")
             {
                 if (!isDamage)
@@ -1408,10 +1414,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (photonView.IsMine)
         {
-            if (other.name == "Boss2Arena")
-            {
-                DunjeonBossArena = false;
-            }
+            
+
         }
     }
     void OnCollisionEnter(Collision collision)

@@ -15,7 +15,6 @@ public class EnemyBoss2 : MonsterBoss
     public bool isBuffPlay;
     public Transform respawn;
     public SphereCollider nuckarea;
-    public static EnemyBoss2 enemyBoss2;
 
 
     public LayerMask whatIsTarget; // 공격 대상 레이어
@@ -31,7 +30,8 @@ public class EnemyBoss2 : MonsterBoss
     public Transform Shpos1;
     public Transform Shpos2;
 
-    public Transform target;
+    [SerializeField]
+    Transform target;
     Rigidbody rigid;
     CapsuleCollider boxCollider;
     [SerializeField]
@@ -64,7 +64,6 @@ public class EnemyBoss2 : MonsterBoss
     public bool isRazor;
     void Awake()
     {
-        enemyBoss2 = this;
         attacking = transform.GetChild(2).GetComponent<Attacking>();
         stunarea = GetComponentInChildren<Light>();
         rigid = GetComponent<Rigidbody>();
@@ -80,7 +79,7 @@ public class EnemyBoss2 : MonsterBoss
     }
     private void OnEnable()
     {
-        target = null;
+        //target = null;
         anim.SetBool("isDie", false);
         isDamage = false;
         boxCollider.enabled = true;
@@ -116,7 +115,7 @@ public class EnemyBoss2 : MonsterBoss
     {
         if (target != null)
         {
-            if ((isDie && Patterning) || target.GetComponent<PlayerST>().isDie || target ==null)
+            if ((isDie && Patterning) || target.GetComponent<PlayerST>().isDie)
             {
                 StopAllCoroutines();
             }
@@ -130,6 +129,19 @@ public class EnemyBoss2 : MonsterBoss
             enemyRange.damage *= 2f;
         }
 
+        Collider[] colliders =
+                    Physics.OverlapSphere(transform.position, 50f, whatIsTarget);
+
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            PlayerST livingEntity = colliders[i].GetComponent<PlayerST>();
+            if (livingEntity != null && !livingEntity.isDie && livingEntity.DunjeonBossArena)
+            {
+                target = livingEntity.transform;
+                break;
+            }
+        }
+
         if (!isDie)
         {
             Targerting();
@@ -137,10 +149,11 @@ public class EnemyBoss2 : MonsterBoss
             {
                 if (nav.enabled && target.GetComponent<PlayerST>().DunjeonBossArena && !target.GetComponent<PlayerST>().isDie) //추적
                 {
+                    Debug.Log("추적");
                     PatternStart();
                     if (!isAttack && !isDie)
                     {
-
+                        Debug.Log("추적응");
                         if (!isBuffPlay && !isSkill)
                             nav.speed = 6f;
 
@@ -519,7 +532,7 @@ public class EnemyBoss2 : MonsterBoss
     void FixedUpdate()
     {
 
-        FreezeVelocity();
+        //FreezeVelocity();
     }
 
     void OnTriggerEnter(Collider other)  //�ǰ�
