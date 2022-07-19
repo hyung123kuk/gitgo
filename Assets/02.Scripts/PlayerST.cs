@@ -171,7 +171,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     void Start()
     {
         nickname.text = PhotonNetwork.LocalPlayer.NickName;
-        //healthbar.CrossFadeAlpha(0, 0, true);  //자기자신 HP바 가리기
+        healthbar.CrossFadeAlpha(0, 0, true);  //자기자신 HP바 가리기
         //nickname.CrossFadeAlpha(0, 0, true);
         helathbarBack.CrossFadeAlpha(0, 0, true);
         healthbar.fillAmount = playerstat._Hp / playerstat._MAXHP;
