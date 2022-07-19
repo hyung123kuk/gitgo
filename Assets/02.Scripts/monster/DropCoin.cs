@@ -65,6 +65,7 @@ public class DropCoin : MonoBehaviourPun
                 else
                 {
                     inventory.inven.addItem(item,1);
+                LogManager.logManager.Log(item.itemName + "È¹µæ");
                      DestroyItem();
             }           
         }

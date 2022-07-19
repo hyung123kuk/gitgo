@@ -224,7 +224,7 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable //포톤으로 만들
     {
         if (photonView.IsMine)
         {
-
+            LogManager.logManager.Log((int)_Gold + "골드 획득 ");
             MONEY += _Gold;
             inven.GoldUpdate();
         }
