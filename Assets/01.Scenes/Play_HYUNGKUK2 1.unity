@@ -44453,14 +44453,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2902990328466574259, guid: 98dc29fc640672a40800660a32540488, type: 3}
-      propertyPath: m_Size.z
-      value: 65.15915
-      objectReference: {fileID: 0}
-    - target: {fileID: 2902990328466574259, guid: 98dc29fc640672a40800660a32540488, type: 3}
-      propertyPath: m_Center.z
-      value: 35.551437
-      objectReference: {fileID: 0}
     - target: {fileID: 6233579533194161453, guid: 98dc29fc640672a40800660a32540488, type: 3}
       propertyPath: m_Name
       value: MonsterManager
