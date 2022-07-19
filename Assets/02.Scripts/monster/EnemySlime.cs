@@ -353,7 +353,7 @@ public class EnemySlime : Monster
             Hiteff2.Play();
             yield return new WaitForSeconds(0.1f);
             isDamage = false;
-            SetHpBar();
+            //SetHpBar();
             if (curHealth > 0)
             {
 

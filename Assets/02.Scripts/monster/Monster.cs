@@ -411,6 +411,7 @@ public class Monster : MonoBehaviourPun
 
     public void MonsterAttack()
     {
+        StopCoroutine("MonsterHpBarOn");
         StartCoroutine(MonsterHpBarOn());
 
 
