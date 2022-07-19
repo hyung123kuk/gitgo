@@ -117,7 +117,7 @@ public class Monster : MonoBehaviourPun
                 hpBar.SetActive(false);
                 
             }
-            photonView.RPC("MasterDamaged", RpcTarget.All, _attackdamage, critical, _hp);
+            photonView.RPC("MasterDamaged", RpcTarget.Others, _attackdamage, critical, _hp);
 
             
         }
