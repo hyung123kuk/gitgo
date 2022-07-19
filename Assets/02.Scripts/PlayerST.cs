@@ -1335,6 +1335,16 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                 gameObject.transform.position = Portal.portal.DunjeonPortal.position + Portal.portal.DunjeonPortal.transform.forward * -2;
             }
 
+            if (other.tag == "BossPortalIN")
+            {
+                gameObject.transform.position = Portal.portal.BossPortalOUT.position + Portal.portal.BossPortalOUT.transform.forward * -2;
+            }
+
+            if (other.tag == "BossPortalOUT")
+            {
+                gameObject.transform.position = Portal.portal.BossPortalIN.position + Portal.portal.BossPortalIN.transform.forward * -2;
+            }
+
 
 
             if (other.tag == "BGM1")   //마을입장
