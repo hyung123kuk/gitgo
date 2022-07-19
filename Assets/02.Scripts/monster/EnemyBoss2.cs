@@ -607,7 +607,7 @@ public class EnemyBoss2 : MonsterBoss
     void Diegg()
     {
 
-        respawn.GetChild(0).gameObject.SetActive(true);
+        respawn.gameObject.SetActive(true);
         --SpawnManager.spawnManager.GolemObjs;
 
         gameObject.SetActive(false);
