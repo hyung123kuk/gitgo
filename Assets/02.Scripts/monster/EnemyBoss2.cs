@@ -15,6 +15,7 @@ public class EnemyBoss2 : MonsterBoss
     public bool isBuffPlay;
     public Transform respawn;
     public SphereCollider nuckarea;
+    public static EnemyBoss2 enemyBoss2;
 
 
     public LayerMask whatIsTarget; // 공격 대상 레이어
@@ -30,7 +31,7 @@ public class EnemyBoss2 : MonsterBoss
     public Transform Shpos1;
     public Transform Shpos2;
 
-    Transform target;
+    public Transform target;
     Rigidbody rigid;
     CapsuleCollider boxCollider;
     [SerializeField]
@@ -63,6 +64,7 @@ public class EnemyBoss2 : MonsterBoss
     public bool isRazor;
     void Awake()
     {
+        enemyBoss2 = this;
         attacking = transform.GetChild(2).GetComponent<Attacking>();
         stunarea = GetComponentInChildren<Light>();
         rigid = GetComponent<Rigidbody>();
@@ -78,6 +80,7 @@ public class EnemyBoss2 : MonsterBoss
     }
     private void OnEnable()
     {
+        target = null;
         anim.SetBool("isDie", false);
         isDamage = false;
         boxCollider.enabled = true;
@@ -108,32 +111,14 @@ public class EnemyBoss2 : MonsterBoss
 
     }
 
-    void OnDrawGizmos()
-    {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, 30);
-    }
+
     void Update()
     {
-        if (isDie && Patterning)
+        if (target != null)
         {
-            StopAllCoroutines();
-        }
-
-        Collider[] colliders =
-                    Physics.OverlapSphere(transform.position, 30f, whatIsTarget);
-
-
-        for (int i = 0; i < colliders.Length; i++)
-        {
-      
-            PlayerST livingEntity = colliders[i].GetComponent<PlayerST>();
-
-
-            if (livingEntity != null && !livingEntity.isDie)
-            { 
-                target = livingEntity.transform;
-                break;
+            if ((isDie && Patterning) || target.GetComponent<PlayerST>().isDie || target ==null)
+            {
+                StopAllCoroutines();
             }
         }
 
@@ -150,7 +135,7 @@ public class EnemyBoss2 : MonsterBoss
             Targerting();
             if (target != null)
             {
-                if (nav.enabled && target.GetComponent<PlayerST>().DunjeonBossArena) //추적
+                if (nav.enabled && target.GetComponent<PlayerST>().DunjeonBossArena && !target.GetComponent<PlayerST>().isDie) //추적
                 {
                     PatternStart();
                     if (!isAttack && !isDie)
@@ -162,15 +147,15 @@ public class EnemyBoss2 : MonsterBoss
                         isChase = true;
                         if (!isDie)
                             nav.isStopped = false;
-                        nav.destination = target.position;
+                        nav.SetDestination(target.transform.position);
                         anim.SetBool("isRun", true);
-                        if (playerST.isDie)
-                            EnemyReset();
                     }
                 }
-                else if (!target.GetComponent<PlayerST>().DunjeonBossArena && nav.enabled) //복귀
+                else if (!target.GetComponent<PlayerST>().DunjeonBossArena || target.GetComponent<PlayerST>().isDie) //복귀
                 {
+                    Debug.Log("복귀시작");
                     EnemyReset();
+                    target = null;
                 }
             }
 
@@ -194,22 +179,30 @@ public class EnemyBoss2 : MonsterBoss
     }
     void EnemyReset()
     {
-        nav.SetDestination(respawn.transform.position);
-        isChase = false;
-        nav.speed = 20f;
-        if (!isDie)
-            nav.isStopped = false;
-        //curHealth = maxHealth;
-        if (Vector3.Distance(respawn.position, transform.position) < 1f)
+        if (PhotonNetwork.IsMasterClient)
         {
+            Debug.Log("에너미리셋");
+            nav.SetDestination(respawn.transform.position);
+            isChase = false;
+            nav.speed = 5f;
             if (!isDie)
-                nav.isStopped = true;
-            anim.SetBool("isRun", false);
+                nav.isStopped = false;
+            //curHealth = maxHealth;
+            if (Vector3.Distance(respawn.position, transform.position) < 1f)
+            {
+                Debug.Log("에너미리셋2");
+                if (!isDie)
+                {
+                    Debug.Log("에너미리셋3");
+                    nav.isStopped = true;
+                }
+                anim.SetBool("isRun", false);
+            }
         }
     }
     void PatternStart()
     {
-        if (!Patterning && !playerST.isDie)
+        if (!Patterning && !playerST.isDie && target != null)
         {
             StartCoroutine(Pattern());
             Patterning = true;
@@ -461,6 +454,7 @@ public class EnemyBoss2 : MonsterBoss
     {
         Pokjueff.Stop();
         isBuffPlay = false;
+        nav.speed = 6f;
         mat.material.DOColor(Color.white, 1f);
     }
 
