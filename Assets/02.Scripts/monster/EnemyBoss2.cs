@@ -79,7 +79,6 @@ public class EnemyBoss2 : MonsterBoss
     }
     private void OnEnable()
     {
-        //target = null;
         anim.SetBool("isDie", false);
         isDamage = false;
         boxCollider.enabled = true;
@@ -97,8 +96,26 @@ public class EnemyBoss2 : MonsterBoss
         coin = 50;
         BossMonsterHpBarSet();
 
-    }
+        if (PhotonNetwork.IsMasterClient) //호스트에서만 추적
+        {
+            StartCoroutine(UpdatePath());
+        }
 
+    }
+    private bool hasTarget
+    {
+        get
+        {
+            // 추적할 대상이 존재하고, 대상이 사망하지 않았다면 true
+            if (target != null && !target.GetComponent<PlayerST>().isDie)
+            {
+                return true;
+            }
+
+            // 그렇지 않다면 false
+            return false;
+        }
+    }
     public override void BossHpBarSettting()
     {
         bossHpBar = GameObject.Find("BossMonsterHp").transform.GetChild(1).gameObject;
@@ -109,113 +126,117 @@ public class EnemyBoss2 : MonsterBoss
         item = Resources.LoadAll<GameObject>("DROP/BOSS2");
 
     }
-
-
-    void Update()
+    private IEnumerator UpdatePath()
     {
-        if (target != null)
+
+        // 살아있는 동안 무한 루프
+        while (!isDie)
         {
-            if ((isDie && Patterning) || target.GetComponent<PlayerST>().isDie)
+            if (hasTarget)
             {
-                StopAllCoroutines();
-            }
-        }
+                // 추적 대상 존재 : 경로를 갱신하고 AI 이동을 계속 진행
+                Targerting();
+                PatternStart();
+                nav.SetDestination(target.position);
 
-        if (isBuff)
-        {
-            isBuff = false;
-            nav.speed = 10f;
-            EnemyAttack enemyRange = GetComponentInChildren<EnemyAttack>();
-            enemyRange.damage *= 2f;
-        }
-
-        Collider[] colliders =
-                    Physics.OverlapSphere(transform.position, 50f, whatIsTarget);
-
-        for (int i = 0; i < colliders.Length; i++)
-        {
-            PlayerST livingEntity = colliders[i].GetComponent<PlayerST>();
-            if (livingEntity != null && !livingEntity.isDie && livingEntity.DunjeonBossArena)
-            {
-                target = livingEntity.transform;
-                break;
-            }
-        }
-
-        if (!isDie)
-        {
-            Targerting();
-            if (target != null)
-            {
-                if (nav.enabled && target.GetComponent<PlayerST>().DunjeonBossArena && !target.GetComponent<PlayerST>().isDie) //추적
+                if (!isBuff)
+                    nav.speed = 6f;
+                if (isBuff)
                 {
-                    Debug.Log("추적");
-                    PatternStart();
-                    if (!isAttack && !isDie)
-                    {
-                        Debug.Log("추적응");
-                        if (!isBuffPlay && !isSkill)
-                            nav.speed = 6f;
-
-                        isChase = true;
-                        if (!isDie)
-                            nav.isStopped = false;
-                        nav.SetDestination(target.transform.position);
-                        anim.SetBool("isRun", true);
-                    }
+                    isBuff = false;
+                    nav.speed = 10f;
+                    EnemyAttack enemyRange = GetComponentInChildren<EnemyAttack>();
+                    enemyRange.damage *= 2f;
                 }
-                else if (!target.GetComponent<PlayerST>().DunjeonBossArena || target.GetComponent<PlayerST>().isDie) //복귀
+                if (!isAttack && !isSkill)
                 {
-                    Debug.Log("복귀시작");
+                    isChase = true;
+                    if (!isDie)
+                        nav.isStopped = false;
+                    anim.SetBool("isRun", true);
+                }
+                if (Vector3.Distance(target.position, transform.position) > 40f || !target.GetComponent<PlayerST>().DunjeonBossArena)
+                {
                     EnemyReset();
                     target = null;
                 }
+
+
             }
-
-        }
-
-        if (target != null)
-        {
-            if (target.GetComponent<PlayerST>().DunjeonBossArena)
+            else
             {
-                if (isChase || isAttack)
+                // 추적 대상 없음 : AI 이동 중지
+                EnemyReset();
+
+                // 20 유닛의 반지름을 가진 가상의 구를 그렸을때, 구와 겹치는 모든 콜라이더를 가져옴
+                // 단, targetLayers에 해당하는 레이어를 가진 콜라이더만 가져오도록 필터링
+                Collider[] colliders =
+                    Physics.OverlapSphere(transform.position, 16f, whatIsTarget);
+
+                // 모든 콜라이더들을 순회하면서, 살아있는 플레이어를 찾기
+                for (int i = 0; i < colliders.Length; i++)
                 {
-                    if (!isDie && !playerST.isJump && !playerST.isFall && !isRazor)//플레이어가 공중에 뜬 상태가 아닐때만 바라보기
-                        transform.LookAt(target);
+                    // 콜라이더로부터 PlayerST 컴포넌트 가져오기
+                    PlayerST livingEntity = colliders[i].GetComponent<PlayerST>();
+
+                    // PlayerST 컴포넌트가 존재하며, 해당 LivingEntity가 살아있다면,
+                    if (livingEntity != null && !livingEntity.isDie)
+                    {
+                        // 추적 대상을 해당 LivingEntity로 설정
+                        target = livingEntity.transform;
+
+                        // for문 루프 즉시 정지
+                        break;
+                    }
                 }
             }
+
+            // 0.25초 주기로 처리 반복
+            yield return new WaitForSeconds(0.25f);
         }
+    }
+    void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireSphere(transform.position, 16);
+    }
+    void Update()
+    {
+        if (isDie && Patterning)
+        {
+            StopAllCoroutines();
+        }
+        if (target != null)
+        {
 
+            if (isChase || isAttack)
+            {
+                if (!isDie && !playerST.isJump && !playerST.isFall && !isRazor)//플레이어가 공중에 뜬 상태가 아닐때만 바라보기
+                    transform.LookAt(target);
+            }
 
-
-
+        }
     }
     void EnemyReset()
     {
-        if (PhotonNetwork.IsMasterClient)
+        nav.SetDestination(respawn.transform.position);
+        isChase = false;
+        anim.SetBool("isRun", true);
+        nav.speed = 5f;
+        if (!isDie)
+            nav.isStopped = false;
+        //curHealth = maxHealth;
+        if (Vector3.Distance(respawn.position, transform.position) < 1f)
         {
-            Debug.Log("에너미리셋");
-            nav.SetDestination(respawn.transform.position);
-            isChase = false;
-            nav.speed = 5f;
             if (!isDie)
-                nav.isStopped = false;
-            //curHealth = maxHealth;
-            if (Vector3.Distance(respawn.position, transform.position) < 1f)
-            {
-                Debug.Log("에너미리셋2");
-                if (!isDie)
-                {
-                    Debug.Log("에너미리셋3");
-                    nav.isStopped = true;
-                }
-                anim.SetBool("isRun", false);
-            }
+                nav.isStopped = true;
+            anim.SetBool("isRun", false);
+            rigid.velocity = Vector3.zero;
         }
     }
     void PatternStart()
     {
-        if (!Patterning && !playerST.isDie && target != null)
+        if (!Patterning && !playerST.isDie)
         {
             StartCoroutine(Pattern());
             Patterning = true;
@@ -249,13 +270,13 @@ public class EnemyBoss2 : MonsterBoss
                     photonView.RPC("Razor", RpcTarget.All);
                     MonsterAttack();
                     break;
-                case 6:  
+                case 6:
                 case 7:
                     //어둠장판 만드는스킬
                     photonView.RPC("Skill1", RpcTarget.All);
                     MonsterAttack();
                     break;
-                case 8:     
+                case 8:
                 case 9:
                     //피 회복스킬
                     photonView.RPC("Heal", RpcTarget.All);
@@ -384,7 +405,7 @@ public class EnemyBoss2 : MonsterBoss
             SetHpBar();
             Debug.Log(curHealth);
         }
-        if(HealStop)
+        if (HealStop)
             nav.speed = 6f;
         yield return new WaitForSeconds(1f);
         if (!HealStop)
@@ -426,13 +447,13 @@ public class EnemyBoss2 : MonsterBoss
         nav.speed = 6f;
         isChase = true;
         isAttack = false;
-        if(!isDie)
-        nav.isStopped = false;
+        if (!isDie)
+            nav.isStopped = false;
         isSkill = false;
         HealStop = false;
         yield return new WaitForSeconds(2.5f);
-        if(Patterning)
-        Patterning = false;
+        if (Patterning)
+            Patterning = false;
     }
     [PunRPC]
     IEnumerator Pokju()
@@ -461,13 +482,12 @@ public class EnemyBoss2 : MonsterBoss
 
         yield return new WaitForSeconds(3.5f);
         Patterning = false;
-       
+
     }
     void BuffTime()
     {
         Pokjueff.Stop();
         isBuffPlay = false;
-        nav.speed = 6f;
         mat.material.DOColor(Color.white, 1f);
     }
 
@@ -525,14 +545,14 @@ public class EnemyBoss2 : MonsterBoss
         isChase = true;
         isAttack = false;
         anim.SetBool("isAttack", false);
-        if(!isDie)
-        nav.isStopped = false;
+        if (!isDie)
+            nav.isStopped = false;
 
     }
     void FixedUpdate()
     {
 
-        //FreezeVelocity();
+        FreezeVelocity();
     }
 
     void OnTriggerEnter(Collider other)  //�ǰ�

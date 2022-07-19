@@ -121,7 +121,7 @@ public class EnemyBoss1 : MonsterBoss
 
     void Update()
     {
-        if (isDie)
+        if (isDie && Patterning)
         {
             StopAllCoroutines();
         }
