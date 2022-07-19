@@ -326,6 +326,8 @@ public class EnemyRange : Monster
 
     public override void Die()
     {
+        target = null;
+        hpBarFlame.gameObject.SetActive(false);
         questNormal.GoblinKillCount();
         MonsterDie();
         if (!isDie)
