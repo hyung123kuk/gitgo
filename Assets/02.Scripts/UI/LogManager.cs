@@ -70,7 +70,7 @@ public class LogManager : MonoBehaviour
         logText.color = color;
     }
 
-    public void Log(string TextLog,bool Error =false)
+    public void Log(string TextLog,bool Error =false )
     {
         LogUp();
         logText[0].text = TextLog;
