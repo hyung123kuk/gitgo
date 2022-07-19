@@ -393,17 +393,22 @@ public class EnemyBoss2 : MonsterBoss
         curHealth += 500;
         if (curHealth > maxHealth)
             curHealth = maxHealth;
-        BossHpBarSet();
-        SetHpBar();
+        if (!isDie)
+        {
+            BossHpBarSet();
+            SetHpBar();
+        }
         yield return new WaitForSeconds(1f);
         if (!HealStop)
         {
             curHealth += 500;
             if (curHealth > maxHealth)
                 curHealth = maxHealth;
-            BossHpBarSet();
-            SetHpBar();
-            Debug.Log(curHealth);
+            if (!isDie)
+            {
+                BossHpBarSet();
+                SetHpBar();
+            }
         }
         if (HealStop)
             nav.speed = 6f;
@@ -413,9 +418,11 @@ public class EnemyBoss2 : MonsterBoss
             curHealth += 500;
             if (curHealth > maxHealth)
                 curHealth = maxHealth;
-            BossHpBarSet();
-            SetHpBar();
-            Debug.Log(curHealth);
+            if (!isDie)
+            {
+                BossHpBarSet();
+                SetHpBar();
+            }
         }
         if (HealStop)
             nav.speed = 6f;
@@ -425,9 +432,11 @@ public class EnemyBoss2 : MonsterBoss
             curHealth += 500;
             if (curHealth > maxHealth)
                 curHealth = maxHealth;
-            BossHpBarSet();
-            SetHpBar();
-            Debug.Log(curHealth);
+            if (!isDie)
+            {
+                BossHpBarSet();
+                SetHpBar();
+            }
         }
         if (HealStop)
             nav.speed = 6f;
@@ -437,9 +446,11 @@ public class EnemyBoss2 : MonsterBoss
             curHealth += 500;
             if (curHealth > maxHealth)
                 curHealth = maxHealth;
-            BossHpBarSet();
-            SetHpBar();
-            Debug.Log(curHealth);
+            if (!isDie)
+            {
+                BossHpBarSet();
+                SetHpBar();
+            }
         }
         isHeal = false;
         Healeff.Stop();
@@ -629,6 +640,7 @@ public class EnemyBoss2 : MonsterBoss
             return;
         isDie = true;
         boxCollider.enabled = false;
+        isSkill = false;
 
         isChase = false; //�׾����� ��������
         anim.SetBool("isDie", true);
