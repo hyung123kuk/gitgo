@@ -321,7 +321,7 @@ public class EnemyRange : Monster
         Hiteff2.Play();
         yield return new WaitForSeconds(0.1f);
         isDamage = false;
-        SetHpBar();
+        //SetHpBar();
     }
 
     public override void Die()
