@@ -29,7 +29,7 @@ public class Peter : NPC
             {
                 Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-                if (Physics.Raycast(ray, out hit, maxDistance: 5f))
+                if (Physics.Raycast(ray, out hit, maxDistance: 10f))
                 {
                     if (hit.transform.gameObject.tag == "PETER")
                     {
