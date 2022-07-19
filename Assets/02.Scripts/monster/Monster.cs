@@ -79,11 +79,6 @@ public class Monster : MonoBehaviourPun
 
     }
 
-    private void OnEnable()
-    {
-        SetColor(0);
-    }
-
     [PunRPC]
     public virtual void MonsterRespawn()
     {
@@ -104,90 +99,7 @@ public class Monster : MonoBehaviourPun
         tr.position = pos;
     }
 
-    [PunRPC]
-    public virtual void MasterDamaged(float _attackdamage,bool critical,float _hp) {
 
-        if (PhotonNetwork.IsMasterClient)
-        {
-            curHealth -= _attackdamage;
-           
-            if(curHealth <= 0)
-            {
-                Die();
-                hpBar.SetActive(false);
-                
-            }
-            photonView.RPC("MasterDamaged", RpcTarget.Others, _attackdamage, critical, _hp);
-
-            
-        }
-        else
-        {
-            curHealth = _hp;
-            if (curHealth<=0)
-            {
-
-                Die();
-                hpBar.SetActive(false);
-            }
-
-        }
-        GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
-        var _damage = damage.GetComponent<DamageUI>();
-        _damage.targetTr = this.gameObject.transform;
-        Text damagevalue = damage.GetComponent<Text>();
-        if (!critical)
-        {
-            damage.transform.GetChild(0).gameObject.SetActive(false);
-            damage.GetComponent<Outline>().enabled = false;
-            damagevalue.color = Color.red;
-        }
-        //Debug.Log(_attackdamage);
-        string dam = ((int)_attackdamage).ToString();
-
-        damagevalue.text = dam;
-        SetHpBar();
-
-        shakeTime = Time.time;
-        if (gameObject.activeSelf)
-            StartCoroutine(HitShake());
-
-    }
-    [PunRPC]
-    public virtual void Damaged(float _hp, bool critical, bool die,float _attackdamage)
-    {
-        if (!PhotonNetwork.IsMasterClient)
-        {
-            curHealth = _hp;
-            if (die)
-            {
-
-                Die();
-                hpBar.SetActive(false);
-            }
-        }
-
-        GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
-        var _damage = damage.GetComponent<DamageUI>();
-        _damage.targetTr = this.gameObject.transform;
-        Text damagevalue = damage.GetComponent<Text>();
-        if (!critical)
-        {
-            damage.transform.GetChild(0).gameObject.SetActive(false);
-            damage.GetComponent<Outline>().enabled = false;
-            damagevalue.color = Color.red;
-        }
-        //Debug.Log(_attackdamage);
-        string dam = ((int)_attackdamage).ToString();
-
-        damagevalue.text = dam;
-        SetHpBar();
-
-        shakeTime = Time.time;
-        if (gameObject.activeSelf)
-            StartCoroutine(HitShake());
-
-    }
 
 
     [PunRPC]
@@ -242,10 +154,7 @@ public class Monster : MonoBehaviourPun
     {
         if (playerST.CharacterType == PlayerST.Type.Warrior || weapons.GetComponent<PhotonView>().IsMine)
         {
-
-            photonView.RPC("MasterDamaged", RpcTarget.MasterClient, attackdamage.attackDamage, attackdamage.critical,curHealth);
-            SetTarget(attackdamage.gameObject);
-            //OnDamage(attackdamage.attackDamage, attackdamage.critical, true); //맞았을때 로컬을 트루로해서 다른데에서도 OnDamage가 적용되게
+            OnDamage(attackdamage.attackDamage, attackdamage.critical, true); //맞았을때 로컬을 트루로해서 다른데에서도 OnDamage가 적용되게
 
             DamageSet();
             BossHpBarSet();
@@ -392,42 +301,37 @@ public class Monster : MonoBehaviourPun
     public void StartMonster()
     {
         StartHpbar();
-        
+        SetColor(0);
         isSpread = false;
     }
-    GameObject hpBar;
+
     private void StartHpbar()
     {
         curHealth = maxHealth;
 
-        if (hpBar == null)
-        {
-            hpBarPrefab = Resources.Load<GameObject>("Enemy_HpBar");
-            uiCanvas = GameObject.Find("EnemyHp_Bar_UI").GetComponent<Canvas>();
-            hpBar = Instantiate<GameObject>(hpBarPrefab, uiCanvas.transform);
+        hpBarPrefab = Resources.Load<GameObject>("Enemy_HpBar");
+        uiCanvas = GameObject.Find("EnemyHp_Bar_UI").GetComponent<Canvas>();
+        GameObject hpBar = Instantiate<GameObject>(hpBarPrefab, uiCanvas.transform);
 
-            hpBarFlame = hpBar.GetComponentsInChildren<Image>()[0];
-            backHpBarImage = hpBar.GetComponentsInChildren<Image>()[1];
-            hpBarImage = hpBar.GetComponentsInChildren<Image>()[2];
-            level = hpBar.transform.GetChild(2).GetChild(0).GetComponent<Text>();
-            levelFlame = hpBar.transform.GetChild(2).GetComponent<Image>();
-            Monstername = hpBar.transform.GetChild(3).GetComponent<Text>();
+        hpBarFlame = hpBar.GetComponentsInChildren<Image>()[0];
+        backHpBarImage = hpBar.GetComponentsInChildren<Image>()[1];
+        hpBarImage = hpBar.GetComponentsInChildren<Image>()[2];
+        level = hpBar.transform.GetChild(2).GetChild(0).GetComponent<Text>();
+        levelFlame = hpBar.transform.GetChild(2).GetComponent<Image>();
+        Monstername = hpBar.transform.GetChild(3).GetComponent<Text>();
 
 
 
-            var _hpbar = hpBar.GetComponent<EnemyHpBar>();
-            _hpbar.targetTr = this.gameObject.transform;
-            _hpbar.offset = hpBarOffset;
-        }
-        hpBar.SetActive(false);
-        SetHpBar();
+        var _hpbar = hpBar.GetComponent<EnemyHpBar>();
+        _hpbar.targetTr = this.gameObject.transform;
+        _hpbar.offset = hpBarOffset;
     }
 
     public void SetHpBar()
     {
         hpBarImage.fillAmount = curHealth / maxHealth;
-        //if (gameObject.activeSelf)
-            //StartCoroutine(MonsterHpBarOn());
+        if (gameObject.activeSelf)
+            StartCoroutine(MonsterHpBarOn());
     }
 
 
@@ -482,7 +386,7 @@ public class Monster : MonoBehaviourPun
         }
 
 
-        
+        SetColor(0);
         if (PhotonNetwork.IsMasterClient)
         {
             if (!isSpread)
@@ -507,17 +411,10 @@ public class Monster : MonoBehaviourPun
 
     public void MonsterAttack()
     {
-        if (curHealth > 0)
-        {
-            if (!hpBar.activeSelf)
-            {
-                hpBar.SetActive(true);
-            }
-            StopCoroutine("MonsterHpBarOn");
-            StartCoroutine(MonsterHpBarOn());
+        StartCoroutine(MonsterHpBarOn());
 
 
-        }
+
     }
 
     public virtual void BossHpBarSet()
@@ -527,7 +424,6 @@ public class Monster : MonoBehaviourPun
 
     IEnumerator MonsterHpBarOn()
     {
-        
         SetColor(1);
         yield return new WaitForSeconds(5.0f);
         SetColor(0);
@@ -559,7 +455,7 @@ public class Monster : MonoBehaviourPun
         color.a = _alpha;
         Monstername.color = color;
 
-       
+
     }
 
 }
