@@ -1337,7 +1337,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
             if (other.tag == "BossPortalIN")
             {
-                gameObject.transform.position = Portal.portal.BossPortalOUT.position + Portal.portal.BossPortalOUT.transform.forward * -2;
+                gameObject.transform.position = Portal.portal.BossPortalOUT.position + Portal.portal.BossPortalOUT.transform.forward * 2;
             }
 
             if (other.tag == "BossPortalOUT")
