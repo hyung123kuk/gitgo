@@ -448,7 +448,7 @@ public class SpawnManager : MonoBehaviourPun
                 GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[6]);
 
                 enemy.transform.position = TurtleSlimePoint.position;
-                enemy.GetComponent<EnemyRange>().respawn = TurtleSlimePoint;
+                enemy.GetComponent<EnemyBoss1>().respawn = TurtleSlimePoint;
                 TurtleSlimePoint.gameObject.SetActive(false);
                 TurtleSlimeidx = 0;
                 break;
@@ -480,7 +480,7 @@ public class SpawnManager : MonoBehaviourPun
                 GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[5]);
 
                 enemy.transform.position = SkeletonPoints[i].position;
-                enemy.GetComponent<EnemyRange>().respawn = SkeletonPoints[i];
+                enemy.GetComponent<EnemySkeleton>().respawn = SkeletonPoints[i];
                 SkeletonPoints[i].gameObject.SetActive(false);
                 Skeletonidx = 0;
                 break;
@@ -512,7 +512,7 @@ public class SpawnManager : MonoBehaviourPun
                 GameObject enemy = MonsterManager.monsterManager.MakeObj(monsters[7]);
 
                 enemy.transform.position = GolemPoint.position;
-                enemy.GetComponent<EnemyRange>().respawn = GolemPoint;
+                enemy.GetComponent<EnemyBoss2>().respawn = GolemPoint;
                 GolemPoint.gameObject.SetActive(false);
                 Golemidx = 0;
                 break;
