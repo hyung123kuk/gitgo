@@ -495,6 +495,7 @@ public class Monster : MonoBehaviourPun
     [PunRPC]
     public void ResetMonster()
     {
+        StopAllCoroutines();
         Destroy(gameObject);
     }
 
