@@ -77,6 +77,7 @@ public class EnemySkeleton : Monster
         StartMonster();
         Monstername.text = "스켈레톤";
         level.text = "8";
+        Exp = 150;
         questNormal = FindObjectOfType<QuestNormal>();
         coin = 50;
         // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작

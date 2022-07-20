@@ -75,6 +75,7 @@ public class EnemyGoblin2 : Monster
         StartMonster();
         Monstername.text = "고블린";
         level.text = "4";
+        Exp = 50;
         coin = 20;
 
         // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작

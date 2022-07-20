@@ -115,6 +115,7 @@ public class EnemyBoss2 : MonsterBoss
         level.text = "10";
         coin = 50;
         coinCount = 20;
+        Exp = 300;
         BossMonsterHpBarSet();
 
         if (PhotonNetwork.IsMasterClient) //호스트에서만 추적

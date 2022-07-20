@@ -76,7 +76,7 @@ public class EnemyRange : Monster
         Monstername.text = "리치";
         level.text = "7";
         coin = 35;
-
+        Exp = 120;
         // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
 
         if (PhotonNetwork.IsMasterClient) //호스트에서만 추적
@@ -328,7 +328,7 @@ public class EnemyRange : Monster
     {
         target = null;
         hpBarFlame.gameObject.SetActive(false);
-        questNormal.GoblinKillCount();
+        questNormal.SkelletonKillCount();
         MonsterDie();
         if (!isDie)
             nav.isStopped = true;
