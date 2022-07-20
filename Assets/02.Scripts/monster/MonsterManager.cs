@@ -42,12 +42,12 @@ public class MonsterManager : MonoBehaviourPunCallbacks
 
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
-        
+
         Debug.Log("마스터클라이언트 나감");
         ResetBox.SetActive(true);
 
         Invoke("Generate", 0.1f);
-       
+
     }
 
     public void RemoveMonster()
@@ -120,7 +120,7 @@ public class MonsterManager : MonoBehaviourPunCallbacks
         TurtleSlime.GetComponent<EnemyBoss1>().respawn = SpawnManager.spawnManager.TurtleSlimePoint;
         Golem.GetComponent<EnemyBoss2>().respawn = SpawnManager.spawnManager.GolemPoint;
     }
-    public void Generate()  //Ǯ�� ����
+    public void Generate()  //Ǯ       
     {
         ResetBox.SetActive(false);
         GameObject SlimePools = new GameObject("Slime Pool");
@@ -246,7 +246,7 @@ public class MonsterManager : MonoBehaviourPunCallbacks
     }
 
 
-    public GameObject MakeObj(string type) //Ǯ�� ��ȯ
+    public GameObject MakeObj(string type) //Ǯ     ȯ
     {
 
         Debug.Log("makeobj함수 들어오나?");
