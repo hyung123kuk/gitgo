@@ -95,15 +95,12 @@ public class Monster : MonoBehaviourPun, IPunObservable
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
-        Debug.Log("테스트1");
         if (stream.IsWriting)
         {
-            Debug.Log("테스트2");
             stream.SendNext(curHealth);
         }
         else
         {
-            Debug.Log("테스트3");
             curHealth = (float)stream.ReceiveNext();
         }
     }
