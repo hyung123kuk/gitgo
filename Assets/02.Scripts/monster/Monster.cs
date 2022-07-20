@@ -31,8 +31,8 @@ public class Monster : MonoBehaviourPun
 
     [SerializeField]
     AttackDamage attackdamage;
-    public float maxHealth; //ÃÖ´ëhp
-    public float curHealth; //ÇöÀçhp
+    public float maxHealth; //ï¿½Ö´ï¿½hp
+    public float curHealth; //ï¿½ï¿½ï¿½ï¿½hp
 
     public float explPower;
     public float upPower;
@@ -43,7 +43,7 @@ public class Monster : MonoBehaviourPun
 
     public bool isSpread = false;
 
-    //½¦ÀÌÅ· °ü·Ã
+    //ï¿½ï¿½ï¿½ï¿½Å· ï¿½ï¿½ï¿½ï¿½
     float allX = 0;
     float allY = 0;
     float allZ = 0;
@@ -120,7 +120,7 @@ public class Monster : MonoBehaviourPun
     public virtual void OnDamage(float _attackdamage, bool critical, bool Local)
     {
 
-        if (Local) // ·ÎÄÃÀÏ¶§ ´Ù¸¥°÷¿¡¼­ º¸³¿ ·ÎÄÃ¾Æ´Ï¸é Áßº¹ ¸·±âÀ§ÇØ ¸·À½
+        if (Local) // ï¿½ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã¾Æ´Ï¸ï¿½ ï¿½ßºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
             photonView.RPC("OnDamage", RpcTarget.Others, _attackdamage, critical, false);
             SetTarget(attackdamage.gameObject);
@@ -169,7 +169,7 @@ public class Monster : MonoBehaviourPun
     {
         if (playerST.CharacterType == PlayerST.Type.Warrior || weapons.GetComponent<PhotonView>().IsMine)
         {
-            OnDamage(attackdamage.attackDamage, attackdamage.critical, true); //¸Â¾ÒÀ»¶§ ·ÎÄÃÀ» Æ®·ç·ÎÇØ¼­ ´Ù¸¥µ¥¿¡¼­µµ OnDamage°¡ Àû¿ëµÇ°Ô
+            OnDamage(attackdamage.attackDamage, attackdamage.critical, true); //ï¿½Â¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ OnDamageï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°ï¿½
 
             DamageSet();
             BossHpBarSet();
@@ -472,6 +472,31 @@ public class Monster : MonoBehaviourPun
         Monstername.color = color;
 
 
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "RESET")
+        {
+            photonView.RPC("ResetMonster", RpcTarget.All);
+
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "RESET")
+        {
+            photonView.RPC("ResetMonster", RpcTarget.All);
+
+        }
+    }
+
+
+    [PunRPC]
+    public void ResetMonster()
+    {
+        StopAllCoroutines();
+        Destroy(gameObject);
     }
 
 }
