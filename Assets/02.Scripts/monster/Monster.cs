@@ -90,8 +90,10 @@ public class Monster : MonoBehaviourPun, IPunObservable
     [PunRPC]
     public void MonsterHp(float Damagedhealth)
     {
-        curHealth = maxHealth - Damagedhealth;
+        curHealth = curHealth - Damagedhealth;
     }
+
+   
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
