@@ -131,7 +131,7 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
         questTyping.QuestStartKey();
     }
 
-
+    bool OneLV8 = false;
     public void MainQuest() //메인퀘스트 창 열기
     {
 
@@ -173,7 +173,7 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
         }
 
 
-        else if (mainNum == 4 && !isMainRecive) // 7레벨 달성
+        else if (mainNum == 4 && !isMainRecive) // 8레벨 달성
         {
             questTyping.mainnum = 4;
             TypingStart();
@@ -181,8 +181,9 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
         }
         else if (mainNum == 4 && isMainRecive)
         {
-            if (playerstat.Level >= 8)
+            if (playerstat.Level >= 8 && !OneLV8)
             {
+                OneLV8 = true;
                 MainQuestSuccess(4);
             }
             QuestExplain.questExplain.Main4(questTyping.main4_item, true, MainSuccess);
