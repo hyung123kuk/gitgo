@@ -102,6 +102,7 @@ public class Weapons : MonoBehaviourPun, IPunObservable
                 stream.SendNext(mage_skill4_Order);
                 stream.SendNext(MeteoCasting);
                 stream.SendNext(isMeteo);
+                stream.SendNext(isIceage);
             }
 
         }
@@ -122,6 +123,7 @@ public class Weapons : MonoBehaviourPun, IPunObservable
                 mage_skill4_Order = (int)stream.ReceiveNext();
                 MeteoCasting = (float)stream.ReceiveNext();
                 isMeteo = (bool)stream.ReceiveNext();
+                isIceage = (bool)stream.ReceiveNext();
             }
 
         }
