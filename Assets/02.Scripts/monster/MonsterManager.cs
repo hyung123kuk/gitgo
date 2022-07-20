@@ -43,8 +43,10 @@ public class MonsterManager : MonoBehaviourPunCallbacks
     public override void OnMasterClientSwitched(Player newMasterClient)
     {
         Debug.Log("마스터클라이언트 나감");
+        RemoveMonster();
         Generate();
     }
+
 
 
     public void Generate()  //Ǯ�� ����
@@ -169,6 +171,46 @@ public class MonsterManager : MonoBehaviourPunCallbacks
         }
 
 
+    }
+    public void RemoveMonster()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            for (int i = 0; i < Slime.Length; i++)
+            {
+                if(photonView.CreatorActorNr == 0)
+                PhotonNetwork.Destroy(Slime[i]);
+            }
+            for (int i = 0; i < BlueSlime.Length; i++)
+            {
+                if (photonView.CreatorActorNr == 0)
+                    PhotonNetwork.Destroy(BlueSlime[i]);
+            }
+            for (int i = 0; i < Goblin.Length; i++)
+            {
+                if (photonView.CreatorActorNr == 0)
+                    PhotonNetwork.Destroy(Goblin[i]);
+            }
+            for (int i = 0; i < Goblin2.Length; i++)
+            {
+                if (photonView.CreatorActorNr == 0)
+                    PhotonNetwork.Destroy(Goblin2[i]);
+            }
+            for (int i = 0; i < GoblinArcher.Length; i++)
+            {
+                if (photonView.CreatorActorNr == 0)
+                    PhotonNetwork.Destroy(GoblinArcher[i]);
+            }
+            for (int i = 0; i < Skeleton.Length; i++)
+            {
+                if (photonView.CreatorActorNr == 0)
+                    PhotonNetwork.Destroy(Skeleton[i]);
+            }
+            if (photonView.CreatorActorNr == 0)
+                PhotonNetwork.Destroy(TurtleSlime);
+            if (photonView.CreatorActorNr == 0)
+                PhotonNetwork.Destroy(Golem);
+        }
     }
     public void startSetting()
     {
