@@ -62,6 +62,20 @@ public class EnemyBoss2 : MonsterBoss
     public GameObject Razoreff;
     public ParticleSystem RazorReadyeff;
     public bool isRazor;
+    private bool hasTarget
+    {
+        get
+        {
+            // 추적할 대상이 존재하고, 대상이 사망하지 않았다면 true
+            if (target != null && !target.GetComponent<PlayerST>().isDie)
+            {
+                return true;
+            }
+
+            // 그렇지 않다면 false
+            return false;
+        }
+    }
     void Awake()
     {
         attacking = transform.GetChild(2).GetComponent<Attacking>();
@@ -78,6 +92,11 @@ public class EnemyBoss2 : MonsterBoss
         }
         dropResourceString = "BOSS2";
     }
+
+    public override void BossHpBarSettting()
+    {
+        bossHpBar = GameObject.Find("BossMonsterHp").transform.GetChild(1).gameObject;
+    }
     private void OnEnable()
     {
         anim.SetBool("isDie", false);
@@ -85,7 +104,7 @@ public class EnemyBoss2 : MonsterBoss
         boxCollider.enabled = true;
         isAttack = false;
         nav.isStopped = false;
-
+        nav.speed = 6f;
         isDie = false;
         curHealth = maxHealth;
         anim = GetComponent<Animator>();
@@ -103,24 +122,8 @@ public class EnemyBoss2 : MonsterBoss
         }
 
     }
-    private bool hasTarget
-    {
-        get
-        {
-            // 추적할 대상이 존재하고, 대상이 사망하지 않았다면 true
-            if (target != null && !target.GetComponent<PlayerST>().isDie)
-            {
-                return true;
-            }
-
-            // 그렇지 않다면 false
-            return false;
-        }
-    }
-    public override void BossHpBarSettting()
-    {
-        bossHpBar = GameObject.Find("BossMonsterHp").transform.GetChild(1).gameObject;
-    }
+    
+    
 
     public void BossItemSet()
     {
@@ -367,6 +370,7 @@ public class EnemyBoss2 : MonsterBoss
             Instantiate(skele, Sohwanpos[i].position, Sohwanpos[i].rotation);
         }
         anim.SetBool("Skill1", false);
+        if(!isDie)
         nav.isStopped = false;
         isChase = true;
         isAttack = false;
@@ -564,7 +568,7 @@ public class EnemyBoss2 : MonsterBoss
     void FixedUpdate()
     {
 
-        FreezeVelocity();
+        //FreezeVelocity();
     }
 
     void OnTriggerEnter(Collider other)  //�ǰ�
@@ -624,24 +628,24 @@ public class EnemyBoss2 : MonsterBoss
 
     public override void Die()
     {
-        BossDrop();
-        MonsterDie();
-        BossHpBarSet();
-        if (!isDie)
-            nav.isStopped = true;
-        if (isDie)
-            return;
         isDie = true;
-        boxCollider.enabled = false;
-        isSkill = false;
-
-        isChase = false; //�׾����� ��������
-        anim.SetBool("isDie", true);
-
-        Invoke("Diegg", 1.5f);
-        if (!questStore.MainSuccess)
+        if (isDie)
         {
-            questStore.MainQuestSuccess(5);
+            BossDrop();
+            MonsterDie();
+            BossHpBarSet();
+            nav.speed = 0f;
+            //if (isDie)
+            //    return;
+            boxCollider.enabled = false;
+            isSkill = false;
+            isChase = false; //�׾����� ��������
+            anim.SetBool("isDie", true);
+            Invoke("Diegg", 1.5f);
+            if (!questStore.MainSuccess)
+            {
+                questStore.MainQuestSuccess(5);
+            }
         }
     }
 

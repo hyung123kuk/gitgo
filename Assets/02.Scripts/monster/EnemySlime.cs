@@ -368,8 +368,6 @@ public class EnemySlime : Monster
 
     public override void Die()
     {
-        
-
         MonsterDie();
         if (!isDie)
             nav.isStopped = true;
