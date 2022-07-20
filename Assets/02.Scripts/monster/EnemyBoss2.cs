@@ -645,7 +645,7 @@ public class EnemyBoss2 : MonsterBoss
 
         isChase = false; //�׾����� ��������
         anim.SetBool("isDie", true);
-        gameObject.SetActive(false);
+
         Invoke("Diegg", 1.5f);
         if (!questStore.MainSuccess)
         {
