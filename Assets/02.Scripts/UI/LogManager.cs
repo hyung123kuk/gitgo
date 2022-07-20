@@ -79,7 +79,7 @@ public class LogManager : MonoBehaviour
         else if (Error) { logText[0].color = Color.red;
             ErrorShake();
         }
-        StopCoroutine(LogDisappear());
+        StopCoroutine("LogDisappear");
         StartCoroutine(LogDisappear());
     }
 
