@@ -86,7 +86,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
 
 
-
+    
 
     public bool isFall; //공중에 떠있는상태? 몬스터들의 룩엣을 조정하기위함.
     //======================전사 스킬========================//
@@ -154,6 +154,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         healthbar = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Image>();
         helathbarBack = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(2).GetComponent<Image>();
     }
+
     [PunRPC]
     void NicknameSerching() //닉넴찾기 다른플레이어
     {

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
+using Photon.Realtime;
 
-public class MonsterManager : MonoBehaviourPun
+public class MonsterManager : MonoBehaviourPunCallbacks
 {
     public GameObject SlimePrefabs;
     public GameObject BlueSlimePrefabs;
@@ -38,6 +39,13 @@ public class MonsterManager : MonoBehaviourPun
         Skeleton = new GameObject[10];
         Invoke("Generate", 0.2f); //마스터 플레이어가 나갔을때 몬스터가 생성이 안된다면 이 0.2초사이에 마스터플레이어가 나갔을 것입니다.. 수정 필요하긴합니다 이부분.
     }
+
+    public override void OnMasterClientSwitched(Player newMasterClient)
+    {
+        Debug.Log("마스터클라이언트 나감");
+        Generate();
+    }
+
 
     public void Generate()  //Ǯ�� ����
     {
@@ -101,7 +109,6 @@ public class MonsterManager : MonoBehaviourPun
             TurtleSlime = turtle.gameObject;
             Golem = golem.gameObject;
 
-            //SpawnManager.spawnManager.startSetting();
         }
 
         if (PhotonNetwork.IsMasterClient)
@@ -163,7 +170,7 @@ public class MonsterManager : MonoBehaviourPun
 
     }
 
-
+    
     public GameObject MakeObj(string type) //Ǯ�� ��ȯ
     {
 

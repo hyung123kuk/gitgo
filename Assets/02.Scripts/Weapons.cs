@@ -4,7 +4,7 @@ using UnityEngine;
 using DG.Tweening;
 using Photon.Pun;
 
-public class Weapons : MonoBehaviourPun, IPunObservable
+public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
 {
     public enum Type { Melee, Range, Mage }; //근접무기와 원거리무기 구분
     public Type type;
