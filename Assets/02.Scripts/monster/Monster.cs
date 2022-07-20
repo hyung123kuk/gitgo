@@ -474,28 +474,4 @@ public class Monster : MonoBehaviourPun
 
     }
 
-    private void OnCollisionStay(Collision collision)
-    {
-        if (collision.gameObject.tag == "RESET")
-        {
-            photonView.RPC("ResetMonster", RpcTarget.All);
-
-        }
-    }
-    private void OnTriggerStay(Collider other)
-    {
-        if (other.tag == "RESET")
-        {
-            photonView.RPC("ResetMonster", RpcTarget.All);
-
-        }
-    }
-
-
-    [PunRPC]
-    public void ResetMonster()
-    {
-        Destroy(gameObject);
-    }
-
 }
