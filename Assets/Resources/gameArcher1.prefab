@@ -206,7 +206,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
-  NoDestroy: 0
+  NoDestroy: 1
 --- !u!1 &4947185038136804564
 GameObject:
   m_ObjectHideFlags: 0

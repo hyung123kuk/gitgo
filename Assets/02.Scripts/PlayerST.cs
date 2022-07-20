@@ -144,7 +144,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         {
             this.enabled = false;
         }
-        
+
         comboHit = GetComponent<ComboHit>();
         anim = GetComponentInChildren<Animator>();
         smesh = GetComponentsInChildren<SkinnedMeshRenderer>();
@@ -669,36 +669,34 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     IEnumerator BlockPlay()
     {
-        if (photonView.IsMine)
-        {
-            isCool1 = false;
-            attackdamage.Usable_Skill1 = false;
-            anim.SetBool("isBlock", true);
-            isBlock = true;
-            isDamage = true;
-            yield return new WaitForSeconds(0.3f);
-            BoxCollider Skillare = Skillarea2.GetComponent<BoxCollider>(); // 데미지 콜라이더 활성화
-            Skillare.enabled = true;
-            SoundManager.soundManager.WarriorShieldSound();
-            ArrowSkill arrow = Skillarea2.GetComponent<ArrowSkill>(); //스킬데미지설정
-            arrow.damage = attackdamage.Skill_1_Damamge();
-            yield return new WaitForSeconds(0.2f);
-            Skillare.enabled = false;
+        isCool1 = false;
+        attackdamage.Usable_Skill1 = false;
+        anim.SetBool("isBlock", true);
+        isBlock = true;
+        isDamage = true;
+        yield return new WaitForSeconds(0.3f);
+        BoxCollider Skillare = Skillarea2.GetComponent<BoxCollider>(); // 데미지 콜라이더 활성화
+        Skillare.enabled = true;
+        SoundManager.soundManager.WarriorShieldSound();
+        ArrowSkill arrow = Skillarea2.GetComponent<ArrowSkill>(); //스킬데미지설정
+        arrow.damage = attackdamage.Skill_1_Damamge();
+        yield return new WaitForSeconds(0.2f);
+        Skillare.enabled = false;
 
-            yield return new WaitForSeconds(0.5f);
-            isCool1 = true;
-            anim.SetBool("isBlock", false);
-            anim.SetBool("isAttack4", false);
-            anim.SetBool("isAttack3", false);
-            anim.SetBool("isAttack2", false);
-            anim.SetBool("isAttack", false);
-            if (photonView.IsMine)
-                comboHit.noOfClicks = 0;
-            isBlock = false;
-            isDamage = false;
-            if (photonView.IsMine)
-                attackdamage.Skill_1_Cool();  //방패치기쿨타임
-        }
+        yield return new WaitForSeconds(0.5f);
+        isCool1 = true;
+        anim.SetBool("isBlock", false);
+        anim.SetBool("isAttack4", false);
+        anim.SetBool("isAttack3", false);
+        anim.SetBool("isAttack2", false);
+        anim.SetBool("isAttack", false);
+        if (photonView.IsMine)
+            comboHit.noOfClicks = 0;
+        isBlock = false;
+        isDamage = false;
+        if (photonView.IsMine)
+            attackdamage.Skill_1_Cool();  //방패치기쿨타임
+
     }
     public void Buff()
     {
@@ -735,7 +733,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     IEnumerator RushPlay()
     {
-        ArrowSkill.arrowSkill.NoDestroy = true;
         isCool2 = false;
         attackdamage.Usable_Skill2 = false;
 
@@ -772,7 +769,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             attackdamage.Skill_2_Cool();  //돌진쿨타임
         yield return new WaitForSeconds(0.5f);
 
-        ArrowSkill.arrowSkill.NoDestroy = false;
         RushEff.SetActive(false);
 
     }
@@ -836,41 +832,36 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     IEnumerator SmokePlay()
     {
+        isCool1 = true;
         if (photonView.IsMine)
-        {
-            ArrowSkill.arrowSkill.NoDestroy = true;
-            isCool1 = true;
-            if (photonView.IsMine)
-                attackdamage.Skill_1_Cool();
-            if (photonView.IsMine)
-                gameObject.layer = LayerMask.NameToLayer("Back");
-            isFall = true;
-            isBackStep = true;
-            if (photonView.IsMine)
-                rigid.AddForce(transform.forward * -23 + transform.up * 10, ForceMode.Impulse);
-            GameObject arceff = Instantiate(BackStepEff, BackStepPos.position, BackStepPos.rotation); //이펙트
-            SoundManager.soundManager.ArcherBackStepSound();
-            BoxCollider Skillare = Skillarea.GetComponent<BoxCollider>(); // 데미지 콜라이더 활성화
-            Skillare.enabled = true;
-            BoxCollider CCare = CCarea.GetComponent<BoxCollider>(); // cc기 콜라이더 활성화
-            CCare.enabled = true;
-            ArrowSkill arrow = Skillare.GetComponent<ArrowSkill>();
-            arrow.damage = attackdamage.Skill_1_Damamge();
-            Destroy(arceff, 2f);
-            anim.SetBool("isSmoke", true);
+            attackdamage.Skill_1_Cool();
+        if (photonView.IsMine)
+            gameObject.layer = LayerMask.NameToLayer("Back");
+        isFall = true;
+        isBackStep = true;
+        if (photonView.IsMine)
+            rigid.AddForce(transform.forward * -23 + transform.up * 10, ForceMode.Impulse);
+        GameObject arceff = Instantiate(BackStepEff, BackStepPos.position, BackStepPos.rotation); //이펙트
+        SoundManager.soundManager.ArcherBackStepSound();
+        BoxCollider Skillare = Skillarea.GetComponent<BoxCollider>(); // 데미지 콜라이더 활성화
+        Skillare.enabled = true;
+        BoxCollider CCare = CCarea.GetComponent<BoxCollider>(); // cc기 콜라이더 활성화
+        CCare.enabled = true;
+        ArrowSkill arrow = Skillare.GetComponent<ArrowSkill>();
+        arrow.damage = attackdamage.Skill_1_Damamge();
+        Destroy(arceff, 2f);
+        anim.SetBool("isSmoke", true);
 
-            yield return new WaitForSeconds(0.2f);
-            Skillare.enabled = false;
-            CCare.enabled = false;
-            yield return new WaitForSeconds(0.2f);
-
+        yield return new WaitForSeconds(0.2f);
+        Skillare.enabled = false;
+        CCare.enabled = false;
+        yield return new WaitForSeconds(0.2f);
+        if (photonView.IsMine)
             gameObject.layer = LayerMask.NameToLayer("Player");
-            anim.SetBool("isSmoke", false);
-            isBackStep = false;
-            isFall = false;
-            yield return new WaitForSeconds(0.5f);
-            ArrowSkill.arrowSkill.NoDestroy = false;
-        }
+        anim.SetBool("isSmoke", false);
+        isBackStep = false;
+        isFall = false;
+        yield return new WaitForSeconds(0.5f);
     }
     public void PoisonArrow()
     {
@@ -1424,7 +1415,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (photonView.IsMine)
         {
-            
+
 
         }
     }

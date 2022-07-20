@@ -3108,7 +3108,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1586826114847994, guid: 2b0d7f8f779c4ed4b96621647861c04c, type: 3}
       propertyPath: m_Name
-      value: FX_Portal_Round_04)
+      value: FX_Portal_Round_04
       objectReference: {fileID: 0}
     - target: {fileID: 1586826114847994, guid: 2b0d7f8f779c4ed4b96621647861c04c, type: 3}
       propertyPath: m_TagString
@@ -3132,15 +3132,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4669084170648960, guid: 2b0d7f8f779c4ed4b96621647861c04c, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 349.04
+      value: 252.69
       objectReference: {fileID: 0}
     - target: {fileID: 4669084170648960, guid: 2b0d7f8f779c4ed4b96621647861c04c, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.31
+      value: 6.88
       objectReference: {fileID: 0}
     - target: {fileID: 4669084170648960, guid: 2b0d7f8f779c4ed4b96621647861c04c, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 564.41
+      value: 565.27
       objectReference: {fileID: 0}
     - target: {fileID: 4669084170648960, guid: 2b0d7f8f779c4ed4b96621647861c04c, type: 3}
       propertyPath: m_LocalRotation.w
