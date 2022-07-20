@@ -609,24 +609,16 @@ public class EnemyBoss2 : MonsterBoss
 
     IEnumerator OnDamage()
     {
-        HitSoundManager.hitsoundManager.GolemHitSound();
-        isDamage = true;
-        Hiteff.Play();
-        Hiteff2.Play();
-        yield return new WaitForSeconds(0.1f);
-        isDamage = false;
-        // foreach (SkinnedMeshRenderer mesh in mat)
-        //   mesh.material.color = Color.red;
-        HitMonster();
-        // SetHpBar();
-
-        if (curHealth < 0)
+        if (!isDie)
         {
-            //Die();
-
+            HitSoundManager.hitsoundManager.GolemHitSound();
+            HitMonster();
+            isDamage = true;
+            Hiteff.Play();
+            Hiteff2.Play();
+            yield return new WaitForSeconds(0.1f);
+            isDamage = false;
         }
-        yield return null;
-
     }
 
     public override void Die()

@@ -414,20 +414,16 @@ public class EnemyBoss1 : MonsterBoss
 
     IEnumerator OnDamage()
     {
-        HitSoundManager.hitsoundManager.SlimeHitSound();
-        Hiteff.Play();
-        Hiteff2.Play();
-        isDamage = true;
-        yield return new WaitForSeconds(0.1f);
-        isDamage = false;
-        HitMonster();
-        // SetHpBar();
-        if (curHealth < 0)
+        if (!isDie)
         {
-            //Die();
+            HitSoundManager.hitsoundManager.GolemHitSound();
+            HitMonster();
+            isDamage = true;
+            Hiteff.Play();
+            Hiteff2.Play();
+            yield return new WaitForSeconds(0.1f);
+            isDamage = false;
         }
-
-
     }
 
     public override void Die()
