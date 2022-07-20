@@ -74,7 +74,7 @@ public class EnemyBoss1 : MonsterBoss
         anim = GetComponent<Animator>();
         attacking = transform.GetChild(2).GetComponent<Attacking>();
         questStore = FindObjectOfType<QuestStore>();
-        RushEff  = Resources.Load<GameObject>("Boss1_RushEff");
+        RushEff = Resources.Load<GameObject>("Boss1_RushEff");
         //RushEff = GameObject.Find("EffectPool").transform.GetChild(0).gameObject;
         dropResourceString = "BOSS1";
     }
@@ -350,7 +350,8 @@ public class EnemyBoss1 : MonsterBoss
     IEnumerator Rusheffend(GameObject rusheff)
     {
         yield return new WaitForSeconds(10f);
-        PhotonNetwork.Destroy(rusheff);
+        if (photonView.IsMine)
+            PhotonNetwork.Destroy(rusheff);
     }
 
     [PunRPC]
@@ -382,7 +383,7 @@ public class EnemyBoss1 : MonsterBoss
     void FixedUpdate()
     {
 
-        FreezeVelocity();
+        //FreezeVelocity();
     }
 
     void OnTriggerEnter(Collider other)  //�ǰ�
@@ -449,7 +450,7 @@ public class EnemyBoss1 : MonsterBoss
                 questStore.MainQuestSuccess(3);
             }
         }
-        
+
     }
 
     void Diegg()

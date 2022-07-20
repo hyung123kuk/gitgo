@@ -15,8 +15,6 @@ public class MonsterBoss : Monster
     public void StartBossMonster()
     {
         StartMonster();
-
-
     }
     public void BossMonsterHpBarSet()
     {
