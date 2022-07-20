@@ -26,17 +26,17 @@ public class DropItem : DropCoin
 
     private void OnTriggerStay(Collider other)
     {
-
-        if (other.gameObject.tag == "Player" && item.itemType == Item.ItemType.Equipment)
+  
+        if (other.gameObject.tag == "Player" && other.gameObject.GetComponent<PhotonView>().IsMine && item.itemType==Item.ItemType.Equipment)
         {
             RangeText.enabled = true;
-            RangeText.text = "ZÅ°¸¦ ´©¸£¸é ¾ÆÀÌÅÛÀ» ÁÝ½À´Ï´Ù.";
+            RangeText.text = "ZÅ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ý½ï¿½ï¿½Ï´ï¿½.";
             if (Input.GetKeyDown(KeyCode.Z))
             {
                 if (!inventory.inven.HasEmptySlot())
                 {
-                    Debug.Log("¾ÆÀÌÅÛ Ã¢ÀÌ ¾ø½À´Ï´Ù.");
-                    LogManager.logManager.Log("ºóÃ¢ÀÌ ¾ø½À´Ï´Ù", true);
+                    Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+                    LogManager.logManager.Log("ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½", true);
                     return;
                 }
                 else
@@ -44,13 +44,24 @@ public class DropItem : DropCoin
 
                     RangeText.enabled = false;
                     inventory.inven.addItem(item);
-                    PhotonNetwork.Destroy(gameObject);
+                   
+                    photonView.RPC("DestroyEquip",RpcTarget.All);
+                    
+                    
                 }
 
 
             }
         }
     }
+
+    [PunRPC]
+    public void DestroyEquip()
+    {
+        Destroy(gameObject);
+    }
+
+
 
     private void OnTriggerExit(Collider other)
     {
