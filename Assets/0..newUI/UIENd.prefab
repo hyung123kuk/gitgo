@@ -634,7 +634,7 @@ MonoBehaviour:
   OwnershipTransfer: 0
   observableSearch: 2
   ObservedComponents: []
-  sceneViewId: 0
+  sceneViewId: 1
   InstantiationId: 0
   isRuntimeInstantiated: 0
 --- !u!1 &666829142059258481
@@ -5606,6 +5606,22 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3244432405178979204, guid: a89d2278f45660e489999b1765fb4032, type: 3}
+      propertyPath: items.Array.size
+      value: 56
+      objectReference: {fileID: 0}
+    - target: {fileID: 3244432405178979204, guid: a89d2278f45660e489999b1765fb4032, type: 3}
+      propertyPath: items.Array.data[53]
+      value: 
+      objectReference: {fileID: 11400000, guid: d52c375860d3a5a4f8fe1e5b94120164, type: 2}
+    - target: {fileID: 3244432405178979204, guid: a89d2278f45660e489999b1765fb4032, type: 3}
+      propertyPath: items.Array.data[54]
+      value: 
+      objectReference: {fileID: 11400000, guid: 404d477749db98d47b4b3b18385f5d67, type: 2}
+    - target: {fileID: 3244432405178979204, guid: a89d2278f45660e489999b1765fb4032, type: 3}
+      propertyPath: items.Array.data[55]
+      value: 
+      objectReference: {fileID: 11400000, guid: ab385d125af164f4d99589e0c9dc3c59, type: 2}
     - target: {fileID: 8731185230406503311, guid: a89d2278f45660e489999b1765fb4032, type: 3}
       propertyPath: inven
       value: 
@@ -6770,13 +6786,29 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 972917989239509599}
     - target: {fileID: 7966394021767094897, guid: a64471615175fa941a2e8bbc67e9d988, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 7966394021767094897, guid: a64471615175fa941a2e8bbc67e9d988, type: 3}
       propertyPath: tooltip
       value: 
       objectReference: {fileID: 972917989239509599}
     - target: {fileID: 7966394021767094897, guid: a64471615175fa941a2e8bbc67e9d988, type: 3}
+      propertyPath: itemCount
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7966394021767094897, guid: a64471615175fa941a2e8bbc67e9d988, type: 3}
       propertyPath: itemSellScope
       value: 
       objectReference: {fileID: 666829142457608570}
+    - target: {fileID: 7966394022105339511, guid: a64471615175fa941a2e8bbc67e9d988, type: 3}
+      propertyPath: items.Array.size
+      value: 56
+      objectReference: {fileID: 0}
+    - target: {fileID: 7966394022105339511, guid: a64471615175fa941a2e8bbc67e9d988, type: 3}
+      propertyPath: items.Array.data[55]
+      value: 
+      objectReference: {fileID: 11400000, guid: ab385d125af164f4d99589e0c9dc3c59, type: 2}
     - target: {fileID: 7966394022116676412, guid: a64471615175fa941a2e8bbc67e9d988, type: 3}
       propertyPath: tooltip
       value: 
