@@ -130,7 +130,7 @@ public class MonsterManager : MonoBehaviourPunCallbacks
         GameObject GoblinArcherPools = new GameObject("GoblinArcher Pool");
         GameObject SkeletonPools = new GameObject("Skeleton Pool");
 
-        if (!PhotonNetwork.IsMasterClient)
+        /*if (!PhotonNetwork.IsMasterClient)
         {
             EnemySlime[] slimes = GameObject.FindObjectsOfType<EnemySlime>();
             EnemyBlueSlime[] blueslimes = GameObject.FindObjectsOfType<EnemyBlueSlime>();
@@ -184,7 +184,7 @@ public class MonsterManager : MonoBehaviourPunCallbacks
             Golem = golem.gameObject;
 
             startSetting();
-        }
+        }*/
 
         if (PhotonNetwork.IsMasterClient)
         {
