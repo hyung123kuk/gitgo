@@ -429,24 +429,26 @@ public class EnemyBoss1 : MonsterBoss
 
     public override void Die()
     {
-        BossDrop();
-        MonsterDie();
-        BossHpBarSet();
-        if (!isDie)
-            nav.isStopped = true;
-        if (isDie)
-            return;
         isDie = true;
-        boxCollider.enabled = false;
-        isChase = false; //�׾����� ��������
-        anim.SetBool("isDie", true);
-
-        Invoke("Diegg", 1.5f);
-
-        if (!questStore.MainSuccess)
+        if (isDie)
         {
-            questStore.MainQuestSuccess(3);
+            BossDrop();
+            MonsterDie();
+            BossHpBarSet();
+            nav.speed = 0f;
+            //if (isDie)
+            //    return;
+            boxCollider.enabled = false;
+            isSkill = false;
+            isChase = false; //�׾����� ��������
+            anim.SetBool("isDie", true);
+            Invoke("Diegg", 1.5f);
+            if (!questStore.MainSuccess)
+            {
+                questStore.MainQuestSuccess(3);
+            }
         }
+        
     }
 
     void Diegg()
