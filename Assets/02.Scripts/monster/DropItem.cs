@@ -30,18 +30,18 @@ public class DropItem : DropCoin
         if (other.gameObject.tag == "Player" && other.gameObject.GetComponent<PhotonView>().IsMine && item.itemType==Item.ItemType.Equipment)
         {
             RangeText.enabled = true;
-            RangeText.text = "ZÅ°¸¦ ´©¸£¸é ¾ÆÀÌÅÛÀ» ÁÝ½À´Ï´Ù.";
+            RangeText.text = "ZÅ°ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ý½ï¿½ï¿½Ï´ï¿½.";
             if (Input.GetKeyDown(KeyCode.Z))
             {
                 if (!inventory.inven.HasEmptySlot())
                 {
-                    Debug.Log("¾ÆÀÌÅÛ Ã¢ÀÌ ¾ø½À´Ï´Ù.");
-                    LogManager.logManager.Log("ºóÃ¢ÀÌ ¾ø½À´Ï´Ù", true);
+                    Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½.");
+                    LogManager.logManager.Log("ï¿½ï¿½Ã¢ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï´ï¿½", true);
                     return;
                 }
                 else
                 {
-                  
+
                     RangeText.enabled = false;
                     inventory.inven.addItem(item);
                    

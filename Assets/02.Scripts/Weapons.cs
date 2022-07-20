@@ -102,6 +102,7 @@ public class Weapons : MonoBehaviourPun, IPunObservable
                 stream.SendNext(mage_skill4_Order);
                 stream.SendNext(MeteoCasting);
                 stream.SendNext(isMeteo);
+                stream.SendNext(isIceage);
             }
 
         }
@@ -122,6 +123,7 @@ public class Weapons : MonoBehaviourPun, IPunObservable
                 mage_skill4_Order = (int)stream.ReceiveNext();
                 MeteoCasting = (float)stream.ReceiveNext();
                 isMeteo = (bool)stream.ReceiveNext();
+                isIceage = (bool)stream.ReceiveNext();
             }
 
         }
@@ -383,8 +385,6 @@ public class Weapons : MonoBehaviourPun, IPunObservable
     [PunRPC]
     IEnumerator IceAgeStart()
     {
-        ArrowSkill.arrowSkill.NoDestroy = true;
-        //attackdamage.Skill_2_Cool();
         SoundManager.soundManager.MageSkill2Voice();
         playerST.isCool2 = false;
         attackdamage.Usable_Skill2 = false;
@@ -414,7 +414,6 @@ public class Weapons : MonoBehaviourPun, IPunObservable
         yield return new WaitForSeconds(0.4f);
         anim.SetBool("Skill2", false);
         isIceage = false;
-        ArrowSkill.arrowSkill.NoDestroy = false;
 
 
         yield return new WaitForSeconds(1f);
