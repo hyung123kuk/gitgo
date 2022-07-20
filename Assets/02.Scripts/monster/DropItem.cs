@@ -29,14 +29,16 @@ public class DropItem : DropCoin
   
         if (other.gameObject.tag == "Player" && other.gameObject.GetComponent<PhotonView>().IsMine && item.itemType==Item.ItemType.Equipment)
         {
+            if(RangeText == null)
+                RangeText = GameObject.FindGameObjectWithTag("RangeText").GetComponent<Text>();
             RangeText.enabled = true;
-            RangeText.text = "ZŰ�� ������ �������� �ݽ��ϴ�.";
+            RangeText.text = "Z키를 누르면 줍습니다.";
             if (Input.GetKeyDown(KeyCode.Z))
             {
                 if (!inventory.inven.HasEmptySlot())
                 {
-                    Debug.Log("������ â�� �����ϴ�.");
-                    LogManager.logManager.Log("��â�� �����ϴ�", true);
+                   
+                    LogManager.logManager.Log("아이템 창이 꽉 찼습니다.", true);
                     return;
                 }
                 else
