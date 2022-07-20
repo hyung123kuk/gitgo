@@ -214,8 +214,8 @@ public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEnd
                 Slot instanceSlot = gameObject.GetComponent<QuikSlot>().slot;
                 if (!instanceSlot.inven.HasEmptySlot() && !instanceSlot.inven.HasSameSlot(instanceSlot.item)) //�κ��� ��â ������ ������ ���� ��� ��ų �� ����
                 {
-                    Debug.Log("��â�� �����ϴ�.");
-                    LogManager.logManager.Log("��â�� �����ϴ�", true);
+                    
+                    LogManager.logManager.Log("아이템창이 꽉찼습니다.", true);
                     return;
                 }
 

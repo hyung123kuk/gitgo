@@ -29,30 +29,30 @@ public class LogManager : MonoBehaviour
         int index = 0;
         for(int i=0; i<logText.Length; i++)
         {
-            index++;
-            if (logText[i].text == "")
+           
+            if (logText[i+1].text == "")
                 break;
-            
+            index++;
         }
-        for(int i = 0; i < index-1; i++)
+        for(int i = index+1; i ==0 ; i--)
         {
 
             logText[i + 1].text = logText[i].text;
             logText[i + 1].color = logText[i].color;
             
         }
-        index = 0;
+        
 
     }
     IEnumerator LogDisappear()
     {
         while(logText[0].text!="")
         {
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.01f);
 
             for(int i =0;i<logText.Length; i++)
             {
-                SetColor(0.05f, logText[i]);
+                SetColor(0.01f, logText[i]);
             }
                 
         }
@@ -79,7 +79,7 @@ public class LogManager : MonoBehaviour
         else if (Error) { logText[0].color = Color.red;
             ErrorShake();
         }
-        StopCoroutine("LogDisappear");
+        StopAllCoroutines();
         StartCoroutine(LogDisappear());
     }
 
