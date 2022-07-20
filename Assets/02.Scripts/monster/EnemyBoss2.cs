@@ -111,7 +111,7 @@ public class EnemyBoss2 : MonsterBoss
         StartBossMonster();
         BossItemSet();
 
-        Monstername.text = "저주받은자 아몬";
+        Monstername.text = "저주받은자\n아몬";
         level.text = "10";
         coin = 50;
         coinCount = 20;

@@ -98,7 +98,7 @@ public class EnemyBoss1 : MonsterBoss
 
         StartBossMonster();
         BossItemSet();
-        Monstername.text = "이끼 골렘";
+        Monstername.text = "이끼\n골렘";
         level.text = "5";
         coin = 30;
         coinCount = 20;
