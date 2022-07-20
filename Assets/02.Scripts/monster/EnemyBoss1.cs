@@ -76,6 +76,7 @@ public class EnemyBoss1 : MonsterBoss
         questStore = FindObjectOfType<QuestStore>();
         RushEff  = Resources.Load<GameObject>("Boss1_RushEff");
         //RushEff = GameObject.Find("EffectPool").transform.GetChild(0).gameObject;
+        dropResourceString = "BOSS1";
     }
 
     public override void BossHpBarSettting()

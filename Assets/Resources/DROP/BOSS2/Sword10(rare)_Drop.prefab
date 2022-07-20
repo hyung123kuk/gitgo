@@ -14355,6 +14355,7 @@ GameObject:
   - component: {fileID: 3306642734519657881}
   - component: {fileID: 3306691769798985491}
   - component: {fileID: 1655197350}
+  - component: {fileID: 6900798302907109706}
   m_Layer: 0
   m_Name: Sword10(rare)_Drop
   m_TagString: Untagged
@@ -14460,10 +14461,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tr: {fileID: 0}
-  col: {fileID: 0}
   item: {fileID: 11400000, guid: 7e2334b2bcf621a46a2d3c3d14e1945f, type: 2}
   playerStat: {fileID: 0}
   Coin: 0
+  col: {fileID: 0}
+  rbody: {fileID: 0}
   RangeText: {fileID: 0}
   RotateSpeed: 2
 --- !u!54 &3306691769798985491
@@ -14496,6 +14498,28 @@ CapsuleCollider:
   m_Height: 2.3473363
   m_Direction: 1
   m_Center: {x: 0.00000023841858, y: 0.85562944, z: -0.000000007450581}
+--- !u!114 &6900798302907109706
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5265149770582961316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5384902910173727891
 GameObject:
   m_ObjectHideFlags: 0
