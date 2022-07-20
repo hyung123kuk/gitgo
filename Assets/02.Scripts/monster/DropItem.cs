@@ -26,8 +26,8 @@ public class DropItem : DropCoin
 
     private void OnTriggerStay(Collider other)
     {
-  
-        if (other.gameObject.tag == "Player" && item.itemType==Item.ItemType.Equipment)
+
+        if (other.gameObject.tag == "Player" && item.itemType == Item.ItemType.Equipment)
         {
             RangeText.enabled = true;
             RangeText.text = "Z키를 누르면 아이템을 줍습니다.";
@@ -41,7 +41,7 @@ public class DropItem : DropCoin
                 }
                 else
                 {
-                  
+
                     RangeText.enabled = false;
                     inventory.inven.addItem(item);
                     PhotonNetwork.Destroy(gameObject);
