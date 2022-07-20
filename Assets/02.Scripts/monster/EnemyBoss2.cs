@@ -76,6 +76,7 @@ public class EnemyBoss2 : MonsterBoss
         {
             Skill1Effs[i] = GameObject.Find("EffectPool").transform.GetChild(1).transform.GetChild(i).gameObject.GetComponent<ParticleSystem>();
         }
+        dropResourceString = "BOSS2";
     }
     private void OnEnable()
     {

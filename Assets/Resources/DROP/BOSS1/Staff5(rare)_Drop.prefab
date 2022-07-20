@@ -9575,6 +9575,7 @@ GameObject:
   - component: {fileID: 7968108040353738231}
   - component: {fileID: 1417317432367522899}
   - component: {fileID: 697837896}
+  - component: {fileID: -5428454743957229517}
   m_Layer: 0
   m_Name: Staff5(rare)_Drop
   m_TagString: Untagged
@@ -9660,10 +9661,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tr: {fileID: 0}
-  col: {fileID: 0}
   item: {fileID: 11400000, guid: cb865ee861bc26642b44a03193cc2265, type: 2}
   playerStat: {fileID: 0}
   Coin: 0
+  col: {fileID: 0}
+  rbody: {fileID: 0}
   RangeText: {fileID: 0}
   RotateSpeed: 2
 --- !u!135 &7968108040353738231
@@ -9709,3 +9711,25 @@ CapsuleCollider:
   m_Height: 0.9848948
   m_Direction: 1
   m_Center: {x: 0.05251246, y: 0.17379937, z: -0.0019264668}
+--- !u!114 &-5428454743957229517
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9105004185972062584}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0

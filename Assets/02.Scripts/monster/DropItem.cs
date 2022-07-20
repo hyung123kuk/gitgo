@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Photon.Pun;
 public class DropItem : DropCoin
 {
 
@@ -44,7 +44,7 @@ public class DropItem : DropCoin
                   
                     RangeText.enabled = false;
                     inventory.inven.addItem(item);
-                    Destroy(gameObject);
+                    PhotonNetwork.Destroy(gameObject);
                 }
 
 
