@@ -169,6 +169,7 @@ MonoBehaviour:
   - MasterDamaged
   - DestroyEquip
   - MosterHpSet
+  - ResetMonster
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
