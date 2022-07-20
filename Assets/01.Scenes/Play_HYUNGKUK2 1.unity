@@ -38826,6 +38826,14 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 666829141586453874, guid: 3b5cd591ce20cfe4ebdae1a40b3ba168, type: 3}
+      propertyPath: item
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 666829141586453874, guid: 3b5cd591ce20cfe4ebdae1a40b3ba168, type: 3}
+      propertyPath: itemCount
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 666829141749520011, guid: 3b5cd591ce20cfe4ebdae1a40b3ba168, type: 3}
       propertyPath: m_Name
       value: UIENd
@@ -38874,6 +38882,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 666829141793362292, guid: 3b5cd591ce20cfe4ebdae1a40b3ba168, type: 3}
+      propertyPath: items.Array.size
+      value: 56
+      objectReference: {fileID: 0}
+    - target: {fileID: 666829141793362292, guid: 3b5cd591ce20cfe4ebdae1a40b3ba168, type: 3}
+      propertyPath: items.Array.data[55]
+      value: 
+      objectReference: {fileID: 11400000, guid: ab385d125af164f4d99589e0c9dc3c59, type: 2}
     - target: {fileID: 685449766742230328, guid: 3b5cd591ce20cfe4ebdae1a40b3ba168, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0
@@ -39318,6 +39334,22 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5453572849344286737, guid: 3b5cd591ce20cfe4ebdae1a40b3ba168, type: 3}
+      propertyPath: items.Array.size
+      value: 56
+      objectReference: {fileID: 0}
+    - target: {fileID: 5453572849344286737, guid: 3b5cd591ce20cfe4ebdae1a40b3ba168, type: 3}
+      propertyPath: items.Array.data[53]
+      value: 
+      objectReference: {fileID: 11400000, guid: d52c375860d3a5a4f8fe1e5b94120164, type: 2}
+    - target: {fileID: 5453572849344286737, guid: 3b5cd591ce20cfe4ebdae1a40b3ba168, type: 3}
+      propertyPath: items.Array.data[54]
+      value: 
+      objectReference: {fileID: 11400000, guid: 404d477749db98d47b4b3b18385f5d67, type: 2}
+    - target: {fileID: 5453572849344286737, guid: 3b5cd591ce20cfe4ebdae1a40b3ba168, type: 3}
+      propertyPath: items.Array.data[55]
+      value: 
+      objectReference: {fileID: 11400000, guid: ab385d125af164f4d99589e0c9dc3c59, type: 2}
     - target: {fileID: 5474519609770797147, guid: 3b5cd591ce20cfe4ebdae1a40b3ba168, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
