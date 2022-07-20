@@ -76,8 +76,23 @@ public class Monster : MonoBehaviourPun, IPunObservable
             }
         }
 
+        photonView.RPC("MosterHpSet", RpcTarget.MasterClient);
+        
 
     }
+
+    [PunRPC]
+    public void MosterHpSet()
+    {
+        photonView.RPC("MonsterHp", RpcTarget.All,maxHealth - curHealth);
+    }
+
+    [PunRPC]
+    public void MonsterHp(float Damagedhealth)
+    {
+        curHealth = maxHealth - Damagedhealth;
+    }
+
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
     {
 
@@ -142,8 +157,8 @@ public class Monster : MonoBehaviourPun, IPunObservable
             damage.GetComponent<Outline>().enabled = false;
             damagevalue.color = Color.red;
         }
+
         
-        Debug.Log("zzzzzzzzzz"+_attackdamage);
         string dam = ((int)_attackdamage).ToString();
 
         damagevalue.text = dam;
