@@ -50,7 +50,76 @@ public class MonsterManager : MonoBehaviourPunCallbacks
        
     }
 
-
+    public void RemoveMonster()
+    {
+        if (PhotonNetwork.IsMasterClient)
+        {
+            for (int i = 0; i < Slime.Length; i++)
+            {
+                Slime[i].GetComponent<PhotonView>().RequestOwnership();
+                Slime[i].SetActive(false);
+            }
+            for (int i = 0; i < BlueSlime.Length; i++)
+            {
+                BlueSlime[i].GetComponent<PhotonView>().RequestOwnership();
+                BlueSlime[i].SetActive(false);
+            }
+            for (int i = 0; i < Goblin.Length; i++)
+            {
+                Goblin[i].GetComponent<PhotonView>().RequestOwnership();
+                Goblin[i].SetActive(false);
+            }
+            for (int i = 0; i < Goblin2.Length; i++)
+            {
+                Goblin2[i].GetComponent<PhotonView>().RequestOwnership();
+                Goblin2[i].SetActive(false);
+            }
+            for (int i = 0; i < GoblinArcher.Length; i++)
+            {
+                GoblinArcher[i].GetComponent<PhotonView>().RequestOwnership();
+                GoblinArcher[i].SetActive(false);
+            }
+            for (int i = 0; i < Skeleton.Length; i++)
+            {
+                Skeleton[i].GetComponent<PhotonView>().RequestOwnership();
+                Skeleton[i].SetActive(false);
+            }
+            TurtleSlime.GetComponent<PhotonView>().RequestOwnership();
+            TurtleSlime.SetActive(false);
+            Golem.GetComponent<PhotonView>().RequestOwnership();
+            Golem.SetActive(false);
+        }
+    }
+    public void startSetting()
+    {
+        Debug.Log("리모트용 리스폰세팅");
+        for (int i = 0; i < Slime.Length; i++)
+        {
+            Slime[i].GetComponent<EnemySlime>().respawn = SpawnManager.spawnManager.SlimePoints[i];
+        }
+        for (int i = 0; i < BlueSlime.Length; i++)
+        {
+            BlueSlime[i].GetComponent<EnemyBlueSlime>().respawn = SpawnManager.spawnManager.BlueSlimePoints[i];
+        }
+        for (int i = 0; i < Goblin.Length; i++)
+        {
+            Goblin[i].GetComponent<EnemyGoblin>().respawn = SpawnManager.spawnManager.GoblinPoints[i];
+        }
+        for (int i = 0; i < Goblin2.Length; i++)
+        {
+            Goblin2[i].GetComponent<EnemyGoblin2>().respawn = SpawnManager.spawnManager.Goblin2Points[i];
+        }
+        for (int i = 0; i < GoblinArcher.Length; i++)
+        {
+            GoblinArcher[i].GetComponent<EnemyRange>().respawn = SpawnManager.spawnManager.GoblinArcherPoints[i];
+        }
+        for (int i = 0; i < Skeleton.Length; i++)
+        {
+            Skeleton[i].GetComponent<EnemySkeleton>().respawn = SpawnManager.spawnManager.SkeletonPoints[i];
+        }
+        TurtleSlime.GetComponent<EnemyBoss1>().respawn = SpawnManager.spawnManager.TurtleSlimePoint;
+        Golem.GetComponent<EnemyBoss2>().respawn = SpawnManager.spawnManager.GolemPoint;
+    }
     public void Generate()  //Ǯ�� ����
     {
         ResetBox.SetActive(false);
@@ -114,6 +183,7 @@ public class MonsterManager : MonoBehaviourPunCallbacks
             TurtleSlime = turtle.gameObject;
             Golem = golem.gameObject;
 
+            startSetting();
         }
 
         if (PhotonNetwork.IsMasterClient)
@@ -175,7 +245,7 @@ public class MonsterManager : MonoBehaviourPunCallbacks
 
     }
 
-    
+
     public GameObject MakeObj(string type) //Ǯ�� ��ȯ
     {
 
