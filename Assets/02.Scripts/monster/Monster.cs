@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.UI;
 
-public class Monster : MonoBehaviourPun
+public class Monster : MonoBehaviourPun, IPunObservable
 {
 
     public PlayerStat playerStat;
@@ -78,7 +78,18 @@ public class Monster : MonoBehaviourPun
 
 
     }
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
+    {
 
+        if (stream.IsWriting)
+        {
+            stream.SendNext(curHealth);
+        }
+        else
+        {
+            curHealth = (float)stream.ReceiveNext();
+        }
+    }
     [PunRPC]
     public virtual void MonsterRespawn()
     {

@@ -67205,22 +67205,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 694722146512959336, guid: 6e3280fa9a64a7543a96425d2f70e67b, type: 3}
-      propertyPath: m_Name
-      value: FX_Portal_Round_04
-      objectReference: {fileID: 0}
-    - target: {fileID: 698361033404702226, guid: 6e3280fa9a64a7543a96425d2f70e67b, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 252.69
-      objectReference: {fileID: 0}
-    - target: {fileID: 698361033404702226, guid: 6e3280fa9a64a7543a96425d2f70e67b, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 6.88
-      objectReference: {fileID: 0}
-    - target: {fileID: 698361033404702226, guid: 6e3280fa9a64a7543a96425d2f70e67b, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 565.27
-      objectReference: {fileID: 0}
     - target: {fileID: 5986003950858546641, guid: 6e3280fa9a64a7543a96425d2f70e67b, type: 3}
       propertyPath: m_Name
       value: Map
