@@ -101,6 +101,7 @@ public class EnemyBoss1 : MonsterBoss
         Monstername.text = "이끼 골렘";
         level.text = "5";
         coin = 30;
+        coinCount = 20;
         // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
         BossMonsterHpBarSet();
 
