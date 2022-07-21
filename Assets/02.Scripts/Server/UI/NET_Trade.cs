@@ -243,6 +243,7 @@ public class NET_Trade : MonoBehaviourPun
         for (int i = 0; i < Net_Your_Slot.Length; i++) {
             if (Net_Your_Slot[i].item != null)
             {
+                Debug.Log("성공");
                 inventory.inven.addItem(Net_Your_Slot[i].item, Net_Your_Slot[i].itemCount);
             }
         }
@@ -257,6 +258,7 @@ public class NET_Trade : MonoBehaviourPun
         {
             if (Net_My_Slot[i].item != null)
             {
+                Debug.Log("실패");
                 inventory.inven.addItem(Net_My_Slot[i].item, Net_My_Slot[i].itemCount);
             }
         }
