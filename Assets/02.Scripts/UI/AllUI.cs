@@ -231,10 +231,10 @@ public class AllUI : MonoBehaviourPun
 
         net_partyRecieve.PartyRecieveWindowOff();
 
-        if (NET_UIPlayer.TradeOn)
+        /*if (NET_UIPlayer.TradeOn)
         {
             FindObjectOfType<NET_Trade>().FailTrade();
-        }
+        }*/
 
         
     }

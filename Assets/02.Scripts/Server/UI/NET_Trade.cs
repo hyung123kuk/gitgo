@@ -183,7 +183,7 @@ public class NET_Trade : MonoBehaviourPun
 
             if (net_UIPlayer.TradeComplete == true)
             {
-                SuccessTrade();
+                SlotNumCheck();
             }
         }
         else //확인버튼 취소
@@ -258,7 +258,7 @@ public class NET_Trade : MonoBehaviourPun
         {
             if (Net_My_Slot[i].item != null)
             {
-                Debug.Log("실패");
+                Debug.Log("ㅂ");
                 inventory.inven.addItem(Net_My_Slot[i].item, Net_My_Slot[i].itemCount);
             }
         }
