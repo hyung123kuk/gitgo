@@ -39509,6 +39509,7 @@ MonoBehaviour:
   Skeleton: []
   TurtleSlime: {fileID: 0}
   Golem: {fileID: 0}
+  ResetBox: {fileID: 0}
 --- !u!114 &6233579533194161454
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -93945,7 +93946,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 222067169223171917, guid: b496782816e7151499b61caed1f4f642, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 36.12
+      value: 32.25
       objectReference: {fileID: 0}
     - target: {fileID: 222067169223171917, guid: b496782816e7151499b61caed1f4f642, type: 3}
       propertyPath: m_LocalRotation.w
