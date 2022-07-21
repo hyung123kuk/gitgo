@@ -14918,6 +14918,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1778994357615247706, guid: ef62619642b0df743b22dd5120c6ac4d, type: 3}
   m_PrefabInstance: {fileID: 506899567}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
 --- !u!1 &507410343
 GameObject:
   m_ObjectHideFlags: 0
@@ -15013,6 +15014,8 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
+>>>>>>> parent of 76406015 (리셋박스)
 --- !u!4 &510564474 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4661435515762813124, guid: e289bf5debb17f6459818c207d781953, type: 3}
@@ -45052,10 +45055,17 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+<<<<<<< HEAD
     - target: {fileID: 6233579533194161452, guid: 98dc29fc640672a40800660a32540488, type: 3}
       propertyPath: ResetBox
       value: 
       objectReference: {fileID: 507410343}
+=======
+    - target: {fileID: 6167379965888864221, guid: 98dc29fc640672a40800660a32540488, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 32.25
+      objectReference: {fileID: 0}
+>>>>>>> parent of 76406015 (리셋박스)
     - target: {fileID: 6233579533194161453, guid: 98dc29fc640672a40800660a32540488, type: 3}
       propertyPath: m_Name
       value: MonsterManager
