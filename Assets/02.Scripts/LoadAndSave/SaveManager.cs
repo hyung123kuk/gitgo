@@ -615,6 +615,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
 
         string json = JsonUtility.ToJson(characterSelData);
         File.WriteAllText(SAVE_DATA_DIRECTORY + Sel_SAVE_FILENAME, json);
+        
     }
 
 
@@ -679,6 +680,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
             if (characterSelData.Charater2 != 0)
                 characterSel.MakeBut();
             Debug.Log("로드완료");
+            characterSel.charSel = 0;
         }
         else
             Debug.Log("세이브 파일이 없습니다.");

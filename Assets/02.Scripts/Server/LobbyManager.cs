@@ -52,6 +52,9 @@ public class LobbyManager : MonoBehaviourPunCallbacks
     // 룸 접속 시도
     public void Connect()
     {
+        if (FindObjectOfType<CharacterSel>().charSel == 0)
+            return;
+
         // 중복 접속 막기
         this.joinButton.interactable = false;
 

@@ -69,6 +69,7 @@ public class CharacterSelEffect : MonoBehaviour
     {
         chSel = GetComponent<CharacterSel>();
         
+        StartCoroutine(InfoReset());
     }
 
 

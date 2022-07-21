@@ -55,7 +55,7 @@ public class LoadCamera : MonoBehaviour
         }
         else if( state == State.Move)
         {
-
+            
             if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return))
             {
 
