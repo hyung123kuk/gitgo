@@ -64196,6 +64196,18 @@ PrefabInstance:
       propertyPath: scrollbar
       value: 
       objectReference: {fileID: 1168266412}
+    - target: {fileID: 4910190689255217481, guid: 68968cb23d18024429c2796afa7901ac, type: 3}
+      propertyPath: forbidWord.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4910190689255217481, guid: 68968cb23d18024429c2796afa7901ac, type: 3}
+      propertyPath: forbidWord.Array.data[0]
+      value: "\uBC14\uBCF4"
+      objectReference: {fileID: 0}
+    - target: {fileID: 4910190689255217481, guid: 68968cb23d18024429c2796afa7901ac, type: 3}
+      propertyPath: forbidWord.Array.data[1]
+      value: "\uBA4D\uCCAD\uC774"
+      objectReference: {fileID: 0}
     - target: {fileID: 4910190689255217482, guid: 68968cb23d18024429c2796afa7901ac, type: 3}
       propertyPath: m_Pivot.x
       value: 0
