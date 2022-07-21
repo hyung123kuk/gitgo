@@ -106,6 +106,22 @@ public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEnd
     }
     private void SkillSet()
     {
+
+        if (playerST == null)
+        {
+            PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
+
+
+            foreach (PlayerST myplayerSt in playerSts)
+            {
+                if (myplayerSt.GetComponent<PhotonView>().IsMine)
+                {
+                    playerST = myplayerSt;
+                    break;
+                }
+            }
+        }
+
         if (playerST.CharacterType == PlayerST.Type.Warrior)
         {
             if (gameObject.tag == "SKILLSLOT1")

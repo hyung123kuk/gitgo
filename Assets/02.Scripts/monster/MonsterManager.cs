@@ -180,8 +180,8 @@ public class MonsterManager : MonoBehaviourPunCallbacks
                 skelletons[i].transform.parent = SkeletonPools.transform;
                 Skeleton[i] = skelletons[i].gameObject;
             }
-            TurtleSlime = turtle.gameObject;
-            Golem = golem.gameObject;
+            //TurtleSlime = turtle.gameObject;
+            //Golem = golem.gameObject;
 
             //startSetting();
         }
