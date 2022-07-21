@@ -699,7 +699,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
 
         SceneManager.LoadScene(0);
         characterSel.transform.GetChild(0).gameObject.SetActive(true);
-       SaveOn = false;
+       //SaveOn = false;
     }
 
     private void OnApplicationQuit() //강제종료될때 자동저장
@@ -711,7 +711,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
             PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater1name;
         else if (CharacterNum == 1)
             PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater2name;
-       SaveOn = false;
+       //SaveOn = false;
     }
 
 
