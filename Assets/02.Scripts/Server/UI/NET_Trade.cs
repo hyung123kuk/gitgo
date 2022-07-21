@@ -183,7 +183,7 @@ public class NET_Trade : MonoBehaviourPun
 
             if (net_UIPlayer.TradeComplete == true)
             {
-                SlotNumCheck();
+                SuccessTrade();
             }
         }
         else //확인버튼 취소
