@@ -40,7 +40,7 @@ public class MonsterManager : MonoBehaviourPunCallbacks
         Invoke("Generate", 0.2f); //마스터 플레이어가 나갔을때 몬스터가 생성이 안된다면 이 0.2초사이에 마스터플레이어가 나갔을 것입니다.. 수정 필요하긴합니다 이부분.
     }
 
-    public override void OnMasterClientSwitched(Player newMasterClient)
+    /*public override void OnMasterClientSwitched(Player newMasterClient)
     {
 
         Debug.Log("마스터클라이언트 나감");
@@ -48,7 +48,7 @@ public class MonsterManager : MonoBehaviourPunCallbacks
 
         Invoke("Generate", 0.1f);
 
-    }
+    }*/
 
     public void RemoveMonster()
     {
@@ -293,7 +293,7 @@ public class MonsterManager : MonoBehaviourPunCallbacks
             for (int i = 0; i < targetPool.Length; i++)
             {
                 Debug.Log(targetPool); //타겟풀 누구?
-                if (!targetPool[i].activeSelf)
+                if (targetPool[i] && !targetPool[i].activeSelf)
                 {
                     //targetPool[i].SetActive(true);
                     targetPool[i].GetComponent<Monster>().MonsterRespawn();
