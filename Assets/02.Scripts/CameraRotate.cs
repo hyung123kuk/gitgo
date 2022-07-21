@@ -53,7 +53,7 @@ public class CameraRotate : MonoBehaviourPun
 
 
 
-    void Update()
+    void LateUpdate()
     {
         if (!photonView.IsMine)
             gameObject.SetActive(false);

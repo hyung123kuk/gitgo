@@ -16,11 +16,14 @@ public class CameraClear : MonoBehaviourPunCallbacks
     }
     IEnumerator ScriptEnable() //스크립트를 껐다켜야 작동됩니다;;
     {
-        gameObject.GetComponent<CameraClear>().enabled = false;
-        yield return new WaitForSeconds(0.1f);
-        gameObject.GetComponent<CameraClear>().enabled = true;
+        if (photonView.IsMine)
+        {
+            gameObject.GetComponent<CameraClear>().enabled = false;
+            yield return new WaitForSeconds(0.1f);
+            gameObject.GetComponent<CameraClear>().enabled = true;
+        }
     }
-    private void Update()
+    private void LateUpdate()
     {
         if (!photonView.IsMine) //로컬상태가 아니면 리턴
         {
