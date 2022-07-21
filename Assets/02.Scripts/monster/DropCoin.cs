@@ -88,6 +88,8 @@ public class DropCoin : MonoBehaviourPun
     IEnumerator DestroyTIme()
     {
         yield return new WaitForSeconds(10.0f);
+        if(!PhotonNetwork.IsMasterClient)
+            GetComponent<PhotonView>().RequestOwnership();
         PhotonNetwork.Destroy(gameObject);
     }
 

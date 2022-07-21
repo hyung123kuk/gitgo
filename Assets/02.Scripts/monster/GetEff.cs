@@ -82,6 +82,8 @@ public class GetEff : MonoBehaviourPun
     IEnumerator DestroyEff()
     {
         yield return new WaitForSeconds(0.3f);
+        if (!PhotonNetwork.IsMasterClient)
+            GetComponent<PhotonView>().RequestOwnership();
         PhotonNetwork.Destroy(gameObject);
     }
 

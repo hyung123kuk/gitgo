@@ -60,6 +60,8 @@ public class DropItem : DropCoin
     [PunRPC]
     public void DestroyEquip()
     {
+        if (!PhotonNetwork.IsMasterClient)
+            GetComponent<PhotonView>().RequestOwnership();
         PhotonNetwork.Destroy(gameObject);
     }
 
