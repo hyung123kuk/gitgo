@@ -88,7 +88,7 @@ public class DropCoin : MonoBehaviourPun
     IEnumerator DestroyTIme()
     {
         yield return new WaitForSeconds(10.0f);
-        DestroyItem();
+        PhotonNetwork.Destroy(gameObject);
     }
 
     [PunRPC]

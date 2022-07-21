@@ -82,7 +82,7 @@ public class GetEff : MonoBehaviourPun
     IEnumerator DestroyEff()
     {
         yield return new WaitForSeconds(0.3f);
-        Destroy();
+        PhotonNetwork.Destroy(gameObject);
     }
 
     [PunRPC]
