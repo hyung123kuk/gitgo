@@ -28,7 +28,7 @@ public class Horse : MonoBehaviourPun
 
     private void OnEnable()
     {
- 
+
 
     }
 
@@ -108,24 +108,23 @@ public class Horse : MonoBehaviourPun
                 anim.SetBool("isRun", false);
 
             }
-
             if (Input.GetKeyDown(KeyCode.V) && playerST.HorseMode) //탑승해제
-            {
-                anim.SetBool("isRun", false);
-                playerST.rigid.useGravity = true;
-                playerST.HorseMode = false;
-                playerST.anim.SetBool("isHorse", false);
-                playerST.transform.parent = null;
-                playerST.rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY
-                    | RigidbodyConstraints.FreezeRotationZ;
-            }
+                HorseModeDis();
+
 
             //rigid.angularVelocity = Vector3.zero;
 
         }
-
-        
-
+    }
+    public void HorseModeDis()
+    {
+        anim.SetBool("isRun", false);
+        playerST.rigid.useGravity = true;
+        playerST.HorseMode = false;
+        playerST.anim.SetBool("isHorse", false);
+        playerST.transform.parent = null;
+        playerST.rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY
+            | RigidbodyConstraints.FreezeRotationZ;
     }
     void LateUpdate()  //플레이어가 카메라를 바라봄
     {

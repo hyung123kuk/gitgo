@@ -1239,11 +1239,15 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             if (other.tag == "DeathZone")
             {
                 SendMessage("TownResurrection");
+                if (HorseMode)
+                    HorseSpawn.GetComponent<Horse>().HorseModeDis();
             }
 
             if (other.tag == "DeathZoneDun")
             {
                 SendMessage("DunjeonResurrection");
+                if (HorseMode)
+                    HorseSpawn.GetComponent<Horse>().HorseModeDis();
             }
 
             if (other.name == "Boss2Arena")
