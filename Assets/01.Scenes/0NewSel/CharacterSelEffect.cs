@@ -69,13 +69,13 @@ public class CharacterSelEffect : MonoBehaviour
     {
         chSel = GetComponent<CharacterSel>();
         
-        StartCoroutine(InfoReset());
+        
     }
 
 
     public void PageEffect()
     {
-       
+        StartCoroutine(InfoReset());
         for (int i = 0; i < Page.Count; i++)
         {
             allblcok.SetActive(true);
