@@ -62,6 +62,7 @@ public class ExitWindow : MonoBehaviourPun
 
     public void SelCharacterMenu()
     {
+        Debug.Log("캐릭터선택창이에요");
         AllUI.allUI.AllWindowEnd();
         PhotonNetwork.LeaveRoom();
     }

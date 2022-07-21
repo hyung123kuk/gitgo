@@ -170,6 +170,21 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             }
         }
     }
+    [PunRPC]
+    void HPBARSerching() //피통갱신 다른플레이어
+    {
+        PlayerMine[] ownerplayers = FindObjectsOfType<PlayerMine>();
+        foreach (PlayerMine ownerplayer in ownerplayers)
+        {
+            if (!ownerplayer.GetComponent<PhotonView>().IsMine)
+            {
+                ownerplayer.GetComponent<PlayerST>().healthbar.fillAmount = ownerplayer.GetComponent<PlayerStat>()._Hp /
+                    ownerplayer.GetComponent<PlayerStat>()._MAXHP;
+                if (ownerplayer == null)
+                    break;
+            }
+        }
+    }
     void Start()
     {
         nickname.text = PhotonNetwork.LocalPlayer.NickName;
@@ -967,6 +982,12 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         {
             NicknameSerching(); //다른플레이어들 닉네임갱신
             photonView.RPC("NicknameSerching", RpcTarget.OthersBuffered);
+        }
+
+        if (this != null)
+        {
+            HPBARSerching(); //다른플레이어들 피통
+            photonView.RPC("HPBARSerching", RpcTarget.OthersBuffered);
         }
 
         if (!photonView.IsMine)
