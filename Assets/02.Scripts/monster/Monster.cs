@@ -110,7 +110,10 @@ public class Monster : MonoBehaviourPun
         {
             photonView.RPC("MonsterPosition", RpcTarget.Others, pos);
         }
-        tr.position = pos;
+        if (tr)
+        {
+            tr.position = pos;
+        }
     }
 
 
