@@ -192,7 +192,7 @@ public class MonsterManager : MonoBehaviourPunCallbacks
             TurtleSlime = turtle.gameObject;
             Golem = golem.gameObject;
 
-            startSetting();
+            //startSetting();
         }
 
         if (PhotonNetwork.IsMasterClient)
