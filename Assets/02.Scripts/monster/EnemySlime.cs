@@ -7,7 +7,8 @@ using Photon.Pun;
 
 public class EnemySlime : Monster
 {
-    public BoxCollider meleeArea;
+    [SerializeField]
+    private BoxCollider meleeArea;
     public bool isChase;
     public bool isAttack;
     public Transform respawn;
@@ -62,13 +63,14 @@ public class EnemySlime : Monster
     {
         attacking = transform.GetChild(2).GetComponent<Attacking>();
         enemySlime = this;
-        rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
+        rigid = GetComponent<Rigidbody>();
         mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         questNormal = FindObjectOfType<QuestNormal>();
     }
+
 
     private void OnEnable()
     {
@@ -240,7 +242,7 @@ public class EnemySlime : Monster
 
             if (rayHits.Length > 0 && !isAttack && !isDie && !isStun) //����ĳ��Ʈ�� �÷��̾ �����ٸ� && ���� �������� �ƴ϶��
             {
-                photonView.RPC("Attack", RpcTarget.AllBuffered);
+                photonView.RPC("Attack", RpcTarget.All);
                 MonsterAttack();
             }
         }
@@ -257,7 +259,8 @@ public class EnemySlime : Monster
             nav.isStopped = true;
         anim.SetBool("isWalk", false);
         anim.SetBool("isAttack", true);
-
+        
+        
         yield return new WaitForSeconds(0.2f);
         meleeArea.enabled = true;
         yield return new WaitForSeconds(0.7f);
