@@ -1,3 +1,4 @@
+
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -42,12 +43,9 @@ public class MonsterManager : MonoBehaviourPunCallbacks
 
     /*public override void OnMasterClientSwitched(Player newMasterClient)
     {
-
         Debug.Log("마스터클라이언트 나감");
         ResetBox.SetActive(true);
-
         Invoke("Generate", 0.1f);
-
     }*/
 
     public void RemoveMonster()
@@ -180,10 +178,10 @@ public class MonsterManager : MonoBehaviourPunCallbacks
                 skelletons[i].transform.parent = SkeletonPools.transform;
                 Skeleton[i] = skelletons[i].gameObject;
             }
-            //TurtleSlime = turtle.gameObject;
-            //Golem = golem.gameObject;
+            TurtleSlime = turtle.gameObject;
+            Golem = golem.gameObject;
 
-            //startSetting();
+            startSetting();
         }
 
         if (PhotonNetwork.IsMasterClient)
@@ -307,3 +305,18 @@ public class MonsterManager : MonoBehaviourPunCallbacks
     }
 
 }
+Footer
+© 2022 GitHub, Inc.
+Footer navigation
+Terms
+Privacy
+Security
+Status
+Docs
+Contact GitHub
+Pricing
+API
+Training
+Blog
+About
+You have no unread notifications
