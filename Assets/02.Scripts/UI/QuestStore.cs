@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class QuestStore : MonoBehaviour , IPointerClickHandler
+public class QuestStore : MonoBehaviourPun , IPointerClickHandler
 {
     [SerializeField]
     public static QuestStore qustore;
@@ -52,7 +53,15 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
 
     private void Start()
     {
-        playerstat = FindObjectOfType<PlayerStat>();
+        PlayerStat[] playerStats = FindObjectsOfType<PlayerStat>();
+        foreach (PlayerStat myPlayerstat in playerStats)
+        {
+            if (myPlayerstat.photonView.IsMine)
+            {
+                playerstat = myPlayerstat;
+                break;
+            }
+        }
     }
     public void QuestStoreLoad()
     {

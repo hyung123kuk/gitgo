@@ -51,12 +51,31 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
 
     private void Start()
     {
-        playerSt = FindObjectOfType<PlayerST>();
+        PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
+        foreach(PlayerST myPlayerst in playerSts)
+        {
+            if (myPlayerst.photonView.IsMine)
+            {
+                playerSt = myPlayerst;
+                break;
+            }
+        }
+
+        PlayerStat[] playerStats = FindObjectsOfType<PlayerStat>();
+        foreach (PlayerStat myPlayerstat in playerStats)
+        {
+            if (myPlayerstat.photonView.IsMine)
+            {
+                playerStat = myPlayerstat;
+                break;
+            }
+        }
+
+
         archerEquipChange = FindObjectOfType<ArcherEquipChange>();
         warriorEquipChange = FindObjectOfType<WarriorEquipChange>();
         mageEquipChange = FindObjectOfType<MageEquipChange>();
 
-        playerStat = FindObjectOfType<PlayerStat>();
         if (item != null)
         {
             itemImage.sprite = item.itemImage;

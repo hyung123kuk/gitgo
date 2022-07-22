@@ -14,7 +14,15 @@ public class EndBtn : MonoBehaviourPun
 
     private void Awake()
     {
-        playerst = FindObjectOfType<PlayerST>();
+        PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
+        foreach (PlayerST myPlayerst in playerSts)
+        {
+            if (myPlayerst.photonView.IsMine)
+            {
+                playerst = myPlayerst;
+                break;
+            }
+        }
     }
 
 }

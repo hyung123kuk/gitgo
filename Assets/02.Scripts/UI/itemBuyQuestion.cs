@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class itemBuyQuestion : MonoBehaviour , IPointerClickHandler
+public class itemBuyQuestion : MonoBehaviourPun , IPointerClickHandler
 {
     public static bool isBuyQuestion = false;
     public GameObject itemBuyWindow;
@@ -26,7 +27,15 @@ public class itemBuyQuestion : MonoBehaviour , IPointerClickHandler
     {
         inven = FindObjectOfType<inventory>();
         allUI = FindObjectOfType<AllUI>();
-        playerStat = FindObjectOfType<PlayerStat>();
+        PlayerStat[] playerStats = FindObjectsOfType<PlayerStat>();
+        foreach (PlayerStat myPlayerstat in playerStats)
+        {
+            if (myPlayerstat.photonView.IsMine)
+            {
+                playerStat = myPlayerstat;
+                break;
+            }
+        }
     }
 
     

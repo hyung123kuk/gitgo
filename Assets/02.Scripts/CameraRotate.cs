@@ -40,7 +40,16 @@ public class CameraRotate : MonoBehaviourPun
     void Start()
     {
 
-        playerst = FindObjectOfType<PlayerST>();
+        PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
+        foreach (PlayerST myPlayerst in playerSts)
+        {
+            if (myPlayerst.photonView.IsMine)
+            {
+                playerst = myPlayerst;
+                break;
+            }
+        }
+
         weapons = FindObjectOfType<Weapons>();
         Vector3 angles = transform.eulerAngles;
         x = angles.y;

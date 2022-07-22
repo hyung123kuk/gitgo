@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class ToolTip : MonoBehaviour
+public class ToolTip : MonoBehaviourPun
 {
     public GameObject toolTip;
 
@@ -28,8 +29,25 @@ public class ToolTip : MonoBehaviour
 
     private void Start()
     {
-        playerST = FindObjectOfType<PlayerST>();
-        playerStat = FindObjectOfType<PlayerStat>();
+        PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
+        foreach (PlayerST myPlayerst in playerSts)
+        {
+            if (myPlayerst.photonView.IsMine)
+            {
+                playerST = myPlayerst;
+                break;
+            }
+        }
+
+        PlayerStat[] playerStats = FindObjectsOfType<PlayerStat>();
+        foreach (PlayerStat myPlayerstat in playerStats)
+        {
+            if (myPlayerstat.photonView.IsMine)
+            {
+                playerStat = myPlayerstat;
+                break;
+            }
+        }
     }
 
     public void ToolTipOn(Item item,Vector2 toolTipPoint,int mode)

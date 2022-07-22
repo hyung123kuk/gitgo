@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class LogManager : MonoBehaviour
+public class LogManager : MonoBehaviourPun
 {
     [SerializeField]
     private Text[] logText;
@@ -21,7 +22,17 @@ public class LogManager : MonoBehaviour
     {
         logManager = this;
         logText = GetComponentsInChildren<Text>();
-        tr = FindObjectOfType<PlayerST>().gameObject.transform;
+
+        PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
+        foreach (PlayerST myPlayerst in playerSts)
+        {
+            if (myPlayerst.photonView.IsMine)
+            {
+                tr = myPlayerst.gameObject.transform;
+                break;
+            }
+        }
+        
     }
 
     private void LogUp()
