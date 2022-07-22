@@ -45,7 +45,7 @@ public class MonsterManager : MonoBehaviourPunCallbacks
 
         Debug.Log("마스터클라이언트 나감");
         //ResetBox.SetActive(true);
-        RemoveMonster();
+        Invoke("RemoveMonster", 0.2f);
         Invoke("Generate", 0.2f);
         //Invoke("Generate", 0.1f);
 
