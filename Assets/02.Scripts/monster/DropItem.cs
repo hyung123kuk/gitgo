@@ -47,7 +47,7 @@ public class DropItem : DropCoin
                     RangeText.enabled = false;
                     inventory.inven.addItem(item);
                    
-                    photonView.RPC("DestroyEquip",RpcTarget.All);
+                    photonView.RPC("DestroyEquip",RpcTarget.AllBuffered);
                     
                     
                 }
@@ -60,8 +60,8 @@ public class DropItem : DropCoin
     [PunRPC]
     public void DestroyEquip()
     {
-        if (PhotonNetwork.IsMasterClient)
-            PhotonNetwork.Destroy(gameObject);
+        
+            Destroy(gameObject);
     }
 
 

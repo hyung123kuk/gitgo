@@ -98,7 +98,7 @@ public class DropCoin : MonoBehaviourPun
     {
         if (local)
         {
-            photonView.RPC("DestroyItem", RpcTarget.Others, false);
+            photonView.RPC("DestroyItem", RpcTarget.OthersBuffered, false);
         }
         Destroy(gameObject);
     }
