@@ -195,12 +195,14 @@ public class NET_Trade : MonoBehaviourPun
     }
 
     public bool SlotCheck;
+    public bool SlotCheckSuccess;
     public void SlotNumCheck() // 슬롯 개수 체크해 성공여부를 결정한다.
     {
         
         SlotCheck = SlotCheckFucn(); //슬롯 갯수 체크
         Debug.Log(SlotCheck);
         net_UIPlayer.SlotNumCheck(SlotCheck); //상대에게 내 슬롯 체크 여부 보냄.
+        SlotCheckSuccess = true;
     }
 
 
@@ -225,6 +227,8 @@ public class NET_Trade : MonoBehaviourPun
 
         }
 
+        Debug.Log(allitemcount);
+        Debug.Log(usedItemCount);
 
         if (!inventory.inven.HasEmptySlot(allitemcount - usedItemCount)) //인벤토리 창이 부족한지확인하는 부분
         {
@@ -241,6 +245,7 @@ public class NET_Trade : MonoBehaviourPun
     {
         
         for (int i = 0; i < Net_Your_Slot.Length; i++) {
+            Debug.Log(Net_Your_Slot[i].item);
             if (Net_Your_Slot[i].item != null)
             {
                 Debug.Log("성공");
@@ -278,6 +283,7 @@ public class NET_Trade : MonoBehaviourPun
             Net_Your_Slot[i].ClearSlot();
         }
 
+        SlotCheckSuccess = false;
 
         NET_UIPlayer.TradeOn = false;
         net_UIPlayer.photonView.RPC("TradeOffSet", RpcTarget.Others);

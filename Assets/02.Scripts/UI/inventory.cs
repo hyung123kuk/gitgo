@@ -200,7 +200,7 @@ public class inventory : MonoBehaviourPun, IPointerClickHandler, IEndDragHandler
                     return true;
                 }
                 _num++;
-
+                Debug.Log(_num);
             }
         }
         

@@ -268,10 +268,23 @@ public class NET_UIPlayer : MonoBehaviourPun
     }
 
     [PunRPC]
-    public void CheckSlot(bool _check)
+    public IEnumerator CheckSlot(bool _check)
     {
         if (photonView.IsMine)
         {
+            while (!FindObjectOfType<NET_Trade>().SlotCheckSuccess)
+            {
+                yield return null;
+            }
+            
+
+            
+
+            Debug.Log(_check);
+            Debug.Log(FindObjectOfType<NET_Trade>().SlotCheck);
+
+           
+
             if (_check && FindObjectOfType<NET_Trade>().SlotCheck) //상대와 내 것 모두 슬롯 체크가 완료 되면 트레이드 성공
             {
                 FindObjectOfType<NET_Trade>().SuccessTrade();
@@ -309,7 +322,7 @@ public class NET_UIPlayer : MonoBehaviourPun
     {
         if (photonView.IsMine && TradeNum!=0)
         {
-            FindObjectOfType<NET_Trade>().TradeReset();
+            FindObjectOfType<NET_Trade>().FailTrade();
             TradeNum = 0;
             photonView.RPC("TradeNumberSet", RpcTarget.Others, TradeNum);
         }
