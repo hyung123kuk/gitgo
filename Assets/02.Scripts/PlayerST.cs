@@ -1342,22 +1342,22 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                 }
             }
 
-            if (other.tag == "DunjeonPortal")
+            if (other.tag == "DunjeonPortal" && !HorseMode)
             {
                 gameObject.transform.position = Portal.portal.WorldPortal.position + Portal.portal.WorldPortal.transform.forward * -2;
             }
 
-            if (other.tag == "WorldPortal")
+            if (other.tag == "WorldPortal" && !HorseMode)
             {
                 gameObject.transform.position = Portal.portal.DunjeonPortal.position + Portal.portal.DunjeonPortal.transform.forward * -2;
             }
 
-            if (other.tag == "BossPortalIN")
+            if (other.tag == "BossPortalIN" && !HorseMode)
             {
                 gameObject.transform.position = Portal.portal.BossPortalOUT.position + Portal.portal.BossPortalOUT.transform.forward * 2;
             }
 
-            if (other.tag == "BossPortalOUT")
+            if (other.tag == "BossPortalOUT" && !HorseMode)
             {
                 gameObject.transform.position = Portal.portal.BossPortalIN.position + Portal.portal.BossPortalIN.transform.forward * -2;
             }
