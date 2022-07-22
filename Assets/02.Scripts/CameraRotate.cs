@@ -73,7 +73,6 @@ public class CameraRotate : MonoBehaviourPun
 
         if (target)
         {
-            Debug.Log("들옴");
             //마우스 스크롤과의 거리계산
             dist -= 1 * Input.mouseScrollDelta.y;
 

@@ -60,7 +60,8 @@ public class DropItem : DropCoin
     [PunRPC]
     public void DestroyEquip()
     {
-        PhotonNetwork.Destroy(gameObject);
+        if (PhotonNetwork.IsMasterClient)
+            PhotonNetwork.Destroy(gameObject);
     }
 
 
