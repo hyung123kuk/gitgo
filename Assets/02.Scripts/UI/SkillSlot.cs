@@ -85,7 +85,13 @@ public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEnd
 
     }
 
-
+    private void OnEnable()
+    {
+        if (playerStat != null)
+        {
+            SetSkillColor();
+        }
+    }
 
     public void SetSkillColor()
     {
