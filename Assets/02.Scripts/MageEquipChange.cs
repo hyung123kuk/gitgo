@@ -6,7 +6,8 @@ using Photon.Pun;
 public class MageEquipChange : MonoBehaviourPun
 {
     public bool UICheck; //캐릭터선택창 체크용
-    public PlayerST playerst;
+    [SerializeField]
+    PlayerST playerst;
     #region 장비변경
     public MageEquip mageEquip;
 
@@ -105,7 +106,8 @@ public class MageEquipChange : MonoBehaviourPun
 
     private void Start()
     {
-        photonView.RPC("EquipSetting", RpcTarget.AllBuffered);
+        if (playerst.CharacterType == PlayerST.Type.Mage && enabled)
+            photonView.RPC("EquipSetting", RpcTarget.AllBuffered);
     }
 
     #region 법사 방어구 변경

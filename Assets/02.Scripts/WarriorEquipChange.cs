@@ -6,6 +6,8 @@ using Photon.Pun;
 public class WarriorEquipChange : MonoBehaviourPun
 {
     public bool UICheck; //캐릭터선택창 체크용
+    [SerializeField]
+    PlayerST playerst;
 
     #region 장비변경
     public WarriorEquip warriorEquip;
@@ -60,7 +62,7 @@ public class WarriorEquipChange : MonoBehaviourPun
         {
             this.enabled = false;
         }
-
+        playerst = GetComponent<PlayerST>();
         warriorEquip = GetComponent<WarriorEquip>();
         #region 워리어 장비초기화
 
@@ -131,6 +133,7 @@ public class WarriorEquipChange : MonoBehaviourPun
 
     private void Start()
     {
+        if(playerst.CharacterType == PlayerST.Type.Warrior && enabled)
         photonView.RPC("EquipSetting", RpcTarget.AllBuffered);
         #region 워리어 장비 초기화
         ////↓머리
