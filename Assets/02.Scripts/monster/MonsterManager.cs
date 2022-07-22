@@ -45,7 +45,7 @@ public class MonsterManager : MonoBehaviourPunCallbacks
 
         Debug.Log("마스터클라이언트 나감");
         //ResetBox.SetActive(true);
-        //Invoke("RemoveMonster", 0.1f);
+        Invoke("RemoveMonster", 0.1f);
         Invoke("Generate", 0.2f);
         //Invoke("Generate", 0.1f);
 
@@ -58,44 +58,52 @@ public class MonsterManager : MonoBehaviourPunCallbacks
             for (int i = 0; i < Slime.Length; i++)
             {
                 //Slime[i].GetComponent<PhotonView>().RequestOwnership();
+                if(Slime[i])
                 Slime[i].SetActive(false);
                 //PhotonNetwork.Destroy(Slime[i]);
             }
             for (int i = 0; i < BlueSlime.Length; i++)
             {
                 //BlueSlime[i].GetComponent<PhotonView>().RequestOwnership();
-                BlueSlime[i].SetActive(false);
+                if (BlueSlime[i])
+                    BlueSlime[i].SetActive(false);
                 //PhotonNetwork.Destroy(BlueSlime[i]);
             }
             for (int i = 0; i < Goblin.Length; i++)
             {
                 //Goblin[i].GetComponent<PhotonView>().RequestOwnership();
-                Goblin[i].SetActive(false);
+                if (Goblin[i])
+                    Goblin[i].SetActive(false);
                 //PhotonNetwork.Destroy(Goblin[i]);
             }
             for (int i = 0; i < Goblin2.Length; i++)
             {
                 //Goblin2[i].GetComponent<PhotonView>().RequestOwnership();
-                Goblin2[i].SetActive(false);
+                if (Goblin2[i])
+                    Goblin2[i].SetActive(false);
                 //PhotonNetwork.Destroy(Goblin2[i]);
             }
             for (int i = 0; i < GoblinArcher.Length; i++)
             {
                 //GoblinArcher[i].GetComponent<PhotonView>().RequestOwnership();
-                GoblinArcher[i].SetActive(false);
+                if (GoblinArcher[i])
+                    GoblinArcher[i].SetActive(false);
                 //PhotonNetwork.Destroy(GoblinArcher[i]);
             }
             for (int i = 0; i < Skeleton.Length; i++)
             {
                 //Skeleton[i].GetComponent<PhotonView>().RequestOwnership();
-                Skeleton[i].SetActive(false);
+                if (Skeleton[i])
+                    Skeleton[i].SetActive(false);
                 //PhotonNetwork.Destroy(Skeleton[i]);
             }
             //TurtleSlime.GetComponent<PhotonView>().RequestOwnership();
-            TurtleSlime.SetActive(false);
+            if (TurtleSlime)
+                TurtleSlime.SetActive(false);
             //PhotonNetwork.Destroy(TurtleSlime);
             //Golem.GetComponent<PhotonView>().RequestOwnership();
-            Golem.SetActive(false);
+            if (Golem)
+                Golem.SetActive(false);
             //PhotonNetwork.Destroy(Golem);
         }
     }
