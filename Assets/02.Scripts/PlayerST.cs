@@ -148,7 +148,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         comboHit = GetComponent<ComboHit>();
         anim = GetComponentInChildren<Animator>();
         smesh = GetComponentsInChildren<SkinnedMeshRenderer>();
-        photonView.RPC("Setting", RpcTarget.AllBuffered);
+        
         saveManager = FindObjectOfType<SaveManager>();
         nickname = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<Text>();
         healthbar = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Image>();
@@ -185,8 +185,33 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             }
         }
     }
+
+    void HorseSerching() //말 부모변경
+    {
+        Debug.Log("말");
+        PlayerST[] ownerplayers = FindObjectsOfType<PlayerST>();
+        foreach (PlayerST ownerplayer in ownerplayers)
+        {
+            if (!ownerplayer.GetComponent<PhotonView>().IsMine && ownerplayer.HorseMode)
+            {
+                Debug.Log("말1");
+                ownerplayer.transform.SetParent(ownerplayer.Horsee.transform);
+                if (ownerplayer == null)
+                    break;
+            }
+            else if(!ownerplayer.GetComponent<PhotonView>().IsMine && !ownerplayer.HorseMode)
+            {
+                Debug.Log("말2");
+                ownerplayer.transform.SetParent(null);
+                if (ownerplayer == null)
+                    break;
+            }
+        }
+    }
     void Start()
     {
+        if (!photonView.IsMine)
+            return;
         nickname.text = PhotonNetwork.LocalPlayer.NickName;
         healthbar.CrossFadeAlpha(0, 0, true);  //자기자신 HP바 가리기
         //nickname.CrossFadeAlpha(0, 0, true);
@@ -196,24 +221,15 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         playerstat = GetComponent<PlayerStat>();
         bowPower = bowMinPower;
         _transform = GetComponent<Transform>();
-
+        photonView.RPC("Setting", RpcTarget.All);
 
 
         playerST = this;
         dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
         weapons = FindObjectOfType<Weapons>();
         rigid = GetComponent<Rigidbody>();
-        // HorseSpawn = FindObjectOfType<Horse>().gameObject;
-        GameObject[] horses = GameObject.FindGameObjectsWithTag("Horse");
-        foreach (GameObject horse1 in horses)
-        {
-            if (horse1.GetComponent<PhotonView>().IsMine)
-            {
-                HorseSpawn = horse1;
-                break;
-            }
-        }
-        Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
+        
+        
 
     }
 
@@ -221,6 +237,17 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     void Setting() //변수 동기화 이유: 무기낄때 퀘스트쪽에서 에러
     {
         questStore = FindObjectOfType<QuestStore>();
+        //GameObject[] horses = GameObject.FindGameObjectsWithTag("Horse");
+        //foreach (GameObject horse1 in horses)
+        //{
+        //    if (horse1.GetComponent<PhotonView>().IsMine)
+        //    {
+        //        HorseSpawn = horse1;
+        //        break;
+        //    }
+        //}
+        HorseSpawn = FindObjectOfType<Horse>().gameObject;
+        Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
     }
 
 
@@ -238,6 +265,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             stream.SendNext(isCooldodge);
             stream.SendNext(isCoolTeleport);
             stream.SendNext(healthbar.fillAmount);
+            stream.SendNext(HorseMode);
         }
         else
         {
@@ -252,6 +280,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             isCooldodge = (bool)stream.ReceiveNext();
             isCoolTeleport = (bool)stream.ReceiveNext();
             healthbar.fillAmount = (float)stream.ReceiveNext();
+            HorseMode = (bool)stream.ReceiveNext();
         }
     }
 
@@ -993,7 +1022,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         if (!photonView.IsMine)
             return;
 
-
+        HorseSerching(); 
 
 
         if (Input.GetKeyDown(KeyCode.H) && !HorseMode) //말 아이템이 없어서 이걸로 테스트했어요
@@ -1058,6 +1087,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         //}
         if (HorseMode) //말탔을때 플레이어의 프리즈포지션 체크
         {
+            Debug.Log("응");
+            transform.position = Horsee.transform.position + Vector3.up * -0.5f;
             rigid.constraints = RigidbodyConstraints.FreezePositionX;
             rigid.constraints = RigidbodyConstraints.FreezePositionY;
             rigid.constraints = RigidbodyConstraints.FreezePositionZ;
@@ -1096,7 +1127,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             if (horsecount == 0) //소환 
             {
                 HorseSpawn.GetComponent<Rigidbody>().velocity = Vector3.zero;
-                HorseSpawn.transform.parent = null;
+                //HorseSpawn.transform.parent = null;
                 SoundManager.soundManager.Horse();
                 HorseSpawn.transform.position = horsepos1.position;
                 HorseSpawn.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
