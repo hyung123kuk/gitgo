@@ -31,6 +31,7 @@ public class EnemyRange : Monster
     Animator anim;
     QuestNormal questNormal;
     float targetRange = 15f; //몬스터 공격사정거리
+    Material mat;
 
     void OnDrawGizmos()
     {
@@ -53,6 +54,7 @@ public class EnemyRange : Monster
     }
     void Awake()
     {
+        mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
         bullet = Resources.Load<GameObject>("Fireball");
         rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<CapsuleCollider>();
@@ -314,12 +316,14 @@ public class EnemyRange : Monster
     }
     IEnumerator OnDamage()
     {
+        mat.color = Color.red;
         HitMonster();
         HitSoundManager.hitsoundManager.GoblinHitSound();
         isDamage = true;
         Hiteff.Play();
         Hiteff2.Play();
         yield return new WaitForSeconds(0.1f);
+        mat.color = Color.white;
         isDamage = false;
         //SetHpBar();
     }
