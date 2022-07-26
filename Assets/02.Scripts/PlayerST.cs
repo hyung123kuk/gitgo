@@ -186,6 +186,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         }
     }
 
+    [PunRPC]
     void HorseSerching() //말 부모변경
     {
         Debug.Log("말");
@@ -1022,7 +1023,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         if (!photonView.IsMine)
             return;
 
-        HorseSerching(); 
+        //HorseSerching(); 
 
 
         if (Input.GetKeyDown(KeyCode.H) && !HorseMode) //말 아이템이 없어서 이걸로 테스트했어요
@@ -1429,8 +1430,12 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
     }
 
-
-
+    [PunRPC]
+    IEnumerator HorseParent()
+    {
+        yield return new WaitForSeconds(0.2f);
+        photonView.RPC("HorseSerching", RpcTarget.All);
+    }
     private void OnTriggerStay(Collider other)
     {
         if (photonView.IsMine)
@@ -1449,6 +1454,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                     transform.position = Horsee.transform.position + Vector3.up * -0.5f;
                     transform.rotation = HorseSpawn.transform.rotation;
                     //Quaternion.LookRotation(new Vector3(h, 0f, v));
+                    photonView.RPC("HorseParent", RpcTarget.All);
                 }
             }
 

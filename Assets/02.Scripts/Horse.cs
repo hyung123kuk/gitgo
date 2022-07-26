@@ -128,6 +128,7 @@ public class Horse : MonoBehaviourPun
         playerST.gameObject.transform.SetParent(null);
         playerST.rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY
             | RigidbodyConstraints.FreezeRotationZ;
+        playerST.photonView.RPC("HorseParent", RpcTarget.All);
     }
     void LateUpdate()  //플레이어가 카메라를 바라봄
     {
