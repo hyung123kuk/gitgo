@@ -145,7 +145,7 @@ public class EnemyBoss2 : MonsterBoss
                 PatternStart();
                 nav.SetDestination(target.position);
 
-                if (!isBuff)
+                if (!isBuff && !isSkill)
                     nav.speed = 6f;
                 if (isBuff)
                 {

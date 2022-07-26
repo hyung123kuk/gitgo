@@ -6997,7 +6997,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e0a7e1141d86145bb71366e9d7f55c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 100
+  damage: 130
   isMelee: 1
   isRazor: 0
 --- !u!114 &1185679536323759074
@@ -7192,7 +7192,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &8677854105255989102
 Transform:
   m_ObjectHideFlags: 0
@@ -7310,8 +7310,8 @@ MonoBehaviour:
   Geteff: {fileID: 0}
   weapons: {fileID: 0}
   attackdamage: {fileID: 0}
-  maxHealth: 5000
-  curHealth: 5000
+  maxHealth: 7000
+  curHealth: 7000
   explPower: 0
   upPower: 0
   itemUpPoint: 0
