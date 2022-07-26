@@ -86,7 +86,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
 
 
-    
+
 
     public bool isFall; //공중에 떠있는상태? 몬스터들의 룩엣을 조정하기위함.
     //======================전사 스킬========================//
@@ -1104,6 +1104,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             }
             else if (horsecount == 1) //소환 해제
             {
+                HorseSpawn.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 SoundManager.soundManager.Horse2();
                 HorseSpawn.transform.position = GameManager.gameManager.HorsePoint.position;
                 //HorseSpawn.transform.parent = transform;
@@ -1412,7 +1413,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
                     anim.SetBool("isHorse", true);
                     rigid.useGravity = false;
-                    transform.parent = Horsee.transform;
+                    transform.SetParent(Horsee.transform);
+                    //transform.parent = Horsee.transform;
                     transform.position = Horsee.transform.position + Vector3.up * -0.5f;
                     transform.rotation = HorseSpawn.transform.rotation;
                     //Quaternion.LookRotation(new Vector3(h, 0f, v));

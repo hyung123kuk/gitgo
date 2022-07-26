@@ -116,13 +116,16 @@ public class Horse : MonoBehaviourPun
 
         }
     }
+    [PunRPC]
     public void HorseModeDis()
     {
+        Debug.Log("∏ª«ÿ¡¶");
         anim.SetBool("isRun", false);
         playerST.rigid.useGravity = true;
         playerST.HorseMode = false;
         playerST.anim.SetBool("isHorse", false);
-        playerST.transform.parent = null;
+        //playerST.transform.parent = null;
+        playerST.gameObject.transform.SetParent(null);
         playerST.rigid.constraints = RigidbodyConstraints.FreezeRotationX | RigidbodyConstraints.FreezeRotationY
             | RigidbodyConstraints.FreezeRotationZ;
     }
