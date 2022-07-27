@@ -692,7 +692,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             if (photonView.IsMine)
                 comboHit.noOfClicks = 0;
         }
-        if (!questStore.MainSuccess)
+        if (!questStore.MainSuccess&&photonView.IsMine)
         {
             questStore.MainQuestSuccess(1);
         }
@@ -1549,7 +1549,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (WeaponNum != basicSword)
         {
-            if (!questStore.MainSuccess)
+            if (!questStore.MainSuccess && photonView.IsMine)
             {
                 questStore.MainQuestSuccess(2);
             }

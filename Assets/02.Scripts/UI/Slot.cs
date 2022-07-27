@@ -106,6 +106,33 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
         if (item == null)
             return;
 
+        if (!playerSt.photonView.IsMine)
+        {
+
+            PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
+            foreach (PlayerST myPlayerst in playerSts)
+            {
+                if (myPlayerst.photonView.IsMine)
+                {
+                    playerSt = myPlayerst;
+                    break;
+                }
+            }
+        }
+        if (!playerStat.photonView.IsMine)
+        {
+
+            PlayerStat[] playerStats = FindObjectsOfType<PlayerStat>();
+            foreach (PlayerStat myPlayerstat in playerStats)
+            {
+                if (myPlayerstat.photonView.IsMine)
+                {
+                    playerStat = myPlayerstat;
+                    break;
+                }
+            }
+        }
+
         if (item.itemEquLevel > playerStat.Level ||
            (item.armortype == Item.ArmorType.cloth && playerSt.CharacterType == PlayerST.Type.Archer) ||
             (item.armortype == Item.ArmorType.cloth && playerSt.CharacterType == PlayerST.Type.Warrior) ||

@@ -126,7 +126,7 @@ public class CharacterSel : MonoBehaviourPunCallbacks
 
     public void GameStart()
     {       
-        saveManager.LoadCharacter();
+        
         saveManager.SaveOn = true;
         transform.GetChild(0).gameObject.SetActive(false);
     }
