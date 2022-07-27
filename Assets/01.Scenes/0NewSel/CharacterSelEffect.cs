@@ -277,8 +277,7 @@ public class CharacterSelEffect : MonoBehaviour
 
     public void ArcherButton()
     {
-        if (character == 1)
-            return;
+        if (character == 1)            return;
         chSel.ArcherBut();
         Debug.Log("아쳐 생성선택 버튼");
         character = 1;
