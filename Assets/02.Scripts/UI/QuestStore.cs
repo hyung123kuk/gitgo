@@ -24,7 +24,7 @@ public class QuestStore : MonoBehaviourPun , IPointerClickHandler
     Image Quest3Image;
     PlayerStat playerstat;
 
-    public int mainNum = 1;
+    public int mainNum;
     public bool isMainRecive = false; //메인 퀘스트 받았는가?
     public bool MainSuccess = false; //메인 퀘스트 성공 했는가?
 
@@ -35,6 +35,7 @@ public class QuestStore : MonoBehaviourPun , IPointerClickHandler
   
     void Awake()
     {
+        mainNum = 1;
        questTyping = FindObjectOfType<QuestTyping>();
         questWindow = FindObjectOfType<QuestWindow>();
         questExplain = FindObjectOfType<QuestExplain>();

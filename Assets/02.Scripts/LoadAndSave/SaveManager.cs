@@ -208,7 +208,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
                 File.WriteAllText(SAVE_DATA_DIRECTORY + ch2_SAVE_FILENAME, json);
             }
 
-            yield return new WaitForSeconds(0.2f); //0.2초마다 저장
+            yield return new WaitForSeconds(1f); //0.2초마다 저장
         }
     }
 
