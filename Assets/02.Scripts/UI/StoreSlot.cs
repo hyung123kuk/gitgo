@@ -18,16 +18,32 @@ public class StoreSlot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHan
 
     void OnEnable()
     {
-        playerStat = FindObjectOfType<PlayerStat>();
-        PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
-
-        foreach (PlayerST myplayerSt in playerSts)
+        if (playerStat == null || !playerStat.photonView.IsMine)
         {
-            if (myplayerSt.GetComponent<PhotonView>().IsMine)
+            PlayerStat[] playerStats = FindObjectsOfType<PlayerStat>();
+            foreach (PlayerStat myPlayerstat in playerStats)
             {
-                playerSt = myplayerSt;
-                break;
+                if (myPlayerstat.photonView.IsMine)
+                {
+                    playerStat = myPlayerstat;
+                    break;
+                }
             }
+        }
+
+        if (playerSt == null || !playerSt.photonView.IsMine)
+        {
+            PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
+
+            foreach (PlayerST myplayerSt in playerSts)
+            {
+                if (myplayerSt.GetComponent<PhotonView>().IsMine)
+                {
+                    playerSt = myplayerSt;
+                    break;
+                }
+            }
+
         }
         ItembuyQuestion = FindObjectOfType<itemBuyQuestion>();
         if (item != null)
