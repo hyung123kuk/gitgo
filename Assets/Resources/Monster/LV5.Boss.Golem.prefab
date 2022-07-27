@@ -9864,7 +9864,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &6779363133910856763
 Transform:
   m_ObjectHideFlags: 0
@@ -9983,8 +9983,8 @@ MonoBehaviour:
   Geteff: {fileID: 0}
   weapons: {fileID: 0}
   attackdamage: {fileID: 0}
-  maxHealth: 5000
-  curHealth: 5000
+  maxHealth: 10000
+  curHealth: 10000
   explPower: 0
   upPower: 0
   itemUpPoint: 0
@@ -9998,6 +9998,7 @@ MonoBehaviour:
   bossHpBar: {fileID: 0}
   BossHpBar: {fileID: 0}
   BossHp: {fileID: 0}
+  dropResourceString: 
   meleeArea: {fileID: 8016346520614835438}
   nuckArea: {fileID: 8016346520740437871}
   nuckarea: {fileID: 8016346520740437869}
@@ -13159,7 +13160,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e0a7e1141d86145bb71366e9d7f55c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 100
   isMelee: 1
   isRazor: 0
 --- !u!114 &8016346520614835436

@@ -199,7 +199,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e0a7e1141d86145bb71366e9d7f55c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 50
   isMelee: 1
   isRazor: 0
 --- !u!114 &1467700734
@@ -12743,7 +12743,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &5998770573931531667
 Transform:
   m_ObjectHideFlags: 0
@@ -12823,10 +12823,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.4
+  m_Radius: 0.6892209
   m_Height: 2
   m_Direction: 1
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Center: {x: -0.0060124393, y: 1, z: 3.9697273e-11}
 --- !u!114 &4725261362134403516
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12855,8 +12855,8 @@ MonoBehaviour:
   Geteff: {fileID: 0}
   weapons: {fileID: 0}
   attackdamage: {fileID: 0}
-  maxHealth: 5000
-  curHealth: 5000
+  maxHealth: 3000
+  curHealth: 3000
   explPower: 0
   upPower: 0
   itemUpPoint: 0

@@ -47,6 +47,9 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable //포톤으로 만들
 
     public PlayerStat playerstat;
 
+    [SerializeField]
+    private ParticleSystem LevelUp;
+
     private void Awake()
     {
         if (!photonView.IsMine)
@@ -72,8 +75,8 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable //포톤으로 만들
 
     void Start()
     {
-        
 
+        LevelUp = transform.GetChild(1).GetComponent<ParticleSystem>();
         playerstat = this;
         playerST = GetComponent<PlayerST>();
         inven = FindObjectOfType<inventory>();
@@ -251,7 +254,7 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable //포톤으로 만들
 
         if (NowExp >= TotalExp)
         {
-
+            LevelUp.Play();
             Level++;
             NowExp = 0;
             TotalExp=LevelExp();
