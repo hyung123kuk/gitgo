@@ -1008,6 +1008,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Update()
     {
+
         if (this != null)
         {
             NicknameSerching(); //다른플레이어들 닉네임갱신
@@ -1019,12 +1020,12 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             HPBARSerching(); //다른플레이어들 피통
             photonView.RPC("HPBARSerching", RpcTarget.OthersBuffered);
         }
-
         if (!photonView.IsMine)
             return;
 
         //HorseSerching(); 
 
+        
 
         if (Input.GetKeyDown(KeyCode.H) && !HorseMode) //말 아이템이 없어서 이걸로 테스트했어요
         {
