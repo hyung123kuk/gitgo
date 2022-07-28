@@ -9,6 +9,7 @@ using Photon.Pun;
 
 public class Nickname : MonoBehaviourPun
 {
+
     public InputField nickNameInput1;
     public InputField nickNameInput2;
     private SaveManager saveManager;
@@ -18,10 +19,10 @@ public class Nickname : MonoBehaviourPun
 
     private void Awake()
     {
-        nickNameInput1 = transform.GetChild(0).transform.GetChild(2).transform.GetChild(0).transform.GetChild(10).
-            GetComponent<InputField>();
-        nickNameInput2 = transform.GetChild(0).transform.GetChild(2).transform.GetChild(0).transform.GetChild(11).
-            GetComponent<InputField>();
+       // nickNameInput1 = transform.GetChild(0).transform.GetChild(2).transform.GetChild(0).transform.GetChild(10).
+       //     GetComponent<InputField>();
+      //  nickNameInput2 = transform.GetChild(0).transform.GetChild(2).transform.GetChild(0).transform.GetChild(11).
+       //     GetComponent<InputField>();
 
 
         saveManager = FindObjectOfType<SaveManager>();

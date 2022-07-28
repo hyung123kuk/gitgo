@@ -31,11 +31,42 @@ public class CharacterSelEffect : MonoBehaviour
     GameObject[] Ch_InfoText;
     [SerializeField]
     GameObject[] Ch_Skill;
+    [SerializeField]
+    GameObject MakeButton;
+    [SerializeField]
+    GameObject nickName;
+    [SerializeField]
+    GameObject nickName2;
+
+
+    [SerializeField]
+    Image[] abillity_Image;
+    [SerializeField]
+    Text[] abillity_Text;
+
+    //클릭 했을때 커지고, +  에니메이션
+    [SerializeField]
+    GameObject[] infoClick;
+    [SerializeField]
+    RectTransform[] characterInfo;
+
+
+    float[,] Abillity = new float[3, 3] { { 70, 90, 40 }, { 80, 70, 50 }, { 50, 50, 100 } };
+
 
 
 
     public float pageSpeed=0.1f;//페이지 하나와 하나의 간격
     public float pageFlipSpeed = 0.02f; //페이지 넘기는 속도
+
+    [SerializeField]
+    CharacterSel chSel;
+
+    private void Start()
+    {
+        chSel = GetComponent<CharacterSel>();
+        
+    }
 
 
     public void PageEffect()
@@ -73,7 +104,7 @@ public class CharacterSelEffect : MonoBehaviour
         }
 
         
-        if(Start && i==1)
+        if(Start && i==0)
              allblcok.SetActive(false);
         if (!Start)
             allblcok.SetActive(false);
@@ -84,8 +115,6 @@ public class CharacterSelEffect : MonoBehaviour
         
         yield return new WaitForSeconds(i * pageSpeed);
 
-        Debug.Log(Page[i].localEulerAngles.y);
-        Debug.Log(startPointPage.localEulerAngles.y);
         while (Page[i].localEulerAngles.y <= 340)
         {
 
@@ -102,20 +131,94 @@ public class CharacterSelEffect : MonoBehaviour
 
     public void Character1Button()
     {
-        Debug.Log("만약에 캐릭터가 없다면");
-        {
+
+        chSel.CharButton1();
+        if (chSel.character1 == CharacterSel.Type.None) { 
             allblcok.SetActive(true);
             StartCoroutine(P_Effect_Right(0));
             StartCoroutine(P_Effect_Right(1));
+            StartCoroutine(InfoReset());
+            infoClick[0].SetActive(true);
+            infoClick[1].SetActive(true);
+            if (chSel.characterAni2D[1])
+                chSel.characterAni2D[1].SetBool("run", false);
         }
+        else
+        {
+            infoClick[0].SetActive(false);
+            infoClick[1].SetActive(true);
+            if (chSel.characterAni2D[0])
+                chSel.characterAni2D[0].SetBool("run", true);
+            if (chSel.characterAni2D[1])
+               chSel.characterAni2D[1].SetBool("run", false);
+            StopAllCoroutines();
+            StartCoroutine(InfoClick());
+        }
+
+ 
+
     }
     public void Character2Button()
     {
-        Debug.Log("만약에 캐릭터가 없다면");
+        chSel.CharButton2();
+        if (chSel.character2 == CharacterSel.Type.None)
         {
+            infoClick[0].SetActive(true);
+            infoClick[1].SetActive(true);
             allblcok.SetActive(true);
             StartCoroutine(P_Effect_Right(0));
             StartCoroutine(P_Effect_Right(1));
+            StartCoroutine(InfoReset());
+            if (chSel.characterAni2D[0])
+                chSel.characterAni2D[0].SetBool("run", false);
+        }
+        else
+        {
+            
+            infoClick[0].SetActive(true);
+            infoClick[1].SetActive(false);
+            if (chSel.characterAni2D[1])
+                chSel.characterAni2D[1].SetBool("run",true);
+            if (chSel.characterAni2D[0])
+                chSel.characterAni2D[0].SetBool("run", false);
+            StopAllCoroutines();
+            StartCoroutine(InfoClick());
+        }
+
+
+
+    }
+
+    IEnumerator InfoClick()
+    {
+        while (infoClick[1].activeSelf && characterInfo[0].localScale.x <1.05f)
+        {            
+            yield return new WaitForSeconds(0.02f);
+            float Scale = Mathf.Lerp(characterInfo[0].localScale.x, 1.4f, Time.deltaTime * 4f);
+            characterInfo[0].localScale = Vector3.one * Scale;
+            float Scale2 = Mathf.Lerp(characterInfo[1].localScale.x, 0.6f, Time.deltaTime * 4f);
+            characterInfo[1].localScale = Vector3.one * Scale2;
+
+        }
+        while (infoClick[0].activeSelf && characterInfo[1].localScale.x < 1.05f)
+        {
+            yield return new WaitForSeconds(0.02f);
+            float Scale = Mathf.Lerp(characterInfo[1].localScale.x, 1.4f, Time.deltaTime * 4f);
+            characterInfo[1].localScale = Vector3.one * Scale;
+            float Scale2 = Mathf.Lerp(characterInfo[0].localScale.x, 0.6f, Time.deltaTime * 4f);
+            characterInfo[0].localScale = Vector3.one * Scale2;
+        }
+    }
+    IEnumerator InfoReset()
+    {
+        while (characterInfo[0].localScale.x <= 1.01f || characterInfo[0].localScale.x >= 0.99f && characterInfo[1].localScale.x <= 1.01f || characterInfo[1].localScale.x >= 0.99f)
+        {
+            yield return new WaitForSeconds(0.02f);
+            float Scale = Mathf.Lerp(characterInfo[0].localScale.x, 1f, Time.deltaTime * 4f);
+            characterInfo[0].localScale = Vector3.one * Scale;
+            float Scale2 = Mathf.Lerp(characterInfo[1].localScale.x, 1f, Time.deltaTime * 4f);
+            characterInfo[1].localScale = Vector3.one * Scale2;
+
         }
     }
 
@@ -123,6 +226,7 @@ public class CharacterSelEffect : MonoBehaviour
     {
         Debug.Log("뒤로가기 버튼");
         {
+            StopAllCoroutines();
             allblcok.SetActive(true);
             StartCoroutine(P_Effect_Left(1, false));
             StartCoroutine(P_Effect_Left(0,false));
@@ -134,8 +238,12 @@ public class CharacterSelEffect : MonoBehaviour
             character = -1;
             block[0].fillAmount = 1f;
             block[1].fillAmount = 1f;
-
-           
+            MakeButton.SetActive(false);
+            nickName.SetActive(false);
+            nickName2.SetActive(false);
+            StartCoroutine(AbilliytyReset());
+            nickName.GetComponent<InputField>().text = "";
+            nickName2.GetComponent<InputField>().text = "";
         }
     }
 
@@ -145,6 +253,7 @@ public class CharacterSelEffect : MonoBehaviour
     {
         if (character == 0)
             return;
+        chSel.WorriorBut();
         Debug.Log("워리어 생성선택 버튼");
         character = 0;
         
@@ -156,6 +265,7 @@ public class CharacterSelEffect : MonoBehaviour
     {
         if (character == 1)
             return;
+        chSel.ArcherBut();
         Debug.Log("아쳐 생성선택 버튼");
         character = 1;
         CharButton();
@@ -165,6 +275,7 @@ public class CharacterSelEffect : MonoBehaviour
     {
         if (character == 2)
             return;
+        chSel.MageBut();
         Debug.Log("마법사 생성선택 버튼");
         character = 2;
         CharButton();
@@ -179,7 +290,7 @@ public class CharacterSelEffect : MonoBehaviour
            
             if(character == i)
             {
-                Debug.Log(1);
+               
                 StartCoroutine(buttonCloseUp(i));
             }
             else
@@ -191,12 +302,22 @@ public class CharacterSelEffect : MonoBehaviour
 
         StartCoroutine(InfoSkill());
         StartCoroutine(Character());
+        StartCoroutine(AbilltyFillAmount());
 
+        if (chSel.charSel == 1)
+        {
+            nickName.SetActive(true);
+        }
+        else if (chSel.charSel == 2)
+        {
+            nickName2.SetActive(true);
+        }
+        MakeButton.SetActive(true);
     }
 
     IEnumerator buttonCloseUp(int i)
     {
-        Debug.Log(Ch_button[i].localScale.x);
+        
         while (Ch_button[i].localScale.x <  1.2f)
         {
             yield return new WaitForSeconds(0.02f);
@@ -273,5 +394,102 @@ public class CharacterSelEffect : MonoBehaviour
         yield return new WaitForSeconds(0.2f);
         allblcok.SetActive(false);
     }
+
+    IEnumerator AbilltyFillAmount()
+    {
+        StartCoroutine(AbilliytyReset());
+
+        while(abillity_Image[0].fillAmount >0.1f || abillity_Image[1].fillAmount > 0.1f || abillity_Image[2].fillAmount > 0.1f)
+        {
+            yield return new WaitForSeconds(0.02f);
+        }
+
+        yield return new WaitForSeconds(0.5f);
+        float attack=0;
+        float shiel=0;
+        float mageDamage=0;
+
+        while(attack <= Abillity[character,0] || shiel <= Abillity[character, 1] || mageDamage <= Abillity[character, 2])
+        {
+            yield return new WaitForSeconds(0.02f);
+            if (attack < Abillity[character, 0]) //능력치 점점 채워지게 fillamount와 텍스트 값 올라감
+            {
+                attack++;
+                abillity_Image[0].fillAmount = attack/100;
+                abillity_Text[0].text = ((int)attack).ToString();
+            }
+            if (shiel < Abillity[character, 1])
+            {
+                shiel++;
+                abillity_Image[1].fillAmount = shiel / 100;
+                abillity_Text[1].text = ((int)shiel).ToString();
+            }
+            if (mageDamage < Abillity[character, 2])
+            {
+                mageDamage++;
+                abillity_Image[2].fillAmount = mageDamage / 100;
+                abillity_Text[2].text = ((int)mageDamage).ToString();
+            }
+            
+
+        }
+            
+
+    }
+    IEnumerator AbilliytyReset()
+    {
+        float attack = abillity_Image[0].fillAmount*100;
+        float shiel = abillity_Image[1].fillAmount*100;
+        float mageDamage = abillity_Image[2].fillAmount*100;
+
+        while (attack >= 0 || shiel >= 0 || mageDamage >= 0)
+        {
+            yield return new WaitForSeconds(0.01f);
+            if (attack >= 0.1f) //능력치 0으로 쭉 내려감
+            {
+                attack-=2;
+                Debug.Log(attack);
+                if (attack < 0)
+                    attack = 0;
+                abillity_Image[0].fillAmount = attack / 100;
+                abillity_Text[0].text = ((int)attack).ToString();
+            }
+            if (shiel >= 0.1f)
+            {
+
+                shiel-=2;
+                if (shiel < 0)
+                    shiel = 0;
+                abillity_Image[1].fillAmount = shiel / 100;
+                abillity_Text[1].text = ((int)shiel).ToString();
+            }
+            if (mageDamage >= 0.1f)
+            {
+                mageDamage-=2;
+                if (mageDamage < 0)
+                    mageDamage = 0;
+                abillity_Image[2].fillAmount = mageDamage / 100;
+                abillity_Text[2].text = ((int)mageDamage).ToString();
+            }
+
+
+        }
+    }
+
+    public void MakeButtonClick()
+    {
+        chSel.MakeBut();
+        Backbutton();
+        
+
+    }
+
+
+    private void Update()
+    {
+        
+
+    }
+
 
 }

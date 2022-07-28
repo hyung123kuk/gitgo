@@ -9,35 +9,28 @@ public class CharacterSel : MonoBehaviourPunCallbacks
 {
     public static CharacterSel characterSel;
 
-    public GameObject LobbyUi; 
 
 
-    public GameObject characterScene;
-    public GameObject sel;
-    public GameObject make;
+
     public enum Type { None,Warrior, Archer, Mage  };
 
     //캐릭터 선택창
     public Type character1=Type.None;
-    public GameObject[] char1;
-    public GameObject maketext;
-    public GameObject maketext2;
+
     public Type character2=Type.None;
-    public GameObject[] char2;
+
     public int charSel;
     public string Char1Stringname; //세이브매니저에서 저장용
     public string Char2Stringname;
     public Text Char1Name;
     public Text Char2Name;
     public Nickname nickname;
-
+    public CharacterSelEffect ch_selEffect;
 
     //캐릭터 생성창
 
     public Type MakeType=Type.None;
-    public GameObject[] makeChar;
-    public Text characterText;
-    public GameObject[] explanation;
+
     public Animator aniWor;
     public Animator aniArc;
     public Animator aniMage;
@@ -46,6 +39,12 @@ public class CharacterSel : MonoBehaviourPunCallbacks
 
     public AudioListener audioListener;
 
+    [SerializeField]
+    GameObject[] characterImage1;
+    [SerializeField]
+    GameObject[] characterImage2;
+    [SerializeField]
+    public Animator[] characterAni2D = new Animator[2];
 
     int widx = 0; //전사 대사소리
     int aidx = 0; //궁수 대사소리
@@ -66,7 +65,8 @@ public class CharacterSel : MonoBehaviourPunCallbacks
         nickname = GetComponent<Nickname>();
         audioListener = GetComponent<AudioListener>();
         saveManager = FindObjectOfType<SaveManager>();
-        LobbyUi = GameObject.Find("Canvas_Lobby").transform.GetChild(0).gameObject;
+        //LobbyUi = GameObject.Find("Canvas_Lobby").transform.GetChild(0).gameObject;
+        ch_selEffect = GetComponent<CharacterSelEffect>();
         if (CharacterSel.characterSel == null)
         {
             characterSel = this;
@@ -89,29 +89,17 @@ public class CharacterSel : MonoBehaviourPunCallbacks
         UiSound.uiSound.UiOptionSound();
         if (character1==Type.None)
         {
-            nickname.nickNameInput1.gameObject.SetActive(true);
-            nickname.nickNameInput2.gameObject.SetActive(false);
-            StopSoundManager.stopSoundManager.WarriorTalk1();
-            widx = 1;
-
-            sel.SetActive(false);
-            make.SetActive(true);
-            makeChar[0].SetActive(true);
-            makeChar[1].SetActive(false);
-            makeChar[2].SetActive(false);
-            explanation[0].SetActive(true);
-            explanation[1].SetActive(false);
-            explanation[2].SetActive(false);
-            characterText.text = "WARRIOR";
-            MakeType = Type.Warrior;
+            //nickname.nickNameInput1.gameObject.SetActive(true);
+            //nickname.nickNameInput2.gameObject.SetActive(false);
+            
+ 
         }
     
         else
         {
             DontDestroyOnLoad(gameObject);
-            transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
             audioListener.enabled = true;
-            LobbyUi.SetActive(true);
+
             if (PhotonNetwork.LocalPlayer.NickName != null)
             {
                 PhotonNetwork.LocalPlayer.NickName = saveManager.Getname1;
@@ -151,31 +139,20 @@ public class CharacterSel : MonoBehaviourPunCallbacks
     public void CharButton2()
     {
         charSel = 2;
-        //UiSound.uiSound.UiOptionSound();
+        UiSound.uiSound.UiOptionSound();
         if (character2 == Type.None)
         {
             //nickname.nickNameInput2.gameObject.SetActive(true);
             //nickname.nickNameInput1.gameObject.SetActive(false);
-            //StopSoundManager.stopSoundManager.WarriorTalk1();
-            widx = 1;
+            
 
-            sel.SetActive(false);
-            make.SetActive(true);
-            makeChar[0].SetActive(true);
-            makeChar[1].SetActive(false);
-            makeChar[2].SetActive(false);
-            explanation[0].SetActive(true);
-            explanation[1].SetActive(false);
-            explanation[2].SetActive(false);
-            characterText.text = "WARRIOR";
-            MakeType = Type.Warrior;
         }
         else
         {
             DontDestroyOnLoad(gameObject);
-            transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
+            //transform.GetChild(0).GetChild(0).gameObject.SetActive(false);
             audioListener.enabled = true;
-            LobbyUi.SetActive(true);
+
             if(PhotonNetwork.LocalPlayer.NickName != null)
             PhotonNetwork.LocalPlayer.NickName = saveManager.Getname2;
         }
@@ -211,14 +188,10 @@ public class CharacterSel : MonoBehaviourPunCallbacks
             StopSoundManager.stopSoundManager.WarriorTalk2();
             widx = 0;
         }
-        makeChar[0].SetActive(true);
-        makeChar[1].SetActive(false);
-        makeChar[2].SetActive(false);
-        explanation[0].SetActive(true);
-        explanation[1].SetActive(false);
-        explanation[2].SetActive(false);
+
+
         MakeType = Type.Warrior;
-        characterText.text = "WARRIOR";
+
     }
     public void ArcherBut()
     {
@@ -235,14 +208,10 @@ public class CharacterSel : MonoBehaviourPunCallbacks
             StopSoundManager.stopSoundManager.ArcherTalk2();
             aidx = 0;
         }
-        makeChar[0].SetActive(false);
-        makeChar[1].SetActive(true);
-        makeChar[2].SetActive(false);
-        explanation[0].SetActive(false);
-        explanation[1].SetActive(true);
-        explanation[2].SetActive(false);
+
+
         MakeType = Type.Archer;
-        characterText.text = "ARCHER";
+
     }
     public void MageBut()
     {
@@ -259,14 +228,10 @@ public class CharacterSel : MonoBehaviourPunCallbacks
             StopSoundManager.stopSoundManager.MageTalk2();
             midx = 0;
         }
-        makeChar[0].SetActive(false);
-        makeChar[1].SetActive(false);
-        makeChar[2].SetActive(true);
-        explanation[0].SetActive(false);
-        explanation[1].SetActive(false);
-        explanation[2].SetActive(true);
+
+
         MakeType = Type.Mage;
-        characterText.text = "MAGE";
+
     }
 
 
@@ -274,8 +239,6 @@ public class CharacterSel : MonoBehaviourPunCallbacks
     {
         StopSoundManager.stopSoundManager.audioSource.Stop();
         UiSound.uiSound.UiOptionSound();
-        make.SetActive(false);
-        sel.SetActive(true);
 
     }
     public void attackBut()
@@ -362,56 +325,91 @@ public class CharacterSel : MonoBehaviourPunCallbacks
 
     public void MakeBut()
     {
-        make.SetActive(false);
-        sel.SetActive(true);
+
         
         if (charSel == 1)
         {
-            maketext.SetActive(false);
+
             character1 = MakeType;
             if (MakeType == Type.Warrior)
             {
-                char1[0].SetActive(true);
-                char1[1].SetActive(false);
-                char1[2].SetActive(false);
+                characterImage1[0].SetActive(true);
+                characterImage1[1].SetActive(false);
+                characterImage1[2].SetActive(false);
+                
+                
             }
             else if (MakeType == Type.Archer)
             {
-                char1[0].SetActive(false);
-                char1[1].SetActive(true);
-                char1[2].SetActive(false);
+                characterImage1[0].SetActive(false);
+                characterImage1[1].SetActive(true);
+                characterImage1[2].SetActive(false);
             }
             else if (MakeType == Type.Mage)
             {
-                char1[0].SetActive(false);
-                char1[1].SetActive(false);
-                char1[2].SetActive(true);
+                characterImage1[0].SetActive(false);
+                characterImage1[1].SetActive(false);
+                characterImage1[2].SetActive(true);
             }
+            int index = -1;
+            for (int i = 0; i < 3; i++)
+            {
+                
+                if (characterImage1[i].activeSelf)
+                {
+                    index = i;
+                    break;
+                }
+                
+            }
+            if(index != -1)
+            {
+                characterAni2D[0]= characterImage1[index].transform.GetChild(0).GetComponent<Animator>();
+            }
+
+
             saveManager.CharacterSelSave1();
 
         }
         if (charSel == 2)
         {
-            maketext2.SetActive(false);
+
             character2 = MakeType;
             if (MakeType == Type.Warrior)
             {
-                char2[0].SetActive(true);
-                char2[1].SetActive(false);
-                char2[2].SetActive(false);
+                characterImage2[0].SetActive(true);
+                characterImage2[1].SetActive(false);
+                characterImage2[2].SetActive(false);
             }
             else if (MakeType == Type.Archer)
             {
-                char2[0].SetActive(false);
-                char2[1].SetActive(true);
-                char2[2].SetActive(false);
+                characterImage2[0].SetActive(false);
+                characterImage2[1].SetActive(true);
+                characterImage2[2].SetActive(false);
             }
             else if (MakeType == Type.Mage)
             {
-                char2[0].SetActive(false);
-                char2[1].SetActive(false);
-                char2[2].SetActive(true);
+                characterImage2[0].SetActive(false);
+                characterImage2[1].SetActive(false);
+                characterImage2[2].SetActive(true);
             }
+
+            int index = -1;
+            for (int i = 0; i < 3; i++)
+            {
+
+                if (characterImage2[i].activeSelf)
+                {
+                    index = i;
+                    break;
+                }
+
+            }
+            if (index != -1)
+            {
+                characterAni2D[1] = characterImage2[index].transform.GetChild(0).GetComponent<Animator>();
+            }
+
             saveManager.CharacterSelSave2();
         }
        
