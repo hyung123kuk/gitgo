@@ -130,8 +130,8 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
     }
     private void Start()
     {
-        if (!photonView.IsMine)
-            this.enabled = false;
+        //if (!photonView.IsMine)
+        //    this.enabled = false;
 
         anim = GetComponentInParent<Animator>();
     }

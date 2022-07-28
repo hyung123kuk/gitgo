@@ -107,7 +107,8 @@ public class MageEquipChange : MonoBehaviourPun
     private void Start()
     {
         if (playerst.CharacterType == PlayerST.Type.Mage && enabled)
-            photonView.RPC("EquipSetting", RpcTarget.AllBuffered);
+            EquipSetting();
+        //photonView.RPC("EquipSetting", RpcTarget.AllBuffered);
     }
 
     #region 법사 방어구 변경

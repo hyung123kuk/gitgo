@@ -140,10 +140,10 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     private void Awake()
     {
 
-        if (!photonView.IsMine)
-        {
-            this.enabled = false;
-        }
+        //if (!photonView.IsMine)
+        //{
+        //    return;
+        //}
 
         comboHit = GetComponent<ComboHit>();
         anim = GetComponentInChildren<Animator>();
@@ -211,8 +211,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     }
     void Start()
     {
-        if (!photonView.IsMine)
-            return;
+        //if (!photonView.IsMine)
+        //    return;
         nickname.text = PhotonNetwork.LocalPlayer.NickName;
         healthbar.CrossFadeAlpha(0, 0, true);  //자기자신 HP바 가리기
         //nickname.CrossFadeAlpha(0, 0, true);
@@ -222,7 +222,10 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         playerstat = GetComponent<PlayerStat>();
         bowPower = bowMinPower;
         _transform = GetComponent<Transform>();
-        photonView.RPC("Setting", RpcTarget.All);
+        questStore = FindObjectOfType<QuestStore>();
+        HorseSpawn = FindObjectOfType<Horse>().gameObject;
+        Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
+        //photonView.RPC("Setting", RpcTarget.All);
 
 
         playerST = this;
@@ -1012,13 +1015,13 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         if (this != null)
         {
             NicknameSerching(); //다른플레이어들 닉네임갱신
-            photonView.RPC("NicknameSerching", RpcTarget.OthersBuffered);
+            photonView.RPC("NicknameSerching", RpcTarget.Others);
         }
 
         if (this != null)
         {
             HPBARSerching(); //다른플레이어들 피통
-            photonView.RPC("HPBARSerching", RpcTarget.OthersBuffered);
+            photonView.RPC("HPBARSerching", RpcTarget.Others);
         }
         if (!photonView.IsMine)
             return;

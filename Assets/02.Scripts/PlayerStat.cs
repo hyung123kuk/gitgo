@@ -52,8 +52,8 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable //포톤으로 만들
 
     private void Awake()
     {
-        if (!photonView.IsMine)
-            this.enabled = false;
+        //if (!photonView.IsMine)
+        //    this.enabled = false;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
