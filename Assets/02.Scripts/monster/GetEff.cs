@@ -71,6 +71,7 @@ public class GetEff : MonoBehaviourPun
                     playerStat.GetComponent<NET_PartyPlayer>().partyExp(exp);
                 }
 
+                if(playerStat != null)
                 playerStat.AddExp(exp);
                 
                 StartCoroutine(DestroyEff());

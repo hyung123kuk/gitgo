@@ -12,18 +12,22 @@ public class PlayerMine : MonoBehaviourPun
 
     private void Start()
     {
+        //if (!photonView.IsMine)
+        //    return;
 
         Player = this.gameObject;
+        Horse = FindObjectOfType<Horse>().gameObject;
 
-        Horse[] horses = FindObjectsOfType<Horse>();
-        foreach (Horse horse1 in horses)
-        {
-            if (horse1.GetComponent<PhotonView>().IsMine)
-            {
-                Horse = horse1.gameObject;
-                break;
-            }
-        }
+        //Horse[] horses = FindObjectsOfType<Horse>();
+        //foreach (Horse horse1 in horses)
+        //{
+        //    if (horse1.GetComponent<PhotonView>().IsMine)
+        //    {
+        //        Debug.Log(horse1);
+        //        Horse = horse1.gameObject;
+        //        break;
+        //    }
+        //}
 
     }
 

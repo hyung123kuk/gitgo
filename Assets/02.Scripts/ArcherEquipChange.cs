@@ -106,7 +106,8 @@ public class ArcherEquipChange : MonoBehaviourPun
     private void Start()
     {
         if (playerst.CharacterType == PlayerST.Type.Archer && enabled)
-            photonView.RPC("EquipSetting", RpcTarget.AllBuffered);
+            EquipSetting();
+        // photonView.RPC("EquipSetting", RpcTarget.AllBuffered);
     }
 
     #region 궁수 방어구 변경

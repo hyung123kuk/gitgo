@@ -53,6 +53,7 @@ public class Monster : MonoBehaviourPun
 
     public float hitDamage;
     public virtual void Die() { }
+    
     public void Start()
     {
         MonsterDropSet();
