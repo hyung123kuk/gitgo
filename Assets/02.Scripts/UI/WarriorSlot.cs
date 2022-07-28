@@ -21,7 +21,15 @@ public class WarriorSlot : MonoBehaviour
 
     private void Start()
     {
-        playerSt = FindObjectOfType<PlayerST>();
+        PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
+        foreach (PlayerST myPlayerst in playerSts)
+        {
+            if (myPlayerst.photonView.IsMine)
+            {
+                playerSt = myPlayerst;
+                break;
+            }
+        }
         if (playerSt.CharacterType == PlayerST.Type.Warrior)
         {
             InvenCharacterImage.sprite = manImage;

@@ -1030,8 +1030,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e0a7e1141d86145bb71366e9d7f55c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 50
   isMelee: 1
+  isRazor: 0
 --- !u!1 &4843076255860280942
 GameObject:
   m_ObjectHideFlags: 0
@@ -1742,8 +1743,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ab6c24ec3177500498b5173e52e2f182, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 50
-  curHealth: 50
+  maxHealth: 1000
+  curHealth: 1000
   meleeArea: {fileID: 4815429379510916219}
   isChase: 0
   isAttack: 0

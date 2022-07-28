@@ -30,6 +30,8 @@ public class AllUI : MonoBehaviourPun
     private NET_UIPlayer net_UiPlayer;
     [SerializeField]
     private NET_PartyRecieve net_partyRecieve;
+    [SerializeField]
+    NET_ChatManager Net_chatManager;
 
     [SerializeField]
     public MouseCursor MouseCursor;
@@ -49,7 +51,7 @@ public class AllUI : MonoBehaviourPun
         MouseCursor=GetComponent<MouseCursor>();
         net_partyRecieve = FindObjectOfType<NET_PartyRecieve>();
         ExitWindow.isExitMenu = false;
-       
+        Net_chatManager = FindObjectOfType<NET_ChatManager>();
 
     }
 
@@ -57,8 +59,13 @@ public class AllUI : MonoBehaviourPun
     void Update()
     {
 
+        
+
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+
+            
+
             for (int i = 0; i < UIWIndow.Length; i++)
             {
                 if (UIWIndow[i].activeSelf == true)
@@ -88,13 +95,16 @@ public class AllUI : MonoBehaviourPun
                     return;
                 }
             }
-
+            
             AllWindowEnd();
             MouseCursor.transform_cursor.gameObject.SetActive(false);
             MouseCursor.SetNormalCursor();
             CheckCursorLock();
 
         }
+
+        if (Net_chatManager.input.isFocused)
+            return;
 
 
 
@@ -225,6 +235,8 @@ public class AllUI : MonoBehaviourPun
         {
             FindObjectOfType<NET_Trade>().FailTrade();
         }
+
+        
     }
 
     public void CheckCursorLock()
@@ -234,7 +246,7 @@ public class AllUI : MonoBehaviourPun
         {
             isUI = false;
             Cursor.lockState = CursorLockMode.Locked;
-            allUI.MouseCursor.transform_cursor.gameObject.SetActive(false);
+            allUI.MouseCursor.transform_cursor.gameObject.SetActive(false); 
             allUI.MouseCursor.Init_Cursor();
         }
         else

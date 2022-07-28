@@ -47,10 +47,13 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable //포톤으로 만들
 
     public PlayerStat playerstat;
 
+    [SerializeField]
+    private ParticleSystem LevelUp;
+
     private void Awake()
     {
-        if (!photonView.IsMine)
-            this.enabled = false;
+        //if (!photonView.IsMine)
+        //    this.enabled = false;
     }
 
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info)
@@ -72,18 +75,19 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable //포톤으로 만들
 
     void Start()
     {
-        
 
+        LevelUp = transform.GetChild(1).GetComponent<ParticleSystem>();
         playerstat = this;
         playerST = GetComponent<PlayerST>();
         inven = FindObjectOfType<inventory>();
         gameUI = FindObjectOfType<GameUI>();
         skillWindow = FindObjectOfType<SkillWindow>();
         statWindow = FindObjectOfType<StatWindow>();
+        inven.invenOn();
         equSlots = GameObject.FindGameObjectWithTag("EqueSlot").GetComponentsInChildren<Slot>(); //여기서 오류가 뜬다면 인벤토리디자인을 킨 상태로 시작해주세요.
+        inven.invenOff();
 
-        
-        Invoke("StartSet", 0.1f);
+        Invoke("StartSet", 0.2f);
 
 
 
@@ -223,7 +227,7 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable //포톤으로 만들
     {
         if (photonView.IsMine)
         {
-
+            LogManager.logManager.Log((int)_Gold + "골드 획득 ");
             MONEY += _Gold;
             inven.GoldUpdate();
         }
@@ -250,7 +254,7 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable //포톤으로 만들
 
         if (NowExp >= TotalExp)
         {
-
+            LevelUp.Play();
             Level++;
             NowExp = 0;
             TotalExp=LevelExp();
@@ -267,6 +271,7 @@ public class PlayerStat : MonoBehaviourPun, IPunObservable //포톤으로 만들
             {
                 QuestStore.qustore.MainQuestSuccess(4);
             }
+            
         }
     }
 

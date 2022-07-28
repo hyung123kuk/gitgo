@@ -208,7 +208,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
                 File.WriteAllText(SAVE_DATA_DIRECTORY + ch2_SAVE_FILENAME, json);
             }
 
-            yield return new WaitForSeconds(0.2f); //0.2초마다 저장
+            yield return new WaitForSeconds(1f); //0.2초마다 저장
         }
     }
 
@@ -545,7 +545,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
         playerStat.Level = data[CharacterNum].Level;
         playerStat.NowExp = data[CharacterNum].Exp;
         playerStat.MONEY = data[CharacterNum].Gold;
-        playerStat.startLoad();
+       
 
         for (int i = 0; i < data[CharacterNum].invenItemName.Count; i++)
         {
@@ -561,7 +561,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
         {
             inven.LoadToEq(data[CharacterNum].EQitemArrNum[i], data[CharacterNum].EQitemArrName[i]);
         }
-
+        playerStat.startLoad();
         questExplain.QuestNum = data[CharacterNum].QuestMainNum;
         questStore.isMainRecive = data[CharacterNum].MainRecieve;
         questStore.mainNum = data[CharacterNum].MainNum;
@@ -615,6 +615,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
 
         string json = JsonUtility.ToJson(characterSelData);
         File.WriteAllText(SAVE_DATA_DIRECTORY + Sel_SAVE_FILENAME, json);
+        
     }
 
 
@@ -679,6 +680,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
             if (characterSelData.Charater2 != 0)
                 characterSel.MakeBut();
             Debug.Log("로드완료");
+            characterSel.charSel = 0;
         }
         else
             Debug.Log("세이브 파일이 없습니다.");
@@ -699,7 +701,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
 
         SceneManager.LoadScene(0);
         characterSel.transform.GetChild(0).gameObject.SetActive(true);
-       SaveOn = false;
+       //SaveOn = false;
     }
 
     private void OnApplicationQuit() //강제종료될때 자동저장
@@ -711,7 +713,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
             PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater1name;
         else if (CharacterNum == 1)
             PhotonNetwork.LocalPlayer.NickName = characterSelData.Charater2name;
-       SaveOn = false;
+       //SaveOn = false;
     }
 
 

@@ -26,7 +26,16 @@ public class NPC : MonoBehaviour
     {
         NPCRange = GetComponent<SphereCollider>();
         allUI = FindObjectOfType<AllUI>();
-        playerST = FindObjectOfType<PlayerST>();
+        PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
+        foreach (PlayerST myPlayerst in playerSts)
+        {
+            if (myPlayerst.photonView.IsMine)
+            {
+                playerST = myPlayerst;
+                break;
+            }
+        }
+
         Camera = playerST.GetComponentInChildren<Camera>();
 
     }

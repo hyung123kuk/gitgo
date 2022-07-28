@@ -27,8 +27,11 @@ public class GetEff : MonoBehaviourPun
 
     public void Target(GameObject tr)
     {
-        target = tr.transform;
-        playerStat = tr.GetComponent<PlayerStat>();
+        if (tr != null)
+        {
+            target = tr.transform;
+            playerStat = tr.GetComponent<PlayerStat>();
+        }
     }
 
     void Update()
@@ -68,6 +71,7 @@ public class GetEff : MonoBehaviourPun
                     playerStat.GetComponent<NET_PartyPlayer>().partyExp(exp);
                 }
 
+                if(playerStat != null)
                 playerStat.AddExp(exp);
                 
                 StartCoroutine(DestroyEff());
@@ -79,13 +83,14 @@ public class GetEff : MonoBehaviourPun
     IEnumerator DestroyEff()
     {
         yield return new WaitForSeconds(0.3f);
-        Destroy();
+        photonView.RPC("Destroy", RpcTarget.AllBuffered);
     }
 
     [PunRPC]
     public void Destroy()
     {
-        photonView.RPC("Destroy", RpcTarget.Others);
+        
+        
 
         Destroy(gameObject);
     }

@@ -29,21 +29,21 @@ public class Monster : MonoBehaviourPun
     [SerializeField]
     public Weapons weapons;
 
-   [SerializeField]
+    [SerializeField]
     AttackDamage attackdamage;
-    public float maxHealth; //ÃÖ´ëhp
-    public float curHealth; //ÇöÀçhp
+    public float maxHealth; //ï¿½Ö´ï¿½hp
+    public float curHealth; //ï¿½ï¿½ï¿½ï¿½hp
 
     public float explPower;
     public float upPower;
 
     public float itemUpPoint;
     public float coin;
-    public float coinCount=3;
+    public float coinCount = 3;
 
     public bool isSpread = false;
-    
-    //½¦ÀÌÅ· °ü·Ã
+
+    //ï¿½ï¿½ï¿½ï¿½Å· ï¿½ï¿½ï¿½ï¿½
     float allX = 0;
     float allY = 0;
     float allZ = 0;
@@ -51,8 +51,9 @@ public class Monster : MonoBehaviourPun
 
     public float Exp;
 
-   public float hitDamage;
+    public float hitDamage;
     public virtual void Die() { }
+    
     public void Start()
     {
         MonsterDropSet();
@@ -68,7 +69,7 @@ public class Monster : MonoBehaviourPun
 
         AttackDamage[] attackDamages = FindObjectsOfType<AttackDamage>();
 
-        foreach(AttackDamage attDam in attackDamages)
+        foreach (AttackDamage attDam in attackDamages)
         {
             if (attDam.GetComponent<PhotonView>().IsMine)
             {
@@ -76,7 +77,21 @@ public class Monster : MonoBehaviourPun
             }
         }
 
+        photonView.RPC("MosterHpSet", RpcTarget.MasterClient);
         
+
+    }
+
+    [PunRPC]
+    public void MosterHpSet()
+    {
+        photonView.RPC("MonsterHp", RpcTarget.All,maxHealth - curHealth);
+    }
+
+    [PunRPC]
+    public void MonsterHp(float Damagedhealth)
+    {
+        curHealth = curHealth - Damagedhealth;
     }
 
     [PunRPC]
@@ -96,19 +111,22 @@ public class Monster : MonoBehaviourPun
         {
             photonView.RPC("MonsterPosition", RpcTarget.Others, pos);
         }
-        tr.position = pos;
+        if (tr)
+        {
+            tr.position = pos;
+        }
     }
 
 
 
 
     [PunRPC]
-    public virtual void OnDamage(float _attackdamage,bool critical,  bool Local) 
+    public virtual void OnDamage(float _attackdamage, bool critical, bool Local)
     {
-  
-        if (Local) // ·ÎÄÃÀÏ¶§ ´Ù¸¥°÷¿¡¼­ º¸³¿ ·ÎÄÃ¾Æ´Ï¸é Áßº¹ ¸·±âÀ§ÇØ ¸·À½
+
+        if (Local) // ï¿½ï¿½ï¿½ï¿½ï¿½Ï¶ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ã¾Æ´Ï¸ï¿½ ï¿½ßºï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
-            photonView.RPC("OnDamage", RpcTarget.Others, _attackdamage,critical, false);
+            photonView.RPC("OnDamage", RpcTarget.Others, _attackdamage, critical, false);
             SetTarget(attackdamage.gameObject);
         }
 
@@ -131,14 +149,16 @@ public class Monster : MonoBehaviourPun
             damage.GetComponent<Outline>().enabled = false;
             damagevalue.color = Color.red;
         }
-        Debug.Log(_attackdamage);
+
+        
         string dam = ((int)_attackdamage).ToString();
 
         damagevalue.text = dam;
         SetHpBar();
 
         shakeTime = Time.time;
-        StartCoroutine(HitShake());
+        if (gameObject.activeSelf)
+            StartCoroutine(HitShake());
 
         if (curHealth <= 0)
         {
@@ -151,12 +171,13 @@ public class Monster : MonoBehaviourPun
 
     public void HitMonster()
     {
-        Debug.Log(weapons);
-        OnDamage(attackdamage.attackDamage, attackdamage.critical, true) ; //¸Â¾ÒÀ»¶§ ·ÎÄÃÀ» Æ®·ç·ÎÇØ¼­ ´Ù¸¥µ¥¿¡¼­µµ OnDamage°¡ Àû¿ëµÇ°Ô
+        if (playerST.CharacterType == PlayerST.Type.Warrior || weapons.GetComponent<PhotonView>().IsMine)
+        {
+            OnDamage(attackdamage.attackDamage, attackdamage.critical, true); //ï¿½Â¾ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Æ®ï¿½ï¿½ï¿½ï¿½Ø¼ï¿½ ï¿½Ù¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ OnDamageï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ç°ï¿½
 
-        DamageSet();
-
-        
+            DamageSet();
+            BossHpBarSet();
+        }
     }
 
 
@@ -189,21 +210,21 @@ public class Monster : MonoBehaviourPun
                 weapons.damage = attackdamage.Skill_4_Damamge();
             }
         }
-        else if(playerST.CharacterType == PlayerST.Type.Archer || playerST.CharacterType == PlayerST.Type.Mage)
+        else if (playerST.CharacterType == PlayerST.Type.Archer || playerST.CharacterType == PlayerST.Type.Mage)
         {
             if (attackdamage.DamageNum == 0)
             {
                 if (!weapons.ShotFull)
                 {
                     Arrow arrow = FindObjectOfType<Arrow>();
-                    if(arrow!=null)
+                    if (arrow != null)
                         arrow.damage = attackdamage.Attack_Dam();
                 }
                 else
                 {
                     Arrow arrow = FindObjectOfType<Arrow>();
                     if (arrow != null)
-                        arrow.damage = 1.3f *  attackdamage.Attack_Dam();
+                        arrow.damage = 1.3f * attackdamage.Attack_Dam();
                 }
 
             }
@@ -243,7 +264,7 @@ public class Monster : MonoBehaviourPun
                 {
                     Arrow arrow = FindObjectOfType<Arrow>();
                     if (arrow != null)
-                        arrow.damage = 1.5f* attackdamage.Skill_3_Damamge();
+                        arrow.damage = 1.5f * attackdamage.Skill_3_Damamge();
 
                     ArrowSkill arrowskill = FindObjectOfType<ArrowSkill>();
                     if (arrowskill != null)
@@ -281,7 +302,7 @@ public class Monster : MonoBehaviourPun
             yield return new WaitForSeconds(increment);
 
 
-        }        
+        }
         transform.position -= new Vector3(allX, allY, allZ);
         allX = 0; allY = 0; allZ = 0;
     }
@@ -293,7 +314,7 @@ public class Monster : MonoBehaviourPun
     {
         Portion = Resources.LoadAll<GameObject>("DROP/Portion");
         Coin = Resources.Load<GameObject>("DROP/Coin");
-       
+
     }
 
     public void StartMonster()
@@ -318,7 +339,7 @@ public class Monster : MonoBehaviourPun
         levelFlame = hpBar.transform.GetChild(2).GetComponent<Image>();
         Monstername = hpBar.transform.GetChild(3).GetComponent<Text>();
 
-       
+
 
         var _hpbar = hpBar.GetComponent<EnemyHpBar>();
         _hpbar.targetTr = this.gameObject.transform;
@@ -328,38 +349,39 @@ public class Monster : MonoBehaviourPun
     public void SetHpBar()
     {
         hpBarImage.fillAmount = curHealth / maxHealth;
-        StartCoroutine(MonsterHpBarOn());
+        if (gameObject.activeSelf)
+            StartCoroutine(MonsterHpBarOn());
     }
 
 
     public void MonsterDrop()
     {
-        
 
 
-            for (int i = 0; i < Portion.Length; i++)
+
+        for (int i = 0; i < Portion.Length; i++)
+        {
+            for (int j = 0; j < 2; j++)
             {
-                for (int j = 0; j < 2; j++)
+                if (Random.Range(0, 10) < 1)
                 {
-                    if (Random.Range(0, 10) < 1)
-                    {
                     int point = Random.Range(-1, 2);
                     PhotonNetwork.Instantiate("DROP/Portion/" + Portion[i].name, transform.position + new Vector3(point * 0.5f, itemUpPoint, point * 0.5f), Quaternion.identity);
-                    }
                 }
             }
+        }
 
-        
+
         for (int i = 0; i < coinCount + Random.Range(-1, 2); i++)
         {
-                    
-             int point = Random.Range(-1, 2);
-              GameObject coinInstan = PhotonNetwork.Instantiate("DROP/"+Coin.name, transform.position + new Vector3(point * 0.5f, itemUpPoint, point * 0.5f), Quaternion.identity);
+
+            int point = Random.Range(-1, 2);
+            GameObject coinInstan = PhotonNetwork.Instantiate("DROP/" + Coin.name, transform.position + new Vector3(point * 0.5f, itemUpPoint, point * 0.5f), Quaternion.identity);
             coinInstan.GetComponent<DropCoin>().SetCoin(coin);
         }
 
-        
-        
+
+
     }
 
     GameObject effTarget;
@@ -383,7 +405,7 @@ public class Monster : MonoBehaviourPun
         }
 
 
-            SetColor(0);
+        SetColor(0);
         if (PhotonNetwork.IsMasterClient)
         {
             if (!isSpread)
@@ -408,8 +430,16 @@ public class Monster : MonoBehaviourPun
 
     public void MonsterAttack()
     {
+        StopCoroutine("MonsterHpBarOn");
         StartCoroutine(MonsterHpBarOn());
-            
+
+
+
+    }
+
+    public virtual void BossHpBarSet()
+    {
+
     }
 
     IEnumerator MonsterHpBarOn()
@@ -445,7 +475,32 @@ public class Monster : MonoBehaviourPun
         color.a = _alpha;
         Monstername.color = color;
 
-        
+
+    }
+
+    private void OnCollisionStay(Collision collision)
+    {
+        if (collision.gameObject.tag == "RESET")
+        {
+            photonView.RPC("ResetMonster", RpcTarget.All);
+
+        }
+    }
+    private void OnTriggerStay(Collider other)
+    {
+        if (other.tag == "RESET")
+        {
+            photonView.RPC("ResetMonster", RpcTarget.All);
+
+        }
+    }
+
+
+    [PunRPC]
+    public void ResetMonster()
+    {
+        StopAllCoroutines();
+        Destroy(gameObject);
     }
 
 }

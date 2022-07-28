@@ -8,22 +8,26 @@ public class PlayerMine : MonoBehaviourPun
     public GameObject Player; //자기꺼
     public GameObject Horse;
 
-    
+
 
     private void Start()
     {
-       
-        Player = this.gameObject;
+        //if (!photonView.IsMine)
+        //    return;
 
-        Horse[] horses = FindObjectsOfType<Horse>();
-        foreach (Horse horse1 in horses)
-        {
-            if (horse1.GetComponent<PhotonView>().IsMine)
-            {
-                Horse = horse1.gameObject;
-                break;
-            }
-        }
+        Player = this.gameObject;
+        Horse = FindObjectOfType<Horse>().gameObject;
+
+        //Horse[] horses = FindObjectsOfType<Horse>();
+        //foreach (Horse horse1 in horses)
+        //{
+        //    if (horse1.GetComponent<PhotonView>().IsMine)
+        //    {
+        //        Debug.Log(horse1);
+        //        Horse = horse1.gameObject;
+        //        break;
+        //    }
+        //}
 
     }
 
@@ -51,14 +55,19 @@ public class PlayerMine : MonoBehaviourPun
             {
                 Debug.Log("플레이어 삭제");
                 PhotonNetwork.Destroy(player1);
+                //if (PhotonNetwork.IsMasterClient)
+                //{
+                //    //Debug.Log("응애");
+                //    //SpawnManager.spawnManager.RemoteMonsterReset();
+                //}
             }
         }
     }
 
     private void Update()
     {
-         Playerfind();
+        Playerfind();
     }
 
-    
+
 }

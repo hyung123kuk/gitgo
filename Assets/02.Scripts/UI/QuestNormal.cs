@@ -167,7 +167,7 @@ public class QuestNormal : MonoBehaviour
             {
                 goblinKill = 20;
                 goblin_Success = true;
-                questExplain.SlimeExplain(goblin_item, Quest_goblin, goblin_Success);
+                questExplain.GoblinExplain(goblin_item, Quest_goblin, goblin_Success);
             }
         }
     }
@@ -196,7 +196,7 @@ public class QuestNormal : MonoBehaviour
             {
                 skelletonKill = 20;
                 skelleton_Success = true;
-                questExplain.SlimeExplain(skelleton_item, Quest_skelleton, skelleton_Success);
+                questExplain.SkeletonExplain(skelleton_item, Quest_skelleton, skelleton_Success);
             }
         }
     }

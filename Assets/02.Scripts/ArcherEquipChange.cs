@@ -6,6 +6,8 @@ using Photon.Pun;
 public class ArcherEquipChange : MonoBehaviourPun
 {
     public bool UICheck; //캐릭터선택창 체크용
+    [SerializeField]
+    PlayerST playerst;
     #region 장비변경
     public ArcherEquip archerEquip;
 
@@ -45,10 +47,12 @@ public class ArcherEquipChange : MonoBehaviourPun
 
     void Awake()
     {
-        if (!photonView.IsMine && !UICheck)
+
+        if (!photonView.IsMine)
         {
             this.enabled = false;
         }
+        playerst = GetComponent<PlayerST>();
         archerEquip = GetComponent<ArcherEquip>();
         #region 장비초기화
         Chest1 = new GameObject[5];
@@ -101,7 +105,9 @@ public class ArcherEquipChange : MonoBehaviourPun
 
     private void Start()
     {
-        photonView.RPC("EquipSetting", RpcTarget.AllBuffered);
+        if (playerst.CharacterType == PlayerST.Type.Archer && enabled)
+            EquipSetting();
+        // photonView.RPC("EquipSetting", RpcTarget.AllBuffered);
     }
 
     #region 궁수 방어구 변경

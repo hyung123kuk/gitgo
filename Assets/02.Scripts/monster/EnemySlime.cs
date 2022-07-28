@@ -5,16 +5,20 @@ using UnityEngine.AI;
 using DG.Tweening;
 using Photon.Pun;
 
-public class EnemySlime  : Monster
+public class EnemySlime : Monster
 {
-
-    public BoxCollider meleeArea;
+    [SerializeField]
+    private BoxCollider meleeArea;
     public bool isChase;
     public bool isAttack;
     public Transform respawn;
+    [SerializeField]
+    Transform MoveRespawn;
     public bool isDie;
     public bool isStun;
     public bool isDamage; //현재맞고있나
+    public bool isReset; //리셋이 끝났는가?
+    public int Corotineidx; //코루틴 중복방지
 
     public LayerMask whatIsTarget; // 공격 대상 레이어
 
@@ -24,7 +28,7 @@ public class EnemySlime  : Monster
 
     public Transform movepoint;
     [SerializeField]
-  
+
     Transform target;
     Rigidbody rigid;
     BoxCollider boxCollider;
@@ -36,8 +40,10 @@ public class EnemySlime  : Monster
 
     QuestNormal questNormal;
 
-    [SerializeField]  
+    [SerializeField]
     Attacking attacking;
+
+    float targetRange = 2f; //몬스터 공격사정거리
 
     private bool hasTarget
     {
@@ -57,24 +63,30 @@ public class EnemySlime  : Monster
     {
         attacking = transform.GetChild(2).GetComponent<Attacking>();
         enemySlime = this;
-        rigid = GetComponent<Rigidbody>();
         boxCollider = GetComponent<BoxCollider>();
+        rigid = GetComponent<Rigidbody>();
         mat = GetComponentInChildren<SkinnedMeshRenderer>().material;
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         questNormal = FindObjectOfType<QuestNormal>();
     }
+
+
     private void OnEnable()
     {
+        isReset = true;
+        anim.SetBool("isDie", false);
         boxCollider.enabled = true;
         isAttack = false;
         nav.isStopped = false;
         isDie = false;
+        isReset = false;
+        Corotineidx = 0;
         curHealth = maxHealth;
         mat.color = Color.white;
         isStun = false;
-        anim=GetComponent<Animator>();
-       
+        anim = GetComponent<Animator>();
+        isDamage = false;
         StartMonster();
         Monstername.text = "슬라임";
         level.text = "1";
@@ -86,7 +98,7 @@ public class EnemySlime  : Monster
         {
             StartCoroutine(UpdatePath());
         }
-        
+
     }
     void Update()
     {
@@ -95,64 +107,44 @@ public class EnemySlime  : Monster
         {
             StopAllCoroutines();
         }
-        //target = GameObject.FindGameObjectWithTag("Player").transform;
-        //if (!isStun && !isDie)
-        //{
-        //    Targerting();
-        //    if (Vector3.Distance(target.position, transform.position) <= 20f && nav.enabled)
-        //    {
-        //        nav.speed = 3.5f;
-        //        if (!isAttack)
-        //        {
-        //            isChase = true;
-        //            nav.isStopped = false;
-        //            nav.SetDestination(target.position);
-        //            anim.SetBool("isWalk", true);
-        //            if (playerST.isDie)
-        //                EnemyReset();
-        //        }
-        //    }
-        //    else if (Vector3.Distance(target.position, transform.position) > 20f && nav.enabled) //리셋
-        //    {
-        //        EnemyReset();
-        //    }
-        //}
+        if (isStun && !isDie)
+        {
+            nav.speed = 0f;
+        }
         if (isChase || isAttack) //룩엣
             if (!isDie && !playerST.isJump && !playerST.isFall && !isStun)
                 transform.LookAt(target);
     }
-    private IEnumerator UpdatePath()
+    public IEnumerator UpdatePath()
     {
-        
+
         // 살아있는 동안 무한 루프
         while (!isDie)
         {
-            
+
             if (hasTarget)
             {
+                Corotineidx = 0;
+                isReset = false;
                 // 추적 대상 존재 : 경로를 갱신하고 AI 이동을 계속 진행
                 Targerting();
                 nav.SetDestination(target.position);
                 nav.speed = 3.5f;
-                if(isAttack)
-                {
-                    isChase = false;
-                    nav.isStopped = true;
-                    anim.SetBool("isWalk", false);
-                }
-                if (!isAttack)
+                if (!isAttack && !isStun)
                 {
                     isChase = true;
-                    nav.isStopped = false;
+                    if (!isDie)
+                        nav.isStopped = false;
                     anim.SetBool("isWalk", true);
                 }
-                if(Vector3.Distance(target.position, transform.position) > 15f)
+
+                if (Vector3.Distance(target.position, transform.position) > 15f)
                 {
                     EnemyReset();
                     target = null;
                 }
-                  
-                    
+
+
             }
             else
             {
@@ -188,18 +180,46 @@ public class EnemySlime  : Monster
     }
     void EnemyReset()
     {
-        if (PhotonNetwork.IsMasterClient)
+        if (PhotonNetwork.IsMasterClient && !isReset)
         {
+            if(respawn != null)
             nav.SetDestination(respawn.transform.position);
-            nav.speed = 20f;
+            nav.speed = 5f;
             //curHealth = maxHealth;  서버에서 체력동기화가 잘 안일어나서 우선 주석 했습니다.
             isChase = false;
             if (Vector3.Distance(respawn.position, transform.position) < 1f)
             {
-                nav.isStopped = true;
+                if (!isDie)
+                    nav.isStopped = true;
                 anim.SetBool("isWalk", false);
-
+                isReset = true;
             }
+        }
+        else if (PhotonNetwork.IsMasterClient && isReset) //방황
+        {
+            if (isReset && Corotineidx == 0)
+            {
+                Corotineidx = 1;
+                StartCoroutine(Move());
+            }
+        }
+    }
+    IEnumerator Move()
+    {
+        while (isReset)
+        {
+            yield return new WaitForSeconds(Random.Range(0.1f, 3.0f));
+            transform.Rotate(new Vector3(0, 1, 0) * Random.Range(1000, 5000) * Time.smoothDeltaTime);
+            if (!isDie)
+                nav.isStopped = false;
+            anim.SetBool("isWalk", true);
+            nav.SetDestination(movepoint.position);
+            nav.speed = 0.5f;
+            yield return new WaitForSeconds(4f);
+            if (!isDie)
+                nav.isStopped = true;
+            anim.SetBool("isWalk", false);
+            yield return new WaitForSeconds(3f);
         }
     }
 
@@ -216,14 +236,13 @@ public class EnemySlime  : Monster
         if (PhotonNetwork.IsMasterClient)
         {
             float targetRadius = 1f;
-            float targetRange = 0.7f;
             RaycastHit[] rayHits =
                 Physics.SphereCastAll(transform.position,
                 targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));  //����ĳ��Ʈ
 
-            if (rayHits.Length > 0 && !isAttack && !isDie) //����ĳ��Ʈ�� �÷��̾ �����ٸ� && ���� �������� �ƴ϶��
+            if (rayHits.Length > 0 && !isAttack && !isDie && !isStun) //����ĳ��Ʈ�� �÷��̾ �����ٸ� && ���� �������� �ƴ϶��
             {
-                photonView.RPC("Attack", RpcTarget.AllBuffered);
+                photonView.RPC("Attack", RpcTarget.All);
                 MonsterAttack();
             }
         }
@@ -236,24 +255,28 @@ public class EnemySlime  : Monster
 
         isChase = false;
         isAttack = true;
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
+        anim.SetBool("isWalk", false);
         anim.SetBool("isAttack", true);
+        
+        
         yield return new WaitForSeconds(0.2f);
         meleeArea.enabled = true;
         yield return new WaitForSeconds(0.7f);
-        rigid.velocity = Vector3.zero;
         meleeArea.enabled = false;
-        
+
 
         isChase = true;
         isAttack = false;
         anim.SetBool("isAttack", false);
-        nav.isStopped = false;
+        if (!isDie)
+            nav.isStopped = false;
     }
     void FixedUpdate()
     {
 
-        FreezeVelocity();
+        //FreezeVelocity();
     }
 
     void OnTriggerEnter(Collider other)  //�ǰ�
@@ -282,11 +305,11 @@ public class EnemySlime  : Monster
 
                 StartCoroutine(OnDamage());
             }
-            
+
         }
         if (other.tag == "CCAREA")
         {
-            StartCoroutine(Stun());
+            photonView.RPC("Stun", RpcTarget.All);
         }
     }
 
@@ -302,14 +325,20 @@ public class EnemySlime  : Monster
     //    }
     //}
 
-
+    [PunRPC]
     IEnumerator Stun()
     {
         isStun = true;
         anim.SetBool("isStun", true);
+        if (!isDie)
+            nav.isStopped = true;
         yield return new WaitForSeconds(3f);
-        isStun = false;
-        anim.SetBool("isStun", false);
+        if (!isDie)
+        {
+            isStun = false;
+            nav.isStopped = false;
+            anim.SetBool("isStun", false);
+        }
     }
 
     IEnumerator OnDamage()
@@ -327,10 +356,10 @@ public class EnemySlime  : Monster
             Hiteff2.Play();
             yield return new WaitForSeconds(0.1f);
             isDamage = false;
-            SetHpBar();
+            //SetHpBar();
             if (curHealth > 0)
             {
-                
+
                 mat.color = Color.white;
             }
             else
@@ -343,20 +372,23 @@ public class EnemySlime  : Monster
     public override void Die()
     {
         MonsterDie();
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
         boxCollider.enabled = false;
         mat.color = Color.black;
         isChase = false; //�׾����� ��������
+        if (isDie)
+            return;
         isDie = true;
         anim.SetBool("isDie", true);
         Invoke("Diegg", 1.5f);
         questNormal.SlimeKillCount();
     }
-    
+
 
     void Diegg()
     {
-        
+
         respawn.gameObject.SetActive(true);
         --SpawnManager.spawnManager.SlimeObjs;
         gameObject.SetActive(false);

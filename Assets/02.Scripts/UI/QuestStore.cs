@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class QuestStore : MonoBehaviour , IPointerClickHandler
+public class QuestStore : MonoBehaviourPun , IPointerClickHandler
 {
     [SerializeField]
     public static QuestStore qustore;
@@ -23,7 +24,7 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
     Image Quest3Image;
     PlayerStat playerstat;
 
-    public int mainNum = 1;
+    public int mainNum;
     public bool isMainRecive = false; //메인 퀘스트 받았는가?
     public bool MainSuccess = false; //메인 퀘스트 성공 했는가?
 
@@ -34,6 +35,7 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
   
     void Awake()
     {
+        mainNum = 1;
        questTyping = FindObjectOfType<QuestTyping>();
         questWindow = FindObjectOfType<QuestWindow>();
         questExplain = FindObjectOfType<QuestExplain>();
@@ -52,7 +54,15 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
 
     private void Start()
     {
-        playerstat = FindObjectOfType<PlayerStat>();
+        PlayerStat[] playerStats = FindObjectsOfType<PlayerStat>();
+        foreach (PlayerStat myPlayerstat in playerStats)
+        {
+            if (myPlayerstat.photonView.IsMine)
+            {
+                playerstat = myPlayerstat;
+                break;
+            }
+        }
     }
     public void QuestStoreLoad()
     {
@@ -131,7 +141,7 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
         questTyping.QuestStartKey();
     }
 
-
+    bool OneLV8 = false;
     public void MainQuest() //메인퀘스트 창 열기
     {
 
@@ -173,7 +183,7 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
         }
 
 
-        else if (mainNum == 4 && !isMainRecive) // 7레벨 달성
+        else if (mainNum == 4 && !isMainRecive) // 8레벨 달성
         {
             questTyping.mainnum = 4;
             TypingStart();
@@ -181,8 +191,9 @@ public class QuestStore : MonoBehaviour , IPointerClickHandler
         }
         else if (mainNum == 4 && isMainRecive)
         {
-            if (playerstat.Level >= 8)
+            if (playerstat.Level >= 8 && !OneLV8)
             {
+                OneLV8 = true;
                 MainQuestSuccess(4);
             }
             QuestExplain.questExplain.Main4(questTyping.main4_item, true, MainSuccess);

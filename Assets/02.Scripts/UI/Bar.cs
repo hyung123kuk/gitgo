@@ -31,7 +31,15 @@ public class Bar : MonoBehaviour
 
     void Start()
     {
-        playerStat = FindObjectOfType<PlayerStat>();
+        PlayerStat[] playerStats = FindObjectsOfType<PlayerStat>();
+        foreach (PlayerStat myPlayerstat in playerStats)
+        {
+            if (myPlayerstat.photonView.IsMine)
+            {
+                playerStat = myPlayerstat;
+                break;
+            }
+        }
         backColor = back.color;
         durationBar = duration + duration2;
     }

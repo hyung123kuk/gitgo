@@ -140,19 +140,21 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     private void Awake()
     {
 
-        if (!photonView.IsMine)
-        {
-            this.enabled = false;
-        }
+        //if (!photonView.IsMine)
+        //{
+        //    return;
+        //}
+
         comboHit = GetComponent<ComboHit>();
         anim = GetComponentInChildren<Animator>();
         smesh = GetComponentsInChildren<SkinnedMeshRenderer>();
-        photonView.RPC("Setting", RpcTarget.AllBuffered);
+        
         saveManager = FindObjectOfType<SaveManager>();
-        nickname = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<Text>();
-        healthbar = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Image>();
-        helathbarBack = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(2).GetComponent<Image>();
+        //nickname = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<Text>();
+        //healthbar = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Image>();
+        //helathbarBack = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(2).GetComponent<Image>();
     }
+
     [PunRPC]
     void NicknameSerching() //닉넴찾기 다른플레이어
     {
@@ -168,34 +170,70 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             }
         }
     }
+    [PunRPC]
+    void HPBARSerching() //피통갱신 다른플레이어
+    {
+        PlayerMine[] ownerplayers = FindObjectsOfType<PlayerMine>();
+        foreach (PlayerMine ownerplayer in ownerplayers)
+        {
+            if (!ownerplayer.GetComponent<PhotonView>().IsMine)
+            {
+                ownerplayer.GetComponent<PlayerST>().healthbar.fillAmount = ownerplayer.GetComponent<PlayerStat>()._Hp /
+                    ownerplayer.GetComponent<PlayerStat>()._MAXHP;
+                if (ownerplayer == null)
+                    break;
+            }
+        }
+    }
+
+    [PunRPC]
+    void HorseSerching() //말 부모변경
+    {
+        Debug.Log("말");
+        PlayerST[] ownerplayers = FindObjectsOfType<PlayerST>();
+        foreach (PlayerST ownerplayer in ownerplayers)
+        {
+            if (!ownerplayer.GetComponent<PhotonView>().IsMine && ownerplayer.HorseMode)
+            {
+                Debug.Log("말1");
+                ownerplayer.transform.SetParent(ownerplayer.Horsee.transform);
+                if (ownerplayer == null)
+                    break;
+            }
+            else if(!ownerplayer.GetComponent<PhotonView>().IsMine && !ownerplayer.HorseMode)
+            {
+                Debug.Log("말2");
+                ownerplayer.transform.SetParent(null);
+                if (ownerplayer == null)
+                    break;
+            }
+        }
+    }
     void Start()
     {
+        //if (!photonView.IsMine)
+        //    return;
         nickname.text = PhotonNetwork.LocalPlayer.NickName;
         healthbar.CrossFadeAlpha(0, 0, true);  //자기자신 HP바 가리기
         //nickname.CrossFadeAlpha(0, 0, true);
         helathbarBack.CrossFadeAlpha(0, 0, true);
+        healthbar.fillAmount = playerstat._Hp / playerstat._MAXHP;
         bgm = GameObject.Find("Sounds").transform.GetChild(3).GetComponent<BGM>();
         playerstat = GetComponent<PlayerStat>();
         bowPower = bowMinPower;
         _transform = GetComponent<Transform>();
-
+        questStore = FindObjectOfType<QuestStore>();
+        HorseSpawn = FindObjectOfType<Horse>().gameObject;
+        Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
+        //photonView.RPC("Setting", RpcTarget.All);
 
 
         playerST = this;
         dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
         weapons = FindObjectOfType<Weapons>();
         rigid = GetComponent<Rigidbody>();
-        // HorseSpawn = FindObjectOfType<Horse>().gameObject;
-        GameObject[] horses = GameObject.FindGameObjectsWithTag("Horse");
-        foreach (GameObject horse1 in horses)
-        {
-            if (horse1.GetComponent<PhotonView>().IsMine)
-            {
-                HorseSpawn = horse1;
-                break;
-            }
-        }
-        Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
+        
+        
 
     }
 
@@ -203,6 +241,17 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     void Setting() //변수 동기화 이유: 무기낄때 퀘스트쪽에서 에러
     {
         questStore = FindObjectOfType<QuestStore>();
+        //GameObject[] horses = GameObject.FindGameObjectsWithTag("Horse");
+        //foreach (GameObject horse1 in horses)
+        //{
+        //    if (horse1.GetComponent<PhotonView>().IsMine)
+        //    {
+        //        HorseSpawn = horse1;
+        //        break;
+        //    }
+        //}
+        HorseSpawn = FindObjectOfType<Horse>().gameObject;
+        Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
     }
 
 
@@ -220,6 +269,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             stream.SendNext(isCooldodge);
             stream.SendNext(isCoolTeleport);
             stream.SendNext(healthbar.fillAmount);
+            stream.SendNext(HorseMode);
         }
         else
         {
@@ -234,6 +284,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             isCooldodge = (bool)stream.ReceiveNext();
             isCoolTeleport = (bool)stream.ReceiveNext();
             healthbar.fillAmount = (float)stream.ReceiveNext();
+            HorseMode = (bool)stream.ReceiveNext();
         }
     }
 
@@ -599,6 +650,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     void DodgePlay()
     {
+
         FootSound.footSound.audioSource.Stop();
         if (CharacterType == Type.Archer)
             SoundManager.soundManager.ArcherJump();
@@ -611,20 +663,26 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
         isCooldodge = false;
         attackdamage.Usable_Dodge = false;
-        dodgeVec = moveVec;
-        speed *= 2;
+        if (photonView.IsMine)
+        {
+            dodgeVec = moveVec;
+            speed *= 2;
+        }
         anim.SetBool("isDodge", true);
         isDodge = true;
         isDamage = true;
 
         Invoke("DodgeOut", 0.4f); //구르기를 하면 0.4초후에 이동속도가 정상으로돌아옴
+
     }
 
     void DodgeOut()
     {
         isCooldodge = true;
-        attackdamage.Skill_Dodge_Cool();
-        speed *= 0.5f;
+        if (photonView.IsMine)
+            attackdamage.Skill_Dodge_Cool();
+        if (photonView.IsMine)
+            speed *= 0.5f;
         isDodge = false;
         isDamage = false;
         anim.SetBool("isDodge", false);
@@ -634,12 +692,14 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             anim.SetBool("isAttack3", false);
             anim.SetBool("isAttack2", false);
             anim.SetBool("isAttack", false);
-            comboHit.noOfClicks = 0;
+            if (photonView.IsMine)
+                comboHit.noOfClicks = 0;
         }
-        if (!questStore.MainSuccess)
+        if (!questStore.MainSuccess&&photonView.IsMine)
         {
             questStore.MainQuestSuccess(1);
         }
+
     }
 
     //==================================여기서부터 전사스킬=======================================
@@ -679,11 +739,13 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         anim.SetBool("isAttack3", false);
         anim.SetBool("isAttack2", false);
         anim.SetBool("isAttack", false);
-        comboHit.noOfClicks = 0;
+        if (photonView.IsMine)
+            comboHit.noOfClicks = 0;
         isBlock = false;
         isDamage = false;
+        if (photonView.IsMine)
+            attackdamage.Skill_1_Cool();  //방패치기쿨타임
 
-        attackdamage.Skill_1_Cool();  //방패치기쿨타임
     }
     public void Buff()
     {
@@ -700,8 +762,10 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     void BuffPlay()
     {
         SoundManager.soundManager.WarriorBuffSound();
-        attackdamage.Skill_Buff_Cool();
+        if (photonView.IsMine)
+            attackdamage.Skill_Buff_Cool();
         BuffEff.Play();
+
     }
     public void Rush()
     {
@@ -718,7 +782,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     IEnumerator RushPlay()
     {
-        ArrowSkill.arrowSkill.NoDestroy = true;
         isCool2 = false;
         attackdamage.Usable_Skill2 = false;
 
@@ -727,7 +790,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         anim.SetBool("isRush", true);
         //yield return new WaitForSeconds(0.5f);
         SoundManager.soundManager.WarriorRushVoice();
-        rigid.AddForce(transform.forward * 40 + transform.up * 20, ForceMode.Impulse);
+        if (photonView.IsMine)
+            rigid.AddForce(transform.forward * 40 + transform.up * 20, ForceMode.Impulse);
         yield return new WaitForSeconds(0.5f);
         SoundManager.soundManager.WarriorRushSound();
         BoxCollider Skillare = Skillarea.GetComponent<BoxCollider>(); //돌진착지지점 데미지 콜라이더 활성화
@@ -745,14 +809,15 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         anim.SetBool("isAttack3", false);
         anim.SetBool("isAttack2", false);
         anim.SetBool("isAttack", false);
-        comboHit.noOfClicks = 0;
+        if (photonView.IsMine)
+            comboHit.noOfClicks = 0;
         isRush = false;
         isFall = false;
         isCool2 = true;
-        attackdamage.Skill_2_Cool();  //돌진쿨타임
+        if (photonView.IsMine)
+            attackdamage.Skill_2_Cool();  //돌진쿨타임
         yield return new WaitForSeconds(0.5f);
 
-        ArrowSkill.arrowSkill.NoDestroy = false;
         RushEff.SetActive(false);
 
     }
@@ -770,6 +835,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     IEnumerator AuraPlay()
     {
+
         isCool3 = false;
         attackdamage.Usable_Skill3 = false;
         isAura = true;
@@ -787,7 +853,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
         Destroy(swordaura, 1f);
         isCool3 = true;
-        attackdamage.Skill_3_Cool();
+        if (photonView.IsMine)
+            attackdamage.Skill_3_Cool();
         yield return new WaitForSeconds(0.8f);
         isAura = false;
         anim.SetBool("isAura", false);
@@ -795,7 +862,9 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         anim.SetBool("isAttack3", false);
         anim.SetBool("isAttack2", false);
         anim.SetBool("isAttack", false);
-        comboHit.noOfClicks = 0;
+        if (photonView.IsMine)
+            comboHit.noOfClicks = 0;
+
     }
     //==================================여기서부터 궁수스킬=======================================
     public void Smoke() //마우스 우클릭 연막
@@ -812,13 +881,15 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     IEnumerator SmokePlay()
     {
-        ArrowSkill.arrowSkill.NoDestroy = true;
         isCool1 = true;
-        attackdamage.Skill_1_Cool();
-        gameObject.layer = LayerMask.NameToLayer("Back");
+        if (photonView.IsMine)
+            attackdamage.Skill_1_Cool();
+        if (photonView.IsMine)
+            gameObject.layer = LayerMask.NameToLayer("Back");
         isFall = true;
         isBackStep = true;
-        rigid.AddForce(transform.forward * -23 + transform.up * 10, ForceMode.Impulse);
+        if (photonView.IsMine)
+            rigid.AddForce(transform.forward * -23 + transform.up * 10, ForceMode.Impulse);
         GameObject arceff = Instantiate(BackStepEff, BackStepPos.position, BackStepPos.rotation); //이펙트
         SoundManager.soundManager.ArcherBackStepSound();
         BoxCollider Skillare = Skillarea.GetComponent<BoxCollider>(); // 데미지 콜라이더 활성화
@@ -834,13 +905,12 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         Skillare.enabled = false;
         CCare.enabled = false;
         yield return new WaitForSeconds(0.2f);
-
-        gameObject.layer = LayerMask.NameToLayer("Player");
+        if (photonView.IsMine)
+            gameObject.layer = LayerMask.NameToLayer("Player");
         anim.SetBool("isSmoke", false);
         isBackStep = false;
         isFall = false;
         yield return new WaitForSeconds(0.5f);
-        ArrowSkill.arrowSkill.NoDestroy = false;
     }
     public void PoisonArrow()
     {
@@ -857,8 +927,11 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     void PoisonPlay()
     {
+
         SoundManager.soundManager.ArcherSkill1Sound();
-        attackdamage.Skill_Buff_Cool();
+        if (photonView.IsMine)
+            attackdamage.Skill_Buff_Cool();
+
     }
     //==================================여기서부터 마법사스킬=======================================
     public void Flash()
@@ -876,13 +949,15 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     IEnumerator FlashStart()
     {
+
         SoundManager.soundManager.MageTeleportSound();
-        attackdamage.Skill_Mage_Teleport_Cool();
+        if (photonView.IsMine)
+            attackdamage.Skill_Mage_Teleport_Cool();
         isCoolTeleport = false;//쿨타임
         attackdamage.Usable_Teleport = false;
 
-
-        gameObject.layer = LayerMask.NameToLayer("Back");
+        if (photonView.IsMine)
+            gameObject.layer = LayerMask.NameToLayer("Back");
         isFlash = true;
         isFall = true;
         mesh.enabled = false;
@@ -891,9 +966,11 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             smesh[i].enabled = false;
         }
         FlashEff.SetActive(true);
-        rigid.AddForce(transform.forward * 40 + transform.up * 10, ForceMode.Impulse);
+        if (photonView.IsMine)
+            rigid.AddForce(transform.forward * 40 + transform.up * 10, ForceMode.Impulse);
         yield return new WaitForSeconds(0.3f);
-        gameObject.layer = LayerMask.NameToLayer("Player");
+        if (photonView.IsMine)
+            gameObject.layer = LayerMask.NameToLayer("Player");
         isFlash = false;
         isFall = false;
         FlashEff.SetActive(false);
@@ -903,10 +980,12 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             smesh[i].enabled = true;
         }
         yield return new WaitForSeconds(0.2f);
-        rigid.velocity = Vector3.zero;
+        if (photonView.IsMine)
+            rigid.velocity = Vector3.zero;
 
         isCoolTeleport = true;//쿨타임
-        attackdamage.Skill_Mage_Teleport_Cool();
+        if (photonView.IsMine)
+            attackdamage.Skill_Mage_Teleport_Cool();
 
     }
     void InputManager()
@@ -932,17 +1011,24 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
     private void Update()
     {
+
         if (this != null)
         {
             NicknameSerching(); //다른플레이어들 닉네임갱신
-            photonView.RPC("NicknameSerching", RpcTarget.OthersBuffered);
+            photonView.RPC("NicknameSerching", RpcTarget.Others);
         }
 
+        if (this != null)
+        {
+            HPBARSerching(); //다른플레이어들 피통
+            photonView.RPC("HPBARSerching", RpcTarget.Others);
+        }
         if (!photonView.IsMine)
             return;
 
+        //HorseSerching(); 
 
-
+        
 
         if (Input.GetKeyDown(KeyCode.H) && !HorseMode) //말 아이템이 없어서 이걸로 테스트했어요
         {
@@ -1006,6 +1092,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         //}
         if (HorseMode) //말탔을때 플레이어의 프리즈포지션 체크
         {
+            Debug.Log("응");
+            transform.position = Horsee.transform.position + Vector3.up * -0.5f;
             rigid.constraints = RigidbodyConstraints.FreezePositionX;
             rigid.constraints = RigidbodyConstraints.FreezePositionY;
             rigid.constraints = RigidbodyConstraints.FreezePositionZ;
@@ -1043,7 +1131,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             //}
             if (horsecount == 0) //소환 
             {
-                HorseSpawn.transform.parent = null;
+                HorseSpawn.GetComponent<Rigidbody>().velocity = Vector3.zero;
+                //HorseSpawn.transform.parent = null;
                 SoundManager.soundManager.Horse();
                 HorseSpawn.transform.position = horsepos1.position;
                 HorseSpawn.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
@@ -1051,6 +1140,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             }
             else if (horsecount == 1) //소환 해제
             {
+                HorseSpawn.GetComponent<Rigidbody>().velocity = Vector3.zero;
                 SoundManager.soundManager.Horse2();
                 HorseSpawn.transform.position = GameManager.gameManager.HorsePoint.position;
                 //HorseSpawn.transform.parent = transform;
@@ -1166,13 +1256,14 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         FreezeVelocity();
         StopMove();
     }
-    void PlayerDie() //사망
+    public void PlayerDie() //사망
     {
 
         if (!photonView.IsMine)
             return;
         SelectPlayer.enabled = false;
         rigid.useGravity = false;
+        DunjeonBossArena = false;
         DiePRC(true, true); //죽음을 알림.
         anim.SetBool("isDie", true);
         if (CharacterType == Type.Warrior || CharacterType == Type.Mage)
@@ -1203,11 +1294,33 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (photonView.IsMine)
         {
+            if (other.tag == "DeathZone")
+            {
+                SendMessage("TownResurrection");
+                if (HorseMode)
+                    HorseSpawn.GetComponent<Horse>().HorseModeDis();
+            }
+
+            if (other.tag == "DeathZoneDun")
+            {
+                SendMessage("DunjeonResurrection");
+                if (HorseMode)
+                    HorseSpawn.GetComponent<Horse>().HorseModeDis();
+            }
+
+            if (other.name == "Boss2Arena")
+            {
+                DunjeonBossArena = true;
+                Debug.Log("여기????");
+            }
+            if (other.name == "Boss2ArenaOut")
+            {
+                DunjeonBossArena = false;
+                Debug.Log("아웃");
+            }
+
             if (other.gameObject.tag == "EnemyRange")  //적에게 맞았다면
             {
-                //if (!isDamage) //무적타이밍이 아닐때만 실행
-                //{
-
                 if (other.gameObject.GetComponent<Attacking>().isAttacking && !isDamage)
                 {
                     EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
@@ -1219,9 +1332,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                         PlayerDie();
                     }
                 }
-                //StartCoroutine(OnDamage());
-
-                //}
             }
             else if (other.gameObject.tag == "Boss1Skill")  //1보스 스턴스킬
             {
@@ -1258,7 +1368,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             {
                 if (!isDamage) //무적타이밍이 아닐때만 실행
                 {
-
                     EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
                     playerstat.DamagedHp(enemyRange.damage);
                     healthbar.fillAmount = playerstat._Hp / playerstat._MAXHP;
@@ -1268,6 +1377,26 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                         PlayerDie();
                     }
                 }
+            }
+
+            if (other.tag == "DunjeonPortal" && !HorseMode)
+            {
+                gameObject.transform.position = Portal.portal.WorldPortal.position + Portal.portal.WorldPortal.transform.forward * -2;
+            }
+
+            if (other.tag == "WorldPortal" && !HorseMode)
+            {
+                gameObject.transform.position = Portal.portal.DunjeonPortal.position + Portal.portal.DunjeonPortal.transform.forward * -2;
+            }
+
+            if (other.tag == "BossPortalIN" && !HorseMode)
+            {
+                gameObject.transform.position = Portal.portal.BossPortalOUT.position + Portal.portal.BossPortalOUT.transform.forward * 2;
+            }
+
+            if (other.tag == "BossPortalOUT" && !HorseMode)
+            {
+                gameObject.transform.position = Portal.portal.BossPortalIN.position + Portal.portal.BossPortalIN.transform.forward * -2;
             }
 
 
@@ -1305,8 +1434,12 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
     }
 
-
-
+    [PunRPC]
+    IEnumerator HorseParent()
+    {
+        yield return new WaitForSeconds(0.2f);
+        photonView.RPC("HorseSerching", RpcTarget.All);
+    }
     private void OnTriggerStay(Collider other)
     {
         if (photonView.IsMine)
@@ -1320,26 +1453,28 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
                     anim.SetBool("isHorse", true);
                     rigid.useGravity = false;
-                    transform.parent = Horsee.transform;
+                    transform.SetParent(Horsee.transform);
+                    //transform.parent = Horsee.transform;
                     transform.position = Horsee.transform.position + Vector3.up * -0.5f;
                     transform.rotation = HorseSpawn.transform.rotation;
                     //Quaternion.LookRotation(new Vector3(h, 0f, v));
+                    photonView.RPC("HorseParent", RpcTarget.All);
                 }
             }
 
-            if (other.name == "In-Portal" && Input.GetKeyDown(KeyCode.F))
+            if (other.tag == "BOSS2_RAZOR")
             {
-                Portal.portal.InDunJeonPortal(gameObject);
-            }
-
-            if (other.name == "Out-Portal" && Input.GetKeyDown(KeyCode.F))
-            {
-                Portal.portal.OutDunJeonPortal(gameObject);
-            }
-
-            if (other.name == "Boss2Arena")
-            {
-                DunjeonBossArena = true;
+                if (!isDamage)
+                {
+                    Debug.Log("응애");
+                    EnemyAttack enemyRange = other.GetComponent<EnemyAttack>();
+                    playerstat.DamagedHp(enemyRange.damage);
+                    healthbar.fillAmount = playerstat._Hp / playerstat._MAXHP;
+                    if (playerstat._Hp <= 0)
+                    {
+                        PlayerDie();
+                    }
+                }
             }
         }
 
@@ -1349,10 +1484,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (photonView.IsMine)
         {
-            if (other.name == "Boss2Arena")
-            {
-                DunjeonBossArena = false;
-            }
+
+
         }
     }
     void OnCollisionEnter(Collision collision)
@@ -1364,21 +1497,21 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                 anim.SetBool("isJump", false);
                 isJump = false;
             }
-            if (collision.gameObject.tag == "WALL")
-            {
-                isYes = true; //벽쪽에서 돌진스킬못쓰게
-            }
+            //if (collision.gameObject.tag == "WALL")
+            //{
+            //    isYes = true; //벽쪽에서 돌진스킬못쓰게
+            //}
         }
     }
     private void OnCollisionExit(Collision collision)
     {
-        if (photonView.IsMine)
-        {
-            if (collision.gameObject.tag == "WALL")
-            {
-                isYes = false;
-            }
-        }
+        //if (photonView.IsMine)
+        //{
+        //    if (collision.gameObject.tag == "WALL")
+        //    {
+        //        isYes = false;
+        //    }
+        //}
     }
 
 
@@ -1419,7 +1552,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (WeaponNum != basicSword)
         {
-            if (!questStore.MainSuccess)
+            if (!questStore.MainSuccess && photonView.IsMine)
             {
                 questStore.MainQuestSuccess(2);
             }

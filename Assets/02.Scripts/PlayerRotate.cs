@@ -39,7 +39,7 @@ public class PlayerRotate : MonoBehaviourPun
         if (!photonView.IsMine)
             return;
 
-        if (weapons.isMeteo || AllUI.isUI || playerST.isDie)
+        if (weapons.isMeteo || AllUI.isUI || playerST.isDie )
             return;
 
         if (!playerST.HorseMode)

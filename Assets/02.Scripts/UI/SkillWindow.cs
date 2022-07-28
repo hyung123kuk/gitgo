@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Photon.Pun;
+using UnityEngine.Video;
 
 public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
 {
@@ -27,6 +28,8 @@ public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
     [SerializeField]
     private SkillToolTip skillToolTip;
 
+    [SerializeField]
+    public VideoPlayer videoPlayer;
 
     public static bool kDown = false;
 
@@ -37,15 +40,16 @@ public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
         warriorSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(2).gameObject;
         acherSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(3).gameObject;
         mageSkillWIndow = transform.GetChild(0).GetChild(0).GetChild(4).gameObject;
-
+        skillWindow.SetActive(true);
         skillslots = GetComponentsInChildren<SkillSlot>();
+
         skillToolTip = FindObjectOfType<SkillToolTip>();
 
 
     }
     private void Start()
     {
-        
+       
         PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
 
 
@@ -79,7 +83,12 @@ public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
 
         //StartCoroutine(Setting());
 
+        Invoke("loadSkill", 0.1f);
 
+    }
+    void loadSkill()
+    {
+        skillWindow.SetActive(false);
     }
 
     //IEnumerator Setting()
@@ -104,6 +113,8 @@ public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
         Cursor.lockState = CursorLockMode.Confined;
         allUI.MouseCursor.transform_cursor.gameObject.SetActive(true);
         kDown = true;
+        
+        
 
     }
 
@@ -114,6 +125,7 @@ public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
 
         kDown = false;
         AllUI.allUI.CheckCursorLock();
+       
     }
 
 
@@ -126,6 +138,7 @@ public class SkillWindow : MonoBehaviourPun, IPointerClickHandler
     {
         for (int i = 0; i < skillslots.Length; i++)
         {
+            
             skillslots[i].SetSkillColor();
 
         }

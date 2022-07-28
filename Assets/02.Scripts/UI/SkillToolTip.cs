@@ -2,8 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
-public class SkillToolTip : MonoBehaviour
+using Photon.Pun;
+public class SkillToolTip : MonoBehaviourPun
 {
     [SerializeField]
     private GameObject skillToolTip;
@@ -27,8 +27,26 @@ public class SkillToolTip : MonoBehaviour
 
     void Start()
     {
-        playerStat = FindObjectOfType<PlayerStat>();
-        attackDamage = FindObjectOfType<AttackDamage>();
+        PlayerStat[] playerStats = FindObjectsOfType<PlayerStat>();
+        foreach (PlayerStat myPlayerstat in playerStats)
+        {
+            if (myPlayerstat.photonView.IsMine)
+            {
+                playerStat = myPlayerstat;
+                break;
+            }
+        }
+        AttackDamage[] attackDamages = FindObjectsOfType<AttackDamage>();
+        foreach (AttackDamage myattackDamage in attackDamages)
+        {
+            if (myattackDamage.GetComponent<PhotonView>().IsMine)
+            {
+                attackDamage = myattackDamage;
+                break;
+            }
+        }
+
+
         skillToolTip = transform.GetChild(0).gameObject;
         SkillName = skillToolTip.transform.GetChild(0).GetComponent<Text>();
         SkillLevel = skillToolTip.transform.GetChild(1).GetComponent<Text>();

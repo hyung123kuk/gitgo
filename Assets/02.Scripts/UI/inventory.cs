@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using Photon.Pun;
 
-public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
+public class inventory : MonoBehaviourPun, IPointerClickHandler, IEndDragHandler
 {
     int invencheck = 0; //인벤 처음 열릴때 소리안나게하기위함
     public static inventory inven;
@@ -61,8 +62,9 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
     private void Awake()
     {
 
-        LoadingUI = GameObject.Find("UIENd").transform.GetChild(6).gameObject;
-        slots = SlotsParent.GetComponentsInChildren<Slot>();
+        //LoadingUI = GameObject.Find("UIENd").transform.GetChild(6).gameObject;
+
+       
         
         allUI = FindObjectOfType<AllUI>();
         itemStore = FindObjectOfType<itemStore>();
@@ -70,16 +72,32 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
         inven = this;
         iDown = false;
         StartCoroutine(invenSet());
+        
         StartCoroutine(LoadingSet());
+        Inven.SetActive(true);
+        slots = SlotsParent.GetComponentsInChildren<Slot>();
         eqslots = GameObject.FindGameObjectWithTag("EqueSlot").GetComponentsInChildren<Slot>();
-
+       
 
     }
 
     private void Start()
     {
 
-        playerStat = FindObjectOfType<PlayerStat>();
+        if (playerStat == null)
+        {
+            PlayerStat[] playerStats = GameObject.FindObjectsOfType<PlayerStat>();
+
+
+            foreach (PlayerStat myplayerStat in playerStats)
+            {
+                if (myplayerStat.GetComponent<PhotonView>().IsMine)
+                {
+                    playerStat = myplayerStat;
+                    break;
+                }
+            }
+        }
         GoldUpdate();
 
        
@@ -97,7 +115,7 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
     IEnumerator LoadingSet() 
     {
         yield return new WaitForSeconds(2f);
-        LoadingUI.SetActive(false);
+        //LoadingUI.SetActive(false);
 
     }
 
@@ -127,7 +145,8 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
         if (invencheck == 1)
             UiSound.uiSound.InventoryCloseSound();
 
-        itemStore.storeOff();
+        if(itemStore)
+            itemStore.storeOff();
         Inven.SetActive(false);
         
         toolTip.ToolTipOff();
@@ -146,6 +165,22 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
    
     public void GoldUpdate()
     {
+
+        if (playerStat == null)
+        {
+            PlayerStat[] playerStats = GameObject.FindObjectsOfType<PlayerStat>();
+
+
+            foreach (PlayerStat myplayerStat in playerStats)
+            {
+                if (myplayerStat.GetComponent<PhotonView>().IsMine)
+                {
+                    playerStat = myplayerStat;
+                    break;
+                }
+            }
+        }
+
         playerStat.MONEY = (int)playerStat.MONEY;
         Gold.text = "Gold : " + playerStat.MONEY.ToString();
     }
@@ -165,7 +200,7 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
                     return true;
                 }
                 _num++;
-
+                Debug.Log(_num);
             }
         }
         
@@ -200,7 +235,7 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
                 {
                     if (buyitem.itemName == slots[i].item.itemName)
                     {
-
+                        
                         slots[i].SetSlotCount(num);
                         playerStat.MONEY -= buyitem._PRICE * num;
                         GoldUpdate();
@@ -224,6 +259,7 @@ public class inventory : MonoBehaviour, IPointerClickHandler, IEndDragHandler
                 {
                     playerStat.MONEY -= buyitem._PRICE;
                 }
+                Debug.Log(buyitem.itemName);
                 slots[i].item = buyitem;
                 slots[i].itemImage.sprite = slots[i].item.itemImage;
                 slots[i].SetColor(1);

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using Photon.Pun;
 public class DropItem : DropCoin
 {
 
@@ -27,30 +27,43 @@ public class DropItem : DropCoin
     private void OnTriggerStay(Collider other)
     {
   
-        if (other.gameObject.tag == "Player" && item.itemType==Item.ItemType.Equipment)
+        if (other.gameObject.tag == "Player" && other.gameObject.GetComponent<PhotonView>().IsMine && item.itemType==Item.ItemType.Equipment)
         {
+            if(RangeText == null)
+                RangeText = GameObject.FindGameObjectWithTag("RangeText").GetComponent<Text>();
             RangeText.enabled = true;
-            RangeText.text = "Z≈∞∏¶ ¥©∏£∏È æ∆¿Ã≈€¿ª ¡›Ω¿¥œ¥Ÿ.";
+            RangeText.text = "ZÌÇ§Î•º ÎàÑÎ•¥Î©¥ Ï§çÏäµÎãàÎã§.";
             if (Input.GetKeyDown(KeyCode.Z))
             {
                 if (!inventory.inven.HasEmptySlot())
                 {
-                    Debug.Log("æ∆¿Ã≈€ √¢¿Ã æ¯Ω¿¥œ¥Ÿ.");
-                    LogManager.logManager.Log("∫Û√¢¿Ã æ¯Ω¿¥œ¥Ÿ", true);
+                   
+                    LogManager.logManager.Log("ÏïÑÏù¥ÌÖú Ï∞ΩÏù¥ ÍΩâ Ï∞ºÏäµÎãàÎã§.", true);
                     return;
                 }
                 else
                 {
-                  
+
                     RangeText.enabled = false;
                     inventory.inven.addItem(item);
-                    Destroy(gameObject);
+                   
+                    photonView.RPC("DestroyEquip",RpcTarget.AllBuffered);
+                    
+                    
                 }
 
 
             }
         }
     }
+
+    [PunRPC]
+    public void DestroyEquip()
+    {
+        Destroy(gameObject);
+    }
+
+
 
     private void OnTriggerExit(Collider other)
     {

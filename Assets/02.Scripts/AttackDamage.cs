@@ -129,7 +129,7 @@ public class AttackDamage : MonoBehaviourPun, IPunObservable
         if (!photonView.IsMine)
             this.enabled = false;
         playerst = GetComponent<PlayerST>();
-        playerStat = FindObjectOfType<PlayerStat>();
+        playerStat = GetComponent<PlayerStat>();
         Skill1_time = Skill_1_cooltime;
         Skill2_time = Skill_2_cooltime;
         Skill3_time = Skill_3_cooltime;

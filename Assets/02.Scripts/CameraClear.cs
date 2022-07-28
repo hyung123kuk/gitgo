@@ -16,11 +16,14 @@ public class CameraClear : MonoBehaviourPunCallbacks
     }
     IEnumerator ScriptEnable() //스크립트를 껐다켜야 작동됩니다;;
     {
-        gameObject.GetComponent<CameraClear>().enabled = false;
-        yield return new WaitForSeconds(0.1f);
-        gameObject.GetComponent<CameraClear>().enabled = true;
+        if (photonView.IsMine)
+        {
+            gameObject.GetComponent<CameraClear>().enabled = false;
+            yield return new WaitForSeconds(0.1f);
+            gameObject.GetComponent<CameraClear>().enabled = true;
+        }
     }
-    private void Update()
+    private void LateUpdate()
     {
         if (!photonView.IsMine) //로컬상태가 아니면 리턴
         {
@@ -35,12 +38,14 @@ public class CameraClear : MonoBehaviourPunCallbacks
             {
                 MainCamera.transform.localPosition = Vector3.Lerp(MainCamera.transform.localPosition, MainCamera.transform.localPosition + Vector3.forward, Time.deltaTime * 10);
                 MainCamera.transform.position = hit.point;
+                Debug.Log("충돌1");
             }
-            else
-            {
-                MainCamera.transform.localPosition = Vector3.Lerp(MainCamera.transform.localPosition, new Vector3(0, 0, -CameraMaxDistance), Time.deltaTime * 5f);
-                //Debug.DrawRay(transform.position, MainCamera.transform.position, Color.red);
-            }
+            //else
+            //{
+            //    Debug.Log("충돌2");
+            //    MainCamera.transform.localPosition = Vector3.Lerp(MainCamera.transform.localPosition, new Vector3(0, 0, -CameraMaxDistance), Time.deltaTime * 5f);
+            //    //Debug.DrawRay(transform.position, MainCamera.transform.position, Color.red);
+            //}
         }
     }
 }

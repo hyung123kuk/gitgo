@@ -45,18 +45,37 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
 
         item_sell_question = FindObjectOfType<itemSellQuestion>();
         tooltip = FindObjectOfType<ToolTip>();
-
+        
 
     }
 
     private void Start()
     {
-        playerSt = FindObjectOfType<PlayerST>();
+        PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
+        foreach(PlayerST myPlayerst in playerSts)
+        {
+            if (myPlayerst.photonView.IsMine)
+            {
+                playerSt = myPlayerst;
+                break;
+            }
+        }
+
+        PlayerStat[] playerStats = FindObjectsOfType<PlayerStat>();
+        foreach (PlayerStat myPlayerstat in playerStats)
+        {
+            if (myPlayerstat.photonView.IsMine)
+            {
+                playerStat = myPlayerstat;
+                break;
+            }
+        }
+
+
         archerEquipChange = FindObjectOfType<ArcherEquipChange>();
         warriorEquipChange = FindObjectOfType<WarriorEquipChange>();
         mageEquipChange = FindObjectOfType<MageEquipChange>();
 
-        playerStat = FindObjectOfType<PlayerStat>();
         if (item != null)
         {
             itemImage.sprite = item.itemImage;
@@ -73,14 +92,46 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
 
             }
             SetColor(1);
-            ItemLimitColorRed();
+            
+            
         }
     }
-
+    private void OnEnable()
+    {
+        if(playerStat !=null)
+        ItemLimitColorRed();
+    }
     public void ItemLimitColorRed()
     {
         if (item == null)
             return;
+
+        if (!playerSt.photonView.IsMine)
+        {
+
+            PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
+            foreach (PlayerST myPlayerst in playerSts)
+            {
+                if (myPlayerst.photonView.IsMine)
+                {
+                    playerSt = myPlayerst;
+                    break;
+                }
+            }
+        }
+        if (!playerStat.photonView.IsMine)
+        {
+
+            PlayerStat[] playerStats = FindObjectsOfType<PlayerStat>();
+            foreach (PlayerStat myPlayerstat in playerStats)
+            {
+                if (myPlayerstat.photonView.IsMine)
+                {
+                    playerStat = myPlayerstat;
+                    break;
+                }
+            }
+        }
 
         if (item.itemEquLevel > playerStat.Level ||
            (item.armortype == Item.ArmorType.cloth && playerSt.CharacterType == PlayerST.Type.Archer) ||
@@ -167,8 +218,7 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
         {
             SoundManager.soundManager.DrinkSound();
             playerStat.RecoverHp(50);
-            playerStat.RecoverMp(50);
-
+            playerStat.RecoverMp(50);  
         }
         else if (item.itemName == "<color=#FF0000>체력 회복 물약</color>")
         {
@@ -185,6 +235,7 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
             UiSound.uiSound.GetCoinSound();
             playerStat.AddGold(100);
         }
+        playerSt.healthbar.fillAmount = playerStat._Hp / playerStat._MAXHP;
         gameUI.bar_set();
     }
 
@@ -678,6 +729,7 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                 item = null;
                 inventory.slots[i].itemImage.sprite = inventory.slots[i].item.itemImage;
                 inventory.slots[i].SetColor(1);
+                inventory.slots[i].ItemLimitColorRed();
                 break;
             }
         }
@@ -709,6 +761,8 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
     {
         DragSlot.instance.SetColor(0);
         DragSlot.instance.dragSlot = null;
+        if(itemSellScope)
+        itemSellScope.SetActive(false);
     }
 
     public void OnDrop(PointerEventData eventData)

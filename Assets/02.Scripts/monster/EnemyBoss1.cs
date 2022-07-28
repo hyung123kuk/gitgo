@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 using Photon.Pun;
+using DG.Tweening;
 public class EnemyBoss1 : MonsterBoss
 {
 
@@ -13,18 +14,17 @@ public class EnemyBoss1 : MonsterBoss
     public bool isAttack; //���� ������
     public bool isRush;
     public bool isStun;
-    public bool isbansa;
+    public bool isThrow;
     public bool isDie;
     public Transform respawn;
 
-    
+    public LayerMask whatIsTarget; // 공격 대상 레이어
 
 
     private Light stunarea;
     Transform target;
     Rigidbody rigid;
-    BoxCollider boxCollider;
-    SkinnedMeshRenderer[] mat;
+    CapsuleCollider boxCollider;
     NavMeshAgent nav;
     Animator anim;
     QuestStore questStore;
@@ -37,25 +37,81 @@ public class EnemyBoss1 : MonsterBoss
 
     [SerializeField]
     Attacking attacking;
+    float targetRange = 3f; //몬스터 공격사정거리
+    public Transform ThrowPoint;
+    public Transform ThrowEndPoint;
+
+    [SerializeField]
+    GameObject RushEff; //돌진스킬 이펙트
+    [SerializeField]
+    GameObject ThrowEff;
+    [SerializeField]
+    SkinnedMeshRenderer mat;
+    [SerializeField]
+    Transform RushPoint;
+
+    private bool hasTarget
+    {
+        get
+        {
+            // 추적할 대상이 존재하고, 대상이 사망하지 않았다면 true
+            if (target != null && !target.GetComponent<PlayerST>().isDie)
+            {
+                return true;
+            }
+
+            // 그렇지 않다면 false
+            return false;
+        }
+    }
     void Awake()
     {
+        mat = transform.GetChild(7).transform.GetComponent<SkinnedMeshRenderer>();
         stunarea = GetComponentInChildren<Light>();
         rigid = GetComponent<Rigidbody>();
-        boxCollider = GetComponent<BoxCollider>();
-        mat = GetComponentsInChildren<SkinnedMeshRenderer>();
+        boxCollider = GetComponent<CapsuleCollider>();
         nav = GetComponent<NavMeshAgent>();
         anim = GetComponent<Animator>();
         attacking = transform.GetChild(2).GetComponent<Attacking>();
         questStore = FindObjectOfType<QuestStore>();
+        RushEff = Resources.Load<GameObject>("Boss1_RushEff");
+        //RushEff = GameObject.Find("EffectPool").transform.GetChild(0).gameObject;
+        dropResourceString = "BOSS1";
+    }
+
+    public override void BossHpBarSettting()
+    {
+        bossHpBar = GameObject.Find("BossMonsterHp").transform.GetChild(0).gameObject;
+    }
+
+    private void OnEnable()
+    {
+        anim.SetBool("isDie", false);
+        isDamage = false;
+        boxCollider.enabled = true;
+        isAttack = false;
+        nav.isStopped = false;
+        isDie = false;
+        curHealth = maxHealth;
+        isStun = false;
+        anim = GetComponent<Animator>();
 
         StartBossMonster();
         BossItemSet();
-        Monstername.text = "거북 슬라임";
+        Monstername.text = "이끼\n골렘";
         level.text = "5";
         coin = 30;
+        coinCount = 20;
+        Exp = 100;
+        // 게임 오브젝트 활성화와 동시에 AI의 추적 루틴 시작
+        BossMonsterHpBarSet();
+
+        if (PhotonNetwork.IsMasterClient) //호스트에서만 추적
+        {
+            StartCoroutine(UpdatePath());
+        }
 
     }
-
 
 
     public void BossItemSet()
@@ -72,52 +128,91 @@ public class EnemyBoss1 : MonsterBoss
         {
             StopAllCoroutines();
         }
-        target = GameObject.FindGameObjectWithTag("Player").transform;
+        if (isChase || isAttack) //룩엣
+            if (!isDie && !playerST.isJump && !playerST.isFall && !isStun)
+                transform.LookAt(target);
 
-        if (!isbansa && !isRush && !isStun && !isDie)
+    }
+    private IEnumerator UpdatePath()
+    {
+
+        // 살아있는 동안 무한 루프
+        while (!isDie)
         {
-            Targerting();
-            if (Vector3.Distance(target.position, transform.position) <= 27f && nav.enabled)
+            if (hasTarget)
             {
+                // 추적 대상 존재 : 경로를 갱신하고 AI 이동을 계속 진행
+                Targerting();
                 PatternStart();
-                if (!isAttack && !isDie)
+                nav.SetDestination(target.position);
+
+                if (!isThrow)
+                    nav.speed = 4f;
+                if (!isAttack && !isSkill)
                 {
-                    nav.speed = 5f;
                     isChase = true;
-                    nav.isStopped = false;
-                    nav.destination = target.position;
+                    if (!isDie)
+                        nav.isStopped = false;
                     anim.SetBool("isRun", true);
-                    if (playerST.isDie)
-                        EnemyReset();
+                }
+                if (Vector3.Distance(target.position, transform.position) > 40f)
+                {
+                    EnemyReset();
+                    target = null;
+                }
+
+
+            }
+            else
+            {
+                // 추적 대상 없음 : AI 이동 중지
+                EnemyReset();
+
+                // 20 유닛의 반지름을 가진 가상의 구를 그렸을때, 구와 겹치는 모든 콜라이더를 가져옴
+                // 단, targetLayers에 해당하는 레이어를 가진 콜라이더만 가져오도록 필터링
+                Collider[] colliders =
+                    Physics.OverlapSphere(transform.position, 16f, whatIsTarget);
+
+                // 모든 콜라이더들을 순회하면서, 살아있는 플레이어를 찾기
+                for (int i = 0; i < colliders.Length; i++)
+                {
+                    // 콜라이더로부터 PlayerST 컴포넌트 가져오기
+                    PlayerST livingEntity = colliders[i].GetComponent<PlayerST>();
+
+                    // PlayerST 컴포넌트가 존재하며, 해당 LivingEntity가 살아있다면,
+                    if (livingEntity != null && !livingEntity.isDie)
+                    {
+                        // 추적 대상을 해당 LivingEntity로 설정
+                        target = livingEntity.transform;
+
+                        // for문 루프 즉시 정지
+                        break;
+                    }
                 }
             }
-            else if (Vector3.Distance(target.position, transform.position) > 27f && nav.enabled)
-            {
-               EnemyReset();
-            }
+
+            // 0.25초 주기로 처리 반복
+            yield return new WaitForSeconds(0.25f);
         }
-
-        if (isChase || isAttack)
-            if (!isDie && !playerST.isJump && !playerST.isFall)
-                transform.LookAt(target); //플레이어가 공중에 뜬 상태가 아닐때만 바라보기
-
     }
     void EnemyReset()
     {
         nav.SetDestination(respawn.position);
         isChase = false;
-        nav.speed = 20f;
-        nav.isStopped = false;
+        nav.speed = 5f;
+        if (!isDie)
+            nav.isStopped = false;
         //curHealth = maxHealth;
         if (Vector3.Distance(respawn.position, transform.position) < 1f)
         {
-            nav.isStopped = true;
+            if (!isDie)
+                nav.isStopped = true;
             anim.SetBool("isRun", false);
         }
     }
     void PatternStart()
     {
-        if (!Patterning)
+        if (!Patterning && !playerST.isDie)
         {
             StartCoroutine(Pattern());
             Patterning = true;
@@ -126,33 +221,22 @@ public class EnemyBoss1 : MonsterBoss
 
     IEnumerator Pattern() //��������
     {
-
         yield return new WaitForSeconds(6f);
         if (!isDie)
         {
-            int ranAction = Random.Range(0,9);
+            int ranAction = Random.Range(4, 9);
             switch (ranAction)
             {
-                case 0:
-                case 1:
-                case 2:
-                case 3:
-
-                    StartCoroutine(Stun());
-                    MonsterAttack();
-                    break;
                 case 4:
                 case 5:
                 case 6:
-
-                    StartCoroutine(Rush());
+                    photonView.RPC("Rush", RpcTarget.All); //돌진스킬
                     MonsterAttack();
                     break;
                 case 7:
                 case 8:
                 case 9:
-
-                    StartCoroutine(Reflect());
+                    photonView.RPC("RockThrow", RpcTarget.All); //제자리서서 스턴거는스킬
                     MonsterAttack();
                     break;
             }
@@ -170,135 +254,142 @@ public class EnemyBoss1 : MonsterBoss
     void Targerting()//Ÿ����
     {
         float targetRadius = 1f;
-        float targetRange = 3f;
-
-
-        //if (isRush)
-        //{
-        //    targetRange = 20f;
-        //}
         RaycastHit[] rayHits =
             Physics.SphereCastAll(transform.position,
             targetRadius, transform.forward, targetRange, LayerMask.GetMask("Player"));  //����ĳ��Ʈ
         if (rayHits.Length > 0 && !isAttack && !isDie && !isSkill) //����ĳ��Ʈ�� �÷��̾ �����ٸ� && ���� �������� �ƴ϶��
         {
-            //StopCoroutine(Attack());
-            StartCoroutine(Attack());
+            photonView.RPC("Attack", RpcTarget.All);
             MonsterAttack();
         }
 
     }
-    IEnumerator Stun()
+    [PunRPC]
+    IEnumerator RockThrow()
     {
+        nav.speed = 0f;
         isSkill = true;
-        isStun = true;
+        isThrow = true;
         isChase = false;
-        isAttack = true;
-        nav.isStopped = true;
-        stunarea.enabled = true;
-        anim.SetBool("isRun", false);
-        anim.SetBool("isAttack", false);
-        yield return new WaitForSeconds(2f);
-        anim.SetBool("isStun", true);
-        yield return new WaitForSeconds(0.3f);
-        nuckarea.enabled = true;
-        stunarea.enabled = false;
-        anim.SetBool("isStun", false);
-        yield return new WaitForSeconds(0.2f);
-        nuckarea.enabled = false;
-
-        isSkill = false;
-
-
-        isStun = false;
-        isChase = true;
-        isAttack = false;
-        nav.isStopped = false;
-        yield return new WaitForSeconds(2.5f);
-        Patterning = false;
-
-    }
-    IEnumerator Reflect()
-    {
-        isSkill = true;
-        isbansa = true;
-        isChase = false;
-        nav.isStopped = true;
-        anim.SetBool("isDefend", true);
-        yield return new WaitForSeconds(5f);
+        mat.material.DOColor(Color.red, 2f);
         rigid.velocity = Vector3.zero;
-        meleeArea.enabled = false;
-
         if (!isDie)
-            anim.SetBool("isDefend", false);
+            nav.isStopped = true;
+        StopCoroutine(Attack());
+        anim.SetBool("isAttack", false);
+        anim.SetBool("isThrow", true);
+        yield return new WaitForSeconds(2.8f);
+        anim.SetBool("isThrowShot", true);
+        Collider[] colliders =
+                    Physics.OverlapSphere(transform.position, 8f, LayerMask.GetMask("Player"));
+
+        for (int i = 0; i < colliders.Length; i++)
+        {
+            PlayerST livingEntity = colliders[i].GetComponent<PlayerST>();
+            if (livingEntity != null && !livingEntity.isDie && !livingEntity.isDamage)
+            {
+                Instantiate(ThrowEff, livingEntity.transform.position, livingEntity.transform.rotation);
+                livingEntity.GetComponent<PlayerStat>().DamagedHp(100);
+                livingEntity.GetComponent<PlayerST>().healthbar.fillAmount = livingEntity.GetComponent<PlayerStat>()._Hp /
+                    livingEntity.GetComponent<PlayerStat>()._MAXHP;
+                Debug.Log("데미지 들어감" + livingEntity.GetComponent<PlayerStat>()._Hp);
+                if (livingEntity.GetComponent<PlayerStat>()._Hp <= 0)
+                {
+                    livingEntity.GetComponent<PlayerST>().PlayerDie();
+                }
+            }
+            if (livingEntity != null && !livingEntity.isDie)
+            {
+                livingEntity.SendMessage("OnDamageNuck");
+            }
+        }
+        yield return new WaitForSeconds(0.2f);
+        anim.SetBool("isThrowShot", false);
+        anim.SetBool("isThrow", false);
+        nav.speed = 4f;
+        mat.material.DOColor(Color.white, 2f);
         isChase = true;
-        nav.isStopped = false;
-        isbansa = false;
+        if (!isDie)
+            nav.isStopped = false;
+        isThrow = false;
         isSkill = false;
         yield return new WaitForSeconds(2.5f);
         Patterning = false;
-
     }
+    [PunRPC]
     IEnumerator Rush()
     {
         isSkill = true;
         isChase = false;
         isAttack = true;
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
         isRush = true;
-        //anim.SetBool("isRush", true);
-        meleeArea.enabled = true;
-        yield return new WaitForSeconds(0.2f);
-        rigid.AddForce(transform.forward * 40 + transform.up * 20, ForceMode.Impulse);
-
-        yield return new WaitForSeconds(1f);
-        transform.position = target.position + Vector3.back * 2;
+        StopCoroutine(Attack());
+        anim.SetBool("isAttack", false);
+        anim.SetBool("isRush", true);
+        if (target != null)
+            transform.DOJump(target.position, 1.5f, 1, 1.2f);
+        yield return new WaitForSeconds(0.8f);
+        anim.SetBool("isRush", false);
+        if (target != null)
+        {
+            GameObject rusheff = PhotonNetwork.Instantiate("Boss1_RushEff", target.transform.position, target.transform.rotation);
+            StartCoroutine(Rusheffend(rusheff));
+        }
         isRush = false;
-        meleeArea.enabled = false;
-        rigid.velocity = Vector3.zero;
-
         isChase = true;
         isAttack = false;
-
-        //anim.SetBool("isRush", false);
-        nav.isStopped = false;
+        if (!isDie)
+            nav.isStopped = false;
         isSkill = false;
         yield return new WaitForSeconds(2.5f);
 
         Patterning = false;
 
     }
+    IEnumerator Rusheffend(GameObject rusheff)
+    {
+        yield return new WaitForSeconds(10f);
+        if (photonView.IsMine)
+            PhotonNetwork.Destroy(rusheff);
+    }
+
+    [PunRPC]
     IEnumerator Attack() //������ �ϰ� �������ϰ� �ٽ� ������ ����
     {
         attacking.isAttacking = true;
-        
+
 
         isChase = false;
         isAttack = true;
-        nav.isStopped = true;
+        if (!isDie)
+            nav.isStopped = true;
         anim.SetBool("isAttack", true);
-        yield return new WaitForSeconds(0.4f);
+        anim.SetBool("isRun", false);
+        yield return new WaitForSeconds(0.8f);
         meleeArea.enabled = true;
-        
         yield return new WaitForSeconds(1f);
         rigid.velocity = Vector3.zero;
         meleeArea.enabled = false;
 
-        isChase = true;
+        if (!isSkill)
+            isChase = true;
         isAttack = false;
         anim.SetBool("isAttack", false);
-        nav.isStopped = false;
+        if (!isDie)
+            nav.isStopped = false;
 
     }
     void FixedUpdate()
     {
 
-        FreezeVelocity();
+        //FreezeVelocity();
     }
 
     void OnTriggerEnter(Collider other)  //�ǰ�
     {
-        if (!isbansa && !isDamage)
+        if (!isDamage)
         {
             if (other.tag == "Melee")
             {
@@ -323,77 +414,56 @@ public class EnemyBoss1 : MonsterBoss
                 StartCoroutine(OnDamage());
             }
         }
-        else if (isbansa)
-        {
-            if (other.tag == "Melee")
-            {
-                Weapons weapon = other.GetComponent<Weapons>();
-                playerStat._Hp -= weapon.damage;
-            }
-            else if (other.tag == "Arrow")
-            {
-                Arrow arrow = other.GetComponent<Arrow>();
-                playerStat._Hp -= arrow.damage;
-            }
-            else if (other.tag == "ArrowSkill")
-            {
-                ArrowSkill arrow = other.GetComponent<ArrowSkill>();
-                curHealth -= arrow.damage;
-
-                StartCoroutine(OnDamage());
-            }
-        }
     }
 
     IEnumerator OnDamage()
     {
-        HitSoundManager.hitsoundManager.SlimeHitSound();
-        Hiteff.Play();
-        Hiteff2.Play();
-        isDamage = true;
-        yield return new WaitForSeconds(0.1f);
-        isDamage = false;
-        if (curHealth > 0)
-            foreach (SkinnedMeshRenderer mesh in mat)
-                mesh.material.color = Color.white;
-        HitMonster();
-       // SetHpBar();
-        if (curHealth < 0)
+        if (!isDie)
         {
-            //Die();
+            HitSoundManager.hitsoundManager.GolemHitSound();
+            HitMonster();
+            isDamage = true;
+            Hiteff.Play();
+            Hiteff2.Play();
+            yield return new WaitForSeconds(0.1f);
+            isDamage = false;
         }
-
-
     }
 
     public override void Die()
     {
-        BossDrop();
-        MonsterDie();
-        nav.isStopped = true;
         isDie = true;
-        boxCollider.enabled = false;
-        foreach (SkinnedMeshRenderer mesh in mat)
-            mesh.material.color = Color.white;
-        isChase = false; //�׾����� ��������
-        anim.SetBool("isDie", true);
-        gameObject.SetActive(false);
-        Invoke("Diegg", 1.5f);
-
-        if (!questStore.MainSuccess)
+        if (isDie)
         {
-            questStore.MainQuestSuccess(3);
+            BossDrop();
+            MonsterDie();
+            BossHpBarSet();
+            nav.speed = 0f;
+            //if (isDie)
+            //    return;
+            boxCollider.enabled = false;
+            isSkill = false;
+            isChase = false; //�׾����� ��������
+            anim.SetBool("isDie", true);
+            Invoke("Diegg", 1.5f);
+            if (!questStore.MainSuccess)
+            {
+                questStore.MainQuestSuccess(3);
+            }
         }
+
     }
 
     void Diegg()
     {
 
-            respawn.gameObject.SetActive(true);
-            --SpawnManager.spawnManager.TurtleSlimeObjs;
-        
+        respawn.gameObject.SetActive(true);
+        --SpawnManager.spawnManager.TurtleSlimeObjs;
+
         gameObject.SetActive(false);
     }
+
+
 }
 
 

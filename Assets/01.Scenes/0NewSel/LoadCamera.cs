@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering.PostProcessing;
+using UnityEngine.UI;
 
 public class LoadCamera : MonoBehaviour
 {
@@ -14,6 +15,8 @@ public class LoadCamera : MonoBehaviour
     public float moveSpeed;
     PostProcessLayer processLayer;
 
+    public GameObject Starttext;
+
     public Camera EndCamera;
     void Start()
     {
@@ -21,10 +24,11 @@ public class LoadCamera : MonoBehaviour
         Loadcam = GetComponent<Camera>();
         processLayer = GetComponent<PostProcessLayer>();
         state = State.WorldMap;
+        EndCamera = GameObject.Find("Camera").transform.GetComponent<Camera>();
+
+        Starttext = transform.GetChild(1).GetChild(0).gameObject;
 
 
-
-        
     }
 
 
@@ -43,11 +47,15 @@ public class LoadCamera : MonoBehaviour
                 GetComponent<Animation>().Stop();
                 FindObjectOfType<CharacterSelEffect>().PageEffect();
                 processLayer.enabled = false;
+                if(Starttext.activeSelf)
+                {
+                    Starttext.SetActive(false);
+                }
             }
         }
         else if( state == State.Move)
         {
-
+            
             if (Input.GetMouseButtonDown(0) || Input.GetKeyDown(KeyCode.Return))
             {
 

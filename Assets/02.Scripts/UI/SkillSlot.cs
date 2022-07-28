@@ -4,8 +4,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using Photon.Pun;
+using UnityEngine.Video;
 
-public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler
+public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler, IPointerEnterHandler, IPointerExitHandler ,IPointerClickHandler
 {
     public static SkillSlot skillSlot;
 
@@ -34,7 +35,8 @@ public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEnd
     private PlayerStat playerStat;
     [SerializeField]
     private SkillWindow skillWindow;
-
+    [SerializeField]
+    private VideoPlayer videoPlayer;
 
     private void Awake()
     {
@@ -77,16 +79,26 @@ public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEnd
         
         
         SkillSet();
-        SetSkillColor();
+        Invoke("SetSkillColor", 0.3f);
+      
 
 
     }
 
+    private void OnEnable()
+    {
+        if (playerStat != null)
+        {
+            SetSkillColor();
+        }
+    }
 
     public void SetSkillColor()
     {
+        Debug.Log(1);
         if (gameObject.layer == LayerMask.NameToLayer("SkillSlot"))
         {
+            
             if (skill.Level > playerStat.Level)
             {
                 imageSkill.color = new Color(1, 0, 0);
@@ -100,6 +112,22 @@ public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEnd
     }
     private void SkillSet()
     {
+
+        if (playerST == null)
+        {
+            PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
+
+
+            foreach (PlayerST myplayerSt in playerSts)
+            {
+                if (myplayerSt.GetComponent<PhotonView>().IsMine)
+                {
+                    playerST = myplayerSt;
+                    break;
+                }
+            }
+        }
+
         if (playerST.CharacterType == PlayerST.Type.Warrior)
         {
             if (gameObject.tag == "SKILLSLOT1")
@@ -208,8 +236,8 @@ public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEnd
                 Slot instanceSlot = gameObject.GetComponent<QuikSlot>().slot;
                 if (!instanceSlot.inven.HasEmptySlot() && !instanceSlot.inven.HasSameSlot(instanceSlot.item)) //�κ��� ��â ������ ������ ���� ��� ��ų �� ����
                 {
-                    Debug.Log("��â�� �����ϴ�.");
-                    LogManager.logManager.Log("��â�� �����ϴ�", true);
+                    
+                    LogManager.logManager.Log("아이템창이 꽉찼습니다.", true);
                     return;
                 }
 
@@ -326,5 +354,29 @@ public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEnd
 
             skillToolTip.ToolTipOff();
         }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+
+
+            Debug.Log(1);
+            if (skill.skillCharacter == SkillUI.SkillCharacter.Common)
+            {
+                if(playerST.CharacterType == PlayerST.Type.Warrior)
+                    videoPlayer.clip = skill.skillVideo[0];
+                else if (playerST.CharacterType == PlayerST.Type.Archer)
+                    videoPlayer.clip = skill.skillVideo[1];
+                else if (playerST.CharacterType == PlayerST.Type.Mage)
+                    videoPlayer.clip = skill.skillVideo[2];
+            }
+            else
+            {
+                videoPlayer.clip = skill.skillVideo[0];
+            }
+
+            Debug.Log(videoPlayer.clip);
+            videoPlayer.Play();
+        
     }
 }

@@ -24,7 +24,15 @@ public class GameUI : MonoBehaviour
 
     private void Start()
     {
-        playerStat = FindObjectOfType<PlayerStat>();
+        PlayerStat[] playerStats = FindObjectsOfType<PlayerStat>();
+        foreach (PlayerStat myPlayerstat in playerStats)
+        {
+            if (myPlayerstat.photonView.IsMine)
+            {
+                playerStat = myPlayerstat;
+                break;
+            }
+        }
 
     }
 

@@ -2,8 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using Photon.Pun;
 
-public class LogManager : MonoBehaviour
+public class LogManager : MonoBehaviourPun
 {
     [SerializeField]
     private Text[] logText;
@@ -21,7 +22,17 @@ public class LogManager : MonoBehaviour
     {
         logManager = this;
         logText = GetComponentsInChildren<Text>();
-        tr = FindObjectOfType<PlayerST>().gameObject.transform;
+
+        PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
+        foreach (PlayerST myPlayerst in playerSts)
+        {
+            if (myPlayerst.photonView.IsMine)
+            {
+                tr = myPlayerst.gameObject.transform;
+                break;
+            }
+        }
+        
     }
 
     private void LogUp()
@@ -29,30 +40,30 @@ public class LogManager : MonoBehaviour
         int index = 0;
         for(int i=0; i<logText.Length; i++)
         {
-            index++;
-            if (logText[i].text == "")
+           
+            if (logText[i+1].text == "")
                 break;
-            
+            index++;
         }
-        for(int i = 0; i < index-1; i++)
+        for(int i = index+1; i ==0 ; i--)
         {
 
             logText[i + 1].text = logText[i].text;
             logText[i + 1].color = logText[i].color;
             
         }
-        index = 0;
+        
 
     }
     IEnumerator LogDisappear()
     {
         while(logText[0].text!="")
         {
-            yield return new WaitForSeconds(0.05f);
+            yield return new WaitForSeconds(0.01f);
 
             for(int i =0;i<logText.Length; i++)
             {
-                SetColor(0.05f, logText[i]);
+                SetColor(0.01f, logText[i]);
             }
                 
         }
@@ -70,7 +81,7 @@ public class LogManager : MonoBehaviour
         logText.color = color;
     }
 
-    public void Log(string TextLog,bool Error =false)
+    public void Log(string TextLog,bool Error =false )
     {
         LogUp();
         logText[0].text = TextLog;
@@ -79,7 +90,7 @@ public class LogManager : MonoBehaviour
         else if (Error) { logText[0].color = Color.red;
             ErrorShake();
         }
-        StopCoroutine(LogDisappear());
+        StopAllCoroutines();
         StartCoroutine(LogDisappear());
     }
 

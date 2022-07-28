@@ -40,7 +40,16 @@ public class CameraRotate : MonoBehaviourPun
     void Start()
     {
 
-        playerst = FindObjectOfType<PlayerST>();
+        PlayerST[] playerSts = FindObjectsOfType<PlayerST>();
+        foreach (PlayerST myPlayerst in playerSts)
+        {
+            if (myPlayerst.photonView.IsMine)
+            {
+                playerst = myPlayerst;
+                break;
+            }
+        }
+
         weapons = FindObjectOfType<Weapons>();
         Vector3 angles = transform.eulerAngles;
         x = angles.y;
@@ -53,7 +62,7 @@ public class CameraRotate : MonoBehaviourPun
 
 
 
-    void Update()
+    void LateUpdate()
     {
         if (!photonView.IsMine)
             gameObject.SetActive(false);
@@ -79,8 +88,6 @@ public class CameraRotate : MonoBehaviourPun
                 dist = 6;
             }
 
-
-
             //카메라 회전속도 계산
             x += Input.GetAxis("Mouse X") * xSpeed * 0.015f;
             if (!playerst.isDie) //죽었을땐 상하못움직이게
@@ -98,18 +105,9 @@ public class CameraRotate : MonoBehaviourPun
 
             transform.rotation = rotation;
             transform.position = position;
-
         }
 
     }
-
-
-
-    void LateUpdate()
-    {
-
-    }
-
 
 
 }

@@ -326,14 +326,14 @@ GameObject:
   - component: {fileID: 1545556018409248743}
   - component: {fileID: -8710847509922061714}
   - component: {fileID: 2328930028868837542}
-  - component: {fileID: 819055659207728104}
+  - component: {fileID: 3418596351360358580}
   m_Layer: 6
   m_Name: LV3.BlueSlime
   m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2756848870794796506
 Transform:
   m_ObjectHideFlags: 0
@@ -349,6 +349,7 @@ Transform:
   - {fileID: 2756952759899085270}
   - {fileID: 2759581112960705643}
   - {fileID: 373754792625925540}
+  - {fileID: 2702294477516860598}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
@@ -413,10 +414,10 @@ NavMeshAgent:
   m_Speed: 3.5
   m_Acceleration: 30
   avoidancePriority: 50
-  m_AngularSpeed: 360
+  m_AngularSpeed: 1000
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 1
+  m_AutoBraking: 0
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 0
@@ -449,6 +450,7 @@ MonoBehaviour:
   Monstername: {fileID: 0}
   Geteff: {fileID: 0}
   weapons: {fileID: 0}
+  attackdamage: {fileID: 0}
   maxHealth: 1000
   curHealth: 1000
   explPower: 0
@@ -469,9 +471,15 @@ MonoBehaviour:
   isDamage: 0
   speed: 5
   check: 0
+  isReset: 0
+  Corotineidx: 0
+  movepoint: {fileID: 2702294477516860598}
+  whatIsTarget:
+    serializedVersion: 2
+    m_Bits: 256
   Hiteff: {fileID: 7314378071803065310}
   Hiteff2: {fileID: 7349683962983291086}
-  movingpos: {fileID: 0}
+  movingpos: {fileID: 2702294477516860598}
   nav: {fileID: 0}
   attacking: {fileID: 0}
 --- !u!114 &-8710847509922061714
@@ -490,16 +498,16 @@ MonoBehaviour:
   ShowParameterInspector: 1
   m_SynchronizeParameters:
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isWalk
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isAttack
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isDie
   - Type: 4
-    SynchronizeType: 1
+    SynchronizeType: 2
     Name: isStun
   m_SynchronizeLayers:
   - SynchronizeType: 2
@@ -520,15 +528,15 @@ MonoBehaviour:
   Group: 0
   prefixField: -1
   Synchronization: 3
-  OwnershipTransfer: 0
+  OwnershipTransfer: 1
   observableSearch: 2
   ObservedComponents:
   - {fileID: -8710847509922061714}
-  - {fileID: 819055659207728104}
+  - {fileID: 3418596351360358580}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
---- !u!114 &819055659207728104
+--- !u!114 &3418596351360358580
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -537,13 +545,30 @@ MonoBehaviour:
   m_GameObject: {fileID: 2759247734597990500}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Script: {fileID: 11500000, guid: 8efc6b1d64977384eb3405357896c656, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_SynchronizePosition: 1
-  m_SynchronizeRotation: 1
-  m_SynchronizeScale: 0
-  m_UseLocal: 1
+  m_PositionModel:
+    SynchronizeEnabled: 1
+    TeleportEnabled: 1
+    TeleportIfDistanceGreaterThan: 3
+    InterpolateOption: 4
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 10
+    ExtrapolateOption: 0
+    ExtrapolateSpeed: 1
+    ExtrapolateIncludingRoundTripTime: 1
+    ExtrapolateNumberOfStoredPositions: 1
+  m_RotationModel:
+    SynchronizeEnabled: 1
+    InterpolateOption: 1
+    InterpolateRotateTowardsSpeed: 180
+    InterpolateLerpSpeed: 5
+  m_ScaleModel:
+    SynchronizeEnabled: 0
+    InterpolateOption: 0
+    InterpolateMoveTowardsSpeed: 1
+    InterpolateLerpSpeed: 0
 --- !u!1 &2759318675473759332
 GameObject:
   m_ObjectHideFlags: 0
@@ -632,8 +657,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 98e0a7e1141d86145bb71366e9d7f55c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  damage: 10
+  damage: 30
   isMelee: 1
+  isRazor: 0
 --- !u!114 &6939806801087738946
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -739,6 +765,36 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2756848870794796506}
   m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &8185420951440570814
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 2702294477516860598}
+  m_Layer: 6
+  m_Name: MovePoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 3443629218296621865, guid: 0000000000000000d000000000000000, type: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &2702294477516860598
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8185420951440570814}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -0, y: 0, z: 2.067}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 2756848870794796506}
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &4268352119756587870
 PrefabInstance:

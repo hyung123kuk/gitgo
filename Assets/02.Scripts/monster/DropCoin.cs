@@ -65,6 +65,7 @@ public class DropCoin : MonoBehaviourPun
                 else
                 {
                     inventory.inven.addItem(item,1);
+                LogManager.logManager.Log(item.itemName + "»πµÊ");
                      DestroyItem();
             }           
         }
@@ -87,7 +88,9 @@ public class DropCoin : MonoBehaviourPun
     IEnumerator DestroyTIme()
     {
         yield return new WaitForSeconds(10.0f);
-        DestroyItem();
+        Debug.Log("æ∆¿Ã≈€¡¶∞≈");
+        if(PhotonNetwork.IsMasterClient)
+        PhotonNetwork.Destroy(gameObject);
     }
 
     [PunRPC]
@@ -95,7 +98,7 @@ public class DropCoin : MonoBehaviourPun
     {
         if (local)
         {
-            photonView.RPC("DestroyItem", RpcTarget.Others, false);
+            photonView.RPC("DestroyItem", RpcTarget.OthersBuffered, false);
         }
         Destroy(gameObject);
     }
