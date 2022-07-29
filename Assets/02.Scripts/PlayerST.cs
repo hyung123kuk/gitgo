@@ -1135,7 +1135,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                 //HorseSpawn.transform.parent = null;
                 SoundManager.soundManager.Horse();
                 HorseSpawn.transform.position = horsepos1.position;
-                HorseSpawn.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
+               // HorseSpawn.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
                 horsecount = 1;
             }
             else if (horsecount == 1) //소환 해제
