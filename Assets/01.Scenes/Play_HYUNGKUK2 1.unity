@@ -27744,10 +27744,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 911383751301614471, guid: bf421bbc38a527e4f847dbea6ce7b448, type: 3}
-      propertyPath: m_Icon
-      value: 
-      objectReference: {fileID: 4422084297763085224, guid: 0000000000000000d000000000000000, type: 0}
-    - target: {fileID: 911383751301614471, guid: bf421bbc38a527e4f847dbea6ce7b448, type: 3}
       propertyPath: m_Name
       value: Sounds
       objectReference: {fileID: 0}
