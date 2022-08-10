@@ -18,6 +18,8 @@ public class ExitWindow : MonoBehaviourPun
     GameObject soundMenu;
     [SerializeField]
     CharacterSel characterSel;
+    [SerializeField]
+    SaveManager savemanager;
 
     public static bool isExitMenu = false;
 
@@ -31,6 +33,10 @@ public class ExitWindow : MonoBehaviourPun
         characterSel = FindObjectOfType<CharacterSel>();
     }
 
+    private void OnEnable()
+    {
+        savemanager = FindObjectOfType<SaveManager>();
+    }
 
     public void ExitWindowOn()
     {
@@ -62,7 +68,7 @@ public class ExitWindow : MonoBehaviourPun
 
     public void SelCharacterMenu()
     {
-        
+        savemanager.SaveOn = false;
         AllUI.allUI.AllWindowEnd();
         PhotonNetwork.LeaveRoom();
     }
@@ -70,6 +76,7 @@ public class ExitWindow : MonoBehaviourPun
 
     public void ExitGame()
     {
+        savemanager.SaveOn = false;
         Application.Quit();
     }
 

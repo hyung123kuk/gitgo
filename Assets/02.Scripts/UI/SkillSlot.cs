@@ -95,7 +95,7 @@ public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEnd
 
     public void SetSkillColor()
     {
-        Debug.Log(1);
+
         if (gameObject.layer == LayerMask.NameToLayer("SkillSlot"))
         {
             
@@ -311,7 +311,9 @@ public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEnd
             gameObject.GetComponent<QuikSlot>().setCoolImage();
         if (DragSkillSlot.instance.dragSkillSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot"))
             DragSkillSlot.instance.dragSkillSlot.gameObject.GetComponent<QuikSlot>().setCoolImage();
-
+        FindObjectOfType<SaveManager>().InvenSave();
+        FindObjectOfType<SaveManager>().QuickSave();
+        FindObjectOfType<SaveManager>().EquSlotSave();
     }
 
     public void SetColor(float _alpha)

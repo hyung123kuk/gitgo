@@ -237,6 +237,10 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
         }
         playerSt.healthbar.fillAmount = playerStat._Hp / playerStat._MAXHP;
         gameUI.bar_set();
+
+        FindObjectOfType<SaveManager>().InvenSave();
+        FindObjectOfType<SaveManager>().QuickSave();
+
     }
 
     // 해당 슬롯 하나 삭제
@@ -452,8 +456,14 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
                 {
                     playerSt.HorseRide();
                 }
+
             }
         }
+
+        FindObjectOfType<SaveManager>().InvenSave();
+        FindObjectOfType<SaveManager>().QuickSave();
+        FindObjectOfType<SaveManager>().EquSlotSave();
+
     }
 
     private void shoulder()
@@ -1192,6 +1202,10 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
         tooltip.ToolTipOff();
         playerStat.StatAllUpdate();
         gameUI.bar_set();
+        FindObjectOfType<SaveManager>().InvenSave();
+        FindObjectOfType<SaveManager>().QuickSave();
+        FindObjectOfType<SaveManager>().EquSlotSave();
+
         if (item != null)
         {
             ItemLimitColorRed();

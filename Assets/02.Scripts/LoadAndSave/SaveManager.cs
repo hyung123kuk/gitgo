@@ -26,6 +26,8 @@ public class Data
     public float Exp;
     public float Gold;
 
+
+
     public List<int> invenArrNum = new List<int>();
     public List<string> invenItemName = new List<string>();
     public List<int> invenItemCount = new List<int>();
@@ -191,11 +193,13 @@ public class SaveManager : MonoBehaviourPunCallbacks
 
     IEnumerator SaveStart()
     {
-
+       
         yield return new WaitForSeconds(1.0f);
         if (!SaveOn) { yield break; }
         while (true)
         {
+
+
             PositionSave();
             string json = JsonUtility.ToJson(data[CharacterNum]);
 
@@ -214,6 +218,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
 
     public void PositionSave()
     {
+        
         PlayerST[] playerst2 = FindObjectsOfType<PlayerST>();
         foreach (PlayerST playerst3 in playerst2)
         {
@@ -232,9 +237,9 @@ public class SaveManager : MonoBehaviourPunCallbacks
         data[CharacterNum].Exp = playerStat.NowExp;
         data[CharacterNum].Level = playerStat.Level;
         data[CharacterNum].Gold = playerStat.MONEY;
-        InvenSave();
+        /*InvenSave();
         QuickSave();
-        EquSlotSave();
+        EquSlotSave();*/
         QuestSave();
 
         if (playerst.CharacterType == PlayerST.Type.Warrior)
@@ -249,14 +254,21 @@ public class SaveManager : MonoBehaviourPunCallbacks
     {
         inven = FindObjectOfType<inventory>();
         Slot[] slots = inven.GetSlots();
+
+
+        
+
         data[CharacterNum].invenArrNum.Clear();
         data[CharacterNum].invenItemCount.Clear();
         data[CharacterNum].invenItemName.Clear();
         for (int i = 0; i < slots.Length; i++)
         {
-
+            
             if (slots[i].item != null)
             {
+               /* data[CharacterNum].invenArrNum[i] = i;
+                data[CharacterNum].invenItemCount[i] = slots[i].itemCount;
+                data[CharacterNum].invenItemName[i] = slots[i].item.itemName;*/
                 data[CharacterNum].invenArrNum.Add(i);
                 data[CharacterNum].invenItemCount.Add(slots[i].itemCount);
                 data[CharacterNum].invenItemName.Add(slots[i].item.itemName);
@@ -264,17 +276,25 @@ public class SaveManager : MonoBehaviourPunCallbacks
             }
             else
             {
+                /*data[CharacterNum].invenArrNum[i] = i;
+                data[CharacterNum].invenItemCount[i] = 0;
+                data[CharacterNum].invenItemName[i] = " ";*/
+
                 data[CharacterNum].invenArrNum.Add(i);
                 data[CharacterNum].invenItemCount.Add(0);
                 data[CharacterNum].invenItemName.Add(" ");
             }
         }
+
+
     }
 
     public void QuickSave()
     {
         QuikSlots = FindObjectOfType<QuickSlots>();
         QuikSlot[] quikslots = QuikSlots.GetSlots();
+
+        
 
         data[CharacterNum].QuickisItem.Clear();
         data[CharacterNum].QuickArrNum.Clear();
@@ -283,8 +303,17 @@ public class SaveManager : MonoBehaviourPunCallbacks
 
         for (int i = 0; i < quikslots.Length; i++)
         {
+           
+
+
             if (quikslots[i].slot.item != null)
             {
+               /* 
+                data[CharacterNum].QuickisItem[i] = true;
+                data[CharacterNum].QuickArrNum[i] = i;
+                data[CharacterNum].QuickitemCount[i] = quikslots[i].slot.itemCount;
+                data[CharacterNum].QuickName[i] = quikslots[i].slot.item.itemName;*/
+
                 data[CharacterNum].QuickisItem.Add(true);
                 data[CharacterNum].QuickArrNum.Add(i);
                 data[CharacterNum].QuickitemCount.Add(quikslots[i].slot.itemCount);
@@ -293,12 +322,29 @@ public class SaveManager : MonoBehaviourPunCallbacks
             }
             else if (quikslots[i].skill.skill != null)
             {
+
+                /*data[CharacterNum].QuickisItem[i] = false;
+                data[CharacterNum].QuickArrNum[i] = i;
+                data[CharacterNum].QuickitemCount[i] = 0;
+                data[CharacterNum].QuickName[i] = quikslots[i].skill.skill.skillName;*/
+
                 data[CharacterNum].QuickisItem.Add(false);
                 data[CharacterNum].QuickArrNum.Add(i);
                 data[CharacterNum].QuickitemCount.Add(0);
                 data[CharacterNum].QuickName.Add(quikslots[i].skill.skill.skillName);
             }
+            else
+            {
+                data[CharacterNum].QuickisItem.Add(false);
+                data[CharacterNum].QuickArrNum.Add(100);
+                data[CharacterNum].QuickitemCount.Add(0);
+                data[CharacterNum].QuickName.Add(" ");
+
+            }
+
         }
+
+        
 
     }
 
@@ -306,17 +352,32 @@ public class SaveManager : MonoBehaviourPunCallbacks
     {
         inven = FindObjectOfType<inventory>();
         Slot[] slots = inven.GetEqSlots();
-        data[CharacterNum].EQitemArrNum.Clear();
+
+
+         data[CharacterNum].EQitemArrNum.Clear();
         data[CharacterNum].EQitemArrName.Clear();
 
         for (int i = 0; i < slots.Length; i++)
         {
             if (slots[i].item != null)
             {
+                /*data[CharacterNum].EQitemArrNum[i] = i;
+                data[CharacterNum].EQitemArrName[i] = slots[i].item.itemName;*/
+
                 data[CharacterNum].EQitemArrNum.Add(i);
+                
                 data[CharacterNum].EQitemArrName.Add(slots[i].item.itemName);
+                
+            }
+            else
+            {
+                data[CharacterNum].EQitemArrNum.Add(-1);
+
+                data[CharacterNum].EQitemArrName.Add(" ");
+
             }
         }
+    
 
     }
 
@@ -437,6 +498,10 @@ public class SaveManager : MonoBehaviourPunCallbacks
                 LoadCh(loadJson);
 
             }
+            else
+            {
+                SaveOn = true;
+            }
         }
         else if (CharacterNum == 1)
         {
@@ -445,6 +510,10 @@ public class SaveManager : MonoBehaviourPunCallbacks
                 string loadJson = File.ReadAllText(SAVE_DATA_DIRECTORY + ch2_SAVE_FILENAME);
 
                 LoadCh(loadJson);
+            }
+            else
+            {
+                SaveOn = true;
             }
         }
 
@@ -586,7 +655,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
         {
             questWindow.LoadToQuest(data[CharacterNum].QuestName[i], data[CharacterNum].QuestNum[i]);
         }
-
+        SaveOn = true;
     }
 
 
