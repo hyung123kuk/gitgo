@@ -44,7 +44,6 @@ public class EnemySlime : Monster
     Attacking attacking;
 
     float targetRange = 2f; //몬스터 공격사정거리
-
     private bool hasTarget
     {
         get
