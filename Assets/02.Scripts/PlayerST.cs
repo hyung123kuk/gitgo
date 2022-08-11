@@ -564,7 +564,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             else if (attackdamage.Duration_Buff)
                 SoundManager.soundManager.ArcherSkill1ShotSound();
             //equipWeapon[NowWeapon].photonView.RPC("Use", RpcTarget.All);
-            equipWeapon[NowWeapon].Use();
+            equipWeapon[NowWeapon].StartCoroutine("Shot");
         }
     }
     [PunRPC]
@@ -578,7 +578,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             if (isFireReady)  //공격할수있을때
             {
 
-                equipWeapon[NowWeapon].Use();
+                equipWeapon[NowWeapon].StartCoroutine("MagicShot");
                 //equipWeapon[NowWeapon].photonView.RPC("Use", RpcTarget.All);
                 fireDelay = 0;
             }

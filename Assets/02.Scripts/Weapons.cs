@@ -154,7 +154,6 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
             LightningBall();
             IceAge();
             Meteo();
-
         }*/
 
 
@@ -514,17 +513,17 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
         //    StopCoroutine("Swing");  //현재 공격중일시 멈춤
         //    StartCoroutine("Swing"); //공격실행
         //}
-        if (!photonView.IsMine)
-            return;
+        //if (!photonView.IsMine)
+        //    return;
 
-        if (type == Type.Range)
-        {
-            photonView.RPC("Shot", RpcTarget.All);
-        }
-        else if (type == Type.Mage)
-        {
-            photonView.RPC("MagicShot", RpcTarget.All);
-        }
+        //if (type == Type.Range)
+        //{
+        //    photonView.RPC("Shot", RpcTarget.All);
+        //}
+        //else if (type == Type.Mage)
+        //{
+        //    photonView.RPC("MagicShot", RpcTarget.All);
+        //}
     }
 
     IEnumerator Swing()
@@ -542,7 +541,7 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
     public bool ShotFull;
 
     [PunRPC]
-    IEnumerator Shot()
+    public IEnumerator Shot()
     {
         playerST.isSootReady = true;
         yield return new WaitForSeconds(0.2f); //애니메이션과 화살나가는속도와 맞추기위함
@@ -593,10 +592,10 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     [PunRPC]
-    IEnumerator MagicShot()
+    public IEnumerator MagicShot()
     {
-        if(playerST.CharacterType == PlayerST.Type.Mage)
-        anim.SetBool("isAttack", true);
+        if (playerST.CharacterType == PlayerST.Type.Mage)
+            anim.SetBool("isAttack", true);
         yield return new WaitForSeconds(0.3f); //애니메이션과 화살나가는속도와 맞추기위함
         SoundManager.soundManager.MageAttackSound();
         GameObject intantArrow = Instantiate(MageDefaultAttack, MagicPos.position, MagicPos.rotation);
