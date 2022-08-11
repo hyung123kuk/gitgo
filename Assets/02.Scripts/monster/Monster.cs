@@ -151,16 +151,16 @@ public class Monster : MonoBehaviourPun
     [PunRPC]
     public virtual void OnDamage(float _attackdamage, bool critical, bool Local)
     {
-
+        Debug.Log(Local);
         if (Local) // �����϶� �ٸ������� ���� ���þƴϸ� �ߺ� �������� ����
         {
             photonView.RPC("OnDamage", RpcTarget.Others, _attackdamage, critical, false);
             SetTarget(attackdamage.gameObject);
             Debug.Log("local");
         }
-
+        
         GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
-
+        
         if (!Local)
         {
             curHealth -= _attackdamage;
@@ -200,8 +200,8 @@ public class Monster : MonoBehaviourPun
 
     public void HitMonster()
     {
-        if (playerST.photonView.IsMine && (playerST.CharacterType == PlayerST.Type.Warrior || weapons.GetComponent<PhotonView>().IsMine
-            || playerST.CharacterType == PlayerST.Type.Archer || playerST.CharacterType == PlayerST.Type.Mage))
+        if (playerST.CharacterType == PlayerST.Type.Warrior || weapons.GetComponent<PhotonView>().IsMine
+            || playerST.CharacterType == PlayerST.Type.Archer || playerST.CharacterType == PlayerST.Type.Mage)
         {
             OnDamage(attackdamage.attackDamage, attackdamage.critical, true); //�¾����� ������ Ʈ����ؼ� �ٸ��������� OnDamage�� ����ǰ�
 
