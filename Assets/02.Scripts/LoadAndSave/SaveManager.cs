@@ -237,9 +237,9 @@ public class SaveManager : MonoBehaviourPunCallbacks
         data[CharacterNum].Exp = playerStat.NowExp;
         data[CharacterNum].Level = playerStat.Level;
         data[CharacterNum].Gold = playerStat.MONEY;
-        /*InvenSave();
+        InvenSave();
         QuickSave();
-        EquSlotSave();*/
+        EquSlotSave();
         QuestSave();
 
         if (playerst.CharacterType == PlayerST.Type.Warrior)
