@@ -484,27 +484,34 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
             }
             if (MeteoCasting > MeteoMaxCasting)
             {
-                StopSoundManager.stopSoundManager.audioSource.Stop();
-                SoundManager.soundManager.MageSkill3Sound();
-                Debug.Log("메테오!!");
-                isMeteoShot = true;
-                anim.SetBool("Skill31", true);
-                GameObject meteo = Instantiate(Mage3SkillEff, Mage3SkillPos2.position, Mage3SkillPos2.rotation);
-                meteo.transform.DOMove(Mage3SkillPos1.position, 1.5f).SetEase(Ease.Linear);
-                ArrowSkill arrow1 = meteo.GetComponent<ArrowSkill>(); //스킬데미지설정
-                arrow1.damage = attackdamage.Skill_3_Damamge();
-                if (!photonView.IsMine)
-                {
-                    meteo.GetComponent<SphereCollider>().enabled = false;
-                }
-                Destroy(meteo, 1.6f);
-                MeteoCasting = 0f;
+                photonView.RPC("MeteoIns", RpcTarget.All);
+
+                if (photonView.IsMine)
                 attackdamage.Skill_3_Cool();
 
                 photonView.RPC("MeteoEnd", RpcTarget.All);
                 photonView.RPC("MeteoEnd2", RpcTarget.All);
             }
         }
+    }
+    [PunRPC]
+    void MeteoIns()
+    {
+        StopSoundManager.stopSoundManager.audioSource.Stop();
+        SoundManager.soundManager.MageSkill3Sound();
+        Debug.Log("메테오!!");
+        isMeteoShot = true;
+        anim.SetBool("Skill31", true);
+        GameObject meteo = Instantiate(Mage3SkillEff, Mage3SkillPos2.position, Mage3SkillPos2.rotation);
+        meteo.transform.DOMove(Mage3SkillPos1.position, 1.5f).SetEase(Ease.Linear);
+        ArrowSkill arrow1 = meteo.GetComponent<ArrowSkill>(); //스킬데미지설정
+        arrow1.damage = attackdamage.Skill_3_Damamge();
+        if (!photonView.IsMine)
+        {
+            meteo.GetComponent<SphereCollider>().enabled = false;
+        }
+        Destroy(meteo, 1.6f);
+        MeteoCasting = 0f;
     }
     [PunRPC]
     void MeteoEffRemove()
