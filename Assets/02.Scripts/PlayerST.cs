@@ -576,8 +576,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (isFireReady)  //공격할수있을때
             {
-                equipWeapon[NowWeapon].StartCoroutine("MagicShot");
-                //equipWeapon[NowWeapon].photonView.RPC("MagicShot", RpcTarget.Others);
+                //equipWeapon[NowWeapon].StartCoroutine("MagicShot");
+                equipWeapon[NowWeapon].photonView.RPC("MagicShot", RpcTarget.All);
                 fireDelay = 0;
             }
         }
