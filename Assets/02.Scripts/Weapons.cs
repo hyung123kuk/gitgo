@@ -27,7 +27,6 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
     public AttackDamage attackdamage;
     public PlayerStat playerstat;
 
-
     /*=========================궁수 스킬 관련===================================*/
     public bool isBombArrow; //2스킬 쓰고나서 공격딜레이
     public bool isEnergyReady; //3스킬쓰고있는상태
@@ -132,9 +131,9 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
     {
         //if (!photonView.IsMine)
         //    this.enabled = false;
-
         anim = GetComponentInParent<Animator>();
     }
+
     private void Update()
     {
 
@@ -547,28 +546,28 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
         yield return new WaitForSeconds(0.2f); //애니메이션과 화살나가는속도와 맞추기위함
         if (!attackdamage.Duration_Buff)
         {
-            if (photonView.IsMine)
+            GameObject intantArrow = Instantiate(ArcDefaultAttack, arrowPos.position, arrowPos.rotation);
+            Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
+            arrowRigid.velocity = arrowPos.forward * playerST.bowPower * 150;
+            Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
+            if(!photonView.IsMine)
             {
-                GameObject intantArrow = Instantiate(ArcDefaultAttack, arrowPos.position, arrowPos.rotation);
-                Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
-                arrowRigid.velocity = arrowPos.forward * playerST.bowPower * 150;
-                Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
-                Destroy(intantArrow, 1f);
-
-                if (playerST.FullChargeing)
-                {
-                    arrow.damage = 1.3f * attackdamage.Attack_Dam();
-                    playerST.FullChargeing = false;
-                    ShotFull = true;
-                }
-                else if (!playerST.FullChargeing)
-                {
-                    arrow.damage = attackdamage.Attack_Dam();
-                    ShotFull = false;
-                }
+                intantArrow.GetComponent<SphereCollider>().enabled = false;
             }
+            Destroy(intantArrow, 1f);
+            
 
-
+            if (playerST.FullChargeing)
+            {
+                arrow.damage = 1.3f * attackdamage.Attack_Dam();
+                playerST.FullChargeing = false;
+                ShotFull = true;
+            }
+            else if (!playerST.FullChargeing)
+            {
+                arrow.damage = attackdamage.Attack_Dam();
+                ShotFull = false;
+            }
         }
         else if (attackdamage.Duration_Buff)
         {

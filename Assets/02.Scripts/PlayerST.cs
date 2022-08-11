@@ -562,8 +562,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                 SoundManager.soundManager.ArcherAttackSound();
             else if (attackdamage.Duration_Buff)
                 SoundManager.soundManager.ArcherSkill1ShotSound();
-            equipWeapon[NowWeapon].StartCoroutine("Shot");
-            //equipWeapon[NowWeapon].photonView.RPC("Shot", RpcTarget.Others);
+            //equipWeapon[NowWeapon].StartCoroutine("Shot");
+            equipWeapon[NowWeapon].photonView.RPC("Shot", RpcTarget.All);
         }
     }
     [PunRPC]
