@@ -98,15 +98,17 @@ public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEnd
 
         if (gameObject.layer == LayerMask.NameToLayer("SkillSlot"))
         {
-            
-            if (skill.Level > playerStat.Level)
+            if (skill != null)
             {
-                imageSkill.color = new Color(1, 0, 0);
+                if (skill.Level > playerStat.Level)
+                {
+                    imageSkill.color = new Color(1, 0, 0);
 
-            }
-            else
-            {
-                imageSkill.color = new Color(1, 1, 1);
+                }
+                else
+                {
+                    imageSkill.color = new Color(1, 1, 1);
+                }
             }
         }
     }
