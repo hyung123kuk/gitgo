@@ -567,11 +567,10 @@ public class SaveManager : MonoBehaviourPunCallbacks
         questNormal = FindObjectOfType<QuestNormal>();
 
         #region 전사 방어구,무기 불러오기
-        //if (playerst.CharacterType == PlayerST.Type.Warrior)
-       // {
+        if (playerst.CharacterType == PlayerST.Type.Warrior)
+        {
             Debug.Log("워리어 로드.....");
             warriorEquipChange.photonView.RPC("WarriorHelmetChange", RpcTarget.AllBuffered, (Item.HelmetNames)data[CharacterNum].Helmet);
-            Debug.Log((Item.HelmetNames)data[CharacterNum].Helmet);
             warriorEquipChange.photonView.RPC("WarriorChestChange", RpcTarget.AllBuffered, (Item.ChestNames)data[CharacterNum].Chest);
             warriorEquipChange.photonView.RPC("WarriorShoulderChange", RpcTarget.AllBuffered, (Item.ShoulderNames)data[CharacterNum].Shoulder);
             warriorEquipChange.photonView.RPC("WarriorGlovesChange", RpcTarget.AllBuffered, (Item.GlovesNames)data[CharacterNum].Gloves);
@@ -579,11 +578,11 @@ public class SaveManager : MonoBehaviourPunCallbacks
             warriorEquipChange.photonView.RPC("WarriorBootsChange", RpcTarget.AllBuffered, (Item.BootsNames)data[CharacterNum].Boots);
             warriorEquipChange.photonView.RPC("WarriorBackChange", RpcTarget.AllBuffered, (Item.BackNames)data[CharacterNum].Back);
             playerst.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, (Item.SwordNames)data[CharacterNum].Weapon);
-       // }
+        }
         #endregion
         #region 궁수 방어구,무기 불러오기
-       // else if (playerst.CharacterType == PlayerST.Type.Archer)
-       // {
+        else if (playerst.CharacterType == PlayerST.Type.Archer)
+        {
             Debug.Log("궁수 로드.....");
             archerEquipChange.photonView.RPC("ArcherHelmetChange", RpcTarget.AllBuffered, (Item.HelmetNames)data[CharacterNum].Helmet);
             archerEquipChange.photonView.RPC("ArcherChestChange", RpcTarget.AllBuffered, (Item.ChestNames)data[CharacterNum].Chest);
@@ -592,11 +591,11 @@ public class SaveManager : MonoBehaviourPunCallbacks
             archerEquipChange.photonView.RPC("ArcherBootsChange", RpcTarget.AllBuffered, (Item.BootsNames)data[CharacterNum].Boots);
             archerEquipChange.photonView.RPC("ArcherBackChange", RpcTarget.AllBuffered, (Item.BackNames)data[CharacterNum].Back);
             playerst.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, (Item.SwordNames)data[CharacterNum].Weapon);
-       // }
+        }
         #endregion
         #region 마법사 방어구,무기 불러오기
-       // else if (playerst.CharacterType == PlayerST.Type.Mage)
-       // {
+        else if (playerst.CharacterType == PlayerST.Type.Mage)
+        {
             Debug.Log("마법사 로드.....");
             mageEquipChange.photonView.RPC("MageHelmetChange", RpcTarget.AllBuffered, (Item.HelmetNames)data[CharacterNum].Helmet);
             mageEquipChange.photonView.RPC("MageChestChange", RpcTarget.AllBuffered, (Item.ChestNames)data[CharacterNum].Chest);
@@ -605,7 +604,7 @@ public class SaveManager : MonoBehaviourPunCallbacks
             mageEquipChange.photonView.RPC("MageBootsChange", RpcTarget.AllBuffered, (Item.BootsNames)data[CharacterNum].Boots);
             mageEquipChange.photonView.RPC("MageBackChange", RpcTarget.AllBuffered, (Item.BackNames)data[CharacterNum].Back);
             playerst.photonView.RPC("WeaponChange", RpcTarget.AllBuffered, (Item.SwordNames)data[CharacterNum].Weapon);
-      //  }
+        }
         #endregion
 
         playerStat.gameObject.transform.position = data[CharacterNum].Position;

@@ -61,6 +61,8 @@ public class MageEquipChange : MonoBehaviourPun
         Boots7 = new GameObject[2];
 
         #endregion
+        if (playerst.CharacterType == PlayerST.Type.Mage && enabled)
+            EquipSetting();
     }
 
     [PunRPC]
@@ -100,8 +102,7 @@ public class MageEquipChange : MonoBehaviourPun
 
     private void Start()
     {
-        if (playerst.CharacterType == PlayerST.Type.Mage && enabled)
-            EquipSetting();
+        
         //photonView.RPC("EquipSetting", RpcTarget.AllBuffered);
     }
 
