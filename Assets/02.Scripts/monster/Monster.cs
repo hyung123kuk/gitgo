@@ -54,6 +54,7 @@ public class Monster : MonoBehaviourPun
     public float hitDamage;
     public virtual void Die() { }
     
+   
     public void Start()
     {
         MonsterDropSet();
@@ -63,9 +64,36 @@ public class Monster : MonoBehaviourPun
         Portion = Resources.LoadAll<GameObject>("DROP/Portion");
         Geteff = Resources.Load<GameObject>("GetEff");
         Damage = Resources.Load<GameObject>("Damage");
-        playerST = FindObjectOfType<PlayerST>();
-        playerStat = FindObjectOfType<PlayerStat>();
-        weapons = FindObjectOfType<Weapons>();
+        //playerST = FindObjectOfType<PlayerST>();
+        //playerStat = FindObjectOfType<PlayerStat>();
+        //weapons = FindObjectOfType<Weapons>();
+        PlayerST[] attackDam111ages = FindObjectsOfType<PlayerST>();
+
+        foreach (PlayerST attDam in attackDam111ages)
+        {
+            if (attDam.GetComponent<PhotonView>().IsMine)
+            {
+                playerST = attDam;
+            }
+        }
+        PlayerStat[] attackDam11ages = FindObjectsOfType<PlayerStat>();
+
+        foreach (PlayerStat attDam in attackDam11ages)
+        {
+            if (attDam.GetComponent<PhotonView>().IsMine)
+            {
+                playerStat = attDam;
+            }
+        }
+        Weapons[] attackDam1ages = FindObjectsOfType<Weapons>();
+
+        foreach (Weapons attDam in attackDam1ages)
+        {
+            if (attDam.GetComponent<PhotonView>().IsMine)
+            {
+                weapons = attDam;
+            }
+        }
 
         AttackDamage[] attackDamages = FindObjectsOfType<AttackDamage>();
 
@@ -139,7 +167,6 @@ public class Monster : MonoBehaviourPun
         }
 
 
-
         var _damage = damage.GetComponent<DamageUI>();
         _damage.targetTr = this.gameObject.transform;
         Text damagevalue = damage.GetComponent<Text>();
@@ -171,7 +198,8 @@ public class Monster : MonoBehaviourPun
 
     public void HitMonster()
     {
-        if (playerST.CharacterType == PlayerST.Type.Warrior || weapons.GetComponent<PhotonView>().IsMine)
+        if (playerST.CharacterType == PlayerST.Type.Warrior || weapons.GetComponent<PhotonView>().IsMine
+            || playerST.CharacterType == PlayerST.Type.Archer || playerST.CharacterType == PlayerST.Type.Mage)
         {
             OnDamage(attackdamage.attackDamage, attackdamage.critical, true); //�¾����� ������ Ʈ����ؼ� �ٸ��������� OnDamage�� ����ǰ�
 
@@ -212,6 +240,7 @@ public class Monster : MonoBehaviourPun
         }
         else if (playerST.CharacterType == PlayerST.Type.Archer || playerST.CharacterType == PlayerST.Type.Mage)
         {
+
             if (attackdamage.DamageNum == 0)
             {
                 if (!weapons.ShotFull)
