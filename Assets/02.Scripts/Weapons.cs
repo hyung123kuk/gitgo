@@ -184,6 +184,10 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
         SoundManager.soundManager.ArcherSkill2_1Sound();
         anim.SetBool("isBomb", true);
         GameObject bombarrow = Instantiate(Arc2Skilarrow, arrowPos.position, arrowPos.rotation);
+        if (!photonView.IsMine)
+        {
+            bombarrow.GetComponent<SphereCollider>().enabled = false;
+        }
         Rigidbody arrowRigid = bombarrow.GetComponent<Rigidbody>();
         arrowRigid.velocity = arrowPos.forward * 20;
         Arrow arrow = bombarrow.GetComponent<Arrow>(); //스킬데미지설정
@@ -279,6 +283,10 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
         attackdamage.Skill_3_Cool();
         SoundManager.soundManager.ArcherSkill3Sound();
         GameObject intantArrow = Instantiate(Arc3SkillArrow1, Arc3SkillPos.position, Arc3SkillPos.rotation);
+        if (!photonView.IsMine)
+        {
+            intantArrow.GetComponent<SphereCollider>().enabled = false;
+        }
         Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
         arrowRigid.velocity = Arc3SkillPos.forward * 20;
         ArrowSkill arrowskill = intantArrow.GetComponent<ArrowSkill>(); //스킬데미지설정
@@ -293,6 +301,10 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
         attackdamage.Skill_3_Cool();
         SoundManager.soundManager.ArcherSkill3Sound();
         GameObject intantArrow = Instantiate(Arc3SkillArrow2, Arc3SkillPos.position, Arc3SkillPos.rotation);
+        if (!photonView.IsMine)
+        {
+            intantArrow.GetComponent<SphereCollider>().enabled = false;
+        }
         Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
         arrowRigid.velocity = Arc3SkillPos.forward * 20;
         ArrowSkill arrowskill = intantArrow.GetComponent<ArrowSkill>(); //스킬데미지설정
@@ -345,6 +357,12 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
         GameObject darkball1 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation);
         GameObject darkball2 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation);
         GameObject darkball3 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation);
+        if (!photonView.IsMine)
+        {
+            darkball1.GetComponent<SphereCollider>().enabled = false;
+            darkball2.GetComponent<SphereCollider>().enabled = false;
+            darkball3.GetComponent<SphereCollider>().enabled = false;
+        }
         darkball1.transform.DOMove(Mage1SkillPos1.position, 1f).SetEase(Ease.Linear);
         darkball2.transform.DOMove(Mage1SkillPos2.position, 1f).SetEase(Ease.Linear);
         darkball3.transform.DOMove(Mage1SkillPos3.position, 1f).SetEase(Ease.Linear);
@@ -393,7 +411,12 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
         yield return new WaitForSeconds(1.8f);
         SoundManager.soundManager.MageSkill2Sound();
         BoxCollider Skillare = Skillarea.GetComponent<BoxCollider>(); //데미지 콜라이더 활성화
+        if(photonView.IsMine)
         Skillare.enabled = true;
+        if (!photonView.IsMine)
+        {
+            Skillare.enabled = false;
+        }
         ArrowSkill arrow = Skillarea.GetComponent<ArrowSkill>(); //스킬데미지설정
         arrow.damage = attackdamage.Skill_2_Damamge();
         BoxCollider CCare = CCarea.GetComponent<BoxCollider>(); //cc기 콜라이더 활성화
@@ -470,6 +493,10 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
                 meteo.transform.DOMove(Mage3SkillPos1.position, 1.5f).SetEase(Ease.Linear);
                 ArrowSkill arrow1 = meteo.GetComponent<ArrowSkill>(); //스킬데미지설정
                 arrow1.damage = attackdamage.Skill_3_Damamge();
+                if (!photonView.IsMine)
+                {
+                    meteo.GetComponent<SphereCollider>().enabled = false;
+                }
                 Destroy(meteo, 1.6f);
                 MeteoCasting = 0f;
                 attackdamage.Skill_3_Cool();
@@ -550,12 +577,12 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
             Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
             arrowRigid.velocity = arrowPos.forward * playerST.bowPower * 150;
             Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
-            if(!photonView.IsMine)
+            if (!photonView.IsMine)
             {
                 intantArrow.GetComponent<SphereCollider>().enabled = false;
             }
             Destroy(intantArrow, 1f);
-            
+
 
             if (playerST.FullChargeing)
             {
@@ -576,6 +603,10 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
             arrowRigid.velocity = arrowPos.forward * playerST.bowPower * 150;
             Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
             arrow.damage = 1.3f * attackdamage.Attack_Dam();
+            if (!photonView.IsMine)
+            {
+                intantArrow.GetComponent<SphereCollider>().enabled = false;
+            }
             ShotFull = true;
             Destroy(intantArrow, 1f);
         }
@@ -601,15 +632,17 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
             anim.SetBool("isAttack", true);
         yield return new WaitForSeconds(0.3f); //애니메이션과 화살나가는속도와 맞추기위함
         SoundManager.soundManager.MageAttackSound();
-        if (photonView.IsMine)
+        GameObject intantArrow = Instantiate(MageDefaultAttack, MagicPos.position, MagicPos.rotation);
+        Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
+        arrowRigid.velocity = MagicPos.forward * 20;
+        Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
+        arrow.damage = attackdamage.Attack_Dam();
+        if (!photonView.IsMine)
         {
-            GameObject intantArrow = Instantiate(MageDefaultAttack, MagicPos.position, MagicPos.rotation);
-            Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
-            arrowRigid.velocity = MagicPos.forward * 20;
-            Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
-            arrow.damage = attackdamage.Attack_Dam();
-            Destroy(intantArrow, 0.7f);
+            intantArrow.GetComponent<SphereCollider>().enabled = false;
         }
+        Destroy(intantArrow, 0.7f);
+
         yield return new WaitForSeconds(0.3f);
         if (playerST.CharacterType == PlayerST.Type.Mage)
             anim.SetBool("isAttack", false);

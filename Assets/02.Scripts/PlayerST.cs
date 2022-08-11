@@ -723,7 +723,12 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         isDamage = true;
         yield return new WaitForSeconds(0.3f);
         BoxCollider Skillare = Skillarea2.GetComponent<BoxCollider>(); // 데미지 콜라이더 활성화
+        if(photonView.IsMine)
         Skillare.enabled = true;
+        if (!photonView.IsMine)
+        {
+            Skillare.enabled = false;
+        }
         SoundManager.soundManager.WarriorShieldSound();
         ArrowSkill arrow = Skillarea2.GetComponent<ArrowSkill>(); //스킬데미지설정
         arrow.damage = attackdamage.Skill_1_Damamge();
@@ -793,7 +798,12 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         yield return new WaitForSeconds(0.5f);
         SoundManager.soundManager.WarriorRushSound();
         BoxCollider Skillare = Skillarea.GetComponent<BoxCollider>(); //돌진착지지점 데미지 콜라이더 활성화
-        Skillare.enabled = true;
+        if (photonView.IsMine)
+            Skillare.enabled = true;
+        if (!photonView.IsMine)
+        {
+            Skillare.enabled = false;
+        }
         ArrowSkill arrow = Skillarea.GetComponent<ArrowSkill>(); //스킬데미지설정
         arrow.damage = attackdamage.Skill_2_Damamge();
         BoxCollider CCare = CCarea.GetComponent<BoxCollider>(); //돌진착지지점 cc기 콜라이더 활성화
@@ -844,6 +854,10 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         yield return new WaitForSeconds(0.7f);
         SoundManager.soundManager.WarriorAuraSound();
         GameObject swordaura = Instantiate(SwordAura, Aurapos.position, Aurapos.rotation);
+        if (!photonView.IsMine)
+        {
+            swordaura.GetComponent<SphereCollider>().enabled = false;
+        }
         Rigidbody aurarigid = swordaura.GetComponent<Rigidbody>();
         aurarigid.velocity = Aurapos.forward * 20;
         ArrowSkill arrow = swordaura.GetComponent<ArrowSkill>(); //스킬데미지설정
@@ -891,7 +905,12 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         GameObject arceff = Instantiate(BackStepEff, BackStepPos.position, BackStepPos.rotation); //이펙트
         SoundManager.soundManager.ArcherBackStepSound();
         BoxCollider Skillare = Skillarea.GetComponent<BoxCollider>(); // 데미지 콜라이더 활성화
-        Skillare.enabled = true;
+        if (photonView.IsMine)
+            Skillare.enabled = true;
+        if (!photonView.IsMine)
+        {
+            Skillare.enabled = false;
+        }
         BoxCollider CCare = CCarea.GetComponent<BoxCollider>(); // cc기 콜라이더 활성화
         CCare.enabled = true;
         ArrowSkill arrow = Skillare.GetComponent<ArrowSkill>();
