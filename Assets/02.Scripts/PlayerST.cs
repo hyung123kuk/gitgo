@@ -225,7 +225,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         questStore = FindObjectOfType<QuestStore>();
         HorseSpawn = FindObjectOfType<Horse>().gameObject;
         Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
-        //photonView.RPC("Setting", RpcTarget.OthersBuffered);
+        photonView.RPC("Setting", RpcTarget.All);
         dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
         weapons = FindObjectOfType<Weapons>();
         rigid = GetComponent<Rigidbody>();
@@ -247,8 +247,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         //        break;
         //    }
         //}
-        HorseSpawn = FindObjectOfType<Horse>().gameObject;
-        Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
+        //HorseSpawn = FindObjectOfType<Horse>().gameObject;
+        //Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
     }
 
 
