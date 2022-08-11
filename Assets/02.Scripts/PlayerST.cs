@@ -140,10 +140,10 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     private void Awake()
     {
 
-        //if (!photonView.IsMine)
-        //{
-        //    return;
-        //}
+        if (!photonView.IsMine)
+        {
+            enabled = false;
+        }
 
         comboHit = GetComponent<ComboHit>();
         anim = GetComponentInChildren<Animator>();
