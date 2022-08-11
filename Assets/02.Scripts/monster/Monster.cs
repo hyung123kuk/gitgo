@@ -200,8 +200,8 @@ public class Monster : MonoBehaviourPun
 
     public void HitMonster()
     {
-        if (playerST.CharacterType == PlayerST.Type.Warrior || weapons.GetComponent<PhotonView>().IsMine
-            || playerST.CharacterType == PlayerST.Type.Archer || playerST.CharacterType == PlayerST.Type.Mage)
+        if (playerST.photonView.IsMine && (playerST.CharacterType == PlayerST.Type.Warrior || weapons.GetComponent<PhotonView>().IsMine
+            || playerST.CharacterType == PlayerST.Type.Archer || playerST.CharacterType == PlayerST.Type.Mage))
         {
             OnDamage(attackdamage.attackDamage, attackdamage.critical, true); //�¾����� ������ Ʈ����ؼ� �ٸ��������� OnDamage�� ����ǰ�
 
