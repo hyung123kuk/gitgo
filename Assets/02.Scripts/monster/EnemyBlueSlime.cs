@@ -282,6 +282,7 @@ public class EnemyBlueSlime : Monster
                 curHealth -= arrow.damage;
 
                 StartCoroutine(OnDamage());
+                Debug.Log("1");
             }
             else if (other.tag == "ArrowSkill")
             {
