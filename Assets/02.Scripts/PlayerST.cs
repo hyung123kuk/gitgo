@@ -498,15 +498,14 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
           !weapons.isIceage && !weapons.isMeteo && !isJump && !isRun && !isBlock && !isRush && !isAura && !isStun)
         {
             MAttack();
-            photonView.RPC("MAttack", RpcTarget.Others);
+            //photonView.RPC("MAttack", RpcTarget.Others);
         }
 
         else if (CharacterType == Type.Archer && !isDodge && !isJump && !isRun && !isStun && !isBackStep && !weapons.isEnergyReady
             && !weapons.isBombArrow)
         {
             AAttack();
-            photonView.RPC("AAttack", RpcTarget.Others);
-
+            //photonView.RPC("AAttack", RpcTarget.Others);
         }
     }
     [PunRPC]
@@ -529,6 +528,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     void AAttack()
     {
+        if (!photonView.IsMine)
+            return;
         fireDelay += Time.deltaTime;
 
         if (fDowning && bowPower < bowChargingTime)
@@ -563,13 +564,16 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                 SoundManager.soundManager.ArcherAttackSound();
             else if (attackdamage.Duration_Buff)
                 SoundManager.soundManager.ArcherSkill1ShotSound();
-            //equipWeapon[NowWeapon].photonView.RPC("Use", RpcTarget.All);
-            equipWeapon[NowWeapon].StartCoroutine("Shot");
+            photonView.RPC("Shot", RpcTarget.All);
+            //equipWeapon[NowWeapon].StartCoroutine("Shot");
+            //equipWeapon[NowWeapon].photonView.RPC("Shot", RpcTarget.Others);
         }
     }
     [PunRPC]
     void MAttack()
     {
+        if (!photonView.IsMine)
+            return;
         fireDelay += Time.deltaTime;     //공격속도 계산
         isFireReady = equipWeapon[NowWeapon].rate < fireDelay;  //공격 가능 타임
 
@@ -577,9 +581,9 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (isFireReady)  //공격할수있을때
             {
-
-                equipWeapon[NowWeapon].StartCoroutine("MagicShot");
-                //equipWeapon[NowWeapon].photonView.RPC("Use", RpcTarget.All);
+                photonView.RPC("MagicShot", RpcTarget.All);
+                //equipWeapon[NowWeapon].StartCoroutine("MagicShot");
+                //equipWeapon[NowWeapon].photonView.RPC("MagicShot", RpcTarget.Others);
                 fireDelay = 0;
             }
         }

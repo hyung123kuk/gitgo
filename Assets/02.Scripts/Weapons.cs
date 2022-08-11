@@ -547,21 +547,25 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
         yield return new WaitForSeconds(0.2f); //애니메이션과 화살나가는속도와 맞추기위함
         if (!attackdamage.Duration_Buff)
         {
-            GameObject intantArrow = Instantiate(ArcDefaultAttack, arrowPos.position, arrowPos.rotation);
-            Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
-            arrowRigid.velocity = arrowPos.forward * playerST.bowPower * 150;
-            Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
-            Destroy(intantArrow, 1f);
-            if (playerST.FullChargeing)
+            if (photonView.IsMine)
             {
-                arrow.damage = 1.3f * attackdamage.Attack_Dam();
-                playerST.FullChargeing = false;
-                ShotFull = true;
-            }
-            else if (!playerST.FullChargeing)
-            {
-                arrow.damage = attackdamage.Attack_Dam();
-                ShotFull = false;
+                GameObject intantArrow = Instantiate(ArcDefaultAttack, arrowPos.position, arrowPos.rotation);
+                Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
+                arrowRigid.velocity = arrowPos.forward * playerST.bowPower * 150;
+                Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
+                Destroy(intantArrow, 1f);
+
+                if (playerST.FullChargeing)
+                {
+                    arrow.damage = 1.3f * attackdamage.Attack_Dam();
+                    playerST.FullChargeing = false;
+                    ShotFull = true;
+                }
+                else if (!playerST.FullChargeing)
+                {
+                    arrow.damage = attackdamage.Attack_Dam();
+                    ShotFull = false;
+                }
             }
 
 
@@ -598,12 +602,15 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
             anim.SetBool("isAttack", true);
         yield return new WaitForSeconds(0.3f); //애니메이션과 화살나가는속도와 맞추기위함
         SoundManager.soundManager.MageAttackSound();
-        GameObject intantArrow = Instantiate(MageDefaultAttack, MagicPos.position, MagicPos.rotation);
-        Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
-        arrowRigid.velocity = MagicPos.forward * 20;
-        Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
-        arrow.damage = attackdamage.Attack_Dam();
-        Destroy(intantArrow, 0.7f);
+        if (photonView.IsMine)
+        {
+            GameObject intantArrow = Instantiate(MageDefaultAttack, MagicPos.position, MagicPos.rotation);
+            Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
+            arrowRigid.velocity = MagicPos.forward * 20;
+            Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
+            arrow.damage = attackdamage.Attack_Dam();
+            Destroy(intantArrow, 0.7f);
+        }
         yield return new WaitForSeconds(0.3f);
         if (playerST.CharacterType == PlayerST.Type.Mage)
             anim.SetBool("isAttack", false);
