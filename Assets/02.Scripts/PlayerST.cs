@@ -1134,9 +1134,11 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     }
     public void HorseRide()
     {
+        Debug.Log(0);
 
         if (!HorseMode) // 말 소환&소환해제
         {
+            Debug.Log(horsecount);
             //if (horsecount == 0)
             //{
             //    SoundManager.soundManager.Horse();

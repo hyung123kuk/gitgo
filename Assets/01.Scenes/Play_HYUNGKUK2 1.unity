@@ -39022,6 +39022,10 @@ PrefabInstance:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 972917990504314525, guid: 3b5cd591ce20cfe4ebdae1a40b3ba168, type: 3}
+      propertyPath: m_SortingOrder
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 1180308033955208887, guid: 3b5cd591ce20cfe4ebdae1a40b3ba168, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0

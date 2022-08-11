@@ -157,7 +157,10 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
 
             itemImage.color = Color.white;
         }
-
+        if(gameObject.layer == LayerMask.NameToLayer("TRADESLOT"))
+        {
+            itemImage.color = Color.white;
+        }
 
 
     }
