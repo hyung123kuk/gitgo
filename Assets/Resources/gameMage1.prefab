@@ -128976,6 +128976,7 @@ GameObject:
   - component: {fileID: 5916550820439577112}
   - component: {fileID: 2664131684223015819}
   - component: {fileID: -6524242300949926563}
+  - component: {fileID: -5978798307966176961}
   m_Layer: 8
   m_Name: gameMage1
   m_TagString: Player
@@ -129107,7 +129108,6 @@ MonoBehaviour:
   Skillarea: {fileID: 5098115199216748339}
   Skillarea2: {fileID: 0}
   CCarea: {fileID: 5098115198916572392}
-  playerST: {fileID: 8445936719463363591}
   HorseMode: 0
   Horsee: {fileID: 0}
   HorseSpawn: {fileID: 0}
@@ -129185,7 +129185,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 248ef865d6187004c99e5f554f02f553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Level: 1
+  Level: 10
   TotalExp: 0
   NowExp: 0
   MONEY: 10000
@@ -129329,6 +129329,7 @@ MonoBehaviour:
   - {fileID: 8445936719463363593}
   - {fileID: 8445936719463363594}
   - {fileID: -6524242300949926563}
+  - {fileID: -5978798307966176961}
   sceneViewId: 0
   InstantiationId: 0
   isRuntimeInstantiated: 0
@@ -129601,6 +129602,22 @@ MonoBehaviour:
     InterpolateOption: 0
     InterpolateMoveTowardsSpeed: 1
     InterpolateLerpSpeed: 0
+--- !u!114 &-5978798307966176961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5916550820439577113}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 64179f3720bbfe947b7724caa67b7c1d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizeVelocity: 1
+  m_SynchronizeAngularVelocity: 1
+  m_TeleportEnabled: 0
+  m_TeleportIfDistanceGreaterThan: 3
 --- !u!1 &5916551075717002491
 GameObject:
   m_ObjectHideFlags: 0

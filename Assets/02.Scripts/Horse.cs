@@ -21,19 +21,6 @@ public class Horse : MonoBehaviourPun
 
     void Awake()
     {
-
-
-        //HorseSpawnAnim();
-    }
-
-    private void OnEnable()
-    {
-
-
-    }
-
-    private void Start()
-    {
         PlayerST[] playerSt = GameObject.FindObjectsOfType<PlayerST>();
         foreach (PlayerST myplayerst in playerSt)
         {
@@ -50,6 +37,19 @@ public class Horse : MonoBehaviourPun
         rigid = GetComponent<Rigidbody>();
         _camera = Camera.main;
         _controller = this.GetComponent<CapsuleCollider>();
+
+        //HorseSpawnAnim();
+    }
+
+    private void OnEnable()
+    {
+
+
+    }
+
+    private void Start()
+    {
+        
 
     }
     IEnumerator HorseActive()
