@@ -58,12 +58,9 @@ public class WarriorEquipChange : MonoBehaviourPun
     #endregion
     void Awake()
     {
-        //if (!photonView.IsMine)
-        //{
-        //    this.enabled = false;
-        //}
         playerst = GetComponent<PlayerST>();
         warriorEquip = GetComponent<WarriorEquip>();
+        
         #region 워리어 장비초기화
 
         Helmet1 = new GameObject[3];
@@ -87,6 +84,8 @@ public class WarriorEquipChange : MonoBehaviourPun
         Back7 = new GameObject[1];
 
         #endregion
+        if (playerst.CharacterType == PlayerST.Type.Warrior && enabled)
+            EquipSetting();
     }
 
     [PunRPC]
@@ -133,48 +132,47 @@ public class WarriorEquipChange : MonoBehaviourPun
 
     private void Start()
     {
-        if (playerst.CharacterType == PlayerST.Type.Warrior && enabled)
-            EquipSetting();
-       // photonView.RPC("EquipSetting", RpcTarget.AllBuffered);
-            #region 워리어 장비 초기화
-            ////↓머리
-            //Helmet1[0] = warriorEquip.LV1_FacialHair; Helmet1[1] = warriorEquip.LV1_Hair; Helmet1[2] = warriorEquip.LV1_Head;
-            //Helmet3[0] = warriorEquip.LV3_Helmet; Helmet3[1] = warriorEquip.LV3_AttackHelmet;
-            //Helmet7[0] = warriorEquip.LV7_Helmet; Helmet7[1] = warriorEquip.LV7_AttackHelmet;
+        
+        // photonView.RPC("EquipSetting", RpcTarget.AllBuffered);
+        #region 워리어 장비 초기화
+        ////↓머리
+        //Helmet1[0] = warriorEquip.LV1_FacialHair; Helmet1[1] = warriorEquip.LV1_Hair; Helmet1[2] = warriorEquip.LV1_Head;
+        //Helmet3[0] = warriorEquip.LV3_Helmet; Helmet3[1] = warriorEquip.LV3_AttackHelmet;
+        //Helmet7[0] = warriorEquip.LV7_Helmet; Helmet7[1] = warriorEquip.LV7_AttackHelmet;
 
-            ////↓어깨
-            //Shoulder3[0] = warriorEquip.LV3_Right_Shoulder; Shoulder3[1] = warriorEquip.LV3_Left_Shoulder;
-            //Shoulder3[2] = warriorEquip.LV3_Right_Elbow; Shoulder3[3] = warriorEquip.LV3_Left_Elbow;
-            //Shoulder7[0] = warriorEquip.LV7_Right_Shoulder; Shoulder7[1] = warriorEquip.LV7_Left_Shoulder;
-            //Shoulder7[2] = warriorEquip.LV7_Right_Elbow; Shoulder7[3] = warriorEquip.LV7_Left_Elbow;
+        ////↓어깨
+        //Shoulder3[0] = warriorEquip.LV3_Right_Shoulder; Shoulder3[1] = warriorEquip.LV3_Left_Shoulder;
+        //Shoulder3[2] = warriorEquip.LV3_Right_Elbow; Shoulder3[3] = warriorEquip.LV3_Left_Elbow;
+        //Shoulder7[0] = warriorEquip.LV7_Right_Shoulder; Shoulder7[1] = warriorEquip.LV7_Left_Shoulder;
+        //Shoulder7[2] = warriorEquip.LV7_Right_Elbow; Shoulder7[3] = warriorEquip.LV7_Left_Elbow;
 
-            ////↓상의
-            //Chest1[0] = warriorEquip.LV1_Torso; Chest1[1] = warriorEquip.LV1_Arm_Upper_Right; Chest1[2] = warriorEquip.LV1_Arm_Upper_Left;
-            //Chest1[3] = warriorEquip.LV1_Arm_Lower_Right; Chest1[4] = warriorEquip.LV1_Arm_Lower_Left;
-            //Chest3[0] = warriorEquip.LV3_Torso; Chest3[1] = warriorEquip.LV3_Arm_Upper_Right; Chest3[2] = warriorEquip.LV3_Arm_Upper_Left;
-            //Chest3[3] = warriorEquip.LV3_Arm_Lower_Right; Chest3[4] = warriorEquip.LV3_Arm_Lowerr_Left;
-            //Chest7[0] = warriorEquip.LV7_Torso; Chest7[1] = warriorEquip.LV7_Arm_Upper_Right; Chest7[2] = warriorEquip.LV7_Arm_Upper_Left;
-            //Chest7[3] = warriorEquip.LV7_Arm_Lower_Right; Chest7[4] = warriorEquip.LV7_Arm_Lower_Left;
+        ////↓상의
+        //Chest1[0] = warriorEquip.LV1_Torso; Chest1[1] = warriorEquip.LV1_Arm_Upper_Right; Chest1[2] = warriorEquip.LV1_Arm_Upper_Left;
+        //Chest1[3] = warriorEquip.LV1_Arm_Lower_Right; Chest1[4] = warriorEquip.LV1_Arm_Lower_Left;
+        //Chest3[0] = warriorEquip.LV3_Torso; Chest3[1] = warriorEquip.LV3_Arm_Upper_Right; Chest3[2] = warriorEquip.LV3_Arm_Upper_Left;
+        //Chest3[3] = warriorEquip.LV3_Arm_Lower_Right; Chest3[4] = warriorEquip.LV3_Arm_Lowerr_Left;
+        //Chest7[0] = warriorEquip.LV7_Torso; Chest7[1] = warriorEquip.LV7_Arm_Upper_Right; Chest7[2] = warriorEquip.LV7_Arm_Upper_Left;
+        //Chest7[3] = warriorEquip.LV7_Arm_Lower_Right; Chest7[4] = warriorEquip.LV7_Arm_Lower_Left;
 
-            ////↓장갑
-            //Glove1[0] = warriorEquip.LV1_Right_Hand; Glove1[1] = warriorEquip.LV1_Left_Hand;
-            //Glove3[0] = warriorEquip.LV3_Right_Hand; Glove3[1] = warriorEquip.LV3_Left_Hand;
-            //Glove7[0] = warriorEquip.LV7_Right_Hand; Glove7[1] = warriorEquip.LV7_Left_Hand;
+        ////↓장갑
+        //Glove1[0] = warriorEquip.LV1_Right_Hand; Glove1[1] = warriorEquip.LV1_Left_Hand;
+        //Glove3[0] = warriorEquip.LV3_Right_Hand; Glove3[1] = warriorEquip.LV3_Left_Hand;
+        //Glove7[0] = warriorEquip.LV7_Right_Hand; Glove7[1] = warriorEquip.LV7_Left_Hand;
 
-            ////↓하의
-            //Pants1[0] = warriorEquip.LV1_Hips;
-            //Pants3[0] = warriorEquip.LV3_Right_Knee; Pants3[1] = warriorEquip.LV3_Left_Knee; Pants3[2] = warriorEquip.LV3_Hips;
-            //Pants7[0] = warriorEquip.LV7_Right_Knee; Pants7[1] = warriorEquip.LV7_Left_Knee; Pants7[2] = warriorEquip.LV7_Hips;
+        ////↓하의
+        //Pants1[0] = warriorEquip.LV1_Hips;
+        //Pants3[0] = warriorEquip.LV3_Right_Knee; Pants3[1] = warriorEquip.LV3_Left_Knee; Pants3[2] = warriorEquip.LV3_Hips;
+        //Pants7[0] = warriorEquip.LV7_Right_Knee; Pants7[1] = warriorEquip.LV7_Left_Knee; Pants7[2] = warriorEquip.LV7_Hips;
 
-            ////↓신발
-            //Boots1[0] = warriorEquip.LV1_Leg_Right; Boots1[1] = warriorEquip.LV1_Leg_Left;
-            //Boots3[0] = warriorEquip.LV3_Leg_Right; Boots3[1] = warriorEquip.LV3_Leg_Left;
-            //Boots7[0] = warriorEquip.LV7_Leg_Right; Boots7[1] = warriorEquip.LV7_Leg_Left;
+        ////↓신발
+        //Boots1[0] = warriorEquip.LV1_Leg_Right; Boots1[1] = warriorEquip.LV1_Leg_Left;
+        //Boots3[0] = warriorEquip.LV3_Leg_Right; Boots3[1] = warriorEquip.LV3_Leg_Left;
+        //Boots7[0] = warriorEquip.LV7_Leg_Right; Boots7[1] = warriorEquip.LV7_Leg_Left;
 
-            ////↓망토
-            //Back3[0] = warriorEquip.LV3_Back;
-            //Back7[0] = warriorEquip.LV7_Back;
-            #endregion
+        ////↓망토
+        //Back3[0] = warriorEquip.LV3_Back;
+        //Back7[0] = warriorEquip.LV7_Back;
+        #endregion
     }
 
     #region 전사 방어구 변경

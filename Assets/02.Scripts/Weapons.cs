@@ -27,7 +27,6 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
     public AttackDamage attackdamage;
     public PlayerStat playerstat;
 
-
     /*=========================궁수 스킬 관련===================================*/
     public bool isBombArrow; //2스킬 쓰고나서 공격딜레이
     public bool isEnergyReady; //3스킬쓰고있는상태
@@ -132,9 +131,9 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
     {
         //if (!photonView.IsMine)
         //    this.enabled = false;
-
         anim = GetComponentInParent<Animator>();
     }
+
     private void Update()
     {
 
@@ -154,7 +153,6 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
             LightningBall();
             IceAge();
             Meteo();
-
         }*/
 
 
@@ -186,6 +184,10 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
         SoundManager.soundManager.ArcherSkill2_1Sound();
         anim.SetBool("isBomb", true);
         GameObject bombarrow = Instantiate(Arc2Skilarrow, arrowPos.position, arrowPos.rotation);
+        if (!photonView.IsMine)
+        {
+            bombarrow.GetComponent<SphereCollider>().enabled = false;
+        }
         Rigidbody arrowRigid = bombarrow.GetComponent<Rigidbody>();
         arrowRigid.velocity = arrowPos.forward * 20;
         Arrow arrow = bombarrow.GetComponent<Arrow>(); //스킬데미지설정
@@ -281,6 +283,10 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
         attackdamage.Skill_3_Cool();
         SoundManager.soundManager.ArcherSkill3Sound();
         GameObject intantArrow = Instantiate(Arc3SkillArrow1, Arc3SkillPos.position, Arc3SkillPos.rotation);
+        if (!photonView.IsMine)
+        {
+            intantArrow.GetComponent<SphereCollider>().enabled = false;
+        }
         Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
         arrowRigid.velocity = Arc3SkillPos.forward * 20;
         ArrowSkill arrowskill = intantArrow.GetComponent<ArrowSkill>(); //스킬데미지설정
@@ -295,6 +301,10 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
         attackdamage.Skill_3_Cool();
         SoundManager.soundManager.ArcherSkill3Sound();
         GameObject intantArrow = Instantiate(Arc3SkillArrow2, Arc3SkillPos.position, Arc3SkillPos.rotation);
+        if (!photonView.IsMine)
+        {
+            intantArrow.GetComponent<SphereCollider>().enabled = false;
+        }
         Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
         arrowRigid.velocity = Arc3SkillPos.forward * 20;
         ArrowSkill arrowskill = intantArrow.GetComponent<ArrowSkill>(); //스킬데미지설정
@@ -347,6 +357,12 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
         GameObject darkball1 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation);
         GameObject darkball2 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation);
         GameObject darkball3 = Instantiate(Mage1SkillEff, MagicPos.position, MagicPos.rotation);
+        if (!photonView.IsMine)
+        {
+            darkball1.GetComponent<SphereCollider>().enabled = false;
+            darkball2.GetComponent<SphereCollider>().enabled = false;
+            darkball3.GetComponent<SphereCollider>().enabled = false;
+        }
         darkball1.transform.DOMove(Mage1SkillPos1.position, 1f).SetEase(Ease.Linear);
         darkball2.transform.DOMove(Mage1SkillPos2.position, 1f).SetEase(Ease.Linear);
         darkball3.transform.DOMove(Mage1SkillPos3.position, 1f).SetEase(Ease.Linear);
@@ -395,7 +411,12 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
         yield return new WaitForSeconds(1.8f);
         SoundManager.soundManager.MageSkill2Sound();
         BoxCollider Skillare = Skillarea.GetComponent<BoxCollider>(); //데미지 콜라이더 활성화
+        if(photonView.IsMine)
         Skillare.enabled = true;
+        if (!photonView.IsMine)
+        {
+            Skillare.enabled = false;
+        }
         ArrowSkill arrow = Skillarea.GetComponent<ArrowSkill>(); //스킬데미지설정
         arrow.damage = attackdamage.Skill_2_Damamge();
         BoxCollider CCare = CCarea.GetComponent<BoxCollider>(); //cc기 콜라이더 활성화
@@ -463,23 +484,34 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
             }
             if (MeteoCasting > MeteoMaxCasting)
             {
-                StopSoundManager.stopSoundManager.audioSource.Stop();
-                SoundManager.soundManager.MageSkill3Sound();
-                Debug.Log("메테오!!");
-                isMeteoShot = true;
-                anim.SetBool("Skill31", true);
-                GameObject meteo = Instantiate(Mage3SkillEff, Mage3SkillPos2.position, Mage3SkillPos2.rotation);
-                meteo.transform.DOMove(Mage3SkillPos1.position, 1.5f).SetEase(Ease.Linear);
-                ArrowSkill arrow1 = meteo.GetComponent<ArrowSkill>(); //스킬데미지설정
-                arrow1.damage = attackdamage.Skill_3_Damamge();
-                Destroy(meteo, 1.6f);
-                MeteoCasting = 0f;
+                photonView.RPC("MeteoIns", RpcTarget.All);
+
+                if (photonView.IsMine)
                 attackdamage.Skill_3_Cool();
 
                 photonView.RPC("MeteoEnd", RpcTarget.All);
                 photonView.RPC("MeteoEnd2", RpcTarget.All);
             }
         }
+    }
+    [PunRPC]
+    void MeteoIns()
+    {
+        StopSoundManager.stopSoundManager.audioSource.Stop();
+        SoundManager.soundManager.MageSkill3Sound();
+        Debug.Log("메테오!!");
+        isMeteoShot = true;
+        anim.SetBool("Skill31", true);
+        GameObject meteo = Instantiate(Mage3SkillEff, Mage3SkillPos2.position, Mage3SkillPos2.rotation);
+        meteo.transform.DOMove(Mage3SkillPos1.position, 1.5f).SetEase(Ease.Linear);
+        ArrowSkill arrow1 = meteo.GetComponent<ArrowSkill>(); //스킬데미지설정
+        arrow1.damage = attackdamage.Skill_3_Damamge();
+        if (!photonView.IsMine)
+        {
+            meteo.GetComponent<SphereCollider>().enabled = false;
+        }
+        Destroy(meteo, 1.6f);
+        MeteoCasting = 0f;
     }
     [PunRPC]
     void MeteoEffRemove()
@@ -514,17 +546,17 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
         //    StopCoroutine("Swing");  //현재 공격중일시 멈춤
         //    StartCoroutine("Swing"); //공격실행
         //}
-        if (!photonView.IsMine)
-            return;
+        //if (!photonView.IsMine)
+        //    return;
 
-        if (type == Type.Range)
-        {
-            photonView.RPC("Shot", RpcTarget.All);
-        }
-        else if (type == Type.Mage)
-        {
-            photonView.RPC("MagicShot", RpcTarget.All);
-        }
+        //if (type == Type.Range)
+        //{
+        //    photonView.RPC("Shot", RpcTarget.All);
+        //}
+        //else if (type == Type.Mage)
+        //{
+        //    photonView.RPC("MagicShot", RpcTarget.All);
+        //}
     }
 
     IEnumerator Swing()
@@ -542,7 +574,7 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
     public bool ShotFull;
 
     [PunRPC]
-    IEnumerator Shot()
+    public IEnumerator Shot()
     {
         playerST.isSootReady = true;
         yield return new WaitForSeconds(0.2f); //애니메이션과 화살나가는속도와 맞추기위함
@@ -552,7 +584,13 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
             Rigidbody arrowRigid = intantArrow.GetComponent<Rigidbody>();
             arrowRigid.velocity = arrowPos.forward * playerST.bowPower * 150;
             Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
+            if (!photonView.IsMine)
+            {
+                intantArrow.GetComponent<SphereCollider>().enabled = false;
+            }
             Destroy(intantArrow, 1f);
+
+
             if (playerST.FullChargeing)
             {
                 arrow.damage = 1.3f * attackdamage.Attack_Dam();
@@ -564,8 +602,6 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
                 arrow.damage = attackdamage.Attack_Dam();
                 ShotFull = false;
             }
-
-
         }
         else if (attackdamage.Duration_Buff)
         {
@@ -574,6 +610,10 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
             arrowRigid.velocity = arrowPos.forward * playerST.bowPower * 150;
             Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
             arrow.damage = 1.3f * attackdamage.Attack_Dam();
+            if (!photonView.IsMine)
+            {
+                intantArrow.GetComponent<SphereCollider>().enabled = false;
+            }
             ShotFull = true;
             Destroy(intantArrow, 1f);
         }
@@ -593,10 +633,10 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
     }
 
     [PunRPC]
-    IEnumerator MagicShot()
+    public IEnumerator MagicShot()
     {
-        if(playerST.CharacterType == PlayerST.Type.Mage)
-        anim.SetBool("isAttack", true);
+        if (playerST.CharacterType == PlayerST.Type.Mage)
+            anim.SetBool("isAttack", true);
         yield return new WaitForSeconds(0.3f); //애니메이션과 화살나가는속도와 맞추기위함
         SoundManager.soundManager.MageAttackSound();
         GameObject intantArrow = Instantiate(MageDefaultAttack, MagicPos.position, MagicPos.rotation);
@@ -604,7 +644,12 @@ public class Weapons : MonoBehaviourPunCallbacks, IPunObservable
         arrowRigid.velocity = MagicPos.forward * 20;
         Arrow arrow = intantArrow.GetComponent<Arrow>(); //스킬데미지설정
         arrow.damage = attackdamage.Attack_Dam();
+        if (!photonView.IsMine)
+        {
+            intantArrow.GetComponent<SphereCollider>().enabled = false;
+        }
         Destroy(intantArrow, 0.7f);
+
         yield return new WaitForSeconds(0.3f);
         if (playerST.CharacterType == PlayerST.Type.Mage)
             anim.SetBool("isAttack", false);

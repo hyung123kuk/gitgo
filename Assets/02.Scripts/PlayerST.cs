@@ -68,7 +68,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     public GameObject Skillarea2; //켜지면 데미지만
     public GameObject CCarea;  //켜지면 CC기 
 
-    public PlayerST playerST;
     public bool HorseMode; //말타고있는지
     public GameObject Horsee; //말 안장
     public GameObject HorseSpawn; //말 부모객체
@@ -142,14 +141,14 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
         //if (!photonView.IsMine)
         //{
-        //    return;
+        //    enabled = false;
         //}
 
         comboHit = GetComponent<ComboHit>();
         anim = GetComponentInChildren<Animator>();
         smesh = GetComponentsInChildren<SkinnedMeshRenderer>();
-        
         saveManager = FindObjectOfType<SaveManager>();
+        photonView.RPC("Setting", RpcTarget.All);
         //nickname = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<Text>();
         //healthbar = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Image>();
         //helathbarBack = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(2).GetComponent<Image>();
@@ -200,7 +199,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                 if (ownerplayer == null)
                     break;
             }
-            else if(!ownerplayer.GetComponent<PhotonView>().IsMine && !ownerplayer.HorseMode)
+            else if (!ownerplayer.GetComponent<PhotonView>().IsMine && !ownerplayer.HorseMode)
             {
                 Debug.Log("말2");
                 ownerplayer.transform.SetParent(null);
@@ -211,13 +210,14 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     }
     void Start()
     {
-        //if (!photonView.IsMine)
-        //    return;
+        if (photonView.IsMine)
+        {
+            healthbar.CrossFadeAlpha(0, 0, true);  //자기자신 HP바 가리기 
+            helathbarBack.CrossFadeAlpha(0, 0, true);
+        }
         nickname.text = PhotonNetwork.LocalPlayer.NickName;
-        healthbar.CrossFadeAlpha(0, 0, true);  //자기자신 HP바 가리기
-        //nickname.CrossFadeAlpha(0, 0, true);
-        helathbarBack.CrossFadeAlpha(0, 0, true);
         healthbar.fillAmount = playerstat._Hp / playerstat._MAXHP;
+        //nickname.CrossFadeAlpha(0, 0, true);
         bgm = GameObject.Find("Sounds").transform.GetChild(3).GetComponent<BGM>();
         playerstat = GetComponent<PlayerStat>();
         bowPower = bowMinPower;
@@ -225,15 +225,12 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         questStore = FindObjectOfType<QuestStore>();
         HorseSpawn = FindObjectOfType<Horse>().gameObject;
         Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
-        //photonView.RPC("Setting", RpcTarget.All);
-
-
-        playerST = this;
+        
         dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
         weapons = FindObjectOfType<Weapons>();
         rigid = GetComponent<Rigidbody>();
-        
-        
+
+
 
     }
 
@@ -250,8 +247,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         //        break;
         //    }
         //}
-        HorseSpawn = FindObjectOfType<Horse>().gameObject;
-        Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
+        //HorseSpawn = FindObjectOfType<Horse>().gameObject;
+        //Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
     }
 
 
@@ -506,7 +503,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         {
             AAttack();
             photonView.RPC("AAttack", RpcTarget.Others);
-
         }
     }
     [PunRPC]
@@ -563,8 +559,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                 SoundManager.soundManager.ArcherAttackSound();
             else if (attackdamage.Duration_Buff)
                 SoundManager.soundManager.ArcherSkill1ShotSound();
-            //equipWeapon[NowWeapon].photonView.RPC("Use", RpcTarget.All);
-            equipWeapon[NowWeapon].Use();
+            //equipWeapon[NowWeapon].StartCoroutine("Shot");
+            equipWeapon[NowWeapon].photonView.RPC("Shot", RpcTarget.All);
         }
     }
     [PunRPC]
@@ -577,9 +573,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         {
             if (isFireReady)  //공격할수있을때
             {
-
-                equipWeapon[NowWeapon].Use();
-                //equipWeapon[NowWeapon].photonView.RPC("Use", RpcTarget.All);
+                //equipWeapon[NowWeapon].StartCoroutine("MagicShot");
+                equipWeapon[NowWeapon].photonView.RPC("MagicShot", RpcTarget.All);
                 fireDelay = 0;
             }
         }
@@ -695,7 +690,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             if (photonView.IsMine)
                 comboHit.noOfClicks = 0;
         }
-        if (!questStore.MainSuccess&&photonView.IsMine)
+        if (!questStore.MainSuccess && photonView.IsMine)
         {
             questStore.MainQuestSuccess(1);
         }
@@ -725,7 +720,12 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         isDamage = true;
         yield return new WaitForSeconds(0.3f);
         BoxCollider Skillare = Skillarea2.GetComponent<BoxCollider>(); // 데미지 콜라이더 활성화
+        if(photonView.IsMine)
         Skillare.enabled = true;
+        if (!photonView.IsMine)
+        {
+            Skillare.enabled = false;
+        }
         SoundManager.soundManager.WarriorShieldSound();
         ArrowSkill arrow = Skillarea2.GetComponent<ArrowSkill>(); //스킬데미지설정
         arrow.damage = attackdamage.Skill_1_Damamge();
@@ -795,7 +795,12 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         yield return new WaitForSeconds(0.5f);
         SoundManager.soundManager.WarriorRushSound();
         BoxCollider Skillare = Skillarea.GetComponent<BoxCollider>(); //돌진착지지점 데미지 콜라이더 활성화
-        Skillare.enabled = true;
+        if (photonView.IsMine)
+            Skillare.enabled = true;
+        if (!photonView.IsMine)
+        {
+            Skillare.enabled = false;
+        }
         ArrowSkill arrow = Skillarea.GetComponent<ArrowSkill>(); //스킬데미지설정
         arrow.damage = attackdamage.Skill_2_Damamge();
         BoxCollider CCare = CCarea.GetComponent<BoxCollider>(); //돌진착지지점 cc기 콜라이더 활성화
@@ -846,6 +851,10 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         yield return new WaitForSeconds(0.7f);
         SoundManager.soundManager.WarriorAuraSound();
         GameObject swordaura = Instantiate(SwordAura, Aurapos.position, Aurapos.rotation);
+        if (!photonView.IsMine)
+        {
+            swordaura.GetComponent<SphereCollider>().enabled = false;
+        }
         Rigidbody aurarigid = swordaura.GetComponent<Rigidbody>();
         aurarigid.velocity = Aurapos.forward * 20;
         ArrowSkill arrow = swordaura.GetComponent<ArrowSkill>(); //스킬데미지설정
@@ -893,7 +902,12 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         GameObject arceff = Instantiate(BackStepEff, BackStepPos.position, BackStepPos.rotation); //이펙트
         SoundManager.soundManager.ArcherBackStepSound();
         BoxCollider Skillare = Skillarea.GetComponent<BoxCollider>(); // 데미지 콜라이더 활성화
-        Skillare.enabled = true;
+        if (photonView.IsMine)
+            Skillare.enabled = true;
+        if (!photonView.IsMine)
+        {
+            Skillare.enabled = false;
+        }
         BoxCollider CCare = CCarea.GetComponent<BoxCollider>(); // cc기 콜라이더 활성화
         CCare.enabled = true;
         ArrowSkill arrow = Skillare.GetComponent<ArrowSkill>();
@@ -1028,7 +1042,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
         //HorseSerching(); 
 
-        
+
 
         if (Input.GetKeyDown(KeyCode.H) && !HorseMode) //말 아이템이 없어서 이걸로 테스트했어요
         {
@@ -1116,9 +1130,11 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     }
     public void HorseRide()
     {
+        Debug.Log(0);
 
         if (!HorseMode) // 말 소환&소환해제
         {
+            Debug.Log(horsecount);
             //if (horsecount == 0)
             //{
             //    SoundManager.soundManager.Horse();
@@ -1135,7 +1151,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                 //HorseSpawn.transform.parent = null;
                 SoundManager.soundManager.Horse();
                 HorseSpawn.transform.position = horsepos1.position;
-                HorseSpawn.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
+               // HorseSpawn.transform.DOMove(horsepos2.position, 1.5f).SetEase(Ease.Linear);
                 horsecount = 1;
             }
             else if (horsecount == 1) //소환 해제

@@ -54,6 +54,7 @@ public class Monster : MonoBehaviourPun
     public float hitDamage;
     public virtual void Die() { }
     
+   
     public void Start()
     {
         MonsterDropSet();
@@ -63,9 +64,36 @@ public class Monster : MonoBehaviourPun
         Portion = Resources.LoadAll<GameObject>("DROP/Portion");
         Geteff = Resources.Load<GameObject>("GetEff");
         Damage = Resources.Load<GameObject>("Damage");
-        playerST = FindObjectOfType<PlayerST>();
-        playerStat = FindObjectOfType<PlayerStat>();
-        weapons = FindObjectOfType<Weapons>();
+        //playerST = FindObjectOfType<PlayerST>();
+        //playerStat = FindObjectOfType<PlayerStat>();
+        //weapons = FindObjectOfType<Weapons>();
+        PlayerST[] attackDam111ages = FindObjectsOfType<PlayerST>();
+
+        foreach (PlayerST attDam in attackDam111ages)
+        {
+            if (attDam.GetComponent<PhotonView>().IsMine)
+            {
+                playerST = attDam;
+            }
+        }
+        PlayerStat[] attackDam11ages = FindObjectsOfType<PlayerStat>();
+
+        foreach (PlayerStat attDam in attackDam11ages)
+        {
+            if (attDam.GetComponent<PhotonView>().IsMine)
+            {
+                playerStat = attDam;
+            }
+        }
+        Weapons[] attackDam1ages = FindObjectsOfType<Weapons>();
+
+        foreach (Weapons attDam in attackDam1ages)
+        {
+            if (attDam.GetComponent<PhotonView>().IsMine)
+            {
+                weapons = attDam;
+            }
+        }
 
         AttackDamage[] attackDamages = FindObjectsOfType<AttackDamage>();
 
@@ -123,21 +151,22 @@ public class Monster : MonoBehaviourPun
     [PunRPC]
     public virtual void OnDamage(float _attackdamage, bool critical, bool Local)
     {
-
+        Debug.Log(Local);
         if (Local) // �����϶� �ٸ������� ���� ���þƴϸ� �ߺ� �������� ����
         {
             photonView.RPC("OnDamage", RpcTarget.Others, _attackdamage, critical, false);
             SetTarget(attackdamage.gameObject);
+            Debug.Log("local");
         }
-
+        
         GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
-
+        
         if (!Local)
         {
             curHealth -= _attackdamage;
             SetTarget(null);
+            Debug.Log("!local");
         }
-
 
 
         var _damage = damage.GetComponent<DamageUI>();
@@ -171,7 +200,8 @@ public class Monster : MonoBehaviourPun
 
     public void HitMonster()
     {
-        if (playerST.CharacterType == PlayerST.Type.Warrior || weapons.GetComponent<PhotonView>().IsMine)
+        if (playerST.CharacterType == PlayerST.Type.Warrior || weapons.GetComponent<PhotonView>().IsMine
+            || playerST.CharacterType == PlayerST.Type.Archer || playerST.CharacterType == PlayerST.Type.Mage)
         {
             OnDamage(attackdamage.attackDamage, attackdamage.critical, true); //�¾����� ������ Ʈ����ؼ� �ٸ��������� OnDamage�� ����ǰ�
 
@@ -212,6 +242,7 @@ public class Monster : MonoBehaviourPun
         }
         else if (playerST.CharacterType == PlayerST.Type.Archer || playerST.CharacterType == PlayerST.Type.Mage)
         {
+
             if (attackdamage.DamageNum == 0)
             {
                 if (!weapons.ShotFull)
@@ -348,6 +379,7 @@ public class Monster : MonoBehaviourPun
 
     public void SetHpBar()
     {
+        Debug.Log("1");
         hpBarImage.fillAmount = curHealth / maxHealth;
         if (gameObject.activeSelf)
             StartCoroutine(MonsterHpBarOn());

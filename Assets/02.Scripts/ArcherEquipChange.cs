@@ -47,11 +47,6 @@ public class ArcherEquipChange : MonoBehaviourPun
 
     void Awake()
     {
-
-        if (!photonView.IsMine)
-        {
-            this.enabled = false;
-        }
         playerst = GetComponent<PlayerST>();
         archerEquip = GetComponent<ArcherEquip>();
         #region 장비초기화
@@ -66,6 +61,8 @@ public class ArcherEquipChange : MonoBehaviourPun
         Boots7 = new GameObject[2];
 
         #endregion
+        if (playerst.CharacterType == PlayerST.Type.Archer && enabled)
+            EquipSetting();
     }
 
     [PunRPC]
@@ -105,8 +102,7 @@ public class ArcherEquipChange : MonoBehaviourPun
 
     private void Start()
     {
-        if (playerst.CharacterType == PlayerST.Type.Archer && enabled)
-            EquipSetting();
+        
         // photonView.RPC("EquipSetting", RpcTarget.AllBuffered);
     }
 

@@ -524,7 +524,7 @@ public class EnemyBoss2 : MonsterBoss
         yield return new WaitForSeconds(2f);
         for (int i = 0; i < 10; i++)
         {
-            float XPOS = Random.Range(300, 358);
+            float XPOS = Random.Range(182, 240);
             float ZPOS = Random.Range(453, 528);
             Skill1Effs[i].transform.position = new Vector3(XPOS, 11.5f, ZPOS);
         }

@@ -47,12 +47,6 @@ public class MageEquipChange : MonoBehaviourPun
 
     void Awake()
     {
-
-        if (!photonView.IsMine)
-        {
-            this.enabled = false;
-        }
-
         mageEquip = GetComponent<MageEquip>();
         playerst = GetComponent<PlayerST>();
         #region 장비초기화
@@ -67,6 +61,8 @@ public class MageEquipChange : MonoBehaviourPun
         Boots7 = new GameObject[2];
 
         #endregion
+        if (playerst.CharacterType == PlayerST.Type.Mage && enabled)
+            EquipSetting();
     }
 
     [PunRPC]
@@ -106,8 +102,7 @@ public class MageEquipChange : MonoBehaviourPun
 
     private void Start()
     {
-        if (playerst.CharacterType == PlayerST.Type.Mage && enabled)
-            EquipSetting();
+        
         //photonView.RPC("EquipSetting", RpcTarget.AllBuffered);
     }
 

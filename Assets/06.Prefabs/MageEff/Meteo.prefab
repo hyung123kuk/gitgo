@@ -127,7 +127,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   damage: 0
-  NoDestroy: 0
+  NoDestroy: 1
 --- !u!1001 &7780367746141597724
 PrefabInstance:
   m_ObjectHideFlags: 0

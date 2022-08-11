@@ -95,18 +95,20 @@ public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEnd
 
     public void SetSkillColor()
     {
-        Debug.Log(1);
+
         if (gameObject.layer == LayerMask.NameToLayer("SkillSlot"))
         {
-            
-            if (skill.Level > playerStat.Level)
+            if (skill != null)
             {
-                imageSkill.color = new Color(1, 0, 0);
+                if (skill.Level > playerStat.Level)
+                {
+                    imageSkill.color = new Color(1, 0, 0);
 
-            }
-            else
-            {
-                imageSkill.color = new Color(1, 1, 1);
+                }
+                else
+                {
+                    imageSkill.color = new Color(1, 1, 1);
+                }
             }
         }
     }
@@ -311,7 +313,9 @@ public class SkillSlot : MonoBehaviourPun, IBeginDragHandler, IDragHandler, IEnd
             gameObject.GetComponent<QuikSlot>().setCoolImage();
         if (DragSkillSlot.instance.dragSkillSlot.gameObject.layer == LayerMask.NameToLayer("quikSlot"))
             DragSkillSlot.instance.dragSkillSlot.gameObject.GetComponent<QuikSlot>().setCoolImage();
-
+        FindObjectOfType<SaveManager>().InvenSave();
+        FindObjectOfType<SaveManager>().QuickSave();
+        FindObjectOfType<SaveManager>().EquSlotSave();
     }
 
     public void SetColor(float _alpha)
