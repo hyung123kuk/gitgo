@@ -47,11 +47,6 @@ public class ArcherEquipChange : MonoBehaviourPun
 
     void Awake()
     {
-
-        if (!photonView.IsMine)
-        {
-            this.enabled = false;
-        }
         playerst = GetComponent<PlayerST>();
         archerEquip = GetComponent<ArcherEquip>();
         #region 장비초기화

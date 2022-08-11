@@ -47,12 +47,6 @@ public class MageEquipChange : MonoBehaviourPun
 
     void Awake()
     {
-
-        if (!photonView.IsMine)
-        {
-            this.enabled = false;
-        }
-
         mageEquip = GetComponent<MageEquip>();
         playerst = GetComponent<PlayerST>();
         #region 장비초기화

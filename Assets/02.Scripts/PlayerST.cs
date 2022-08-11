@@ -140,10 +140,10 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     private void Awake()
     {
 
-        if (!photonView.IsMine)
-        {
-            enabled = false;
-        }
+        //if (!photonView.IsMine)
+        //{
+        //    enabled = false;
+        //}
 
         comboHit = GetComponent<ComboHit>();
         anim = GetComponentInChildren<Animator>();
@@ -211,21 +211,22 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     }
     void Start()
     {
-        //if (!photonView.IsMine)
-        //    return;
+        if (photonView.IsMine)
+        {
+            healthbar.CrossFadeAlpha(0, 0, true);  //자기자신 HP바 가리기 
+            helathbarBack.CrossFadeAlpha(0, 0, true);
+        }
         nickname.text = PhotonNetwork.LocalPlayer.NickName;
-        healthbar.CrossFadeAlpha(0, 0, true);  //자기자신 HP바 가리기
-        //nickname.CrossFadeAlpha(0, 0, true);
-        helathbarBack.CrossFadeAlpha(0, 0, true);
         healthbar.fillAmount = playerstat._Hp / playerstat._MAXHP;
+        //nickname.CrossFadeAlpha(0, 0, true);
         bgm = GameObject.Find("Sounds").transform.GetChild(3).GetComponent<BGM>();
         playerstat = GetComponent<PlayerStat>();
         bowPower = bowMinPower;
         _transform = GetComponent<Transform>();
-        questStore = FindObjectOfType<QuestStore>();
-        HorseSpawn = FindObjectOfType<Horse>().gameObject;
-        Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
-        //photonView.RPC("Setting", RpcTarget.All);
+        //questStore = FindObjectOfType<QuestStore>();
+        //HorseSpawn = FindObjectOfType<Horse>().gameObject;
+        //Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
+        photonView.RPC("Setting", RpcTarget.All);
 
 
         playerST = this;
