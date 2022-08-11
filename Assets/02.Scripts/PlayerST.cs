@@ -68,7 +68,6 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     public GameObject Skillarea2; //켜지면 데미지만
     public GameObject CCarea;  //켜지면 CC기 
 
-    public PlayerST playerST;
     public bool HorseMode; //말타고있는지
     public GameObject Horsee; //말 안장
     public GameObject HorseSpawn; //말 부모객체
@@ -148,8 +147,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         comboHit = GetComponent<ComboHit>();
         anim = GetComponentInChildren<Animator>();
         smesh = GetComponentsInChildren<SkinnedMeshRenderer>();
-
         saveManager = FindObjectOfType<SaveManager>();
+        
         //nickname = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<Text>();
         //healthbar = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Image>();
         //helathbarBack = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(2).GetComponent<Image>();
@@ -223,13 +222,10 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         playerstat = GetComponent<PlayerStat>();
         bowPower = bowMinPower;
         _transform = GetComponent<Transform>();
-        //questStore = FindObjectOfType<QuestStore>();
-        //HorseSpawn = FindObjectOfType<Horse>().gameObject;
-        //Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
-        photonView.RPC("Setting", RpcTarget.All);
-
-
-        playerST = this;
+        questStore = FindObjectOfType<QuestStore>();
+        HorseSpawn = FindObjectOfType<Horse>().gameObject;
+        Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
+        //photonView.RPC("Setting", RpcTarget.OthersBuffered);
         dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
         weapons = FindObjectOfType<Weapons>();
         rigid = GetComponent<Rigidbody>();
