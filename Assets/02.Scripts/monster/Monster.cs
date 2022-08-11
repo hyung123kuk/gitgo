@@ -156,6 +156,7 @@ public class Monster : MonoBehaviourPun
         {
             photonView.RPC("OnDamage", RpcTarget.Others, _attackdamage, critical, false);
             SetTarget(attackdamage.gameObject);
+            Debug.Log("local");
         }
 
         GameObject damage = Instantiate<GameObject>(Damage, uiCanvas.transform);
@@ -164,6 +165,7 @@ public class Monster : MonoBehaviourPun
         {
             curHealth -= _attackdamage;
             SetTarget(null);
+            Debug.Log("!local");
         }
 
 
@@ -377,6 +379,7 @@ public class Monster : MonoBehaviourPun
 
     public void SetHpBar()
     {
+        Debug.Log("1");
         hpBarImage.fillAmount = curHealth / maxHealth;
         if (gameObject.activeSelf)
             StartCoroutine(MonsterHpBarOn());
