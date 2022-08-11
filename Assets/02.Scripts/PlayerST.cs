@@ -148,7 +148,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         comboHit = GetComponent<ComboHit>();
         anim = GetComponentInChildren<Animator>();
         smesh = GetComponentsInChildren<SkinnedMeshRenderer>();
-        
+
         saveManager = FindObjectOfType<SaveManager>();
         //nickname = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<Text>();
         //healthbar = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Image>();
@@ -200,7 +200,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
                 if (ownerplayer == null)
                     break;
             }
-            else if(!ownerplayer.GetComponent<PhotonView>().IsMine && !ownerplayer.HorseMode)
+            else if (!ownerplayer.GetComponent<PhotonView>().IsMine && !ownerplayer.HorseMode)
             {
                 Debug.Log("말2");
                 ownerplayer.transform.SetParent(null);
@@ -232,8 +232,8 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
         weapons = FindObjectOfType<Weapons>();
         rigid = GetComponent<Rigidbody>();
-        
-        
+
+
 
     }
 
@@ -695,7 +695,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             if (photonView.IsMine)
                 comboHit.noOfClicks = 0;
         }
-        if (!questStore.MainSuccess&&photonView.IsMine)
+        if (!questStore.MainSuccess && photonView.IsMine)
         {
             questStore.MainQuestSuccess(1);
         }
@@ -1028,7 +1028,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
 
         //HorseSerching(); 
 
-        
+
 
         if (Input.GetKeyDown(KeyCode.H) && !HorseMode) //말 아이템이 없어서 이걸로 테스트했어요
         {
