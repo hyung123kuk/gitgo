@@ -38,7 +38,7 @@ public class CameraClear : MonoBehaviourPunCallbacks
             {
                 MainCamera.transform.localPosition = Vector3.Lerp(MainCamera.transform.localPosition, MainCamera.transform.localPosition + Vector3.forward, Time.deltaTime * 10);
                 MainCamera.transform.position = hit.point;
-                Debug.Log("Ãæµ¹1");
+
             }
             //else
             //{
