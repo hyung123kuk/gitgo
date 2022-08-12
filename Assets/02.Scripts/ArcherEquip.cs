@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ArcherEquip : MonoBehaviour
 {
-    public static ArcherEquip archerEquip;
 
     #region 머리
     [Header("머리")]
@@ -63,8 +62,5 @@ public class ArcherEquip : MonoBehaviour
     #endregion
 
 
-    void Awake()
-    {
-        archerEquip = this;
-    }
+    
 }

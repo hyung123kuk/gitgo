@@ -1460,7 +1460,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (photonView.IsMine)
         {
-            if (other.tag == "Horse")
+            if (other.tag == "Horse" && other.GetComponent<PhotonView>().IsMine)
             {
                 if (Input.GetKeyDown(KeyCode.C)) //말탑승
                 {
