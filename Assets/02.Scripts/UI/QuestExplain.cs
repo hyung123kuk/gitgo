@@ -177,7 +177,7 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
         QuestExplainOn();
         questName.text = main3Name;
         questName.color = mainColor;
-        explainText.text = "사냥터에 나타나는\n거북슬라임을 잡으세요!!!";
+        explainText.text = "사냥터에 나타나는\n골렘을 잡으세요!!!";
         Clear(clear);
         Recieve(isRecieve);
      
@@ -208,7 +208,7 @@ public class QuestExplain : MonoBehaviour, IPointerClickHandler
         QuestExplainOn();
         questName.text = main5Name;
         questName.color = mainColor;
-        explainText.text = "최강의 생물체인\n골렘을 사냥하세요!!!";
+        explainText.text = "최강의 생물체인\n아몬을 사냥하세요!!!";
         Clear(clear);
         Recieve(isRecieve);
 

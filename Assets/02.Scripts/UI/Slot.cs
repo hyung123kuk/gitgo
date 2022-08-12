@@ -157,7 +157,7 @@ public class Slot : MonoBehaviourPun, IPointerEnterHandler, IPointerExitHandler,
 
             itemImage.color = Color.white;
         }
-        if(gameObject.layer == LayerMask.NameToLayer("TRADESLOT"))
+        if(gameObject.layer == LayerMask.NameToLayer("TRADESLOT") || item.itemType == Item.ItemType.Ride)
         {
             itemImage.color = Color.white;
         }

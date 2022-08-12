@@ -40,8 +40,8 @@ public class MonsterBoss : Monster
         Debug.Log("bossattac22k");
         if (bossHpBar != null)
         {
-            StopCoroutine(BossHpOn());
-            StartCoroutine(BossHpOn());
+            StopCoroutine("BossHpOn");
+            StartCoroutine("BossHpOn");
             BossHpBar.fillAmount = curHealth / maxHealth;
             BossHp.text = (int)curHealth + " / " + (int)maxHealth;
         }
