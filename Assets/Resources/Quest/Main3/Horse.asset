@@ -14,10 +14,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   itemType: 4
   armortype: 3
-  equipType: 0
+  equipType: 9
   ItemGrade: 0
   itemEquLevel: 0
-  SwordNames: 5
+  swordNames: 0
+  helmetNames: 0
+  chestNames: 0
+  shoulderNames: 0
+  glovesNames: 0
+  pantsNames: 0
+  bootsNames: 0
+  backNames: 0
   itemText: "\uACE0\uB188 \uCC38 \uD2BC\uC2E4\uD574\uBCF4\uC774\uB124..."
   itemName: "\uD53C\uD130\uC758 \uAC80\uC740 \uB9D0"
   itemImage: {fileID: 21300000, guid: fcde7daed61452841a099d6077d1fdc0, type: 3}
