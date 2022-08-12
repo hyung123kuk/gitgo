@@ -15129,6 +15129,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1992890130114788698, guid: ee29c76badfbd2b4383c568d14a01cec, type: 3}
+      propertyPath: m_Name
+      value: Level2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1992890130283449412, guid: ee29c76badfbd2b4383c568d14a01cec, type: 3}
+      propertyPath: m_Name
+      value: Level1
+      objectReference: {fileID: 0}
     - target: {fileID: 1992890130606983334, guid: ee29c76badfbd2b4383c568d14a01cec, type: 3}
       propertyPath: m_Name
       value: SelManager

@@ -182,6 +182,8 @@ public class SaveManager : MonoBehaviourPunCallbacks
         }
         if (!SaveOn)// 캐릭터 선택창이라면
         {
+            level1 = GameObject.Find("Level1").GetComponent<Text>();
+            level2 = GameObject.Find("Level2").GetComponent<Text>();
             CharacterSelLoad();
         }
 
