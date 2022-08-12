@@ -148,7 +148,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         anim = GetComponentInChildren<Animator>();
         smesh = GetComponentsInChildren<SkinnedMeshRenderer>();
         saveManager = FindObjectOfType<SaveManager>();
-        
+        photonView.RPC("Setting", RpcTarget.All);
         //nickname = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).GetComponent<Text>();
         //healthbar = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(1).GetComponent<Image>();
         //helathbarBack = transform.GetChild(0).transform.GetChild(0).transform.GetChild(0).transform.GetChild(2).GetComponent<Image>();
@@ -225,7 +225,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
         questStore = FindObjectOfType<QuestStore>();
         HorseSpawn = FindObjectOfType<Horse>().gameObject;
         Horsee = HorseSpawn.transform.GetChild(1).transform.GetChild(0).transform.GetChild(10).transform.GetChild(6).transform.GetChild(0).gameObject; //안장
-        photonView.RPC("Setting", RpcTarget.All);
+        
         dieui = GameObject.Find("DieUI").GetComponent<DieUI>();
         weapons = FindObjectOfType<Weapons>();
         rigid = GetComponent<Rigidbody>();
@@ -1460,7 +1460,7 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     {
         if (photonView.IsMine)
         {
-            if (other.tag == "Horse")
+            if (other.tag == "Horse" && other.GetComponent<PhotonView>().IsMine)
             {
                 if (Input.GetKeyDown(KeyCode.C)) //말탑승
                 {

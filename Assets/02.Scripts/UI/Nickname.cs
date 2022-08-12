@@ -9,6 +9,7 @@ using Photon.Pun;
 
 public class Nickname : MonoBehaviourPun
 {
+
     public InputField nickNameInput1;
     public InputField nickNameInput2;
     private SaveManager saveManager;
@@ -30,40 +31,40 @@ public class Nickname : MonoBehaviourPun
 
     private void Start()
     {
-        nickNameInput1.characterLimit = 8; //ÃÖ´ëÀÔ·Â¼ö Á¦ÇÑ
-        nickNameInput2.characterLimit = 8; //ÃÖ´ëÀÔ·Â¼ö Á¦ÇÑ
+        nickNameInput1.characterLimit = 8; //ï¿½Ö´ï¿½ï¿½Ô·Â¼ï¿½ ï¿½ï¿½ï¿½ï¿½
+        nickNameInput2.characterLimit = 8; //ï¿½Ö´ï¿½ï¿½Ô·Â¼ï¿½ ï¿½ï¿½ï¿½ï¿½
     }
 
 
 
-    private bool CheckNickname() //ÇÑ±Û,¿µ¾î,¼ýÀÚ¸¸ ÀÔ·Â°¡´ÉÇÏ°Ô
+    private bool CheckNickname() //ï¿½Ñ±ï¿½,ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½Ú¸ï¿½ ï¿½Ô·Â°ï¿½ï¿½ï¿½ï¿½Ï°ï¿½
     {
-        return Regex.IsMatch(nickNameInput1.text, "^[0-9a-zA-Z°¡-ÆR]*$") || Regex.IsMatch(nickNameInput2.text, "^[0-9a-zA-Z°¡-ÆR]*$"); 
-        //ÇÑ±Û¿µ¾î¼ýÀÚ·Î ÀÔ·ÂÀ»ÇßÀ¸¸é true
+        return Regex.IsMatch(nickNameInput1.text, "^[0-9a-zA-Zï¿½ï¿½-ï¿½R]*$") || Regex.IsMatch(nickNameInput2.text, "^[0-9a-zA-Zï¿½ï¿½-ï¿½R]*$"); 
+        //ï¿½Ñ±Û¿ï¿½ï¿½ï¿½ï¿½ï¿½Ú·ï¿½ ï¿½Ô·ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ true
     }
 
-    private bool CheckOverlap() //Áßº¹°Ë»ç
+    private bool CheckOverlap() //ï¿½ßºï¿½ï¿½Ë»ï¿½
     {
-        return namelist.Count != namelist.Distinct().Count(); //Áßº¹µ¥ÀÌÅÍ°¡ Á¸ÀçÇÏ¸é true
+        return namelist.Count != namelist.Distinct().Count(); //ï¿½ßºï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Í°ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ï¸ï¿½ true
     }
 
-    public void OnClickCreateName() //´Ð³×ÀÓ »ý¼º
+    public void OnClickCreateName() //ï¿½Ð³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
     {
         if (CheckNickname() == false)
         {
-            Debug.Log("ÇÑ±Û,¿µ¾î,¼ýÀÚ·Î¸¸ ¸¸µé¼öÀÖ½À´Ï´Ù.");
+            Debug.Log("ï¿½Ñ±ï¿½,ï¿½ï¿½ï¿½ï¿½,ï¿½ï¿½ï¿½Ú·Î¸ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö½ï¿½ï¿½Ï´ï¿½.");
             return;
         }
         
         if(CheckOverlap() == true)
         {
-            Debug.Log("Áßº¹¾ÆÀÌµðÀÔ´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä.");
+            Debug.Log("ï¿½ßºï¿½ï¿½ï¿½ï¿½Ìµï¿½ï¿½Ô´Ï´ï¿½. ï¿½Ù½ï¿½ ï¿½Ô·ï¿½ï¿½Ï¼ï¿½ï¿½ï¿½.");
             return;
         }
 
-        if (characterSel.charSel == 1) //´Ð³×ÀÓ ÀúÀå
+        if (characterSel.charSel == 1) //ï¿½Ð³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
         {
-            namelist.Add(nickNameInput1.text); //¼­¹ö¸Å´ÏÀú¿¡¼­ °ü¸®ÇØ¾ßÇÔ
+            namelist.Add(nickNameInput1.text); //ï¿½ï¿½ï¿½ï¿½ï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½Ø¾ï¿½ï¿½ï¿½
 
             if (nickNameInput1.text.Equals(""))
                 PhotonNetwork.LocalPlayer.NickName = "unknown";

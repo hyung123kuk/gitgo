@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class CharacterSelEffect : MonoBehaviour
 {
     [SerializeField]
-    List<RectTransform> Page = new List<RectTransform>(); // [0]-> ½ÃÀÛÆäÀÌÁö ,[1] -> Ä³¸¯ÅÍ¸¸µé±âÆäÀÌÁö, [2] ->Ä³¸¯ÅÍ¸¸µé±â 2¹øÂ°ÆäÀÌÁö
+    List<RectTransform> Page = new List<RectTransform>(); // [0]-> ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ,[1] -> Ä³ï¿½ï¿½ï¿½Í¸ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½, [2] ->Ä³ï¿½ï¿½ï¿½Í¸ï¿½ï¿½ï¿½ï¿½ 2ï¿½ï¿½Â°ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     [SerializeField]
     RectTransform startPointPage;
     [SerializeField]
@@ -18,13 +18,13 @@ public class CharacterSelEffect : MonoBehaviour
     [SerializeField]
     GameObject allblcok;
 
-    int character=-1; //0:¿ö¸®¾î 1:¾ÆÃ³ 2:¸ÞÀÌÁö
+    int character=-1; //0:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1:ï¿½ï¿½Ã³ 2:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     [SerializeField]
-    GameObject[] Characters; //0:¿ö¸®¾î 1:¾ÆÃ³ 2:¸ÞÀÌÁö
+    GameObject[] Characters; //0:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1:ï¿½ï¿½Ã³ 2:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     [SerializeField]
     GameObject Ch_Effect;
     [SerializeField]
-    RectTransform[] Ch_button; //0:¿ö¸®¾î 1:¾ÆÃ³ 2:¸ÞÀÌÁö
+    RectTransform[] Ch_button; //0:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ 1:ï¿½ï¿½Ã³ 2:ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
     [SerializeField]
     Image[] block;
     [SerializeField]
@@ -44,7 +44,7 @@ public class CharacterSelEffect : MonoBehaviour
     [SerializeField]
     Text[] abillity_Text;
 
-    //Å¬¸¯ ÇßÀ»¶§ Ä¿Áö°í, +  ¿¡´Ï¸ÞÀÌ¼Ç
+    //Å¬ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ Ä¿ï¿½ï¿½ï¿½ï¿½, +  ï¿½ï¿½ï¿½Ï¸ï¿½ï¿½Ì¼ï¿½
     [SerializeField]
     GameObject[] infoClick;
     [SerializeField]
@@ -56,8 +56,8 @@ public class CharacterSelEffect : MonoBehaviour
 
 
 
-    public float pageSpeed=0.1f;//ÆäÀÌÁö ÇÏ³ª¿Í ÇÏ³ªÀÇ °£°Ý
-    public float pageFlipSpeed = 0.02f; //ÆäÀÌÁö ³Ñ±â´Â ¼Óµµ
+    public float pageSpeed=0.1f;//ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½Ï³ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½
+    public float pageFlipSpeed = 0.02f; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ñ±ï¿½ï¿½ ï¿½Óµï¿½
 
     [SerializeField]
     CharacterSel chSel;
@@ -238,7 +238,7 @@ public class CharacterSelEffect : MonoBehaviour
 
     public void Backbutton()
     {
-        Debug.Log("µÚ·Î°¡±â ¹öÆ°");
+        Debug.Log("ï¿½Ú·Î°ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°");
         {
             StopAllCoroutines();
             allblcok.SetActive(true);
@@ -268,7 +268,7 @@ public class CharacterSelEffect : MonoBehaviour
         if (character == 0)
             return;
         chSel.WorriorBut();
-        Debug.Log("¿ö¸®¾î »ý¼º¼±ÅÃ ¹öÆ°");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°");
         character = 0;
         
         CharButton();
@@ -279,7 +279,7 @@ public class CharacterSelEffect : MonoBehaviour
     {
         if (character == 1)            return;
         chSel.ArcherBut();
-        Debug.Log("¾ÆÃÄ »ý¼º¼±ÅÃ ¹öÆ°");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°");
         character = 1;
         CharButton();
     }
@@ -289,7 +289,7 @@ public class CharacterSelEffect : MonoBehaviour
         if (character == 2)
             return;
         chSel.MageBut();
-        Debug.Log("¸¶¹ý»ç »ý¼º¼±ÅÃ ¹öÆ°");
+        Debug.Log("ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Æ°");
         character = 2;
         CharButton();
     }
@@ -425,7 +425,7 @@ public class CharacterSelEffect : MonoBehaviour
         while(attack <= Abillity[character,0] || shiel <= Abillity[character, 1] || mageDamage <= Abillity[character, 2])
         {
             yield return new WaitForSeconds(0.02f);
-            if (attack < Abillity[character, 0]) //´É·ÂÄ¡ Á¡Á¡ Ã¤¿öÁö°Ô fillamount¿Í ÅØ½ºÆ® °ª ¿Ã¶ó°¨
+            if (attack < Abillity[character, 0]) //ï¿½É·ï¿½Ä¡ ï¿½ï¿½ï¿½ï¿½ Ã¤ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ fillamountï¿½ï¿½ ï¿½Ø½ï¿½Æ® ï¿½ï¿½ ï¿½Ã¶ï¿½
             {
                 attack++;
                 abillity_Image[0].fillAmount = attack/100;
@@ -458,7 +458,7 @@ public class CharacterSelEffect : MonoBehaviour
         while (attack >= 0 || shiel >= 0 || mageDamage >= 0)
         {
             yield return new WaitForSeconds(0.01f);
-            if (attack >= 0.1f) //´É·ÂÄ¡ 0À¸·Î Âß ³»·Á°¨
+            if (attack >= 0.1f) //ï¿½É·ï¿½Ä¡ 0ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½
             {
                 attack-=2;
                 Debug.Log(attack);

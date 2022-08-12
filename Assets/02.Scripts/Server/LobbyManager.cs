@@ -81,7 +81,7 @@ public class LobbyManager : MonoBehaviourPunCallbacks
         this.connectionInfoText.text = "빈 방 없음, 새로운방 생성...";
         //최대 인원을 4명으로 설정 + 방을 만듦
         //방이름 , 4명 설정
-        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 4 , CleanupCacheOnLeave=false });
+        PhotonNetwork.CreateRoom(null, new RoomOptions { MaxPlayers = 2 , CleanupCacheOnLeave=false });
 
     }
 
