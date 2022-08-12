@@ -172,17 +172,18 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
     [PunRPC]
     void HPBARSerching() //피통갱신 다른플레이어
     {
-        PlayerMine[] ownerplayers = FindObjectsOfType<PlayerMine>();
-        foreach (PlayerMine ownerplayer in ownerplayers)
-        {
-            if (!ownerplayer.GetComponent<PhotonView>().IsMine)
-            {
-                ownerplayer.GetComponent<PlayerST>().healthbar.fillAmount = ownerplayer.GetComponent<PlayerStat>()._Hp /
-                    ownerplayer.GetComponent<PlayerStat>()._MAXHP;
-                if (ownerplayer == null)
-                    break;
-            }
-        }
+        //PlayerMine[] ownerplayers = FindObjectsOfType<PlayerMine>();
+        //foreach (PlayerMine ownerplayer in ownerplayers)
+        //{
+        //    if (!ownerplayer.GetComponent<PhotonView>().IsMine)
+        //    {
+        //        ownerplayer.GetComponent<PlayerST>().healthbar.fillAmount = ownerplayer.GetComponent<PlayerStat>()._Hp /
+        //            ownerplayer.GetComponent<PlayerStat>()._MAXHP;
+        //        if (ownerplayer == null)
+        //            break;
+        //    }
+        //}
+        healthbar.fillAmount = playerstat._Hp / playerstat._MAXHP;
     }
 
     [PunRPC]
@@ -1032,16 +1033,16 @@ public class PlayerST : MonoBehaviourPunCallbacks, IPunObservable
             photonView.RPC("NicknameSerching", RpcTarget.Others);
         }
 
-        if (this != null)
-        {
-            HPBARSerching(); //다른플레이어들 피통
-            photonView.RPC("HPBARSerching", RpcTarget.Others);
-        }
+        
         if (!photonView.IsMine)
             return;
 
         //HorseSerching(); 
-
+        if (this != null)
+        {
+            HPBARSerching(); //다른플레이어들 피통
+           // photonView.RPC("HPBARSerching", RpcTarget.Others);
+        }
 
 
         if (Input.GetKeyDown(KeyCode.H) && !HorseMode) //말 아이템이 없어서 이걸로 테스트했어요
