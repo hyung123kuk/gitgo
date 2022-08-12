@@ -2885,6 +2885,8 @@ MonoBehaviour:
   archerEquipChange: {fileID: 0}
   mageEquipChange: {fileID: 0}
   playerst: {fileID: 0}
+  level1: {fileID: 1992890129750097499}
+  level2: {fileID: 1992890129750097498}
 --- !u!4 &368415811
 Transform:
   m_ObjectHideFlags: 0
@@ -15181,6 +15183,28 @@ PrefabInstance:
       objectReference: {fileID: 252950844}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ee29c76badfbd2b4383c568d14a01cec, type: 3}
+--- !u!114 &1992890129750097498 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1992890130114788700, guid: ee29c76badfbd2b4383c568d14a01cec, type: 3}
+  m_PrefabInstance: {fileID: 1992890129750097497}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1992890129750097499 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1992890130283449414, guid: ee29c76badfbd2b4383c568d14a01cec, type: 3}
+  m_PrefabInstance: {fileID: 1992890129750097497}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5f7201a12d95ffc409449d95f23cf332, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &8583688068251117202
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -5,6 +5,7 @@ using Newtonsoft.Json;
 using System.IO;
 using UnityEngine.SceneManagement;
 using Photon.Pun;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class CharacterSelData
@@ -156,6 +157,9 @@ public class SaveManager : MonoBehaviourPunCallbacks
     MageEquipChange mageEquipChange;
     [SerializeField]
     PlayerST playerst;
+
+    public Text level1;
+    public Text level2;
 
     private void Awake()
     {
@@ -517,9 +521,10 @@ public class SaveManager : MonoBehaviourPunCallbacks
             }
         }
 
-
-
+ 
     }
+
+
 
     private void LoadCh(string _loadJson)
     {
@@ -750,6 +755,20 @@ public class SaveManager : MonoBehaviourPunCallbacks
                 characterSel.MakeBut();
             Debug.Log("로드완료");
             characterSel.charSel = 0;
+
+            if (File.Exists(SAVE_DATA_DIRECTORY + ch1_SAVE_FILENAME))
+            {
+                string json = File.ReadAllText(SAVE_DATA_DIRECTORY + ch1_SAVE_FILENAME);
+                data[0] = JsonUtility.FromJson<Data>(json);
+                level1.text = "레   벨 :  " + data[0].Level;
+
+            }
+            if (File.Exists(SAVE_DATA_DIRECTORY + ch2_SAVE_FILENAME))
+            {
+                string json = File.ReadAllText(SAVE_DATA_DIRECTORY + ch2_SAVE_FILENAME);
+                data[1] = JsonUtility.FromJson<Data>(json);
+                level2.text = "레   벨 :  " + data[1].Level;
+            }
         }
         else
             Debug.Log("세이브 파일이 없습니다.");
