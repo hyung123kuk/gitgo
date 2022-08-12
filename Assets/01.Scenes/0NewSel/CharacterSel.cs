@@ -14,20 +14,20 @@ public class CharacterSel : MonoBehaviourPunCallbacks
 
     public enum Type { None,Warrior, Archer, Mage  };
 
-    //Ä³¸¯ÅÍ ¼±ÅÃÃ¢
+    //Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¢
     public Type character1=Type.None;
 
     public Type character2=Type.None;
 
     public int charSel;
-    public string Char1Stringname; //¼¼ÀÌºê¸Å´ÏÀú¿¡¼­ ÀúÀå¿ë
+    public string Char1Stringname; //ï¿½ï¿½ï¿½Ìºï¿½Å´ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½
     public string Char2Stringname;
     public Text Char1Name;
     public Text Char2Name;
     public Nickname nickname;
     public CharacterSelEffect ch_selEffect;
 
-    //Ä³¸¯ÅÍ »ý¼ºÃ¢
+    //Ä³ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ã¢
 
     public Type MakeType=Type.None;
 
@@ -47,19 +47,19 @@ public class CharacterSel : MonoBehaviourPunCallbacks
     [SerializeField]
     public Animator[] characterAni2D = new Animator[2];
 
-    int widx = 0; //Àü»ç ´ë»ç¼Ò¸®
-    int aidx = 0; //±Ã¼ö ´ë»ç¼Ò¸®
-    int midx = 0; //¸¶¹ý»ç ´ë»ç¼Ò¸®
-    [Header("¾Ö´Ï¸ÞÀÌ¼Ç ¹öÆ° ¿¬Å¸¹æÁö & ¾Ö´Ï¸ÞÀÌ¼Ç ³¡³ª±âÀü¿¡ ´Ù¸¥ ¾Ö´Ï¸ÞÀÌ¼Ç ¹öÆ° ´©¸£´Â°Å ¹æÁö")]
-    public int wSkill0 = 0; //Àü»ç °ø°Ý ½ºÀ§Ä¡ 
-    public int wSkill1 = 0; //Àü»ç ½ºÅ³1 ½ºÀ§Ä¡ 
-    public int wSkill2 = 0; //Àü»ç ½ºÅ³2 ½ºÀ§Ä¡ 
-    public int aSkill0 = 0; //±Ã¼ö °ø°Ý ½ºÀ§Ä¡ 
-    public int aSkill1 = 0; //±Ã¼ö ½ºÅ³1 ½ºÀ§Ä¡ 
-    public int aSkill2 = 0; //±Ã¼ö ½ºÅ³2 ½ºÀ§Ä¡ 
-    public int mSkill0 = 0; //¹ý»ç °ø°Ý ½ºÀ§Ä¡ 
-    public int mSkill1 = 0; //¹ý»ç ½ºÅ³1 ½ºÀ§Ä¡ 
-    public int mSkill2 = 0; //¹ý»ç ½ºÅ³2 ½ºÀ§Ä¡ 
+    int widx = 0; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ò¸ï¿½
+    int aidx = 0; //ï¿½Ã¼ï¿½ ï¿½ï¿½ï¿½Ò¸ï¿½
+    int midx = 0; //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½Ò¸ï¿½
+    [Header("ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½Æ° ï¿½ï¿½Å¸ï¿½ï¿½ï¿½ï¿½ & ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ ï¿½Ù¸ï¿½ ï¿½Ö´Ï¸ï¿½ï¿½Ì¼ï¿½ ï¿½ï¿½Æ° ï¿½ï¿½ï¿½ï¿½ï¿½Â°ï¿½ ï¿½ï¿½ï¿½ï¿½")]
+    public int wSkill0 = 0; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ 
+    public int wSkill1 = 0; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³1 ï¿½ï¿½ï¿½ï¿½Ä¡ 
+    public int wSkill2 = 0; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³2 ï¿½ï¿½ï¿½ï¿½Ä¡ 
+    public int aSkill0 = 0; //ï¿½Ã¼ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ 
+    public int aSkill1 = 0; //ï¿½Ã¼ï¿½ ï¿½ï¿½Å³1 ï¿½ï¿½ï¿½ï¿½Ä¡ 
+    public int aSkill2 = 0; //ï¿½Ã¼ï¿½ ï¿½ï¿½Å³2 ï¿½ï¿½ï¿½ï¿½Ä¡ 
+    public int mSkill0 = 0; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½ï¿½ï¿½Ä¡ 
+    public int mSkill1 = 0; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³1 ï¿½ï¿½ï¿½ï¿½Ä¡ 
+    public int mSkill2 = 0; //ï¿½ï¿½ï¿½ï¿½ ï¿½ï¿½Å³2 ï¿½ï¿½ï¿½ï¿½Ä¡ 
 
     private void Awake()
     {
